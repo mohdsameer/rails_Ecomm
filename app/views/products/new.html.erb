@@ -1,0 +1,40 @@
+<h1>Create product</h1>
+<%= form_tag url_for(action: :create), method: :post do %>
+<div class="field">
+	<%= label_tag :brand_name %>
+	<%= text_field_tag :brand_name %>
+</div>
+
+<div class="field">
+	<%= label_tag :product_name %>
+	<%= text_field_tag :name %>
+</div>
+<div class="field">
+	<%= label_tag :variations %>
+	<%= text_field_tag :variations %>
+</div>
+<div class="field">
+	<%= label_tag :color %>
+	<%= text_field_tag :color %>
+</div>
+<div class="field">
+	<%= label_tag :size %>
+	<%= text_field_tag :size %>
+</div>
+<div class="field">
+	<%= label_tag :Real_variant_SKU %>
+	<%= text_field_tag :Real_variant_SKU %>
+</div>
+<div class="field">
+	<%= label_tag :print_area_width %>
+	<%= text_field_tag :print_area_width %>
+</div>
+<div class="field">
+	<%= label_tag :print_area_height %>
+	<%= text_field_tag :print_area_height %>
+</div>
+
+  <div class="actions">
+    <%= submit_tag "Create" %>
+  </div>
+<% end %>

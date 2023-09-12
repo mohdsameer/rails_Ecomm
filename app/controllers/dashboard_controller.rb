@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
   def index
-    
-  end  
+    @products = Product.all
+  end
 end

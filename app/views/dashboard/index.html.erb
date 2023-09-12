@@ -27,7 +27,19 @@
     </div>
 
     <div class="col-md-9">
-      <h1>Main Content</h1>
+      <!-- <h1>Main Content</h1> -->
+      <h1>All Products</h1>
+        <ul>
+          <% @products.each do |product| %>
+            <li>
+              <h2><%= product.name %></h2>
+              <p>brand_name: <%= product.brand_name %></p>
+              <p>product_name: <%= product.name %></p>
+              <p>variations: <%= product.variations %></p>
+            </li>
+          <% end %>
+        </ul>
+    <%= link_to 'Create a New Product', new_product_path %>
     </div>
   </div>
 </div>

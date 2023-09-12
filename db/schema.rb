@@ -14,20 +14,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_121419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "images", force: :cascade do |t|
-    t.string "imageable_type", null: false
-    t.bigint "imageable_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "image"
-    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable"
-    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
-  end
-
   create_table "products", force: :cascade do |t|
     t.string "brand_name"
-    t.string "product_name"
+    t.string "name"
     t.bigint "variations"
+    t.string "color"
+    t.float "size"
+    t.bigint "Real_variant_SKU"
+    t.bigint "print_area_width"
+    t.bigint "print_area_height"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -35,6 +30,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_121419) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "type"
+    t.string "email", null: false
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
