@@ -1,3 +1,9 @@
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
 <h1>Login</h1>
 <%= form_tag url_for(action: :create), method: :post do %>
   <div class="field">

@@ -14,7 +14,11 @@ class ProductsController < ApplicationController
 
   private
 
+  # def product_params
+  #    params.require(:product).permit(:name, :brand_name, :color, :size, :Real_variant_SKU, :print_area_width, :print_area_height, :image)
+  # end
+
   def product_params
-    params.permit(:name, :brand_name, :color, :size, :Real_variant_SKU, :print_area_width, :print_area_height )
+    params.require(:product).permit(:name, :brand_name, :color, :size, :Real_variant_SKU, :print_area_width, :print_area_height, :image, variants_attributes: [:color, :size, :Real_variant_SKU])
   end
 end

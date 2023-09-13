@@ -1,40 +1,51 @@
-<h1>Create product</h1>
-<%= form_tag url_for(action: :create), method: :post do %>
-<div class="field">
-	<%= label_tag :brand_name %>
-	<%= text_field_tag :brand_name %>
-</div>
+<%= render partial: 'shared/sidebar' %>
+<div class="col-md-9">
+  <h1>Create a new product</h1>
+  <%= form_for @product, html: { multipart: true } do |f| %>
 
-<div class="field">
-	<%= label_tag :product_name %>
-	<%= text_field_tag :name %>
-</div>
-<div class="field">
-	<%= label_tag :variations %>
-	<%= text_field_tag :variations %>
-</div>
-<div class="field">
-	<%= label_tag :color %>
-	<%= text_field_tag :color %>
-</div>
-<div class="field">
-	<%= label_tag :size %>
-	<%= text_field_tag :size %>
-</div>
-<div class="field">
-	<%= label_tag :Real_variant_SKU %>
-	<%= text_field_tag :Real_variant_SKU %>
-</div>
-<div class="field">
-	<%= label_tag :print_area_width %>
-	<%= text_field_tag :print_area_width %>
-</div>
-<div class="field">
-	<%= label_tag :print_area_height %>
-	<%= text_field_tag :print_area_height %>
-</div>
+    <!-- Product fields -->
+    <div class="form-control">
+      <%= f.label :image %>
+      <%= f.file_field :image %>
+    </div>
 
-  <div class="actions">
-    <%= submit_tag "Create" %>
-  </div>
-<% end %>
+    <div class="form-control">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="form-control">
+      <%= f.label :brand_name %>
+      <%= f.text_field :brand_name %>
+    </div>
+
+    <!-- Variations (nested) -->
+    <h1>Variations</h1>
+    <div id="variants">
+      <%= f.fields_for :variants do |variation_form| %>
+        <%= render 'variant_fields', f: variation_form %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association '+ Add variants', f, :variants, class: 'btn btn-primary' %>
+      </div>
+    </div>
+
+    <!-- Product print area fields -->
+    <h1>Product Print Area</h1>
+    <div class="form-control">
+      <%= f.label :print_area_width %>
+      <%= f.text_field :print_area_width %>
+    </div>
+
+    <div class="form-control">
+      <%= f.label :print_area_height %>
+      <%= f.text_field :print_area_height %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Save', class: "btn btn-primary" %>
+      <%= button_tag 'Cancel', class: "btn btn-secondary", type: "button", onclick: "window.location.href = '#{dashboard_index_path}'" %>
+    </div>
+
+  <% end %>
+</div>

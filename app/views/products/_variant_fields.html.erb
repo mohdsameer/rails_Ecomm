@@ -1,0 +1,20 @@
+<div class="nested-fields">
+  <div class="form-control">
+    <%= label_tag :color %>
+    <%= text_field_tag :color %>
+  </div>
+
+  <div class="form-control">
+    <%= label_tag :size %>
+    <%= text_field_tag :size %>
+  </div>
+
+  <div class="form-control">
+    <%= label_tag :Real_variant_SKU %>
+    <%= text_field_tag :Real_variant_SKU %>
+  </div>
+
+  <div class="links">
+    <%= link_to_remove_association "Remove", f, class: 'btn btn-danger' %>
+  </div>
+</div>

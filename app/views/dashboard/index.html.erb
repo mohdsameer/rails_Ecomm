@@ -1,45 +1,31 @@
-<div class="container-flouid my-4 ms-4">
-  <div class="row">
-    <div class="col-md-2 sidebar">
-      <div class="logo">LOGO</div>
-
-      <div class="user-info my-5 bg-light ps-3 py-2 rounded-4">
-        <div class="user-name">Hudson Alvarez</div>
-        <div class="user-role small">Admin</div>
-      </div>
-
-      
-      <ul class="sidebar-tabs list-group list-group-flush">
-        <li class="sidebar-tabs-item list-group-item border-0">Analytics</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Payments</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Orders</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Dropshippers</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Producers</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Product Categories</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Products</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Inventories</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Tickets</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Coupon Code Manager</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Shipping API</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Tickets Options Manager</li>
-        <li class="sidebar-tabs-item list-group-item border-0">Print Method Manager</li>
-      </ul> 
-    </div>
-
+<%= render partial: 'shared/sidebar' %>
     <div class="col-md-9">
       <!-- <h1>Main Content</h1> -->
       <h1>All Products</h1>
+      <table class="table table-borderless">
         <ul>
           <% @products.each do |product| %>
             <li>
               <h2><%= product.name %></h2>
-              <p>brand_name: <%= product.brand_name %></p>
-              <p>product_name: <%= product.name %></p>
-              <p>variations: <%= product.variations %></p>
+
+              <p> product id: <%= product.id %></p>
+              <div style="display: flex; height: 100px; width: 100px;">
+                <p> product_image:</p> 
+                  <% if product.image.attached? %>
+                    <%= image_tag product.image %>
+                  <% else %>
+                    <p>No image available</p>
+                  <% end %> 
+              </div> 
+
+              <p>brand name: <%= product.brand_name %></p>
+              <p>product name: <%= product.name %></p>
+              <p>variations: <%= product.variants.count %></p>
             </li>
           <% end %>
         </ul>
-    <%= link_to 'Create a New Product', new_product_path %>
+      </table>
+      <%= link_to 'Create a New Product', new_product_path %>
     </div>
   </div>
 </div>

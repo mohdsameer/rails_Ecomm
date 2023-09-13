@@ -23,13 +23,13 @@ puts "#{designer_user.name} created" if designer_user.present?
 #creating product
 for i in 0..1 do
 	puts "Creating a product"
-	product = Product.create(brand_name: "brand #{i+1}", name: "product #{i+1}", variations: 2, color: "Red", size: "20oZ", Real_variant_SKU: 827381723, print_area_width: 75, print_area_height: 75)
+	product = Product.create(brand_name: "brand #{i+1}", name: "product #{i+1}", color: "Red", size: "20oZ", Real_variant_SKU: 827381723, print_area_width: 75, print_area_height: 75)
 	puts "product created"
 end
 
 #creating variants
 Product.all.each do |product|
 	puts "Creating variants"
-	variant = product.variants.create!(specification: [{"colour":"red", "size":"20oz", "SKU":827381723, "inventory":0 , "product_length": 5, "product_height": 5, "product_width": 5, "product_weight":2.5, unit: "lb/oz"}])
+	variant = product.variants.create!(color: "Red", size: 20, Real_variant_SKU: 827381723, specification: [{"colour":"red", "size":"20oz", "SKU":827381723, "inventory":0 , "product_length": 5, "product_height": 5, "product_width": 5, "product_weight":2.5, unit: "lb/oz"}])
 	puts "variant created"
 end
