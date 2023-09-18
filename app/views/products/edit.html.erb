@@ -1,0 +1,51 @@
+<%= render partial: 'shared/sidebar' %>
+  <div class="col-md-9">
+    <h1>Edit Product</h1>
+
+    <%= form_for @product, url: product_path(@product), method: :patch, html: { multipart: true } do |f| %>
+      <div class="form-control">
+        <%= f.label :image %>
+        <%= f.file_field :image %>
+      </div>
+
+      <div class="form-control">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+
+      <div class="form-control">
+        <%= f.label :brand_name %>
+        <%= f.text_field :brand_name %>
+      </div>
+
+      <h1>variant</h1>
+      <div id="variations">
+        <% @variants.each do |variant| %>
+          <%= f.fields_for :variants, variant do |variation_form| %>
+            <%= render 'variant_fields', f: variation_form %>
+          <% end %>
+          <%= link_to 'Remove Variant', remove_variant_product_path(variant), method: :delete, class: 'btn btn-danger' %>
+        <% end %>
+        <div class="links">
+          <%= link_to_add_association '+ Add Variants', f, :variants, class: 'add-variant btn btn-primary' %>
+        </div>
+      </div>
+
+      <h1>Product Print Area</h1>
+      <div class="form-control">
+        <%= f.label :print_area_width %>
+        <%= f.text_field :print_area_width %>
+      </div>
+
+      <div class="form-control">
+        <%= f.label :print_area_height %>
+        <%= f.text_field :print_area_height %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit 'Update Product' ,class: "btn btn-primary" %>
+        <%= link_to 'Cancel', dashboard_index_path, class: 'btn btn-secondary' %>
+      </div>
+    <% end %>
+  </div>
+</div>

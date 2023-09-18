@@ -21,7 +21,7 @@
 
     <!-- Variations (nested) -->
     <h1>Variations</h1>
-    <div id="variants">
+    <div id="variants" data-controller="variants">
       <%= f.fields_for :variants do |variation_form| %>
         <%= render 'variant_fields', f: variation_form %>
       <% end %>
