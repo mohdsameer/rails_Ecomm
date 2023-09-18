@@ -6,6 +6,7 @@ class CreateVariants < ActiveRecord::Migration[7.0]
       t.string  :color
       t.integer   :size
       t.integer :Real_variant_SKU
+      t.integer :inventory
       
       t.timestamps
     end

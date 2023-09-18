@@ -1,5 +1,10 @@
 <div class="nested-fields">
   <div class="form-control">
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+  </div>
+  
+  <div class="form-control">
     <%= f.label :color %>
     <%= f.text_field :color %>
   </div>
@@ -13,4 +18,9 @@
     <%= f.label :Real_variant_SKU %>
     <%= f.text_field :Real_variant_SKU %>
   </div>
+
+  <div class="form-control">
+    <%= f.label :inventory %>
+    <%= f.text_field :inventory %>
+  </div> 
 </div>

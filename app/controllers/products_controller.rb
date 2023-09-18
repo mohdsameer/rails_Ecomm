@@ -36,6 +36,6 @@ end
   private
 
   def product_params
-    params.require(:product).permit(:name, :brand_name, :color, :size, :Real_variant_SKU, :print_area_width, :print_area_height, :image, variants_attributes: [:color, :size, :Real_variant_SKU])
+    params.require(:product).permit(:name, :brand_name, :color, :size, :Real_variant_SKU, :print_area_width, :print_area_height, :image, variants_attributes: [:color, :size, :Real_variant_SKU, :image, :inventory])
   end
 end

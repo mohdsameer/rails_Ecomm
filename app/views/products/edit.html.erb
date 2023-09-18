@@ -22,7 +22,7 @@
       <div id="variations">
         <% @variants.each do |variant| %>
           <%= f.fields_for :variants, variant do |variation_form| %>
-            <%= render 'variant_fields', f: variation_form %>
+            <%= render 'variant_show', f: variation_form %>
           <% end %>
           <%= link_to 'Remove Variant', remove_variant_product_path(variant), method: :delete, class: 'btn btn-danger' %>
         <% end %>
