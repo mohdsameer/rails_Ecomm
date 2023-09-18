@@ -1,7 +1,7 @@
 # Destroy all existing records
 User.destroy_all
 Product.destroy_all
-
+Variant.destroy_all
 # Creating a Admin User
 puts "Creating a Admin User"
 admin_user     = Admin.create!(name: 'Admin User', email: 'adminuser@gmail.com', password: 'password')
@@ -30,6 +30,6 @@ end
 #creating variants
 Product.all.each do |product|
 	puts "Creating variants"
-	variant = product.variants.create!(color: "Red", size: 20, Real_variant_SKU: 827381723, specification: [{"colour":"red", "size":"20oz", "SKU":827381723, "inventory":0 , "product_length": 5, "product_height": 5, "product_width": 5, "product_weight":2.5, unit: "lb/oz"}])
+	variant = product.variants.create!(color: "Red", size: 20, Real_variant_SKU: 827381723, inventory: 10, specification: [{"product_length": 5, "product_height": 5, "product_width": 5, "product_weight":2.5, unit: "lb/oz"}])
 	puts "variant created"
 end

@@ -33,8 +33,8 @@
       <%= image_tag("LOGOCUSTOM.png", class:"sidebar_logo") %>
       <div class="sidebar_head">
         <div class="sidebar_text">
-          <p class="dark_head">Hudson Alvarez</p>
-          <p class="light_head">Admin</p>
+          <p class="dark_head"><%= current_user&.name %></p>
+          <p class="light_head"><%= current_user&.type %></p>
         </div>
       </div>
       <div class="list_wrapper">
