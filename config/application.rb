@@ -16,6 +16,8 @@ module RailsEcomm
       require "dotenv"
       Dotenv.load(".env")
     end
+    
+    config.middleware.use ActionDispatch::Flash
 
     # Configuration for the application, engines, and railties goes here.
     #
