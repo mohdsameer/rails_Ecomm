@@ -1,51 +1,290 @@
-<%= render partial: 'shared/sidebar' %>
-<div class="col-md-9">
-  <h1>Create a new product</h1>
-  <%= form_for @product, html: { multipart: true } do |f| %>
+<div class="hero_wrapper">
 
-    <!-- Product fields -->
-    <div class="form-control">
-      <%= f.label :image %>
-      <%= f.file_field :image %>
+  <%= render partial: 'shared/sidebar' %>
+  <div class="new_product_wrap">
+    <div class="product_header">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M14.425 13.25L17.2583 16.075C17.4161 16.2315 17.5048 16.4445 17.5048 16.6667C17.5048 16.8889 17.4161 17.1019 17.2583 17.2583C17.1019 17.4161 16.8889 17.5048 16.6667 17.5048C16.4445 17.5048 16.2315 17.4161 16.075 17.2583L13.25 14.425C12.0854 15.3392 10.6472 15.8352 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667C15.8352 10.6472 15.3392 12.0854 14.425 13.25ZM9.16667 4.16667C6.40524 4.16667 4.16667 6.40524 4.16667 9.16667C4.16667 11.9281 6.40524 14.1667 9.16667 14.1667C11.9281 14.1667 14.1667 11.9281 14.1667 9.16667C14.1667 6.40524 11.9281 4.16667 9.16667 4.16667Z" fill="#637381"/>
+      </svg>
+      <div class="icon_group">
+        <div class="flag"><%= image_tag("GB") %></div>
+        <div class="create_bell_box">
+          <%= image_tag("ic_notifications", class:"create_bell_icon") %>
+          <div class="create_notification">
+            <p class="notification_text">1</p>
+          </div>
+        </div>
+        <%= image_tag("ic_user_group") %>
+        <%= image_tag("Img_Avatar", class: "user_icon") %>
+      </div>
+    </div>
+    <h5 class="new_head">Create a new product</h5>
+
+    <div class="export_btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M3.33301 15.8333C3.33301 15.3731 3.7061 15 4.16634 15H15.833C16.2932 15 16.6663 15.3731 16.6663 15.8333C16.6663 16.2936 16.2932 16.6667 15.833 16.6667H4.16634C3.7061 16.6667 3.33301 16.2936 3.33301 15.8333Z" fill="white"/>
+        <path d="M4.16634 16.6667C3.7061 16.6667 3.33301 16.2936 3.33301 15.8333V14.1667C3.33301 13.7064 3.7061 13.3333 4.16634 13.3333C4.62658 13.3333 4.99967 13.7064 4.99967 14.1667V15.8333C4.99967 16.2936 4.62658 16.6667 4.16634 16.6667Z" fill="white"/>
+        <path d="M15.833 16.6667C15.3728 16.6667 14.9997 16.2936 14.9997 15.8333V14.1667C14.9997 13.7064 15.3728 13.3333 15.833 13.3333C16.2932 13.3333 16.6663 13.7064 16.6663 14.1667V15.8333C16.6663 16.2936 16.2932 16.6667 15.833 16.6667Z" fill="white"/>
+        <path d="M9.99967 12.5C9.82691 12.5013 9.65801 12.4489 9.51634 12.35L6.18301 10C5.809 9.73468 5.71962 9.21704 5.98301 8.84167C6.11057 8.65963 6.30557 8.53609 6.52466 8.49854C6.74375 8.46098 6.96876 8.51251 7.14967 8.64167L9.99967 10.6333L12.833 8.5C13.2012 8.22386 13.7235 8.29848 13.9997 8.66667C14.2758 9.03486 14.2012 9.55719 13.833 9.83333L10.4997 12.3333C10.3554 12.4415 10.18 12.5 9.99967 12.5Z" fill="white"/>
+        <path d="M9.99967 10.8333C9.53944 10.8333 9.16634 10.4602 9.16634 10V3.33333C9.16634 2.8731 9.53944 2.5 9.99967 2.5C10.4599 2.5 10.833 2.8731 10.833 3.33333V10C10.833 10.4602 10.4599 10.8333 9.99967 10.8333Z" fill="white"/>
+      </svg>
+      <div class="btn_text">CSV. Export</div>
     </div>
 
-    <div class="form-control">
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-    </div>
-
-    <div class="form-control">
-      <%= f.label :brand_name %>
-      <%= f.text_field :brand_name %>
-    </div>
-
-    <!-- Variations (nested) -->
-    <h1>Variations</h1>
-    <div id="variants" data-controller="variants">
-      <%= f.fields_for :variants do |variation_form| %>
-        <%= render 'variant_fields', f: variation_form %>
-      <% end %>
-      <div class="links">
-        <%= link_to_add_association '+ Add variants', f, :variants, class: 'btn btn-primary' %>
+    <div class="group_info_section">
+      <div class="image_info">
+        <%= image_tag("illustration_upload", class:"info_img") %>
+        <div class="info_content">
+          <h5 class="info_head">Main Product Image</h5>
+          <a class="info_link" href="#">Drop files here or click <span>browse</span> thorough your machine</a>
+        </div>
+      </div>
+      <div class="right_info_content">
+        <div class="right_item">
+          <label>Product Name</label>
+          <input class="item_text" type="text" placeholder="20 oz YETI Tumbler">
+        </div>
+        <div class="right_item">
+          <label>Brand Name</label>
+          <input class="item_text" type="text" placeholder="Brand Name">
+        </div>
       </div>
     </div>
 
-    <!-- Product print area fields -->
-    <h1>Product Print Area</h1>
-    <div class="form-control">
-      <%= f.label :print_area_width %>
-      <%= f.text_field :print_area_width %>
+    <div class="producers_section">
+      <h5 class="producers_head">Producers</h5>
+
+      <table class="producers_table">
+        <tr>
+          <th class="table_head"> Producer Company Name</th>
+          <th class="table_head">Producer Location</th>
+          <th class="table_head">Blank Price</th>
+          <th class="table_head">Front Side Print Price</th>
+          <th class="table_head">Back Side Print Price</th>
+          <th class="table_head">  </th>
+          <th class="table_head">Edit Pricing</th>
+        </tr>
+        <tr>
+          <td class="table_td" >Alimentari</td>
+          <td class="table_td" >Giovanni</td>
+          <td class="table_td" >Italy</td>
+          <td class="table_td" >Magazzini</td>
+          <td class="table_td" >Giovanni</td>
+          <td class="table_td" >Italy</td>
+          <td class="table_td" >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8836 3.83273L16.1669 6.11606C16.8052 6.7242 16.8313 7.73411 16.2253 8.3744L8.72525 15.8744C8.45361 16.1438 8.09758 16.3115 7.71692 16.3494L4.24192 16.6661H4.16692C3.94542 16.6673 3.73252 16.5804 3.57525 16.4244C3.39945 16.2492 3.31086 16.0048 3.33358 15.7577L3.69192 12.2827C3.72984 11.9021 3.89756 11.546 4.16692 11.2744L11.6669 3.7744C12.3134 3.22819 13.2667 3.25327 13.8836 3.83273ZM11.1003 6.66606L13.3336 8.8994L15.0003 7.2744L12.7253 4.9994L11.1003 6.66606Z" fill="#212B36"/>
+            </svg>
+          </td>
+        </tr>
+        <tr>
+          <td class="table_td" >Alimentari</td>
+          <td class="table_td" >Giovanni</td>
+          <td class="table_td" >Italy</td>
+          <td class="table_td" >Magazzini</td>
+          <td class="table_td" >Giovanni</td>
+          <td class="table_td" >Italy</td>
+          <td class="table_td" >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8836 3.83273L16.1669 6.11606C16.8052 6.7242 16.8313 7.73411 16.2253 8.3744L8.72525 15.8744C8.45361 16.1438 8.09758 16.3115 7.71692 16.3494L4.24192 16.6661H4.16692C3.94542 16.6673 3.73252 16.5804 3.57525 16.4244C3.39945 16.2492 3.31086 16.0048 3.33358 15.7577L3.69192 12.2827C3.72984 11.9021 3.89756 11.546 4.16692 11.2744L11.6669 3.7744C12.3134 3.22819 13.2667 3.25327 13.8836 3.83273ZM11.1003 6.66606L13.3336 8.8994L15.0003 7.2744L12.7253 4.9994L11.1003 6.66606Z" fill="#212B36"/>
+            </svg>
+          </td>
+        </tr>
+      </table>
     </div>
 
-    <div class="form-control">
-      <%= f.label :print_area_height %>
-      <%= f.text_field :print_area_height %>
+    <div class="variations_section">
+      <h5 class="variantions_head">Variations</h5>
+      <table class="variatins_table table ">
+        <thead class="w-100">
+          <tr>
+            <th class="table_head" style="border-top-left-radius: 18px;" >Image</th>
+            <th class="table_head">Color</th>
+            <th class="table_head">Size</th>
+            <th class="table_head">SKU</th>
+            <th class="table_head">Dimensions</th>
+            <th class="table_head w-75 border-0" style="border-top-right-radius: 18px;">Inventory</th>
+          </tr>
+        <thead>
+        <tbody class="w-100">
+          <tr>
+            <td class="table_td py-2 px-3">
+              <%= image_tag("IMG") %>
+            </td>
+            <td class="table_td">Black</td>
+            <td class="table_td">20 oz</td>
+            <td class="table_td">827381723</td>
+            <td class="table_td">
+              <div class="dimension_btn" style="width: 124px; padding: 6px 3px;"  >
+                <span>Edit Dimension</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 12L18.59 10.59L13 16.17V4H11V16.17L5.42 10.58L4 12L12 20L20 12Z" fill="white"/>
+                </svg>
+              </div>
+            </td>
+            <td class="table_td w-75">0</td>
+            <td class="table_td">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M11.6663 10C11.6663 10.9205 10.9201 11.6667 9.99967 11.6667C9.0792 11.6667 8.33301 10.9205 8.33301 10C8.33301 9.07953 9.0792 8.33333 9.99967 8.33333C10.9201 8.33333 11.6663 9.07953 11.6663 10Z" fill="#637381"/>
+                <path d="M11.6663 4.16667C11.6663 5.08714 10.9201 5.83333 9.99967 5.83333C9.0792 5.83333 8.33301 5.08714 8.33301 4.16667C8.33301 3.24619 9.0792 2.5 9.99967 2.5C10.9201 2.5 11.6663 3.24619 11.6663 4.16667Z" fill="#637381"/>
+                <path d="M11.6663 15.8333C11.6663 16.7538 10.9201 17.5 9.99967 17.5C9.0792 17.5 8.33301 16.7538 8.33301 15.8333C8.33301 14.9129 9.0792 14.1667 9.99967 14.1667C10.9201 14.1667 11.6663 14.9129 11.6663 15.8333Z" fill="#637381"/>
+              </svg>
+            </td>
+          </tr>
+          <tr>
+            <td class="table_td py-2 px-3">
+              <%= image_tag("IMG") %>
+            </td>
+            <td class="table_td">White</td>
+            <td class="table_td">20 oz</td>
+            <td class="table_td">827381723</td>
+            <td class="table_td">
+              <div class="dimension_btn light" style="width: 124px; padding: 6px 3px;"  >
+                <span>Edit Dimension</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 12L5.41 13.41L11 7.83L11 20L13 20L13 7.83L18.58 13.42L20 12L12 4L4 12Z" fill="white"/>
+                </svg>
+              </div>
+            </td>
+            <td class="table_td">0</td>
+            <td class="table_td">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M11.6663 10C11.6663 10.9205 10.9201 11.6667 9.99967 11.6667C9.0792 11.6667 8.33301 10.9205 8.33301 10C8.33301 9.07953 9.0792 8.33333 9.99967 8.33333C10.9201 8.33333 11.6663 9.07953 11.6663 10Z" fill="#637381"/>
+                <path d="M11.6663 4.16667C11.6663 5.08714 10.9201 5.83333 9.99967 5.83333C9.0792 5.83333 8.33301 5.08714 8.33301 4.16667C8.33301 3.24619 9.0792 2.5 9.99967 2.5C10.9201 2.5 11.6663 3.24619 11.6663 4.16667Z" fill="#637381"/>
+                <path d="M11.6663 15.8333C11.6663 16.7538 10.9201 17.5 9.99967 17.5C9.0792 17.5 8.33301 16.7538 8.33301 15.8333C8.33301 14.9129 9.0792 14.1667 9.99967 14.1667C10.9201 14.1667 11.6663 14.9129 11.6663 15.8333Z" fill="#637381"/>
+              </svg>
+            </td>
+          </tr>
+        <tbody>
+        <tfoot class="w-100">
+          <tr>
+            <td class="purpul_row rounded-0 first">
+            <div class="t_text">Product Length</div></td>
+            <td class="purpul_row"><div class="t_text">Product Height</div></td>
+            <td class="purpul_row"><div class="t_text">Product Widht</div></td>
+            <td class="purpul_row"><div class="t_text">Product Weight</div></td>
+            <td class="purpul_row w-25"></td>
+            <td class="purpul_row w-25 rounded-0"><div class="t_text">Action</div></td>
+          </tr>
+          <tr>
+            <td class="table_footer">
+              <div class="foot_content">
+                <label>Length</label>
+                <span class="foot_text">in</span>
+                <span>5</span>
+              </div>
+            </td>
+            <td class="table_footer">
+              <div class="foot_content">
+                <label>Length</label>
+                <span class="foot_text">in</span>
+                <span>5</span>
+              </div>
+            </td>
+            <td class="table_footer">
+              <div class="foot_content">
+                <label>Length</label>
+                <span class="foot_text">in</span>
+                <span>5</span>
+              </div>
+            </td>
+            <td class="table_footer">
+              <div class="foot_content">
+                <label>Length</label>
+                <span class="foot_text">in</span>
+                <span>5</span>
+              </div>
+            </td>
+            <td class="table_footer">
+              <div class="foot_content">
+                <label>Length</label>
+                <span class="foot_text">in</span>
+                <span>5</span>
+              </div>
+            </td>
+            <td class="table_footer">
+              <div class="foot_content foot_btn">
+                <button>Confirm</button>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <button class="add_variation">
+        <svg class="add_icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+          <path d="M19.5 11H13.5V5C13.5 4.44772 13.0523 4 12.5 4C11.9477 4 11.5 4.44772 11.5 5V11H5.5C4.94772 11 4.5 11.4477 4.5 12C4.5 12.5523 4.94772 13 5.5 13H11.5V19C11.5 19.5523 11.9477 20 12.5 20C13.0523 20 13.5 19.5523 13.5 19V13H19.5C20.0523 13 20.5 12.5523 20.5 12C20.5 11.4477 20.0523 11 19.5 11Z" fill="white"/>
+        </svg>
+        <span class="add_head">Add Variation</span>
+      </button>
+
+      <div class="horizontal_line"></div>
+
+      <div class="save_variant_section">
+        <div class="group_info_section p-0">
+          <div class="image_info pt-3">
+            <%= image_tag("illustration_upload", class:"info_img") %>
+            <div class="info_content">
+              <h5 class="info_head">Variant Image</h5>
+              <a class="info_link" href="#">Drop files here or click <span>browse</span> thorough your machine</a>
+            </div>
+          </div>
+          <div class="right_info_content">
+            <div class="right_item">
+              <label>Color</label>
+              <input class="item_text" type="text">
+            </div>
+            <div class="right_item">
+              <label>Size</label>
+              <input class="item_text" type="text">
+            </div>
+            <div class="right_item">
+              <label>Real Variant SKU</label>
+              <input class="item_text" type="text">
+            </div>
+          </div>
+        </div>
+
+        <button class="save_variant_btn">Save Variant</button>
+      </div>
     </div>
 
-    <div class="actions">
-      <%= f.submit 'Save', class: "btn btn-primary" %>
-      <%= button_tag 'Cancel', class: "btn btn-secondary", type: "button", onclick: "window.location.href = '#{dashboard_index_path}'" %>
+    <div class="product_print_section">
+      <h5 class="print_head">Product Print Area</h5>
+      <table class="print_table">
+        <thead class="w-100">
+          <tr>
+            <th class="py-2 px-3 print_th">Print Area Width (mm) </th>
+            <th class="py-2 px-3 print_th">Print Area Height (mm)  </th>
+            <th class="py-2 px-3 print_th w-50"></th>
+            <th class="py-2 px-3 print_th">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="py-2 px-3 print_td">
+              <div class="foot_content">
+                <span>75</span>
+              </div>
+            </td>
+            <td class="py-2 px-3 print_td">
+              <div class="foot_content">
+                <span>75</span>
+              </div>
+            </td>
+            <td class="py-2 px-3 print_td">
+            </td>
+            <td class="text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8836 3.83273L16.1669 6.11606C16.8052 6.7242 16.8313 7.73411 16.2253 8.3744L8.72525 15.8744C8.45361 16.1438 8.09758 16.3115 7.71692 16.3494L4.24192 16.6661H4.16692C3.94542 16.6673 3.73252 16.5804 3.57525 16.4244C3.39945 16.2492 3.31086 16.0048 3.33358 15.7577L3.69192 12.2827C3.72984 11.9021 3.89756 11.546 4.16692 11.2744L11.6669 3.7744C12.3134 3.22819 13.2667 3.25327 13.8836 3.83273ZM11.1003 6.66606L13.3336 8.8994L15.0003 7.2744L12.7253 4.9994L11.1003 6.66606Z" fill="#212B36"/>
+              </svg>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-  <% end %>
+    <div class="bottom_btn_group">
+        <button class="cancel_btn">Cancel</button>
+        <button class="save_btn">Save</button>
+    </div>
 </div>
