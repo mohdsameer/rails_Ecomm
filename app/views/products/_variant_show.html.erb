@@ -1,0 +1,20 @@
+<div class="col-md-9">
+  <table class="table table-borderless">
+    <ul>
+      <% @variants.each do |variant| %>
+        <li>
+            <p> variant_image:</p> 
+              <% if variant.image.attached? %>
+                <%= image_tag variant.image %>
+              <% else %>
+                <%= image_tag asset_path('dummy-product.png') %>
+              <% end %> 
+          <p>color: <%= variant.color %></p>
+          <p>size: <%= variant.size %></p>
+          <p>Real_variant_SKU: <%= variant.Real_variant_SKU %></p>
+          <p>inventory: <%= variant.inventory %></p>
+        </li>
+      <% end %>
+    </ul>
+  </table>
+</div>

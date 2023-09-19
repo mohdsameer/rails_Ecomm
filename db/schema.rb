@@ -69,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_054647) do
     t.string "color"
     t.integer "size"
     t.integer "Real_variant_SKU"
+    t.integer "inventory"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
