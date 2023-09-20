@@ -10,7 +10,7 @@ puts "#{admin_user.name} created" if admin_user.present?
 # Creating a Evaluator User
 for i in 0..1 do
 	puts "Creating a producer User"
-	producer_user = Producer.create!(name: 'producer User', email: "prodceruser#{i+1}@gmail.com", password: 'password')
+	producer_user = Producer.create!(name: 'producer User', email: "prodceruser#{i+1}@gmail.com", password: 'password', company_name: "producer company#{i+1}", location: "IND", black_price: 0.5,front_side_print_price: 5.5, back_side_print_price: 5.5)
 	puts "#{producer_user.name} created" if producer_user.present?
 end
 

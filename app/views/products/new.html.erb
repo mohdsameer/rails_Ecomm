@@ -52,48 +52,35 @@
         </div>
       </div>
 
-    <!-- <div class="producers_section">
+    <div class="producers_section">
       <h5 class="producers_head">Producers</h5>
+        <table class="producers_table">
+          <tr>
+            <th class="table_head"> Producer Company Name</th>
+            <th class="table_head">Producer Location</th>
+            <th class="table_head">Blank Price</th>
+            <th class="table_head">Front Side Print Price</th>
+            <th class="table_head">Back Side Print Price</th>
+            <th class="table_head">  </th>
+            <!-- <th class="table_head">Edit Pricing</th> -->
+          </tr>
+          <% @producer.each do |producer| %>
+            <tr>
+              <td class="table_td" ><%= producer.company_name %></td>
+              <td class="table_td" ><%= producer.location %></td>
+              <td class="table_td" ><%= producer.black_price %></td>
+              <td class="table_td" ><%= producer.front_side_print_price %></td>
+              <td class="table_td" ><%= producer.back_side_print_price %></td>
+              <!-- <td class="table_td" >
 
-      <table class="producers_table">
-        <tr>
-          <th class="table_head"> Producer Company Name</th>
-          <th class="table_head">Producer Location</th>
-          <th class="table_head">Blank Price</th>
-          <th class="table_head">Front Side Print Price</th>
-          <th class="table_head">Back Side Print Price</th>
-          <th class="table_head">  </th>
-          <th class="table_head">Edit Pricing</th>
-        </tr>
-        <tr>
-          <td class="table_td" >Alimentari</td>
-          <td class="table_td" >Giovanni</td>
-          <td class="table_td" >Italy</td>
-          <td class="table_td" >Magazzini</td>
-          <td class="table_td" >Giovanni</td>
-          <td class="table_td" >Italy</td>
-          <td class="table_td" >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8836 3.83273L16.1669 6.11606C16.8052 6.7242 16.8313 7.73411 16.2253 8.3744L8.72525 15.8744C8.45361 16.1438 8.09758 16.3115 7.71692 16.3494L4.24192 16.6661H4.16692C3.94542 16.6673 3.73252 16.5804 3.57525 16.4244C3.39945 16.2492 3.31086 16.0048 3.33358 15.7577L3.69192 12.2827C3.72984 11.9021 3.89756 11.546 4.16692 11.2744L11.6669 3.7744C12.3134 3.22819 13.2667 3.25327 13.8836 3.83273ZM11.1003 6.66606L13.3336 8.8994L15.0003 7.2744L12.7253 4.9994L11.1003 6.66606Z" fill="#212B36"/>
-            </svg>
-          </td>
-        </tr>
-        <tr>
-          <td class="table_td" >Alimentari</td>
-          <td class="table_td" >Giovanni</td>
-          <td class="table_td" >Italy</td>
-          <td class="table_td" >Magazzini</td>
-          <td class="table_td" >Giovanni</td>
-          <td class="table_td" >Italy</td>
-          <td class="table_td" >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8836 3.83273L16.1669 6.11606C16.8052 6.7242 16.8313 7.73411 16.2253 8.3744L8.72525 15.8744C8.45361 16.1438 8.09758 16.3115 7.71692 16.3494L4.24192 16.6661H4.16692C3.94542 16.6673 3.73252 16.5804 3.57525 16.4244C3.39945 16.2492 3.31086 16.0048 3.33358 15.7577L3.69192 12.2827C3.72984 11.9021 3.89756 11.546 4.16692 11.2744L11.6669 3.7744C12.3134 3.22819 13.2667 3.25327 13.8836 3.83273ZM11.1003 6.66606L13.3336 8.8994L15.0003 7.2744L12.7253 4.9994L11.1003 6.66606Z" fill="#212B36"/>
-            </svg>
-          </td>
-        </tr>
-      </table>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8836 3.83273L16.1669 6.11606C16.8052 6.7242 16.8313 7.73411 16.2253 8.3744L8.72525 15.8744C8.45361 16.1438 8.09758 16.3115 7.71692 16.3494L4.24192 16.6661H4.16692C3.94542 16.6673 3.73252 16.5804 3.57525 16.4244C3.39945 16.2492 3.31086 16.0048 3.33358 15.7577L3.69192 12.2827C3.72984 11.9021 3.89756 11.546 4.16692 11.2744L11.6669 3.7744C12.3134 3.22819 13.2667 3.25327 13.8836 3.83273ZM11.1003 6.66606L13.3336 8.8994L15.0003 7.2744L12.7253 4.9994L11.1003 6.66606Z" fill="#212B36"/>
+                </svg>
+              </td> -->
+            </tr>
+          <% end %>
+        </table>
     </div>
- -->
     <div class="variations_section">
       <h5 class="variantions_head">Variations</h5>
       <!-- <table class="variatins_table table ">
