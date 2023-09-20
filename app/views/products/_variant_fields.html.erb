@@ -1,58 +1,29 @@
-<div class="save_variant_section">
+<div class="nested-fields save_variant_section">
   <div class="group_info_section p-0">
     <div class="image_info pt-3">
       <%= image_tag("illustration_upload", class:"info_img") %>
       <div class="info_content">
         <h5 class="info_head">Variant Image</h5>
+        <%= f.file_field :image, class:"file_type" %>
         <a class="info_link" href="#">Drop files here or click <span>browse</span> thorough your machine</a>
       </div>
     </div>
     <div class="right_info_content">
       <div class="right_item">
         <label>Color</label>
+        <%= f.text_field :color, class: "item_text" %>
         <input class="item_text" type="text">
       </div>
       <div class="right_item">
         <label>Size</label>
+        <%= f.text_field:size, class: "item_text" %>
         <input class="item_text" type="text">
       </div>
       <div class="right_item">
         <label>Real Variant SKU</label>
+        <%= f.text_field :Real_variant_SKU, class: "item_text" %>
         <input class="item_text" type="text">
       </div>
     </div>
   </div>
-
-  <button class="save_variant_btn">Save Variant</button>
-</div>
-
-
-
-
-
-<div class="nested-fields">
-  <div class="form-control">
-    <%= f.label :image %>
-    <%= f.file_field :image %>
-  </div>
-  
-  <div class="form-control">
-    <%= f.label :color %>
-    <%= f.text_field :color %>
-  </div>
-
-  <div class="form-control">
-    <%= f.label :size %>
-    <%= f.text_field:size %>
-  </div>
-
-  <div class="form-control">
-    <%= f.label :Real_variant_SKU %>
-    <%= f.text_field :Real_variant_SKU %>
-  </div>
-
-  <div class="form-control">
-    <%= f.label :inventory %>
-    <%= f.text_field :inventory %>
-  </div> 
 </div>

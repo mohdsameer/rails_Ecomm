@@ -7,5 +7,5 @@ export default class extends Controller {
     console.log('variants controller connected!')
     $('#variants').on('cocoon:after-insert', function(e, insertedItem) {
       });
-    });   
+    }); 
   }

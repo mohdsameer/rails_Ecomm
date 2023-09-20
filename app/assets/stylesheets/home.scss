@@ -904,6 +904,14 @@
           align-items: center;
           gap: 8px;
           align-self: stretch;
+          position: relative;
+
+          .file_type {
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+          }
 
           .info_head {
             color: #212B36;
@@ -1547,6 +1555,14 @@
               font-style: normal;
               font-weight: 400;
               line-height: 18px;
+
+                .foot_input {
+                  border: 0px;
+
+                  &:focus {
+                    outline: none;
+                  }
+                }
             }
           }
         }

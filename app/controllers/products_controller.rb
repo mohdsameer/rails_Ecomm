@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   def new
+    @producer = Producer.all
     @product = Product.new
   end
 
@@ -31,7 +32,7 @@ class ProductsController < ApplicationController
     else
       render :edit
     end
-end
+  end
 
   private
 
