@@ -71,7 +71,7 @@
           <td class="table_td" >Magazzini</td>
           <td class="table_td" >Giovanni</td>
           <td class="table_td" >Italy</td>
-          <td class="table_td" >
+          <td class="table_td edit_icon"  >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8836 3.83273L16.1669 6.11606C16.8052 6.7242 16.8313 7.73411 16.2253 8.3744L8.72525 15.8744C8.45361 16.1438 8.09758 16.3115 7.71692 16.3494L4.24192 16.6661H4.16692C3.94542 16.6673 3.73252 16.5804 3.57525 16.4244C3.39945 16.2492 3.31086 16.0048 3.33358 15.7577L3.69192 12.2827C3.72984 11.9021 3.89756 11.546 4.16692 11.2744L11.6669 3.7744C12.3134 3.22819 13.2667 3.25327 13.8836 3.83273ZM11.1003 6.66606L13.3336 8.8994L15.0003 7.2744L12.7253 4.9994L11.1003 6.66606Z" fill="#212B36"/>
             </svg>
@@ -84,13 +84,49 @@
           <td class="table_td" >Magazzini</td>
           <td class="table_td" >Giovanni</td>
           <td class="table_td" >Italy</td>
-          <td class="table_td" >
+          <td class="table_td edit_icon" >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8836 3.83273L16.1669 6.11606C16.8052 6.7242 16.8313 7.73411 16.2253 8.3744L8.72525 15.8744C8.45361 16.1438 8.09758 16.3115 7.71692 16.3494L4.24192 16.6661H4.16692C3.94542 16.6673 3.73252 16.5804 3.57525 16.4244C3.39945 16.2492 3.31086 16.0048 3.33358 15.7577L3.69192 12.2827C3.72984 11.9021 3.89756 11.546 4.16692 11.2744L11.6669 3.7744C12.3134 3.22819 13.2667 3.25327 13.8836 3.83273ZM11.1003 6.66606L13.3336 8.8994L15.0003 7.2744L12.7253 4.9994L11.1003 6.66606Z" fill="#212B36"/>
             </svg>
           </td>
         </tr>
       </table>
+
+      <!-- this is popup for edit producer -->
+
+      <div class="producer_card hide">
+        <h5 class="producer_head">Pricing (Production cost)</h5>
+        <div class="card_content">
+          <div class="card_items">
+            <p class="cart_text">Blank</p>
+            <div class="cost_wrap">
+              <label>Cost of Printing</label>
+              <span>$</span>
+              <input type="text" placeholder="0.50">
+            </div>
+          </div>
+          <div class="card_items">
+            <p class="cart_text">Blank</p>
+            <div class="cost_wrap">
+              <label>Cost of Printing</label>
+              <span>$</span>
+              <input type="text" placeholder="0.50">
+            </div>
+          </div>
+          <div class="card_items">
+            <p class="cart_text">Blank</p>
+            <div class="cost_wrap">
+              <label>Cost of Printing</label>
+              <span>$</span>
+              <input type="text" placeholder="0.50">
+            </div>
+          </div>
+        </div>
+        <div class="bottom_btn_group">
+          <button class="cancel_btn">Cancel</button>
+          <button class="save_btn">Save</button>
+        </div>
+      </div>
     </div>
 
     <div class="variations_section">
@@ -123,7 +159,7 @@
               </div>
             </td>
             <td class="table_td w-75">0</td>
-            <td class="table_td">
+            <td class="table_td icon_delete">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M11.6663 10C11.6663 10.9205 10.9201 11.6667 9.99967 11.6667C9.0792 11.6667 8.33301 10.9205 8.33301 10C8.33301 9.07953 9.0792 8.33333 9.99967 8.33333C10.9201 8.33333 11.6663 9.07953 11.6663 10Z" fill="#637381"/>
                 <path d="M11.6663 4.16667C11.6663 5.08714 10.9201 5.83333 9.99967 5.83333C9.0792 5.83333 8.33301 5.08714 8.33301 4.16667C8.33301 3.24619 9.0792 2.5 9.99967 2.5C10.9201 2.5 11.6663 3.24619 11.6663 4.16667Z" fill="#637381"/>
@@ -147,7 +183,7 @@
               </div>
             </td>
             <td class="table_td">0</td>
-            <td class="table_td">
+            <td class="table_td icon_delete">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M11.6663 10C11.6663 10.9205 10.9201 11.6667 9.99967 11.6667C9.0792 11.6667 8.33301 10.9205 8.33301 10C8.33301 9.07953 9.0792 8.33333 9.99967 8.33333C10.9201 8.33333 11.6663 9.07953 11.6663 10Z" fill="#637381"/>
                 <path d="M11.6663 4.16667C11.6663 5.08714 10.9201 5.83333 9.99967 5.83333C9.0792 5.83333 8.33301 5.08714 8.33301 4.16667C8.33301 3.24619 9.0792 2.5 9.99967 2.5C10.9201 2.5 11.6663 3.24619 11.6663 4.16667Z" fill="#637381"/>
@@ -210,6 +246,20 @@
           </tr>
         </tfoot>
       </table>
+      <div class="delete_variation hide">
+        <div class="icon_wrap">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M21 5.99943H16V4.32943C15.9765 3.68924 15.7002 3.08448 15.2316 2.64772C14.7629 2.21095 14.1402 1.97782 13.5 1.99943H10.5C9.85975 1.97782 9.23706 2.21095 8.76843 2.64772C8.2998 3.08448 8.02346 3.68924 8 4.32943V5.99943H3C2.73478 5.99943 2.48043 6.10478 2.29289 6.29232C2.10536 6.47986 2 6.73421 2 6.99943C2 7.26464 2.10536 7.519 2.29289 7.70653C2.48043 7.89407 2.73478 7.99943 3 7.99943H4V18.9994C4 19.7951 4.31607 20.5581 4.87868 21.1207C5.44129 21.6834 6.20435 21.9994 7 21.9994H17C17.7956 21.9994 18.5587 21.6834 19.1213 21.1207C19.6839 20.5581 20 19.7951 20 18.9994V7.99943H21C21.2652 7.99943 21.5196 7.89407 21.7071 7.70653C21.8946 7.519 22 7.26464 22 6.99943C22 6.73421 21.8946 6.47986 21.7071 6.29232C21.5196 6.10478 21.2652 5.99943 21 5.99943ZM10 4.32943C10 4.16943 10.21 3.99943 10.5 3.99943H13.5C13.79 3.99943 14 4.16943 14 4.32943V5.99943H10V4.32943ZM18 18.9994C18 19.2646 17.8946 19.519 17.7071 19.7065C17.5196 19.8941 17.2652 19.9994 17 19.9994H7C6.73478 19.9994 6.48043 19.8941 6.29289 19.7065C6.10536 19.519 6 19.2646 6 18.9994V7.99943H18V18.9994Z" fill="#212B36"/>
+            <path d="M9 16.9994C9.26522 16.9994 9.51957 16.8941 9.70711 16.7065C9.89464 16.519 10 16.2646 10 15.9994V11.9994C10 11.7342 9.89464 11.4799 9.70711 11.2923C9.51957 11.1048 9.26522 10.9994 9 10.9994C8.73478 10.9994 8.48043 11.1048 8.29289 11.2923C8.10536 11.4799 8 11.7342 8 11.9994V15.9994C8 16.2646 8.10536 16.519 8.29289 16.7065C8.48043 16.8941 8.73478 16.9994 9 16.9994Z" fill="#212B36"/>
+            <path d="M15 16.9994C15.2652 16.9994 15.5196 16.8941 15.7071 16.7065C15.8946 16.519 16 16.2646 16 15.9994V11.9994C16 11.7342 15.8946 11.4799 15.7071 11.2923C15.5196 11.1048 15.2652 10.9994 15 10.9994C14.7348 10.9994 14.4804 11.1048 14.2929 11.2923C14.1054 11.4799 14 11.7342 14 11.9994V15.9994C14 16.2646 14.1054 16.519 14.2929 16.7065C14.4804 16.8941 14.7348 16.9994 15 16.9994Z" fill="#212B36"/>
+          </svg>
+          <h5 class="icon_text">Delete Variation?</h5>
+        </div>
+        <div class="delete_btn_wrap">
+          <button class="delete_btn">Delete</button>
+          <button class="cancel_btn">Cancel</button>
+        </div>
+      </div>
       <button class="add_variation">
         <svg class="add_icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
           <path d="M19.5 11H13.5V5C13.5 4.44772 13.0523 4 12.5 4C11.9477 4 11.5 4.44772 11.5 5V11H5.5C4.94772 11 4.5 11.4477 4.5 12C4.5 12.5523 4.94772 13 5.5 13H11.5V19C11.5 19.5523 11.9477 20 12.5 20C13.0523 20 13.5 19.5523 13.5 19V13H19.5C20.0523 13 20.5 12.5523 20.5 12C20.5 11.4477 20.0523 11 19.5 11Z" fill="white"/>
@@ -287,4 +337,19 @@
         <button class="cancel_btn">Cancel</button>
         <button class="save_btn">Save</button>
     </div>
+  </div>
 </div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".edit_icon").click(function(){
+      $(".producer_card").toggleClass("hide")  
+    })
+
+    $(".icon_delete").click(function(){
+      $(".delete_variation").toggleClass("hide")  
+    })
+  })
+
+</script>
