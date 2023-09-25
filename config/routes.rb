@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'dashboard/index'
   resources :products, only: [:new, :create,:edit, :update] do
      delete 'remove_variant', on: :member
+     get 'edit_producer', on: :member
+     patch 'update_producer', on: :member
   end
 
 # Etsy routes

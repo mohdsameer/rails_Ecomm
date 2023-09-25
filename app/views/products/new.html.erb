@@ -63,14 +63,17 @@
             <th class="table_head">Back Side Print Price</th>
             <th class="table_head">  </th>
             <!-- <th class="table_head">Edit Pricing</th> -->
-          </tr>
-          <% @producer.each do |producer| %>
-            <tr>
-              <td class="table_td" ><%= producer.company_name %></td>
-              <td class="table_td" ><%= producer.location %></td>
-              <td class="table_td" ><%= producer.black_price %></td>
-              <td class="table_td" ><%= producer.front_side_print_price %></td>
-              <td class="table_td" ><%= producer.back_side_print_price %></td>
+         </tr>
+            <% @producers.each do |producer| %>
+              <tr>
+                <td class="table_td"><%= producer.company_name %></td>
+                <td class="table_td"><%= producer.location %></td>
+                <td class="table_td" ><%= @product_producer_pricing.set_default_price %></td>
+                <td class="table_td" ><%= @product_producer_pricing.set_default_price %></td>
+                <td class="table_td" ><%= @product_producer_pricing.set_default_price %></td>
+              </tr>
+            <% end %>
+
               <!-- <td class="table_td" >
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -78,7 +81,6 @@
                 </svg>
               </td> -->
             </tr>
-          <% end %>
         </table>
     </div>
     <div class="variations_section">
