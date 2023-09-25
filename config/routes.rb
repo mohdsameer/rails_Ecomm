@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'orders/index'
 # Defines the root path route ("/")
   get 'dashboard/index'
   resources :products, only: [:new, :create,:edit, :update] do
