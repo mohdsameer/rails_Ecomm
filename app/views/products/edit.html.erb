@@ -106,107 +106,107 @@
             <th class="table_head w-75 border-0" style="border-top-right-radius: 18px;">Inventory</th>
           </tr>
         <thead>
-        <% @variants.each do |variant| %>
-        <tbody class="w-100">
-          <tr>
-            <td class="table_td py-2 px-3">
-              <% if variant.image.attached? %>
-                <%= image_tag variant.image %>
-              <% else %>
-                <%= image_tag asset_path('dummy-product.png') %>
-              <% end %> 
-            </td>
-            <td class="table_td"><%= variant.color %></td>
-            <td class="table_td"><%= variant.size %></td>
-            <td class="table_td"><%= variant.Real_variant_SKU %></td>
-            <td class="table_td">
-              <div class="dimension_btn" style="width: 124px; padding: 6px 3px;"  >
-                <span>Edit Dimension</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 12L18.59 10.59L13 16.17V4H11V16.17L5.42 10.58L4 12L12 20L20 12Z" fill="white"/>
+        <tbody class="w-100" data-controller="variants">
+          <% @variants.each do |variant| %>
+          
+            <tr>
+              <td class="table_td py-2 px-3">
+                <% if variant.image.attached? %>
+                  <%= image_tag variant.image %>
+                <% else %>
+                  <%= image_tag asset_path('dummy-product.png') %>
+                <% end %> 
+              </td>
+              <td class="table_td"><%= variant.color %></td>
+              <td class="table_td"><%= variant.size %></td>
+              <td class="table_td"><%= variant.Real_variant_SKU %></td>
+              <td class="table_td">
+                <button type="button" data-variants-target="editDimension" data-variant-id="<%= variant.id %>" class="dimension_btn icon_change" style="width: 124px; padding: 6px 3px;">
+                  <span>Edit Dimension</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 12L18.59 10.59L13 16.17V4H11V16.17L5.42 10.58L4 12L12 20L20 12Z" fill="white"/>
+                  </svg>
+                </button>
+              </td>
+              <td class="table_td w-75"><%= variant.inventory %></td>
+              <td class="table_td icon_delete">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M11.6663 10C11.6663 10.9205 10.9201 11.6667 9.99967 11.6667C9.0792 11.6667 8.33301 10.9205 8.33301 10C8.33301 9.07953 9.0792 8.33333 9.99967 8.33333C10.9201 8.33333 11.6663 9.07953 11.6663 10Z" fill="#637381"/>
+                  <path d="M11.6663 4.16667C11.6663 5.08714 10.9201 5.83333 9.99967 5.83333C9.0792 5.83333 8.33301 5.08714 8.33301 4.16667C8.33301 3.24619 9.0792 2.5 9.99967 2.5C10.9201 2.5 11.6663 3.24619 11.6663 4.16667Z" fill="#637381"/>
+                  <path d="M11.6663 15.8333C11.6663 16.7538 10.9201 17.5 9.99967 17.5C9.0792 17.5 8.33301 16.7538 8.33301 15.8333C8.33301 14.9129 9.0792 14.1667 9.99967 14.1667C10.9201 14.1667 11.6663 14.9129 11.6663 15.8333Z" fill="#637381"/>
                 </svg>
-              </div>
-            </td>
-            <td class="table_td w-75"><%= variant.inventory %></td>
-            <td class="table_td icon_delete">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M11.6663 10C11.6663 10.9205 10.9201 11.6667 9.99967 11.6667C9.0792 11.6667 8.33301 10.9205 8.33301 10C8.33301 9.07953 9.0792 8.33333 9.99967 8.33333C10.9201 8.33333 11.6663 9.07953 11.6663 10Z" fill="#637381"/>
-                <path d="M11.6663 4.16667C11.6663 5.08714 10.9201 5.83333 9.99967 5.83333C9.0792 5.83333 8.33301 5.08714 8.33301 4.16667C8.33301 3.24619 9.0792 2.5 9.99967 2.5C10.9201 2.5 11.6663 3.24619 11.6663 4.16667Z" fill="#637381"/>
-                <path d="M11.6663 15.8333C11.6663 16.7538 10.9201 17.5 9.99967 17.5C9.0792 17.5 8.33301 16.7538 8.33301 15.8333C8.33301 14.9129 9.0792 14.1667 9.99967 14.1667C10.9201 14.1667 11.6663 14.9129 11.6663 15.8333Z" fill="#637381"/>
-              </svg>
-            </td>
-          </tr>
-        <tbody>
-        <div class="delete_variation hide">
-          <div class="icon_wrap">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M21 5.99943H16V4.32943C15.9765 3.68924 15.7002 3.08448 15.2316 2.64772C14.7629 2.21095 14.1402 1.97782 13.5 1.99943H10.5C9.85975 1.97782 9.23706 2.21095 8.76843 2.64772C8.2998 3.08448 8.02346 3.68924 8 4.32943V5.99943H3C2.73478 5.99943 2.48043 6.10478 2.29289 6.29232C2.10536 6.47986 2 6.73421 2 6.99943C2 7.26464 2.10536 7.519 2.29289 7.70653C2.48043 7.89407 2.73478 7.99943 3 7.99943H4V18.9994C4 19.7951 4.31607 20.5581 4.87868 21.1207C5.44129 21.6834 6.20435 21.9994 7 21.9994H17C17.7956 21.9994 18.5587 21.6834 19.1213 21.1207C19.6839 20.5581 20 19.7951 20 18.9994V7.99943H21C21.2652 7.99943 21.5196 7.89407 21.7071 7.70653C21.8946 7.519 22 7.26464 22 6.99943C22 6.73421 21.8946 6.47986 21.7071 6.29232C21.5196 6.10478 21.2652 5.99943 21 5.99943ZM10 4.32943C10 4.16943 10.21 3.99943 10.5 3.99943H13.5C13.79 3.99943 14 4.16943 14 4.32943V5.99943H10V4.32943ZM18 18.9994C18 19.2646 17.8946 19.519 17.7071 19.7065C17.5196 19.8941 17.2652 19.9994 17 19.9994H7C6.73478 19.9994 6.48043 19.8941 6.29289 19.7065C6.10536 19.519 6 19.2646 6 18.9994V7.99943H18V18.9994Z" fill="#212B36"/>
-              <path d="M9 16.9994C9.26522 16.9994 9.51957 16.8941 9.70711 16.7065C9.89464 16.519 10 16.2646 10 15.9994V11.9994C10 11.7342 9.89464 11.4799 9.70711 11.2923C9.51957 11.1048 9.26522 10.9994 9 10.9994C8.73478 10.9994 8.48043 11.1048 8.29289 11.2923C8.10536 11.4799 8 11.7342 8 11.9994V15.9994C8 16.2646 8.10536 16.519 8.29289 16.7065C8.48043 16.8941 8.73478 16.9994 9 16.9994Z" fill="#212B36"/>
-              <path d="M15 16.9994C15.2652 16.9994 15.5196 16.8941 15.7071 16.7065C15.8946 16.519 16 16.2646 16 15.9994V11.9994C16 11.7342 15.8946 11.4799 15.7071 11.2923C15.5196 11.1048 15.2652 10.9994 15 10.9994C14.7348 10.9994 14.4804 11.1048 14.2929 11.2923C14.1054 11.4799 14 11.7342 14 11.9994V15.9994C14 16.2646 14.1054 16.519 14.2929 16.7065C14.4804 16.8941 14.7348 16.9994 15 16.9994Z" fill="#212B36"/>
-            </svg>
-            <h5 class="icon_text">Delete Variation?</h5>
-          </div>
-          <div class="delete_btn_wrap">
-            <%= link_to 'Delete', remove_variant_product_path(variant), method: :delete, class:"delete_btn"%>
-            <%= link_to 'Cancel', edit_product_path(@product), class: 'cancel_btn' %>
-          </div>
-        </div>
-        <%end%>
-<!--         <tfoot class="w-100">
-          <tr>
-            <td class="purpul_row rounded-0 first">
-            <div class="t_text">Product Length</div></td>
-            <td class="purpul_row"><div class="t_text">Product Height</div></td>
-            <td class="purpul_row"><div class="t_text">Product Widht</div></td>
-            <td class="purpul_row"><div class="t_text">Product Weight</div></td>
-            <td class="purpul_row w-25"></td>
-            <td class="purpul_row w-25 rounded-0"><div class="t_text">Action</div></td>
-          </tr>
-          <tr>
-            <td class="table_footer">
-              <div class="foot_content">
-                <label>Length</label>
-                <span class="foot_text">in</span>
-                <span>5</span>
-              </div>
-            </td>
-            <td class="table_footer">
-              <div class="foot_content">
-                <label>Length</label>
-                <span class="foot_text">in</span>
-                <span>5</span>
-              </div>
-            </td>
-            <td class="table_footer">
-              <div class="foot_content">
-                <label>Length</label>
-                <span class="foot_text">in</span>
-                <span>5</span>
-              </div>
-            </td>
-            <td class="table_footer">
-              <div class="foot_content">
-                <label>Length</label>
-                <span class="foot_text">in</span>
-                <span>5</span>
-              </div>
-            </td>
-            <td class="table_footer">
-              <div class="foot_content">
-                <label>Length</label>
-                <span class="foot_text">in</span>
-                <span>5</span>
-              </div>
-            </td>
-            <td class="table_footer">
-              <div class="foot_content foot_btn">
-                <button>Confirm</button>
-              </div>
-            </td>
-          </tr>
-        </tfoot> -->
-      </table>
+              </td>
+            </tr>
 
+            <tr class="dimenstion_variation hide" id="dimension-head-<%= variant.id %>">
+              <td class="purpul_row rounded-0 first"><div class="t_text">Product Length</div></td>
+              <td class="purpul_row"><div class="t_text">Product Height</div></td>
+              <td class="purpul_row"><div class="t_text">Product Widht</div></td>
+              <td class="purpul_row"><div class="t_text">Product Weight</div></td>
+              <td class="purpul_row w-25"></td>
+              <td class="purpul_row w-25 rounded-0"><div class="t_text">Action</div></td>
+            </tr>
+
+            <tr data-controller="variants-dimensions" id="dimension-form-<%= variant.id %>"  class="dimenstion_variation hide " data-variants-dimensions-variant-id-value="<%= variant.id %>">
+              <td class="table_footer" >
+                <div class="foot_content">
+                  <label>Length</label>
+                  <span class="foot_text">in</span>
+                  <span><%= text_field_tag :length, variant.length, class: "foot_input" , data: { 'variants-dimensions-target': 'lengthInput' } %></span>
+                </div>
+              </td>
+              <td class="table_footer">
+                <div class="foot_content">
+                  <label>Height</label>
+                  <span class="foot_text">in</span>
+                  <span><%= text_field_tag :height, variant.height, class: "foot_input" , data: { 'variants-dimensions-target': 'heightInput' } %></span>
+                </div>
+              </td>
+              <td class="table_footer">
+                <div class="foot_content">
+                  <label>width</label>
+                  <span class="foot_text">in</span>
+                  <span><%= text_field_tag :width, variant.width, class: "foot_input" , data: { 'variants-dimensions-target': 'widthInput' } %></span>
+                </div>
+              </td>
+              <td class="table_footer">
+                <div class="foot_content">
+                  <label>weight</label>
+                  <span class="foot_text">in</span>
+                  <span><%= text_field_tag :weight_lb, variant.weight_lb, class: "foot_input" , data: { 'variants-dimensions-target': 'weight_lbInput' } %></span>
+                </div>
+              </td>
+              <td class="table_footer">
+                <div class="foot_content">
+                  <label>weight</label>
+                  <span class="foot_text">in</span>
+                  <span><%= text_field_tag :weight_oz, variant.weight_oz, class: "foot_input" , data: { 'variants-dimensions-target': 'weight_ozInput' } %></span>
+                </div>
+              </td>
+              <td class="table_footer">
+                <div class="foot_content foot_btn">
+                  <button type="button" class="btn btn-primary" data-variants-dimensions-target="saveVariant">Confirm</button>
+                </div>
+              </td>
+            </tr>
+          
+            <div class="delete_variation hide">
+              <div class="icon_wrap">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 5.99943H16V4.32943C15.9765 3.68924 15.7002 3.08448 15.2316 2.64772C14.7629 2.21095 14.1402 1.97782 13.5 1.99943H10.5C9.85975 1.97782 9.23706 2.21095 8.76843 2.64772C8.2998 3.08448 8.02346 3.68924 8 4.32943V5.99943H3C2.73478 5.99943 2.48043 6.10478 2.29289 6.29232C2.10536 6.47986 2 6.73421 2 6.99943C2 7.26464 2.10536 7.519 2.29289 7.70653C2.48043 7.89407 2.73478 7.99943 3 7.99943H4V18.9994C4 19.7951 4.31607 20.5581 4.87868 21.1207C5.44129 21.6834 6.20435 21.9994 7 21.9994H17C17.7956 21.9994 18.5587 21.6834 19.1213 21.1207C19.6839 20.5581 20 19.7951 20 18.9994V7.99943H21C21.2652 7.99943 21.5196 7.89407 21.7071 7.70653C21.8946 7.519 22 7.26464 22 6.99943C22 6.73421 21.8946 6.47986 21.7071 6.29232C21.5196 6.10478 21.2652 5.99943 21 5.99943ZM10 4.32943C10 4.16943 10.21 3.99943 10.5 3.99943H13.5C13.79 3.99943 14 4.16943 14 4.32943V5.99943H10V4.32943ZM18 18.9994C18 19.2646 17.8946 19.519 17.7071 19.7065C17.5196 19.8941 17.2652 19.9994 17 19.9994H7C6.73478 19.9994 6.48043 19.8941 6.29289 19.7065C6.10536 19.519 6 19.2646 6 18.9994V7.99943H18V18.9994Z" fill="#212B36"/>
+                  <path d="M9 16.9994C9.26522 16.9994 9.51957 16.8941 9.70711 16.7065C9.89464 16.519 10 16.2646 10 15.9994V11.9994C10 11.7342 9.89464 11.4799 9.70711 11.2923C9.51957 11.1048 9.26522 10.9994 9 10.9994C8.73478 10.9994 8.48043 11.1048 8.29289 11.2923C8.10536 11.4799 8 11.7342 8 11.9994V15.9994C8 16.2646 8.10536 16.519 8.29289 16.7065C8.48043 16.8941 8.73478 16.9994 9 16.9994Z" fill="#212B36"/>
+                  <path d="M15 16.9994C15.2652 16.9994 15.5196 16.8941 15.7071 16.7065C15.8946 16.519 16 16.2646 16 15.9994V11.9994C16 11.7342 15.8946 11.4799 15.7071 11.2923C15.5196 11.1048 15.2652 10.9994 15 10.9994C14.7348 10.9994 14.4804 11.1048 14.2929 11.2923C14.1054 11.4799 14 11.7342 14 11.9994V15.9994C14 16.2646 14.1054 16.519 14.2929 16.7065C14.4804 16.8941 14.7348 16.9994 15 16.9994Z" fill="#212B36"/>
+                </svg>
+                <h5 class="icon_text">Delete Variation?</h5>
+              </div>
+              <div class="delete_btn_wrap">
+                <%= link_to 'Delete', remove_variant_product_path(variant), method: :delete, class:"delete_btn"%>
+                <%= link_to 'Cancel', edit_product_path(@product), class: 'cancel_btn' %>
+              </div>
+            </div>
+          <% end %>
+        <tbody>
+      </table>
 
       <div class="links add_variation">
         <svg class="add_icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -218,34 +218,6 @@
       </div>
 
       <div class="horizontal_line"></div>
-
-<!--       <div class="save_variant_section">
-        <div class="group_info_section p-0">
-          <div class="image_info pt-3">
-            <%= image_tag("illustration_upload", class:"info_img") %>
-            <div class="info_content">
-              <h5 class="info_head">Variant Image</h5>
-              <a class="info_link" href="#">Drop files here or click <span>browse</span> thorough your machine</a>
-            </div>
-          </div>
-          <div class="right_info_content">
-            <div class="right_item">
-              <label>Color</label>
-              <input class="item_text" type="text">
-            </div>
-            <div class="right_item">
-              <label>Size</label>
-              <input class="item_text" type="text">
-            </div>
-            <div class="right_item">
-              <label>Real Variant SKU</label>
-              <input class="item_text" type="text">
-            </div>
-          </div>
-        </div>
-
-        <button class="save_variant_btn">Save Variant</button>
-      </div> -->
       </div>
 
       <div class="product_print_section">
