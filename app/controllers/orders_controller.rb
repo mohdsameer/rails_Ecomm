@@ -1,7 +1,11 @@
 class OrdersController < ApplicationController
   def index
     per_page = params[:per_page] || 20
-    @orders = Order.all.paginate(page: params[:page], per_page: per_page)
+    if params[:sort].present?
+      @orders = Order.where(order_status: params[:sort]).paginate(page: params[:page], per_page: per_page)
+    else
+      @orders = Order.all.paginate(page: params[:page], per_page: per_page)
+    end
   end
 
   def new

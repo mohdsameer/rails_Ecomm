@@ -9,14 +9,11 @@ class Order < ApplicationRecord
   has_many :products, through: :order_products
 
   #Attachment
-  # has_many_attached :images
   has_one_attached :shipping_label_image
   has_one_attached :packing_slip_image
   has_one_attached :gift_message_slip_image
   has_one_attached :design_file_1_image
   has_one_attached :design_file_2_image
   has_one_attached :additional_file_image
-
-
 
 end
