@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'orders/index'
+
 # Defines the root path route ("/")
   get 'dashboard/index'
   get 'dashboard/producer_panel_dasboard'
@@ -13,6 +13,9 @@ Rails.application.routes.draw do
      get 'edit_producer', on: :member
      patch 'update_producer', on: :member
   end
+  
+  resources :orders
+  resources :variants
 
 # Etsy routes
   get '/import_etsy_products', to: 'etsy_import#import_products' 

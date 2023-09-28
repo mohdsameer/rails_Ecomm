@@ -1342,6 +1342,9 @@
             border: 1px solid rgba(145, 158, 171, 0.32);
             position: relative;
             padding: 12px;
+            display: flex;
+            width: 100px;
+            gap: 8px;
 
             & label {
               color: #919eab;
@@ -1357,7 +1360,14 @@
             }
 
             & span {
-              padding: 12px;
+              .foot_input {
+                width: 100%;
+                padding: 0px;
+                border: 0px;
+                &:focus {
+                  outline: none;
+                }
+              }
             }
 
             .foot_text {
