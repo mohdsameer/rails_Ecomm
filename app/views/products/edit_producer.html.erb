@@ -1,0 +1,37 @@
+<turbo-frame id="edit_producer" class="producer_card">
+  <%= form_for @product_producer_pricing, url: update_producer_product_path(user_id: @producer, product_id: @product), method: :patch do |f| %>
+    <div class="producer_card">
+      <h5 class="producer_head">Pricing (Production cost)</h5>
+      <div class="card_content">
+        <div class="card_items">
+          <p class="cart_text">Blank price</p>
+          <div class="cost_wrap">
+            <label>Cost of Printing</label>
+            <span>$</span>
+            <%= f.text_field :blank_price %>
+          </div>
+        </div>
+        <div class="card_items">
+          <p class="cart_text">Front side print price</p>
+          <div class="cost_wrap">
+            <label>Cost of Printing</label>
+            <span>$</span>
+            <%= f.text_field :front_side_print_price %>
+          </div>
+        </div>
+        <div class="card_items">
+          <p class="cart_text">Back side print price</p>
+          <div class="cost_wrap">
+            <label>Cost of Printing</label>
+            <span>$</span>
+            <%= f.text_field :back_side_print_price %>
+          </div>
+        </div>
+      </div>
+      <div class="bottom_btn_group">
+        <%= link_to 'Cancel', edit_product_path(@product), class: 'btn btn-secondary' %>
+        <%= f.submit 'Update producer', class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</turbo-frame>

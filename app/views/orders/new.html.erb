@@ -1,0 +1,90 @@
+<div class="hero_wrapper">
+
+  <%= render partial: 'shared/sidebar' %>
+    <%= form_tag orders_path, method: :post,  multipart: true do %>
+    <table>
+      <tr>
+        <th class="px-5 py-3 custom_col">Product ID</th>
+        <th class="px-5 py-3 custom_col">Product Name</th>
+        <th class="px-5 py-3 custom_col">Product Image</th>
+        <th class="px-5 py-3 custom_col">Product Quantity</th>
+      </tr>
+
+      <% @products.each do |product| %>
+        <tr>
+          <td><%=product.id %></td>
+          <td><%=product.name %></td>
+          <td><% if product.image.attached? %>
+                <!-- <%= image_tag product.image %> -->
+                <%= image_tag asset_path('dummy-product.png') %>
+              <% else %>
+                <%= image_tag asset_path('dummy-product.png') %>
+              <% end %>
+          </td>
+          <td>
+            <div class="quantity-control">
+              <button type="button" class="decrement">-</button>
+              <%= number_field_tag "products[#{product.id}]", 0, class: "quantity_input" %>
+              <button type="button" class="increment">+</button>
+            </div>
+          </td>
+        </tr>
+      <%end%>
+      <div class="field">
+        <%= label_tag :customer_name %>
+        <%= text_field_tag :customer_name %>
+      </div> 
+
+      <div class="field">
+        <%= label_tag :shipping_label,'Shipping Label' %>
+        <%= file_field_tag "shipping_label_image" %>
+      </div>      
+      <div class="field">
+        <%= label_tag :packing_slip,'Packing Slip' %>
+        <%= file_field_tag "packing_slip_image" %>
+      </div>      
+      <div class="field">
+        <%= label_tag :gift_message_slip,'Gift Message Slip' %>
+        <%= file_field_tag "gift_message_slip_image" %>
+      </div>      
+      <div class="field">
+        <%= label_tag :design_file_1,'Design File 1' %>
+        <%= file_field_tag "design_file_1_image" %>
+      </div>      
+      <div class="field">
+        <%= label_tag :design_file_2,'Design File 2' %>
+        <%= file_field_tag "design_file_2_image" %>
+      </div>      
+      <div class="field">
+        <%= label_tag :additional_file,'Additional File' %>
+        <%= file_field_tag "additional_file_image" %>
+      </div>
+
+
+    </table>
+      <%= submit_tag 'Submit Order', class: 'btn btn-primary' %>
+    <%end%>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const quantityInputs = document.querySelectorAll(".quantity_input");
+
+  quantityInputs.forEach(input => {
+    const incrementBtn = input.parentElement.querySelector(".increment");
+    const decrementBtn = input.parentElement.querySelector(".decrement");
+
+    incrementBtn.addEventListener("click", () => {
+      input.value = parseInt(input.value) + 1;
+    });
+
+    decrementBtn.addEventListener("click", () => {
+      const currentValue = parseInt(input.value);
+      if (currentValue > 1) {
+        input.value = currentValue - 1;
+      }
+    });
+  });
+});
+</script>

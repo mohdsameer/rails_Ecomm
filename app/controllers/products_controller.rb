@@ -1,12 +1,17 @@
 class ProductsController < ApplicationController
   def new
-    @producer = Producer.all
     @product = Product.new
+    @producers = Producer.all
+    @product_producer_pricing = ProductProducerPricing.new
   end
 
   def create
     @product = Product.new(product_params)
     if @product.save
+      @producers = Producer.all
+      @producers.each do |producer|
+        ProductProducerPricing.create(user_id:producer.id, product_id: @product.id)
+      end
       redirect_to dashboard_index_path, notice: 'Product was successfully created.'
     else
       render :new
@@ -16,6 +21,8 @@ class ProductsController < ApplicationController
   def edit
     @product = Product.find(params[:id])
     @variants = @product.variants
+    @producer = Producer.all
+ 
   end
 
   def remove_variant
@@ -34,9 +41,27 @@ class ProductsController < ApplicationController
     end
   end
 
+  def edit_producer
+    @product_producer_pricing = ProductProducerPricing.find_by(user_id: params[:user_id], product_id: params[:product_id])
+    @product = Product.find(params[:product_id])
+    @producer = Producer.find(params[:user_id])
+  end
+
+  def update_producer
+    @product_producer_pricing = ProductProducerPricing.find_by(user_id: params[:user_id], product_id: params[:product_id])
+    @product = Product.find_by(id: params[:product_id])
+    if @product_producer_pricing.update(product_producer_params)
+      redirect_to edit_product_path(@product), notice: 'Producer was successfully updated.'
+    end
+  end
+
   private
 
   def product_params
-    params.require(:product).permit(:name, :brand_name, :color, :size, :Real_variant_SKU, :print_area_width, :print_area_height, :image, variants_attributes: [:color, :size, :Real_variant_SKU, :image, :inventory])
+    params.require(:product).permit(:name, :brand_name, :print_area_width, :print_area_height, :image, variants_attributes: [:color, :size, :Real_variant_SKU, :image, :inventory, :length, :height, :width, :weight_lb, :weight_oz], product_producer_pricing_attributes: [:id, :blank_price, :front_side_print_price, :back_side_print_price, :user_id, :product_id])
+  end
+
+  def product_producer_params
+    params.require(:product_producer_pricing).permit(:blank_price, :front_side_print_price,:back_side_print_price)
   end
 end

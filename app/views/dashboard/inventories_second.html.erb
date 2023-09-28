@@ -1,0 +1,173 @@
+<div class="hero_wrapper">
+  <%= render "shared/sidebar" %>
+  <div class="inventory_panel_wrapper">
+    <div class="panel_header">
+      <div class="header_box">
+        <div class="create_wrap">
+          <div class="create_content">
+            <%= image_tag("ic_plus", class:"plus_icon") %>
+            <p class="create_text">Create Manual Order</p>
+          </div>
+          <div class="create_bell_box">
+            <%= image_tag("ic_notifications", class:"create_bell_icon") %>
+            <div class="create_notification">
+              <p class="notification_text">1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="inventory_content_box">
+
+      <div class="search_box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M17.31 15.9L20.71 19.29C20.8993 19.4778 21.0058 19.7334 21.0058 20C21.0058 20.2666 20.8993 20.5222 20.71 20.71C20.5222 20.8993 20.2666 21.0058 20 21.0058C19.7334 21.0058 19.4778 20.8993 19.29 20.71L15.9 17.31C14.5025 18.407 12.7767 19.0022 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11C19.0022 12.7767 18.407 14.5025 17.31 15.9ZM11 5C7.68629 5 5 7.68629 5 11C5 14.3137 7.68629 17 11 17C14.3137 17 17 14.3137 17 11C17 7.68629 14.3137 5 11 5Z" fill="#919EAB"/>
+        </svg>
+        <input class="search_input" type="text" placeholder="Search Product by Name, SKU, Product ID, Color" >
+      </div>
+
+      <div class="inventory_table_wrap">
+        <table>
+          <tr>
+            <th>Product Id</th>
+            <th>Product Image</th>
+            <th>Product Detail</th>
+            <th>Inventory Change</th>
+            <th>Qty Change</th>
+            <th>Update Reason</th>
+            <th>Tracking No</th>
+            <th>Tracking No</th>
+            <th>Date</th>
+          </tr>
+          <% 3.times do %>
+          <tr>
+            <td>111</td>
+            <td class="product_img">
+              <%= image_tag "IMG" %>
+            </td>
+            <td>20 oz YETI Tumbler</td>
+            <td class="inventory_change_icon">
+              <div>
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                  <path d="M16.5 8L15.09 6.59L9.5 12.17V0H7.5V12.17L1.92 6.58L0.5 8L8.5 16L16.5 8Z" fill="#FF5630"/>
+                </svg>
+
+                <!-- this is in loop that's why we use both icon -->
+                <svg class="icon_green" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                  <path d="M0.499999 8L1.91 9.41L7.5 3.83L7.5 16L9.5 16L9.5 3.83L15.08 9.42L16.5 8L8.5 6.99382e-07L0.499999 8Z" fill="#00AB55"/>
+                </svg>
+                <div class="icon_text">50 to 49</div>
+              </div>
+            </td>
+            <td>00000</td>
+            <td>Defective Product</td>
+            <td>000000</td>
+            <td>Producer 1</td>
+            <td>01/02/2022</td>
+          </tr>
+          <% end %>
+        </table>
+
+        <div class="d-none">
+          
+
+        <!-- popup here -->
+        <div class="cancel_request">
+          <div class="cancel_head bg-white">
+            New Quantity: 29
+          </div>
+          <div class="cancel_btn_group">
+            <div class="btn bg-success text-white">Confirm</div>
+            <div class="btn outline_btn">Confirm</div>
+          </div>
+        </div>
+
+        <!-- edit inventorie pop -->
+
+        <div class="edit_pop_wrap">
+          <div class="edit_head mb-0">Edit Inventory QTY: Product ID</div><hr class="mt-0">
+          <div class="current_qty">Current Quantity: 29</div>
+          <div class="current_qty green_box">INCREASE QTY</div>
+
+          <div class="input_group">
+            <label>Add Quantity</label>
+            <input type="text" />
+          </div>
+          <div class="input_group">
+            <label>Reason for Increase</label>
+            <input type="text" />
+          </div>
+          <div class="input_group">
+            <label>Tracking No</label>
+            <input type="text" />
+          </div>
+          <div class="input_group">
+            <label>Invoice No</label>
+            <input type="text" />
+          </div>
+
+          <div class="current_qty orange_box">DECREASE QTY</div>
+
+          <div class="input_group">
+            <label>Decrease Quantity</label>
+            <input type="text" />
+          </div>
+          <div class="input_group">
+            <label>Reason for Decrease</label>
+            <input type="text" />
+          </div>
+          <div class="current_qty">New Quantity: 29</div>
+          <div class="inventory_edit_btn">Submit</div>
+        </div>
+
+        <!-- edit asile sku -->
+
+        <div class="edit_pop_wrap small_pop">
+          <div class="edit_head mb-0 py-3">Edit Aisle: SKU NO</div><hr class="mt-0">
+          <div class="current_qty">Current Aisle: A11</div>
+
+          <div class="input_group">
+            <input type="text" placeholder="Enter New Aisle No" />
+          </div>
+          <div class="current_qty">New Aisle: </div>
+          <div class="inventory_edit_btn">Submit</div>
+        </div>
+
+        </div>
+        <!-- end popups -->
+
+      </div>
+      <hr>
+
+      <div class="pages_content">
+        <div>
+          Rows per page:
+        </div>
+        <div class="d-flex align-items-center">
+          <div>20</div>
+          <div>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+              <path d="M16.3805 9.28957L12.5005 13.1696L8.62047 9.28957C8.23047 8.89957 7.60047 8.89957 7.21047 9.28957C6.82047 9.67957 6.82047 10.3096 7.21047 10.6996L11.8005 15.2896C12.1905 15.6796 12.8205 15.6796 13.2105 15.2896L17.8005 10.6996C18.1905 10.3096 18.1905 9.67957 17.8005 9.28957C17.4105 8.90957 16.7705 8.89957 16.3805 9.28957Z" fill="#212B36"/>
+            </svg>
+          </div>
+        </div>
+        <div>6-10 of 11</div>
+        <div class="d-flex">
+          <div>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+              <path d="M12.0247 15.8337C11.7726 15.8346 11.5336 15.7212 11.3747 15.5254L7.34973 10.5254C7.09697 10.2179 7.09697 9.77458 7.34973 9.46708L11.5164 4.46708C11.8109 4.1127 12.337 4.06419 12.6914 4.35874C13.0458 4.6533 13.0943 5.17936 12.7997 5.53375L9.07473 10.0004L12.6747 14.4671C12.8828 14.7168 12.9266 15.0648 12.787 15.3584C12.6474 15.652 12.3498 15.8375 12.0247 15.8337Z" fill="#919EAB" fill-opacity="0.8"/>
+            </svg>
+          </div>
+          <div>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+              <path d="M8.83334 15.8336C8.63863 15.834 8.44993 15.7662 8.3 15.6419C8.12958 15.5007 8.02238 15.2974 8.00206 15.0769C7.98173 14.8565 8.04996 14.637 8.19167 14.4669L11.925 10.0003L8.325 5.52528C8.1852 5.35312 8.11978 5.13233 8.14324 4.91179C8.1667 4.69126 8.2771 4.48917 8.45 4.35028C8.62431 4.19691 8.85469 4.12322 9.08565 4.14695C9.31661 4.17067 9.52719 4.28968 9.66667 4.47528L13.6917 9.47528C13.9444 9.78278 13.9444 10.2261 13.6917 10.5336L9.525 15.5336C9.35545 15.7382 9.09853 15.8496 8.83334 15.8336Z" fill="#212B36"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
