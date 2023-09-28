@@ -2,6 +2,12 @@ Rails.application.routes.draw do
   get 'orders/index'
 # Defines the root path route ("/")
   get 'dashboard/index'
+  get 'dashboard/producer_panel_dasboard'
+  get 'dashboard/inventories'
+  get 'dashboard/inventories_second'
+  get 'dashboard/manual_order'
+  
+  
   resources :products, only: [:new, :create,:edit, :update] do
      delete 'remove_variant', on: :member
      get 'edit_producer', on: :member

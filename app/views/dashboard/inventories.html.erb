@@ -1,0 +1,102 @@
+<div class="hero_wrapper">
+  <%= render "shared/sidebar" %>
+  <div class="inventory_panel_wrapper">
+    <div class="panel_header">
+      <div class="header_box">
+        <div class="create_wrap">
+          <div class="create_content">
+            <%= image_tag("ic_plus", class:"plus_icon") %>
+            <p class="create_text">Create Manual Order</p>
+          </div>
+          <div class="create_bell_box">
+            <%= image_tag("ic_notifications", class:"create_bell_icon") %>
+            <div class="create_notification">
+              <p class="notification_text">1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="inventory_head"><span>Inventories</span> <span>Producer 1</span> </div>
+    <div class="inventory_content_box">
+      <button class="history_btn">Click here to Track Inventory History</button>
+
+      <div class="search_box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M17.31 15.9L20.71 19.29C20.8993 19.4778 21.0058 19.7334 21.0058 20C21.0058 20.2666 20.8993 20.5222 20.71 20.71C20.5222 20.8993 20.2666 21.0058 20 21.0058C19.7334 21.0058 19.4778 20.8993 19.29 20.71L15.9 17.31C14.5025 18.407 12.7767 19.0022 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11C19.0022 12.7767 18.407 14.5025 17.31 15.9ZM11 5C7.68629 5 5 7.68629 5 11C5 14.3137 7.68629 17 11 17C14.3137 17 17 14.3137 17 11C17 7.68629 14.3137 5 11 5Z" fill="#919EAB"/>
+        </svg>
+        <input class="search_input" type="text" placeholder="Search Product by Name, SKU, Product ID, Color" >
+      </div>
+
+      <div class="inventory_table_wrap">
+        <table>
+          <tr>
+            <th class="left">Product Id</th>
+            <th>Product Image</th>
+            <th>Product Name</th>
+            <th>Brand</th>
+            <th>SKU</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Aisle No</th>
+            <th>Status</th>
+            <th class="right">
+              <div class="right d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M15 9L13.9425 7.9425L9.75 12.1275V3H8.25V12.1275L4.065 7.935L3 9L9 15L15 9Z" fill="white"/>
+                </svg>
+              Inventory QTY
+              </div>
+            </th>
+          </tr>
+          <% 3.times do %>
+          <tr>
+            <td>111</td>
+            <td class="product_img">
+              <%= image_tag "IMG" %>
+              <svg class="expand_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20 5C20 4.44772 19.5523 4 19 4H14C13.4477 4 13 4.44772 13 5C13 5.55228 13.4477 6 14 6H16.57L13.29 9.29C13.1007 9.47777 12.9942 9.73336 12.9942 10C12.9942 10.2666 13.1007 10.5222 13.29 10.71C13.4778 10.8993 13.7334 11.0058 14 11.0058C14.2666 11.0058 14.5222 10.8993 14.71 10.71L18 7.42V10C18 10.5523 18.4477 11 19 11C19.5523 11 20 10.5523 20 10V5Z" fill="#212B36"/>
+                <path d="M10.71 13.29C10.5222 13.1007 10.2666 12.9942 10 12.9942C9.73336 12.9942 9.47777 13.1007 9.29 13.29L6 16.57V14C6 13.4477 5.55228 13 5 13C4.44772 13 4 13.4477 4 14V19C4 19.5523 4.44772 20 5 20H10C10.5523 20 11 19.5523 11 19C11 18.4477 10.5523 18 10 18H7.42L10.71 14.71C10.8993 14.5222 11.0058 14.2666 11.0058 14C11.0058 13.7334 10.8993 13.4778 10.71 13.29Z" fill="#212B36"/>
+              </svg>
+            </td>
+            <td>20 oz YETI Tumbler</td>
+            <td>Yeti</td>
+            <td>00000</td>
+            <td>Black</td>
+            <td>20 oz</td>
+            <td class="aisle_no px-2">
+              <div class="d-flex align-items-center">
+                <span>A11</span>
+                <span class="aisle_icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6603 4.59986L19.4003 7.33986C20.1663 8.06963 20.1976 9.28152 19.4703 10.0499L10.4703 19.0499C10.1443 19.3731 9.7171 19.5744 9.2603 19.6199L5.0903 19.9999H5.0003C4.7345 20.0014 4.47902 19.897 4.2903 19.7099C4.07934 19.4997 3.97303 19.2064 4.0003 18.9099L4.4303 14.7399C4.47581 14.2831 4.67707 13.8558 5.0003 13.5299L14.0003 4.52986C14.7761 3.87441 15.92 3.90451 16.6603 4.59986ZM13.3203 7.99986L16.0003 10.6799L18.0003 8.72986L15.2703 5.99986L13.3203 7.99986Z" fill="#637381"/>
+                </svg>
+                </span>
+              </div>
+            </td>
+            <td class="px-2">
+              <div class="yellow_badge">
+                <div>Low Stock</div>
+              </div>
+            </td>
+            <td class="aisle_no px-2">
+              <div class="d-flex align-items-center justify-content-around">
+                <span>50</span>
+                <span class="aisle_icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6603 4.59986L19.4003 7.33986C20.1663 8.06963 20.1976 9.28152 19.4703 10.0499L10.4703 19.0499C10.1443 19.3731 9.7171 19.5744 9.2603 19.6199L5.0903 19.9999H5.0003C4.7345 20.0014 4.47902 19.897 4.2903 19.7099C4.07934 19.4997 3.97303 19.2064 4.0003 18.9099L4.4303 14.7399C4.47581 14.2831 4.67707 13.8558 5.0003 13.5299L14.0003 4.52986C14.7761 3.87441 15.92 3.90451 16.6603 4.59986ZM13.3203 7.99986L16.0003 10.6799L18.0003 8.72986L15.2703 5.99986L13.3203 7.99986Z" fill="#637381"/>
+                </svg>
+                </span>
+              </div>
+            </td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
