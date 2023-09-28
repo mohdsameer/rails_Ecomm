@@ -1,4 +1,4 @@
-<div class="orders_page_wrapper">
+<div class="orders_page_wrapper <%= current_user.type == "Designer" || current_user.type == "Admin" ? 'designer_orders' : '' %>">
   <%= render "shared/sidebar" %>
 
   <% if !current_user.type == "Designer" || current_user.type == "Admin" %>
@@ -13,7 +13,7 @@
   function changeRowsPerPage(value) {
     window.location.href = window.location.pathname + "?per_page=" + value;
   }
-  
+
   // Show the first tab and hide the rest
   $('#tabs-nav li:first-child').addClass('active');
   $('.tab-content').hide();
@@ -28,5 +28,13 @@
     var activeTab = $(this).find('a').attr('href');
     $(activeTab).fadeIn();
     return false;
+  });
+
+
+  $('.collapse_show').click(function () {
+    $(this).closest('.tbody_row').find('.collapse_data').slideDown();
+  });
+  $('.collapse_hide').click(function () {
+    $(this).closest('.tbody_row').find('.collapse_data').slideUp();
   });
 </script>
