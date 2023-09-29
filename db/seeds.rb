@@ -23,7 +23,7 @@ puts "#{designer_user.name} created" if designer_user.present?
 #creating product
 for i in 0..1 do
 	puts "Creating a product"
-	product = Product.create(brand_name: "brand #{i+1}", name: "product #{i+1}", color: "Red", size: "20oZ", Real_variant_SKU: 827381723, print_area_width: 75, print_area_height: 75)
+	product = Product.create(brand_name: "brand #{i+1}", name: "product #{i+1}", print_area_width: 75, print_area_height: 75)
 	puts "product created"
 end
 

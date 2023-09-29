@@ -92,6 +92,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_052952) do
     t.string "password_digest"
     t.string "company_name"
     t.string "location"
+    t.float "black_price"
+    t.float "front_side_print_price"
+    t.float "back_side_print_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
