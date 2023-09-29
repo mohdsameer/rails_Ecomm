@@ -1,4 +1,17 @@
 class ProductsController < ApplicationController
+
+  def index
+    per_page = params[:per_page] || 20
+
+    if current_user&.type.eql?("Admin")
+      @products = Product.all.paginate(page: params[:page], per_page: per_page)
+    elsif current_user&.type.eql?("Producer")
+      @products = Product.all.paginate(page: params[:page], per_page: per_page)
+    else
+      @products = Product.all.paginate(page: params[:page], per_page: per_page)
+    end
+  end
+
   def new
     @product = Product.new
     @producers = Producer.all
@@ -12,7 +25,7 @@ class ProductsController < ApplicationController
       @producers.each do |producer|
         ProductProducerPricing.create(user_id:producer.id, product_id: @product.id)
       end
-      redirect_to dashboard_index_path, notice: 'Product was successfully created.'
+      redirect_to products_path, notice: 'Product was successfully created.'
     else
       render :new
     end
@@ -35,7 +48,7 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     if @product.update(product_params)
-      redirect_to dashboard_index_path, notice: 'Product was successfully updated.'
+      redirect_to products_path, notice: 'Product was successfully updated.'
     else
       render :edit
     end

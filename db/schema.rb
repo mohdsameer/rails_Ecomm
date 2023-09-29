@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_124820) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_28_052952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_124820) do
     t.date "due_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "priority", default: 0
   end
 
   create_table "product_producer_pricings", force: :cascade do |t|
@@ -91,6 +92,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_124820) do
     t.string "password_digest"
     t.string "company_name"
     t.string "location"
+    t.float "black_price"
+    t.float "front_side_print_price"
+    t.float "back_side_print_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,8 +1,308 @@
+//**  Common Css **//
+
+.search_box {
+  display: flex;
+  max-width: 40.22vw;
+  width: 100%;
+  padding: 0.926vw 0.81vw;
+  align-items: center;
+  border-radius: 0.463vw;
+  border: 1px solid rgba(145, 158, 171, 0.32);
+  margin: 0 0 1.042vw;
+  gap: 0.463vw;
+
+  svg {
+    height: 1.389vw;
+    width: 1.389vw;
+  }
+  .search_input {
+    color: #919eab;
+    font-family: Public Sans;
+    font-size: 0.926vw;
+    font-weight: 400;
+    line-height: 1.389vw;
+    border: none;
+    flex: 1;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+
+.order_table_section {
+  border-radius: 0.637vw;
+  padding-top: 0.231vw;
+
+  .order_info_table {
+    width: 100%;
+
+    .order_th {
+      padding: 0.463vw;
+      text-align: center;
+      background: #637381;
+      color: #fff;
+      font-family: Public Sans;
+      font-size: 0.694vw;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.389vw;
+
+      &.first {
+        padding: 0.926vw;
+        border-top-left-radius: 0.637vw;
+      }
+
+      &.last {
+        border-radius: 0px 0.637vw 0px 0px;
+      }
+    }
+
+    .order_td {
+      padding: 0;
+      text-align: center;
+      background: #f4f6f8;
+      color: #212b36;
+      font-family: Public Sans;
+      font-size: 0.694vw;
+      font-weight: 600;
+      line-height: 1.389vw;
+      border-bottom: 0.231vw solid white;
+
+      &.td_icon {
+        border-right: 1px solid rgba(145, 158, 171, 0.2);
+        background: #f4f6f8;
+
+        input[type="checkbox"] {
+          width: 1.389vw;
+          height: 1.389vw;
+          border: 1px solid black;
+          border-radius: 8px;
+        }
+      }
+
+      .order_id_icon {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0 0.637vw;
+
+        svg {
+          height: 1.389vw;
+          width: 1.389vw;
+          cursor: pointer;
+        }
+
+        .order_num {
+          flex: 1;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          padding: 0.926vw;
+        }
+      }
+
+      .ship_to {
+
+      }
+
+      .order_status_icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & div {
+          border-radius: 0.347vw;
+          background: rgba(255, 171, 0, 0.16);
+          color: #b76e00;
+          height: 1.389vw;
+          width: fit-content;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0 0.463vw;
+        }
+      }
+
+      .order_priority_icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & div {
+          border-radius: 0.347vw;
+          height: 1.389vw;
+          width: fit-content;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0 0.463vw;
+          background: rgba(255, 86, 48, 0.32);
+          color: #b71d18;
+        }
+      }
+
+      .order_more_action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .more_icon_group {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.694vw;
+          background: #c4cdd5;
+          padding: 0.463vw 0.694vw;
+          width: 11.343vw;
+
+          .icon {
+            height: 1.736vw;
+            width: 1.736vw;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #000;
+
+            &.blue {
+              border: 1px solid #1939b7;
+            }
+
+            img {
+              height: 1.157vw;
+            }
+          }
+        }
+      }
+    }
+
+
+    //** Custom Table for ui **//
+    
+    &.custom_info_table {
+      .thead {
+        width: 100%;
+
+        .thead_row {
+          display: flex;
+          width: 100%;
+
+          .order_th {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.first {
+              width: 2.546vw;
+            }
+            &.second {
+              width: 6.944vw;
+            }
+            &.three {
+              width: 5.787vw;
+            }
+            &.four {
+              width: 5.787vw;
+            }
+            &.five {
+              width: 11.574vw;
+            }
+            &.six {
+              width: 6.944vw;
+            }
+            &.seven {
+              width: 6.944vw;
+            }
+            &.eight {
+              width: 16.377vw;
+            }
+            &.nine {
+              width: 11.343vw;
+            }
+            &.last {
+              width: 2.546vw;
+            }
+          }
+        }
+      }
+
+      .tbody {
+        .tbody_row {
+          display: flex;
+          flex-wrap: wrap;
+          width: 100%;
+
+          .order_td {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.first {
+              width: 2.546vw;
+            }
+            &.second {
+              width: 6.944vw;
+            }
+            &.three {
+              width: 5.787vw;
+            }
+            &.four {
+              width: 5.787vw;
+            }
+            &.five {
+              width: 11.574vw;
+            }
+            &.six {
+              width: 6.944vw;
+            }
+            &.seven {
+              width: 6.944vw;
+            }
+            &.eight {
+              width: 16.377vw;
+            }
+            &.nine {
+              width: 11.343vw;
+            }
+            &.last {
+              width: 2.546vw;
+            }
+          }
+
+          .collapse_data {
+            display: none;
+            width: 100%;
+            margin: 0 0 0.531vw;
+          }
+        }
+      }
+    }
+
+    //** Custom Table for ui **//
+  }
+}
+
+
+//** Common Css End **//
+
+
 
 .orders_page_wrapper {
   display: flex;
   width: 100%;
   background-color: #ffffff;
+
+  &.designer_orders {
+    .sidebar_wrapper {
+      width: 13.6vw;
+    }
+
+    .orders_wrapper {
+      padding: 0px 2.431vw 0 2.083vw;
+    }
+  }
 
   .sidebar_wrapper {
     width: 12.731vw;
@@ -54,36 +354,6 @@
       font-weight: 700;
       line-height: 2.083vw;
       margin: 0 0 0.984vw;
-    }
-
-    .search_box {
-      display: flex;
-      max-width: 40.22vw;
-      width: 100%;
-      padding: 0.926vw 0.81vw;
-      align-items: center;
-      border-radius: 0.463vw;
-      border: 1px solid rgba(145, 158, 171, 0.32);
-      margin: 0 0 1.042vw;
-      gap: 0.463vw;
-
-      svg {
-        height: 1.389vw;
-        width: 1.389vw;
-      }
-      .search_input {
-        color: #919eab;
-        font-family: Public Sans;
-        font-size: 0.926vw;
-        font-weight: 400;
-        line-height: 1.389vw;
-        border: none;
-        flex: 1;
-
-        &:focus {
-          outline: none;
-        }
-      }
     }
 
     .order_info_wrap {
@@ -204,153 +474,7 @@
               width: 100%;
               max-width: 76.852vw;
 
-              .order_table_section {
-                border-radius: 0.637vw;
-                padding-top: 0.231vw;
-
-                .order_info_table {
-                  width: 100%;
-
-                  .order_th {
-                    padding: 0.463vw;
-                    text-align: center;
-                    background: #637381;
-                    color: #fff;
-                    font-family: Public Sans;
-                    font-size: 0.694vw;
-                    font-style: normal;
-                    font-weight: 600;
-                    line-height: 1.389vw;
-
-                    &.first {
-                      padding: 0.926vw;
-                      border-top-left-radius: 0.637vw;
-                    }
-
-                    &.last {
-                      border-radius: 0px 0.637vw 0px 0px;
-                    }
-                  }
-
-                  .order_td {
-                    padding: 0;
-                    text-align: center;
-                    background: #f4f6f8;
-                    color: #212b36;
-                    font-family: Public Sans;
-                    font-size: 0.694vw;
-                    font-weight: 600;
-                    line-height: 1.389vw;
-                    border-bottom: 0.231vw solid white;
-
-                    &.td_icon {
-                      border-right: 1px solid rgba(145, 158, 171, 0.2);
-                      background: #f4f6f8;
-
-                      input[type="checkbox"] {
-                        width: 1.389vw;
-                        height: 1.389vw;
-                        border: 1px solid black;
-                        border-radius: 8px;
-                      }
-                    }
-
-                    .order_id_icon {
-                      display: flex;
-                      align-items: center;
-                      justify-content: flex-start;
-                      padding: 0 0.637vw;
-
-                      svg {
-                        height: 1.389vw;
-                        width: 1.389vw;
-                      }
-
-                      .order_num {
-                        flex: 1;
-                        display: flex;
-                        justify-content: flex-start;
-                        align-items: center;
-                        padding: 0.926vw;
-                      }
-                    }
-
-                    .ship_to {
-
-                    }
-
-                    .order_status_icon {
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-
-                      & div {
-                        border-radius: 0.347vw;
-                        background: rgba(255, 171, 0, 0.16);
-                        color: #b76e00;
-                        height: 1.389vw;
-                        width: fit-content;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding: 0 0.463vw;
-                      }
-                    }
-
-                    .order_priority_icon {
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-
-                      & div {
-                        border-radius: 0.347vw;
-                        height: 1.389vw;
-                        width: fit-content;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding: 0 0.463vw;
-                        background: rgba(255, 86, 48, 0.32);
-                        color: #b71d18;
-                      }
-                    }
-
-                    .order_more_action {
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-
-                      .more_icon_group {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        gap: 0.694vw;
-                        background: #c4cdd5;
-                        padding: 0.463vw 0.694vw;
-                        width: 11.343vw;
-
-                        .icon {
-                          height: 1.736vw;
-                          width: 1.736vw;
-                          border-radius: 100%;
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
-                          border: 1px solid #000;
-
-                          &.blue {
-                            border: 1px solid #1939b7;
-                          }
-
-                          img {
-                            height: 1.157vw;
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+              
 
               .message_wrapper {
                 padding: 0 0.694vw;
@@ -717,6 +841,7 @@
                   svg {
                     height: 1.389vw;
                     width: 1.389vw;
+                    cursor: pointer;
                   }
 
                   .fold_text {
@@ -1077,8 +1202,6 @@
       text-align: center;
       margin-top: 1.100vw;
     }
-  }
-}
 
 
 //** order on hold popup end **//
@@ -1111,8 +1234,31 @@
     }
   }
 }
+  
+  //** Common css badge end **//
 
 
+//** Desinger Orders Page Css Start **//
 
+.designer_orders {
+  .order_info_wrap {
 
-//** Common css badge end **//
+    .search_wrap {
+      padding: 0.694vw 1.157vw 0;
+      width: 100%;
+
+      .search_box {
+        max-width: 100%;
+      }
+    }
+
+    .tabs_box {
+      .order_tabs_wrap {
+        padding: 0 1.389vw;
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+//** Desinger Orders Page Css End **//
