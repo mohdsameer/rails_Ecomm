@@ -1,4 +1,7 @@
-<div class="products_wrapper">
+<div class="hero_wrapper">
+  <%= render "shared/sidebar" %>
+
+  <div class="products_wrapper">
     <div class="products_content">
       <div class="top_section">
         <div class="search_wrap">
@@ -23,13 +26,23 @@
         </div>
 
         <div class="export_btn_wrap">
-          <p class="export_head">Orders</p>
+          <p class="export_head">Products</p>
           <div class="btn_group">
+            <div class="export_btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M3.33301 15.8333C3.33301 15.3731 3.7061 15 4.16634 15H15.833C16.2932 15 16.6663 15.3731 16.6663 15.8333C16.6663 16.2936 16.2932 16.6667 15.833 16.6667H4.16634C3.7061 16.6667 3.33301 16.2936 3.33301 15.8333Z" fill="white"/>
+                <path d="M4.16634 16.6667C3.7061 16.6667 3.33301 16.2936 3.33301 15.8333V14.1667C3.33301 13.7064 3.7061 13.3333 4.16634 13.3333C4.62658 13.3333 4.99967 13.7064 4.99967 14.1667V15.8333C4.99967 16.2936 4.62658 16.6667 4.16634 16.6667Z" fill="white"/>
+                <path d="M15.833 16.6667C15.3728 16.6667 14.9997 16.2936 14.9997 15.8333V14.1667C14.9997 13.7064 15.3728 13.3333 15.833 13.3333C16.2932 13.3333 16.6663 13.7064 16.6663 14.1667V15.8333C16.6663 16.2936 16.2932 16.6667 15.833 16.6667Z" fill="white"/>
+                <path d="M9.99967 12.5C9.82691 12.5013 9.65801 12.4489 9.51634 12.35L6.18301 10C5.809 9.73468 5.71962 9.21704 5.98301 8.84167C6.11057 8.65963 6.30557 8.53609 6.52466 8.49854C6.74375 8.46098 6.96876 8.51251 7.14967 8.64167L9.99967 10.6333L12.833 8.5C13.2012 8.22386 13.7235 8.29848 13.9997 8.66667C14.2758 9.03486 14.2012 9.55719 13.833 9.83333L10.4997 12.3333C10.3554 12.4415 10.18 12.5 9.99967 12.5Z" fill="white"/>
+                <path d="M9.99967 10.8333C9.53944 10.8333 9.16634 10.4602 9.16634 10V3.33333C9.16634 2.8731 9.53944 2.5 9.99967 2.5C10.4599 2.5 10.833 2.8731 10.833 3.33333V10C10.833 10.4602 10.4599 10.8333 9.99967 10.8333Z" fill="white"/>
+              </svg>
+              <div class="btn_text">CSV. Export</div>
+            </div>
             <div class="export_btn">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M15.833 9.16732H10.833V4.16732C10.833 3.70708 10.4599 3.33398 9.99967 3.33398C9.53944 3.33398 9.16634 3.70708 9.16634 4.16732V9.16732H4.16634C3.7061 9.16732 3.33301 9.54041 3.33301 10.0007C3.33301 10.4609 3.7061 10.834 4.16634 10.834H9.16634V15.834C9.16634 16.2942 9.53944 16.6673 9.99967 16.6673C10.4599 16.6673 10.833 16.2942 10.833 15.834V10.834H15.833C16.2932 10.834 16.6663 10.4609 16.6663 10.0007C16.6663 9.54041 16.2932 9.16732 15.833 9.16732Z" fill="white"/>
               </svg>
-            <%= link_to 'Create Manual Order', new_order_path , class: 'btn_text'%>
+            <%= link_to 'Create a New Product', new_product_path , class: 'btn_text'%>
             </div>
           </div>
         </div>
@@ -39,45 +52,37 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M17.31 15.9L20.71 19.29C20.8993 19.4778 21.0058 19.7334 21.0058 20C21.0058 20.2666 20.8993 20.5222 20.71 20.71C20.5222 20.8993 20.2666 21.0058 20 21.0058C19.7334 21.0058 19.4778 20.8993 19.29 20.71L15.9 17.31C14.5025 18.407 12.7767 19.0022 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11C19.0022 12.7767 18.407 14.5025 17.31 15.9ZM11 5C7.68629 5 5 7.68629 5 11C5 14.3137 7.68629 17 11 17C14.3137 17 17 14.3137 17 11C17 7.68629 14.3137 5 11 5Z" fill="#919EAB"/>
           </svg>
-          <input class="search_input" type="text" placeholder="Search by order">
+          <input class="search_input" type="text" placeholder="Search Product..">
         </div>
       </div>
       <div class="table_section">
         <div class="table_content">
           <table>
             <tr>
-              <th class="px-5 py-3 custom_col"><%= link_to "All order" %></th>
-              <th class="px-5 py-3 custom_col"><%= link_to "On Hold", :sort => "onhold"%></th>
-              <th class="px-5 py-3 custom_col"><%= link_to "Rejected", :sort => "rejected"%></th>
-              <th class="px-5 py-3 custom_col"><%= link_to "In Production", :sort => "inproduction"%></th>
-              <th class="px-5 py-3 custom_col"><%= link_to "Fulfilled", :sort => "fullfilled"%></th>
+              <th><input type="checkbox"></th>
+              <th class="px-5 py-3 custom_col">Product ID</th>
+              <th class="px-5 py-3 custom_col">Product photo</th>
+              <th class="px-5 py-3 custom_col">Brand Name</th>
+              <th class="px-5 py-3 custom_col">Product Name</th>
+              <th class="px-5 py-3 custom_col">Variations</th>
+              <th class="px-5 py-3 custom_col">Edit/Duplicate</th>
             </tr>
-            <tr>
-              <th class="px-5 py-3 custom_col">Order ID</th>
-              <th class="px-5 py-3 custom_col">Etsy ID</th>
-              <th class="px-5 py-3 custom_col">Customer Name</th>
-              <th class="px-5 py-3 custom_col">Total item</th>
-              <th class="px-5 py-3 custom_col">Price</th>
-              <th class="px-5 py-3 custom_col">Order status</th>
-              <th class="px-5 py-3 custom_col">Order edit status</th>
-              <th class="px-5 py-3 custom_col">Revision</th>
-              <th class="px-5 py-3 custom_col">Due Date</th>
-            </tr>
-            <% @orders.each do |order| %>
+            <% @products.each do |product| %>
               <tr>
                   <td class=" text-center"><input type="checkbox"></td>
-                  <td class="p-4 custom_col text-center"><%= order.id %></td>
-                  <td class="p-4 custom_col col_shadow text-center"><%= order.etsy_order_id %></td>
-                  <td class="p-4 custom_col col_shadow text-center"><%= order.customer_name %></td>
-                  <td class="p-4 custom_col col_shadow text-center"><%= order.order_products.pluck(:product_quantity).sum %></td>
-                  <td class="p-4 custom_col col_shadow text-center">$ <%= order.price %></td>
-                  <td class="p-4 custom_col col_shadow text-center"><%= order.order_status %></td>
-                  <td class="p-4 custom_col col_shadow text-center"><%= order.order_edit_status %></td>
-                  <td class="p-4 custom_col col_shadow text-center">-</td>
-                  <td class="p-4 custom_col col_shadow text-center"><%= order.due_date %></td>
-
+                  <td class="p-4 custom_col text-center"><%= product.id %></td>
                   <td class="p-4 custom_col col_shadow text-center">
-                    <a href="<%= edit_order_path(order) %>"> 
+                    <% if product.image.attached? %>
+                      <%= image_tag product.image %>
+                    <% else %>
+                      <%= image_tag asset_path('dummy-product.png') %>
+                    <% end %>
+                  </td>
+                  <td class="p-4 custom_col col_shadow text-center"><%= product.brand_name %></td>
+                  <td class="p-4 custom_col col_shadow text-center"><%= product.name %></td>
+                  <td class="p-4 custom_col col_shadow text-center"><%= product.variants.count %></td>
+                  <td class="p-4 custom_col col_shadow text-center">
+                    <a href="<%= edit_product_path(product) %>"> 
                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4806 4.60084L20.2206 7.34084C20.9866 8.0706 21.0179 9.2825 20.2906 10.0508L11.2906 19.0508C10.9646 19.3741 10.5374 19.5753 10.0806 19.6208L5.91061 20.0008H5.82061C5.55481 20.0024 5.29933 19.898 5.11061 19.7108C4.89965 19.5007 4.79334 19.2074 4.82061 18.9108L5.25061 14.7408C5.29612 14.284 5.49738 13.8568 5.82061 13.5308L14.8206 4.53084C15.5964 3.87539 16.7403 3.90549 17.4806 4.60084ZM14.1406 8.00084L16.8206 10.6808L18.8206 8.73084L16.0906 6.00084L14.1406 8.00084Z" fill="#637381"/>
                       </svg>
@@ -113,23 +118,36 @@
                 </svg>
               </div>
             </div>
-            <div><%= @orders.current_page%>-<%= @orders.limit_value%> of <%= @orders.count %></div>
+            <div><%= @products.current_page%>-<%= @products.limit_value%> of <%= @products.count %></div>
 
             <div>
               
             <div class="d-flex"></div>
+                <div class="pagination">
+                  <%= will_paginate @products %>
                   <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
                     <path d="M12.0247 15.8337C11.7726 15.8346 11.5336 15.7212 11.3747 15.5254L7.34973 10.5254C7.09697 10.2179 7.09697 9.77458 7.34973 9.46708L11.5164 4.46708C11.8109 4.1127 12.337 4.06419 12.6914 4.35874C13.0458 4.6533 13.0943 5.17936 12.7997 5.53375L9.07473 10.0004L12.6747 14.4671C12.8828 14.7168 12.9266 15.0648 12.787 15.3584C12.6474 15.652 12.3498 15.8375 12.0247 15.8337Z" fill="#919EAB" fill-opacity="0.8"/>
                   </svg>
                 </div>
+              </div>
               <div>
+                <div class="pagination">
+                  <%= will_paginate @products %>
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
                   <path d="M8.83334 15.8336C8.63863 15.834 8.44993 15.7662 8.3 15.6419C8.12958 15.5007 8.02238 15.2974 8.00206 15.0769C7.98173 14.8565 8.04996 14.637 8.19167 14.4669L11.925 10.0003L8.325 5.52528C8.1852 5.35312 8.11978 5.13233 8.14324 4.91179C8.1667 4.69126 8.2771 4.48917 8.45 4.35028C8.62431 4.19691 8.85469 4.12322 9.08565 4.14695C9.31661 4.17067 9.52719 4.28968 9.66667 4.47528L13.6917 9.47528C13.9444 9.78278 13.9444 10.2261 13.6917 10.5336L9.525 15.5336C9.35545 15.7382 9.09853 15.8496 8.83334 15.8336Z" fill="#212B36"/>
                 </svg>
               </div>
+            </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<script>
+  function changeRowsPerPage(value) {
+    window.location.href = window.location.pathname + "?per_page=" + value;
+  }
+</script>

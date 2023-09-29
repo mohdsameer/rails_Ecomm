@@ -1,12 +1,16 @@
 class SessionsController < ApplicationController
+  skip_before_action :require_login
   def new
+    if current_user.present?
+       redirect_to root_path, notice: 'Already Login'
+    end
   end
 
   def create
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect_to dashboard_index_path, notice: 'Login successful!'
+      redirect_to root_path, notice: 'Login successful!'
     else
       flash[:alert] = 'Invalid email or password'
       render :new
