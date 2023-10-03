@@ -1,13 +1,13 @@
 <div class="orders_page_wrapper <%= current_user.type == "Designer" || current_user.type == "Admin" ? 'designer_orders' : '' %>">
   <%= render "shared/sidebar" %>
 
-  <% if current_user.type == "Designer" || current_user.type == "Admin" %>
+  <% if !current_user.type == "Designer" || current_user.type == "Admin" %>
     <%= render "designer_index" %>
   <% else %>
     <%= render "producer_index" %>
   <% end %>
-  
 </div>
+
 
 <script type="text/javascript">
   function changeRowsPerPage(value) {
@@ -36,5 +36,9 @@
   });
   $('.collapse_hide').click(function () {
     $(this).closest('.tbody_row').find('.collapse_data').slideUp(800);
+  });
+
+  $('.drop_icon_box').click(function() {
+    $(this).closest('.tbody_row').find('.menu_drop').toggle();
   });
 </script>
