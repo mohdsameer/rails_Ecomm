@@ -8,27 +8,30 @@
         <th class="px-5 py-3 custom_col">Product Name</th>
         <th class="px-5 py-3 custom_col">Product Image</th>
         <th class="px-5 py-3 custom_col">Product Quantity</th>
+        <th class="px-5 py-3 custom_col">color</th>
       </tr>
 
       <% @products.each do |product| %>
-        <tr>
-          <td><%=product.id %></td>
-          <td><%=product.name %></td>
-          <td><% if product.image.attached? %>
-                <!-- <%= image_tag product.image %> -->
-                <%= image_tag asset_path('dummy-product.png') %>
-              <% else %>
-                <%= image_tag asset_path('dummy-product.png') %>
-              <% end %>
-          </td>
-          <td>
-            <div class="quantity-control">
-              <button type="button" class="decrement">-</button>
-              <%= number_field_tag "products[#{product.id}]", 0, class: "quantity_input" %>
-              <button type="button" class="increment">+</button>
-            </div>
-          </td>
-        </tr>
+        <% product.variants.each do |variant|%>
+          <tr>
+            <td><%=variant.product.id %></td>
+            <td><%=variant.product.name %></td>
+            <td><% if variant.image.attached? %>
+                  <%= image_tag variant.image %>
+                <% else %>
+                  <%= image_tag asset_path('dummy-product.png') %>
+                <% end %>
+            </td>
+            <td><%= variant.color%>
+            <td>
+              <div class="quantity-control">
+                <button type="button" class="decrement">-</button>
+                <%= number_field_tag "variants[#{variant.id}]", 0, class: "quantity_input" %>
+                <button type="button" class="increment">+</button>
+              </div>
+            </td>
+          </tr>
+        <%end%>
       <%end%>
       <div class="field">
         <%= label_tag :customer_name %>

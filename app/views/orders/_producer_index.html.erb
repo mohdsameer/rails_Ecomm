@@ -212,6 +212,7 @@
                               <div class="items_wrapper">
                                 <% i = 1 %>
                                 <% order.order_products.each do |order_product| %>
+                                  <% variant = Variant.find(order_product.variant_id) %>
                                   <div class="order_items_row">
                                     <div class="items_num"><%=i %></div>
                                     <div class="items_table">
@@ -234,7 +235,7 @@
                                                 <div class="group_btn">
                                                   <div class="left_btn black_box"><%= order_product.product_quantity%></div>
                                                 <!-- TODO this line is static -->
-                                                  <div class="input_grop">Black</div>
+                                                  <div class="input_grop"><%= variant.color%></div>
                                                 </div>
                                               </div>
                                             </td>
@@ -282,7 +283,7 @@
                                               <div class="content_item">
                                                 <div class="table_data">
                                                   <div class="value_row"><span><b>Aisle:</b></span> G21 </div>
-                                                  <div class="value_row"><span><b>Qty:</b></span><%= order_product.product.variants.pluck(:inventory).sum %></div>
+                                                  <div class="value_row"><span><b>Qty:</b></span><%=variant.inventory %></div>
                                                 </div>
                                                 <!-- <div class="item_status">In Stock</div> -->
                                                 <div class="item_status low_stock">Low Stock</div>

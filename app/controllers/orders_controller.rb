@@ -26,10 +26,10 @@ class OrdersController < ApplicationController
     @order.front_side_image.attach(params[:front_side_image])
     @order.back_side_image.attach(params[:back_side_image])
 
-
-    params[:products].each do |id, quantity|
+    params[:variants].each do |id, quantity|
       if quantity.to_i > 0
-        @order.order_products.create(product_id: id.to_i, product_quantity: quantity.to_i)
+        product_id = Variant.find(id).product
+        @order.order_products.create(variant_id: id.to_i, product_quantity: quantity.to_i,product_id: product_id.id)
       end
     end
     redirect_to orders_path, notice: 'order was successfully created.'

@@ -1,0 +1,6 @@
+<%= form_for @variant, url: update_inventory_variant_path(@variant), method: :patch do |variant| %>
+    <%= variant.label :inventory %>
+    <%= variant.text_field :inventory ,class: "item_text" %>
+
+    <%= variant.submit 'Update inventory', class: "btn btn-primary" %>
+<% end %>

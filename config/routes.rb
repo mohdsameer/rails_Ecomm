@@ -14,8 +14,11 @@ Rails.application.routes.draw do
   end
   
   resources :orders
-  resources :variants
-
+  resources :variants do
+     get 'inventory_history', on: :collection
+     get 'edit_inventory', on: :member
+     patch 'update_inventory', on: :member
+  end
 # Etsy routes
   get '/import_etsy_products', to: 'etsy_import#import_products' 
 # Sessions routes
