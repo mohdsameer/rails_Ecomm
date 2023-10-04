@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_28_052952) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_04_070848) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -97,6 +97,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_052952) do
     t.float "back_side_print_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "etsy_access_token"
+    t.string "etsy_refresh_token"
   end
 
   create_table "variants", force: :cascade do |t|

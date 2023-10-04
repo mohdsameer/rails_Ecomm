@@ -36,6 +36,7 @@ class OrdersController < ApplicationController
   end
 
   private
+
   def order_params
     params.permit(:etsy_order_id, :customer_name, :price, :order_status, :order_edit_status, :due_date, :shipping_label_image, :packing_slip_image, :gift_message_slip_image, :design_file_1_image, :design_file_2_image, :additional_file_image, :front_side_image, :back_side_image)
   end

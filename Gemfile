@@ -52,8 +52,8 @@ gem 'cocoon'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
-# Etsy api 
-gem 'etsy'
+# Etsy api
+gem 'ruby-etsy'
 
 # Pagination
 gem 'will_paginate'
@@ -86,3 +86,8 @@ group :test do
   gem "webdrivers"
 
 end
+
+gem 'rack-cors'
+gem 'pkce_challenge'
+gem 'oauth2'
+gem 'rest-client'

@@ -1,11 +1,11 @@
 class VariantsController < ApplicationController
-	def update
-		@variant = Variant.find(params[:id])
-		@variant.update(variant_params)
-		respond_to do |format|
-			format.js {render :variant_dimension}
-		end
-	end
+  def update
+    @variant = Variant.find(params[:id])
+    @variant.update(variant_params)
+    respond_to do |format|
+      format.js {render :variant_dimension}
+    end
+  end
 
 	def edit_inventory
 		@variant = Variant.find(params[:id])

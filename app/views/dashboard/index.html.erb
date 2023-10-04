@@ -1,8 +1,9 @@
 <div class="hero_wrapper">
   <%= render "shared/sidebar" %>
-    <% if current_user.type == "Designer" || current_user.type == "Admin" %>
-      <h1>Dashboard</h1>
-    <% else %>
-      <%= render "producer_panel_dashboard" %>
-    <% end %>
+
+  <% if current_user.type == "Designer" || current_user.type == "Admin" %>
+    <h1>Dashboard</h1>
+  <% else %>
+    <%= render "producer_panel_dashboard" %>
+  <% end %>
 </div>
