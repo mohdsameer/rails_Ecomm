@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_070848) do
     t.integer "product_quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "variant_id"
     t.index ["order_id"], name: "index_order_products_on_order_id"
     t.index ["product_id"], name: "index_order_products_on_product_id"
   end
@@ -92,9 +93,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_070848) do
     t.string "password_digest"
     t.string "company_name"
     t.string "location"
-    t.float "black_price"
-    t.float "front_side_print_price"
-    t.float "back_side_print_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "etsy_access_token"
@@ -115,6 +113,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_070848) do
     t.float "width"
     t.float "weight_lb"
     t.float "weight_oz"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

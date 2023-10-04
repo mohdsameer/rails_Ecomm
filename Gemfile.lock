@@ -180,6 +180,9 @@ GEM
       rack (>= 1.2, < 4)
       snaky_hash (~> 2.0)
       version_gem (~> 1.1)
+    paper_trail (15.0.0)
+      activerecord (>= 6.1)
+      request_store (~> 1.4)
     parse-http (1.0.1)
     pg (1.5.4)
     pkce_challenge (1.0.0)
@@ -235,6 +238,8 @@ GEM
     regexp_parser (2.8.1)
     reline (0.3.8)
       io-console (~> 0.5)
+    request_store (1.5.1)
+      rack (>= 1.4)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -273,6 +278,7 @@ GEM
     stimulus-rails (1.2.2)
       railties (>= 6.0.0)
     stringio (3.0.8)
+    stripe (9.3.0)
     thor (1.2.2)
     tilt (2.2.0)
     timeout (0.4.0)
@@ -322,6 +328,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   oauth2
+  paper_trail
   pg
   pkce_challenge
   pry-rails
@@ -335,6 +342,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   stimulus-rails
+  stripe
   turbo-rails
   tzinfo-data
   web-console

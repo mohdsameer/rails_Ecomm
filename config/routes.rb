@@ -29,4 +29,6 @@ Rails.application.routes.draw do
 
   get '/etsy/authorize', to: 'etsy#authorize'
   get '/etsy/callback', to: 'etsy#callback'
+
+  resources :payments
 end
