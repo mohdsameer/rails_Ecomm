@@ -41,6 +41,7 @@
             <th>Date</th>
           </tr>
           <% @variants.each do |variant| %>
+            <% next if variant.versions&.last&.reify&.inventory.nil? %>
             <tr>
               <td><%= variant.product.id %></td>
               <td class="product_img">
@@ -75,7 +76,7 @@
                 </div>
               </td>
               <td>
-                <% if variant.versions.present?%>
+                <% if variant.versions.present?  && variant.versions.last.event == "update"%>
                   <% qty =  variant.versions&.last&.reify&.inventory - variant.inventory %>
                   <%= qty.abs%>
                 <% else %>
@@ -86,14 +87,14 @@
               </td>
               <td>000000</td>
               <td>
-                <% if variant.versions.present?%>
+                <% if variant.versions.present? && variant.versions.last.event == "update"%>
                   <%= variant.user_type%>
                 <%else%>
                   -
                 <%end%>
               </td>
               <td>
-                <% if variant.versions.present? %>
+                <% if variant.versions.present? && variant.versions.last.event == "update"%>
                   <%= variant.created_at %>
                 <% else %>
                   -

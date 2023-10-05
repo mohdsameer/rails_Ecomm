@@ -11,8 +11,14 @@ Rails.application.routes.draw do
     get 'edit_producer', on: :member
     patch 'update_producer', on: :member
   end
-
-  resources :orders
+  
+  resources :orders do
+    member do
+      get :download
+      get :confirm
+      get :reject
+    end
+  end
 
   resources :variants do
     get 'inventory_history', on: :collection

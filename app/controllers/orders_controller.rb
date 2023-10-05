@@ -35,6 +35,34 @@ class OrdersController < ApplicationController
     redirect_to orders_path, notice: 'order was successfully created.'
   end
 
+  def confirm
+    @order = Order.find_by(id: params[:id])
+  end
+
+  def reject
+    @order = Order.find_by(id: params[:id])
+  end
+
+  def update
+    if params[:request_type] == "Confirm"
+      @order = Order.find_by(id: params[:id]).update(order_edit_status: 1)
+    elsif params[:request_type] == "Reject"
+      @order = Order.find_by(id: params[:id]).update(order_status: 1, reject_reason: params[:order][:reject_reason])
+    else
+      @order = Order.find_by(id: params[:id]).update(order_edit_status: 1)
+    end
+  end
+
+  def download
+    order = Order.find(params[:id])
+    if order.front_side_image.attached?
+      send_data order.front_side_image.download, filename: 'image.png', type: 'image/png'
+    else
+      flash[:error] = 'Image not found.'
+      redirect_to orders_path
+    end
+  end
+
   private
 
   def order_params

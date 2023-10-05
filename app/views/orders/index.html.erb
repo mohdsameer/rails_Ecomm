@@ -1,7 +1,7 @@
 <div class="orders_page_wrapper <%= current_user.type == "Designer" || current_user.type == "Admin" ? 'designer_orders' : '' %>">
   <%= render "shared/sidebar" %>
 
-  <% if !current_user.type == "Designer" || current_user.type == "Admin" %>
+  <% if current_user.type == "Designer" || current_user.type == "Admin" %>
     <%= render "designer_index" %>
   <% else %>
     <%= render "producer_index" %>
@@ -41,4 +41,13 @@
   $('.drop_icon_box').click(function() {
     $(this).closest('.tbody_row').find('.menu_drop').toggle();
   });
+
+
+  var $checkboxes = $('.custom_info_table .order_td input[type="checkbox"]');
+  $checkboxes.change(function(){
+    var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
+    $('#count-checked-checkboxes').text(countCheckedCheckboxes);
+  });
+
+  
 </script>

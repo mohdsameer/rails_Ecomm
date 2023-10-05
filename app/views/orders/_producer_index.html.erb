@@ -33,7 +33,7 @@
         <div id="tab2" class="tab-content">
           <div class="orders_details_box">
             <div class="toolbar_section">
-              <h5 class="toolbar_head">3 orders selected</h5>
+              <h5 class="toolbar_head"><span id="count-checked-checkboxes">0</span>&nbsp;orders selected</h5>
               <div class="toolbar_btn">
                 Download Design Files
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -110,19 +110,28 @@
                                 <div class="icon blue">
                                   <%= image_tag("fluent_vehicle") %>
                                 </div>
-                                <div class="icon">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                                    <path d="M10 9.5V5.5L3 12.5L10 19.5V15.4C15 15.4 18.5 17 21 20.5C20 15.5 17 10.5 10 9.5Z" fill="#212B36"/>
-                                  </svg>
+                                <div class="icon order_reject" id="order_reject_<%= order.id %>" data-id="<%= order.id %>">
+
+                                  <a href="<%= reject_order_path(order) %>"  data-turbo-frame="reject-order-modal">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                                      <path d="M10 9.5V5.5L3 12.5L10 19.5V15.4C15 15.4 18.5 17 21 20.5C20 15.5 17 10.5 10 9.5Z" fill="#212B36"/>
+                                    </svg>
+                                  </a>
                                 </div>
-                                <div class="icon">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                                    <path d="M9.86009 18.4999C9.58292 18.499 9.31856 18.3832 9.13009 18.1799L4.27009 13.0099C3.89177 12.6068 3.91192 11.9733 4.31509 11.5949C4.71826 11.2166 5.35177 11.2368 5.73009 11.6399L9.85009 16.0299L18.2601 6.82994C18.4926 6.54035 18.8665 6.40351 19.2311 6.47455C19.5956 6.54559 19.8908 6.81281 19.9976 7.16853C20.1044 7.52424 20.0052 7.90985 19.7401 8.16994L10.6001 18.1699C10.4134 18.3769 10.1488 18.4965 9.87009 18.4999H9.86009Z" fill="#212B36"/>
-                                  </svg>
+                                <div class="icon order_confirm" id="order_confirm_<%= order.id %>" data-id="<%= order.id %>">
+
+                                  <a href="<%= confirm_order_path(order) %>" data-turbo-frame="confirm-order-modal">
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                                      <path d="M9.86009 18.4999C9.58292 18.499 9.31856 18.3832 9.13009 18.1799L4.27009 13.0099C3.89177 12.6068 3.91192 11.9733 4.31509 11.5949C4.71826 11.2166 5.35177 11.2368 5.73009 11.6399L9.85009 16.0299L18.2601 6.82994C18.4926 6.54035 18.8665 6.40351 19.2311 6.47455C19.5956 6.54559 19.8908 6.81281 19.9976 7.16853C20.1044 7.52424 20.0052 7.90985 19.7401 8.16994L10.6001 18.1699C10.4134 18.3769 10.1488 18.4965 9.87009 18.4999H9.86009Z" fill="#212B36"/>
+                                    </svg>
+                                  </a>
                                 </div>
                               </div>
                             </div>
                           </div>
+
                           <div class="order_td last">
                             <div class="drop_menu">
                               <div class="drop_icon_box">
@@ -234,7 +243,6 @@
                                                 <% end %>
                                                 <div class="group_btn">
                                                   <div class="left_btn black_box"><%= order_product.product_quantity%></div>
-                                                <!-- TODO this line is static -->
                                                   <div class="input_grop"><%= variant.color%></div>
                                                 </div>
                                               </div>
@@ -247,7 +255,7 @@
                                                   <%= image_tag asset_path('dummy-product.png') %>
                                                 <% end %>
                                                 <div class="group_btn">
-                                                  <div class="download_btn">
+                                                  <%= link_to download_order_path(order_product.order), class: "download_btn" do %>
                                                     <svg  xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
                                                       <path d="M5.16675 22.6667C5.16675 22.0223 5.68908 21.5 6.33341 21.5H22.6667C23.3111 21.5 23.8334 22.0223 23.8334 22.6667C23.8334 23.311 23.3111 23.8333 22.6667 23.8333H6.33341C5.68908 23.8333 5.16675 23.311 5.16675 22.6667Z" fill="#637381"/>
                                                       <path d="M6.33341 23.8333C5.68908 23.8333 5.16675 23.311 5.16675 22.6667V20.3333C5.16675 19.689 5.68908 19.1667 6.33341 19.1667C6.97775 19.1667 7.50008 19.689 7.50008 20.3333V22.6667C7.50008 23.311 6.97775 23.8333 6.33341 23.8333Z" fill="#637381"/>
@@ -255,7 +263,7 @@
                                                       <path d="M14.5001 18C14.2582 18.0018 14.0217 17.9285 13.8234 17.79L9.15675 14.5C8.63313 14.1286 8.508 13.4039 8.87675 12.8783C9.05533 12.6235 9.32834 12.4505 9.63506 12.398C9.94179 12.3454 10.2568 12.4175 10.5101 12.5983L14.5001 15.3867L18.4667 12.4C18.9822 12.0134 19.7135 12.1179 20.1001 12.6333C20.4867 13.1488 20.3822 13.8801 19.8667 14.2667L15.2001 17.7667C14.9981 17.9181 14.7525 18 14.5001 18Z" fill="#637381"/>
                                                       <path d="M14.5001 15.6667C13.8558 15.6667 13.3334 15.1443 13.3334 14.5V5.16667C13.3334 4.52233 13.8558 4 14.5001 4C15.1444 4 15.6667 4.52233 15.6667 5.16667V14.5C15.6667 15.1443 15.1444 15.6667 14.5001 15.6667Z" fill="#637381"/>
                                                     </svg>
-                                                  </div>
+                                                  <% end %>
                                                 </div>
                                               </div>
                                             </td>
@@ -267,7 +275,7 @@
                                                   <%= image_tag asset_path('dummy-product.png') %>
                                                 <% end %>
                                                 <div class="group_btn">
-                                                  <div class="download_btn">
+                                                  <%= link_to download_order_path(order_product.order), class: 'download_btn' do %>
                                                     <svg  xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
                                                       <path d="M5.16675 22.6667C5.16675 22.0223 5.68908 21.5 6.33341 21.5H22.6667C23.3111 21.5 23.8334 22.0223 23.8334 22.6667C23.8334 23.311 23.3111 23.8333 22.6667 23.8333H6.33341C5.68908 23.8333 5.16675 23.311 5.16675 22.6667Z" fill="#637381"/>
                                                       <path d="M6.33341 23.8333C5.68908 23.8333 5.16675 23.311 5.16675 22.6667V20.3333C5.16675 19.689 5.68908 19.1667 6.33341 19.1667C6.97775 19.1667 7.50008 19.689 7.50008 20.3333V22.6667C7.50008 23.311 6.97775 23.8333 6.33341 23.8333Z" fill="#637381"/>
@@ -275,7 +283,7 @@
                                                       <path d="M14.5001 18C14.2582 18.0018 14.0217 17.9285 13.8234 17.79L9.15675 14.5C8.63313 14.1286 8.508 13.4039 8.87675 12.8783C9.05533 12.6235 9.32834 12.4505 9.63506 12.398C9.94179 12.3454 10.2568 12.4175 10.5101 12.5983L14.5001 15.3867L18.4667 12.4C18.9822 12.0134 19.7135 12.1179 20.1001 12.6333C20.4867 13.1488 20.3822 13.8801 19.8667 14.2667L15.2001 17.7667C14.9981 17.9181 14.7525 18 14.5001 18Z" fill="#637381"/>
                                                       <path d="M14.5001 15.6667C13.8558 15.6667 13.3334 15.1443 13.3334 14.5V5.16667C13.3334 4.52233 13.8558 4 14.5001 4C15.1444 4 15.6667 4.52233 15.6667 5.16667V14.5C15.6667 15.1443 15.1444 15.6667 14.5001 15.6667Z" fill="#637381"/>
                                                     </svg>
-                                                  </div>
+                                                  <% end %>
                                                 </div>
                                               </div>
                                             </td>
@@ -366,6 +374,8 @@
   </div>
 </div>
 
+<turbo-frame id="confirm-order-modal"></turbo-frame>
+<turbo-frame id="reject-order-modal"></turbo-frame>
 <%#= render partial: "cancel_request_popup" %>
 <%#= render partial: "reject_order_popup" %>
 <%#= render partial: "confirm_order" %>

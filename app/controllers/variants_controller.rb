@@ -23,7 +23,6 @@ class VariantsController < ApplicationController
 	end
 
 	def inventory_history
-		# PaperTrail::Version.where(event: "update")
 		@variants = Variant.all
 	end
 
