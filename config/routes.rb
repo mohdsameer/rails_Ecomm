@@ -17,6 +17,10 @@ Rails.application.routes.draw do
       get :download
       get :confirm
       get :reject
+      get :send_message
+      post :message_create
+      get :cancel_request
+      post :update_cancel_status
     end
   end
 

@@ -44,5 +44,37 @@ export default class extends Controller {
       $('.reject_popup_wrapper').find('.cancel_flash').removeClass('show_cancel_flash');
       $('.reject_popup_wrapper').find('.reject_pop_box').show();
     });
+
+    $( ".contact_admin" ).each(function(index) {
+      $(this).on("click", function(){
+        $('.send_msg_popup').show();
+      });
+    });
+    $('.submit_msg').click(function() {
+      $('.send_msg_wrapper').find('.send_msg_pop_box').hide();
+      $('.send_msg_wrapper').find('.success_flash').addClass('show_flash');
+    });
+    $('.close_submit_popup').click(function() {
+      $('.send_msg_popup').hide();
+      $('.send_msg_wrapper').find('.success_flash').removeClass('show_flash');
+      $('.send_msg_wrapper').find('.send_msg_pop_box').show();
+    });
+
+      // reject modal js
+    $( ".order_cancel" ).each(function(index) {
+      $(this).on("click", function(){
+        $('.cancel_request_popup').show();
+      });
+    });
+
+    $('.accept_cancel_order').click(function() {
+      $('.cancel_request_wrapper').find('.cancel_request_box').hide();
+      $('.cancel_request_wrapper').find('.cancel_flash').addClass('show_cancel_flash');
+    });
+    $('.close_cancel_order').click(function() {
+      $('.cancel_request_popup').hide();
+      $('.cancel_request_wrapper').find('.cancel_flash').removeClass('show_cancel_flash');
+      $('.cancel_request_wrapper').find('.cancel_request_box').show();
+    });
   };
 };

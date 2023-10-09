@@ -6,12 +6,9 @@
         <div class="reject_body">
 
           <%= form_for @order, url: order_path(@order, request_type: "Reject") do |o| %>
-
             <div class="send_text h-100 w-100">
               <%= o.label :Add_a_Comment %>
               <%= o.text_area :reject_reason ,class: "w-100", placeholder: "A product was already printed. Please let me know how to proceed with this order" %>
-              <!-- <label>Add a Comment</label> -->
-              <!-- <textarea class="w-100">A product was already printed. Please let me know how to proceed with this order.</textarea> -->
             </div>
 
             <div class="reject_foot">

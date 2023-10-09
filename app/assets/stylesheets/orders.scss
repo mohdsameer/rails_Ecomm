@@ -653,6 +653,7 @@
                         font-size: 0.868vw;
                         font-weight: 700;
                         line-height: 1.505vw;
+                        text-decoration: none;
 
                         &.accept_btn {
                           background: #ff5630;
@@ -1049,7 +1050,7 @@
   z-index: 1050;
   display: none;
 
-  .confirm_order_wrapper {
+  .confirm_order_wrapper, .cancel_request_wrapper {
     position: absolute;
     left: 0;
     top: 0;
@@ -1430,6 +1431,7 @@
 }
 
 .send_msg_popup {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -1529,7 +1531,7 @@
     }
 
     .success_flash {
-      display: flex;
+      display: none;
       padding: 1.389vw 2.546vw;
       flex-direction: column;
       justify-content: center;
@@ -1538,6 +1540,10 @@
       border-radius: 1.389vw;
       background: #F4F6F8;
       position: relative;
+
+      &.show_flash {
+        display: flex;
+      }
 
       .flash_content {
         display: flex;

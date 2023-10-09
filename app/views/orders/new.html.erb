@@ -70,7 +70,10 @@
         <%= label_tag :back_side,'Back Side' %>
         <%= file_field_tag "back_side_image" %>
       </div>
-
+      <div class="field">
+        <%= label_tag :additional_comment %>
+        <%= text_field_tag :additional_comment %>
+      </div>
 
     </table>
       <%= submit_tag 'Submit Order', class: 'btn btn-primary' %>
