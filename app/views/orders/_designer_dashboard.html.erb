@@ -1,0 +1,90 @@
+<div class="designer_dasboard_wrapper">
+  <div class="order_head">
+    <div class="head_content">
+      <div class="manual_btn">
+        <svg class="plus_icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M15.833 9.16658H10.833V4.16659C10.833 3.70635 10.4599 3.33325 9.99967 3.33325C9.53944 3.33325 9.16634 3.70635 9.16634 4.16659V9.16658H4.16634C3.7061 9.16658 3.33301 9.53968 3.33301 9.99992C3.33301 10.4602 3.7061 10.8333 4.16634 10.8333H9.16634V15.8333C9.16634 16.2935 9.53944 16.6666 9.99967 16.6666C10.4599 16.6666 10.833 16.2935 10.833 15.8333V10.8333H15.833C16.2932 10.8333 16.6663 10.4602 16.6663 9.99992C16.6663 9.53968 16.2932 9.16658 15.833 9.16658Z" fill="white"/>
+        </svg>
+        Create Manual Order
+      </div>
+      <div class="create_bell_box">
+        <%= image_tag("ic_notifications", class:"create_bell_icon") %>
+        <div class="create_notification">1</div>
+      </div>
+    </div>
+  </div>
+  <div class="designer_name">Designer 1</div>
+  <div class="total_wrap">
+    <div class="total_box">
+      <div class="total_head">Total Orders Completed</div>
+      <div class="total_count">1000</div>
+    </div>
+  </div>
+
+  <div class="designer_name finance">Finance</div>
+  <div class="total_wrap">
+    <div class="total_box finance_box">
+      <div class="total_head">finance_box</div>
+      <div class="total_count">$100</div>
+      <div class="group_text">
+        <div class="group_content">
+          <div class="text_head">Current balance</div>
+          <div class="text_data">$100.00</div>
+        </div>
+        <div class="group_content">
+          <div class="text_head">Current balance</div>
+          <div class="text_data">$100.00</div>
+        </div>
+        <div class="group_content">
+          <div class="text_head">Current balance</div>
+          <div class="text_data bold_text">$300.00</div>
+        </div>
+      </div>
+      <button class="request_btn">Request Payment Now</button>
+    </div>
+  </div>
+
+  <div class="designer_name finance">Payment History</div>
+
+  <div class="history_wrap">
+    <table class="history_table">
+      <tr class="w-100">
+        <th class="th">Company</th>
+        <th class="th">Contact</th>
+      </tr>
+
+      <% 9.times do %>
+      <tr>
+        <td class="td">00/00/0000</td>
+        <td class="td">$00.00</td>
+      </tr>
+      <%end%>
+    </table>
+    <div class="pages_content">
+      <div>
+        Rows per page:
+      </div>
+      <div class="d-flex align-items-center">
+        <div>20</div>
+        <div>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+            <path d="M16.3805 9.28957L12.5005 13.1696L8.62047 9.28957C8.23047 8.89957 7.60047 8.89957 7.21047 9.28957C6.82047 9.67957 6.82047 10.3096 7.21047 10.6996L11.8005 15.2896C12.1905 15.6796 12.8205 15.6796 13.2105 15.2896L17.8005 10.6996C18.1905 10.3096 18.1905 9.67957 17.8005 9.28957C17.4105 8.90957 16.7705 8.89957 16.3805 9.28957Z" fill="#212B36"/>
+          </svg>
+        </div>
+      </div>
+      <div>6-10 of 11</div>
+      <div class="d-flex">
+        <div>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+            <path d="M12.0247 15.8337C11.7726 15.8346 11.5336 15.7212 11.3747 15.5254L7.34973 10.5254C7.09697 10.2179 7.09697 9.77458 7.34973 9.46708L11.5164 4.46708C11.8109 4.1127 12.337 4.06419 12.6914 4.35874C13.0458 4.6533 13.0943 5.17936 12.7997 5.53375L9.07473 10.0004L12.6747 14.4671C12.8828 14.7168 12.9266 15.0648 12.787 15.3584C12.6474 15.652 12.3498 15.8375 12.0247 15.8337Z" fill="#919EAB" fill-opacity="0.8"/>
+          </svg>
+        </div>
+        <div>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+            <path d="M8.83334 15.8336C8.63863 15.834 8.44993 15.7662 8.3 15.6419C8.12958 15.5007 8.02238 15.2974 8.00206 15.0769C7.98173 14.8565 8.04996 14.637 8.19167 14.4669L11.925 10.0003L8.325 5.52528C8.1852 5.35312 8.11978 5.13233 8.14324 4.91179C8.1667 4.69126 8.2771 4.48917 8.45 4.35028C8.62431 4.19691 8.85469 4.12322 9.08565 4.14695C9.31661 4.17067 9.52719 4.28968 9.66667 4.47528L13.6917 9.47528C13.9444 9.78278 13.9444 10.2261 13.6917 10.5336L9.525 15.5336C9.35545 15.7382 9.09853 15.8496 8.83334 15.8336Z" fill="#212B36"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

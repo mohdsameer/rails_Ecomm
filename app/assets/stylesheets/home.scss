@@ -164,17 +164,18 @@
 
 .order_head {
   display: flex;
-  padding: 24px 44px;
+  padding: 1.389vw 2.546vw;
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
+  margin: 0 0 1.389vw;
 
   .head_content {
     display: flex;
-    padding: 12px 0px;
+    padding: 0.694vw 0px;
     justify-content: flex-end;
     align-items: center;
-    gap: 8px;
+    gap: 0.463vw;
     flex: 1 0 0;
 
     // bell icon css
@@ -217,7 +218,7 @@
       background: rgba(145, 158, 171, 0.24);
       width: 2.315vw;
       height: 2.315vw;
-      padding: 8px;
+      padding: 0.463vw;
     }
   }
 }
