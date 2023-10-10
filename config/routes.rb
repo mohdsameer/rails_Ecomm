@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get 'dashboard/inventories'
   get 'dashboard/inventories_second'
   get 'dashboard/manual_order'
+  get 'dashboard/choose_shiping'
+
   
   
   resources :products, only: [:index, :new, :create,:edit, :update] do

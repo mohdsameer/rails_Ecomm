@@ -120,7 +120,7 @@
 
 <!-- next popup -->
 
-<div class="status_pop_wrapper d-none">
+<div class="status_pop_wrapper">
   <div class="status_bar">
     <div class="left_section">
       <div class="bar_head">Order ID: 1</div>
@@ -231,10 +231,36 @@
 
 <!-- next popup -->
 
-<div class="duplicate_pop">
+<div class="duplicate_pop d-none">
   <%= image_tag "bxs_copy", alt:"icon", class:"icon" %>
   <div class="pop_text">
     <div class="fw-bold">Duplicate Order</div>
     <div>Creates a new manual order</div>
+  </div>
+</div>
+
+
+
+<!-- next popup save changes -->
+
+<div class="save_changes_pop d-none">
+  <div class="save_head">Save Changes?</div>
+  <div class="save_text">If not saved, any progress made on this order will be lost and cannot be recovered.</div>
+  <div class="btn_group">
+    <button class="outline_btn save_btn">Don’t Save</button>
+    <button class="outline_btn save_btn green_bg">Save</button>
+  </div>
+</div>
+
+
+<!-- next popup -->
+
+<div class="save_changes_pop">
+  <div class="save_head head_alert">
+    <%= image_tag "yellow_alert", alt:"icon", class:"alert_icon" %>
+  It appears that at least one product in your order does not have a print file attached. Please confirm if you still wish to proceed with purchasing a blank product without any personalization.</div>
+  <div class="btn_group">
+    <button class="outline_btn save_btn">Continue Editing</button>
+    <button class="outline_btn save_btn black_bg">Confirm</button>
   </div>
 </div>

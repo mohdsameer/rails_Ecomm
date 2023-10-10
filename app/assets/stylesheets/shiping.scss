@@ -1,0 +1,99 @@
+.choose_shiping_wrapper {
+
+  .manual_order_header {
+    margin-top: 88px;
+  }
+
+  .shiping_info_wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+    .shiping_head {
+      display: flex;
+    }
+
+    .shiping_details_wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      width: 86.227vw;
+
+      .method_wrap {
+        width: 49.653vw;
+
+        .method_section {
+          display: flex;
+          padding: 3.588vw 2.778vw;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          border-radius: 8px;
+          background: var(--grey-100, #F9FAFB);
+
+          .method_head {
+            color: var(--text-light-primary, #212B36);
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 36px;
+          }
+          .method_flash {
+            display: flex;
+            padding: 10px 0px;
+            align-items: center;
+            border-radius: 8px;
+            background: var(--warning-light, #FFD666);
+            width: 44.097vw;
+            color: var(--info-darker, #003768);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+
+            .flash_icon {
+              width: 24px;
+              height: 24px;
+              margin: 0px 12px 0px 16px;
+            }
+          }
+
+          .method_list {
+            display: flex;
+            width: 44.097vw;
+            height: 3.588vw;
+            align-items: center;
+            background: var(--background-light-neutral, #F4F6F8);
+            margin-bottom: 6px;
+
+
+            .list_item {
+              width: 44.097vw;
+              height: 3.588vw;
+              color: var(--text-light-primary, #212B36);
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 24px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .checkbox {
+              margin: 8px;
+              width: 24px;
+              height: 24px;
+            }
+          }
+        }
+      }
+
+      .customer_wrap {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 16px;
+        width: 35.185vw;
+
+      }
+    }
+  }
+}
