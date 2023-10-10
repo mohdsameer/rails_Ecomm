@@ -64,24 +64,40 @@
               </td>
               <td class="inventory_change_icon">
                 <div>
-                  <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
-                    <path d="M16.5 8L15.09 6.59L9.5 12.17V0H7.5V12.17L1.92 6.58L0.5 8L8.5 16L16.5 8Z" fill="#FF5630"/>
-                  </svg>
+                  <%if variant.versions&.last&.reify&.inventory > variant.inventory%>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                      <path d="M16.5 8L15.09 6.59L9.5 12.17V0H7.5V12.17L1.92 6.58L0.5 8L8.5 16L16.5 8Z" fill="#FF5630"/>
+                    </svg>
+                    <div class="icon_text "><%= variant.versions&.last&.reify&.inventory %> to <%= variant.inventory%></div>
 
                   <!-- this is in loop that's why we use both icon -->
-                  <svg class="icon_green" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
-                    <path d="M0.499999 8L1.91 9.41L7.5 3.83L7.5 16L9.5 16L9.5 3.83L15.08 9.42L16.5 8L8.5 6.99382e-07L0.499999 8Z" fill="#00AB55"/>
-                  </svg>
-                  <div class="icon_text"><%= variant.versions&.last&.reify&.inventory %> to <%= variant.inventory%></div>
+                  <% else %>
+                    <svg class="icon_green" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                      <path d="M0.499999 8L1.91 9.41L7.5 3.83L7.5 16L9.5 16L9.5 3.83L15.08 9.42L16.5 8L8.5 6.99382e-07L0.499999 8Z" fill="#00AB55"/>
+                    </svg>
+                    <div class="icon_text green_text"><%= variant.versions&.last&.reify&.inventory %> to <%= variant.inventory%></div>
+                  <%end%>
                 </div>
               </td>
-              <td>
-                <% if variant.versions.present?  && variant.versions.last.event == "update"%>
-                  <% qty =  variant.versions&.last&.reify&.inventory - variant.inventory %>
-                  <%= qty.abs%>
-                <% else %>
-                  0
-                <%end%>
+              <td class="inventory_change_icon">
+                <div>
+                  <% if variant.versions.present?  && variant.versions.last.event == "update"%>
+                    <% qty = variant.versions&.last&.reify&.inventory - variant.inventory %>
+                    <% if qty.positive?%>
+                      <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                        <path d="M16.5 8L15.09 6.59L9.5 12.17V0H7.5V12.17L1.92 6.58L0.5 8L8.5 16L16.5 8Z" fill="#FF5630"/>
+                      </svg>
+                      <div class="icon_text"><%= qty%></div>
+                    <%else%>
+                      <svg class="icon_green" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                      <path d="M0.499999 8L1.91 9.41L7.5 3.83L7.5 16L9.5 16L9.5 3.83L15.08 9.42L16.5 8L8.5 6.99382e-07L0.499999 8Z" fill="#00AB55"/>
+                      </svg>
+                      <div class="icon_text green_text"><%= qty.abs%></div>
+                    <%end%>
+                  <%else%>
+                    0
+                  <%end%>
+                </div>
               </td>
               <td>Defective 
               </td>

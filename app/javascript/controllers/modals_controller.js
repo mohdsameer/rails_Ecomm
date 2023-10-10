@@ -7,6 +7,9 @@ export default class extends Controller {
 
   connect() {
     console.log('modals controller connected!')
+
+// confirm order js
+
     $(`#${this.modalIdValue}`).show();
 
     $( ".order_confirm" ).each(function(index) {
@@ -27,6 +30,8 @@ export default class extends Controller {
       $('.confirm_order_wrapper').find('.cancel_request_box').show();
     });
 
+// Reject order by producer js
+
     $( ".order_reject" ).each(function(index) {
       $(this).on("click", function(){
         var dataId = $(this).attr('data-id');
@@ -45,6 +50,8 @@ export default class extends Controller {
       $('.reject_popup_wrapper').find('.reject_pop_box').show();
     });
 
+// Send message to admin js
+
     $( ".contact_admin" ).each(function(index) {
       $(this).on("click", function(){
         $('.send_msg_popup').show();
@@ -60,7 +67,8 @@ export default class extends Controller {
       $('.send_msg_wrapper').find('.send_msg_pop_box').show();
     });
 
-      // reject modal js
+// reject modal js
+
     $( ".order_cancel" ).each(function(index) {
       $(this).on("click", function(){
         $('.cancel_request_popup').show();

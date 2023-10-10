@@ -876,6 +876,11 @@
                                     background: rgba(255, 171, 0, 0.16);
                                     color: #B76E00;
                                   }
+
+                                  &.out_of_stock {
+                                    background: var(--transparent-error-16, rgba(255, 86, 48, 0.16));
+                                    color:  #B71D18;
+                                  }
                                 }
                               }
                             }

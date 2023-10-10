@@ -2,7 +2,9 @@ class Order < ApplicationRecord
   include ActionView::Helpers::DateHelper
 
   #scope
-  scope :new_orders, -> { where(status: 'new') }
+  scope :new_orders, -> { where(order_status: 'onhold') }
+  scope :fullfilled_order, -> {where(order_status: 'fullfilled')}
+
 	# Enumarations
   enum order_status: { onhold: 0, rejected: 1, inproduction: 2, fullfilled: 3 }
   enum order_edit_status: { incomplete: 0, completed: 1 }

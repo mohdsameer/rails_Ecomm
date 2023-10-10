@@ -81,21 +81,34 @@
                 </div>
               </td>
               <td class="px-2">
-                <div class="yellow_badge">
-                  <div>Low Stock</div>
-                </div>
+
+                <% if variant.inventory > 100 %>
+                  <div class="yellow_badge">
+                    <div class="green_badge">In Stock</div>
+                  </div>
+
+                <% elsif variant.inventory < 100 && variant.inventory > 0 %>
+                  <div class="yellow_badge">
+                    <div>Low Stock</div>
+                  </div>
+
+                <%else%>
+                  <div class="yellow_badge">
+                    <div class="orange_badge">Out of Stock</div>
+                  </div>
+                <%end%>
+
               </td>
               <td class="aisle_no px-2">
                 <div class="d-flex align-items-center justify-content-around">
                   <span><%= variant.inventory%></span>
-
-                  <%= link_to 'update inventory',edit_inventory_variant_path(variant)%>
-
-                  <span class="aisle_icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6603 4.59986L19.4003 7.33986C20.1663 8.06963 20.1976 9.28152 19.4703 10.0499L10.4703 19.0499C10.1443 19.3731 9.7171 19.5744 9.2603 19.6199L5.0903 19.9999H5.0003C4.7345 20.0014 4.47902 19.897 4.2903 19.7099C4.07934 19.4997 3.97303 19.2064 4.0003 18.9099L4.4303 14.7399C4.47581 14.2831 4.67707 13.8558 5.0003 13.5299L14.0003 4.52986C14.7761 3.87441 15.92 3.90451 16.6603 4.59986ZM13.3203 7.99986L16.0003 10.6799L18.0003 8.72986L15.2703 5.99986L13.3203 7.99986Z" fill="#637381"/>
-                  </svg>
-                  </span>
+                  <a href="<%= edit_inventory_variant_path(variant) %>">
+                    <span class="aisle_icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6603 4.59986L19.4003 7.33986C20.1663 8.06963 20.1976 9.28152 19.4703 10.0499L10.4703 19.0499C10.1443 19.3731 9.7171 19.5744 9.2603 19.6199L5.0903 19.9999H5.0003C4.7345 20.0014 4.47902 19.897 4.2903 19.7099C4.07934 19.4997 3.97303 19.2064 4.0003 18.9099L4.4303 14.7399C4.47581 14.2831 4.67707 13.8558 5.0003 13.5299L14.0003 4.52986C14.7761 3.87441 15.92 3.90451 16.6603 4.59986ZM13.3203 7.99986L16.0003 10.6799L18.0003 8.72986L15.2703 5.99986L13.3203 7.99986Z" fill="#637381"/>
+                      </svg>
+                    </span>
+                  </a>
                 </div>
               </td>
             </tr>
