@@ -1,17 +1,14 @@
 .inventory_panel_wrapper {
   flex: 1;
-  height: 1287px;
-  padding: 0px 66px 0px 22px;
-  gap: 24px;
-
+  padding: 0px 3.819vw 0px 1.273vw;
 
   .panel_header {
     display: flex;
-    flex: 1;
-    padding: 1.389vw 0px;
-    flex-direction: column;
+    padding: 1.389vw 2.546vw;
+    justify-content: flex-end;
     align-items: center;
-    gap: 2.778vw;
+    width: 100%;
+    margin: 0 0 0.984vw;
 
     .header_box {
       display: flex;
@@ -57,35 +54,34 @@
   }
 
   .inventory_head {
-    color: var(--text-light-primary, #212B36);
-    font-family: Public Sans;
-    font-size: 24px;
+    color: #212B36;
+    font-size: 1.389vw;
     font-weight: 700;
-    line-height: 36px;
+    line-height: 2.083vw;
+    margin: 0 0 1.389vw;
   }
 
   .inventory_content_box {
-    padding: 24px 5px 24px 12px;
+    padding: 1.389vw 0.289vw 1.389vw 0.694vw;
 
     .history_btn {
-      padding: 11px 22px;
-      border-radius: 8px;
-      border: 1px solid var(--secondary-main, #36F);
-      background: var(--grey-700, #454F5B);
-      color: var(--secondary-contrast-text, #FFF);
-      font-family: Public Sans;
-      font-size: 15px;
+      padding: 0.637vw 1.273vw;
+      border-radius: 0.463vw;
+      border: 1px solid #36F;
+      background: #454F5B;
+      color: #FFF;
+      font-size: 0.868vw;
       font-weight: 700;
-      line-height: 26px; /* 173.333% */
+      line-height: 1.505vw;
     }
 
     .search_box {
       display: flex;
-      margin: 22px 0px;
+      margin: 1.273vw 0px;
       padding: 16px 14px;
       align-items: center;
-      gap: 8px;
-      border-radius: 8px;
+      gap: 0.463vw;
+      border-radius: 0.463vw;
       border: 1px solid rgba(145, 158, 171, 0.32);
 
       .search_input {
