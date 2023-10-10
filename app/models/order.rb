@@ -1,6 +1,10 @@
 class Order < ApplicationRecord
   include ActionView::Helpers::DateHelper
 
+  #scope
+  scope :new_orders, -> { where(order_status: 'onhold') }
+  scope :fullfilled_order, -> {where(order_status: 'fullfilled')}
+
 	# Enumarations
   enum order_status: { onhold: 0, rejected: 1, inproduction: 2, fullfilled: 3 }
   enum order_edit_status: { incomplete: 0, completed: 1 }
@@ -9,6 +13,8 @@ class Order < ApplicationRecord
   #Association
   has_many :order_products
   has_many :products, through: :order_products
+  has_many :messages
+  has_one  :cancel_request
 
   #Attachment
   has_one_attached :shipping_label_image
@@ -20,8 +26,12 @@ class Order < ApplicationRecord
   has_one_attached :front_side_image
   has_one_attached :back_side_image
 
-
+  #method
   def order_received
     distance_of_time_in_words(created_at, Time.current)
+  end
+
+  def created_on
+    messages.last.created_at.strftime('%B %e, %Y')
   end
 end

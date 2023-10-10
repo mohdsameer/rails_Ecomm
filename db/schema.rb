@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_28_052952) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_05_085203) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_052952) do
     t.integer "product_quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "variant_id"
     t.index ["order_id"], name: "index_order_products_on_order_id"
     t.index ["product_id"], name: "index_order_products_on_product_id"
   end
@@ -62,6 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_052952) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "priority", default: 0
+    t.string "reject_reason"
   end
 
   create_table "product_producer_pricings", force: :cascade do |t|
@@ -94,6 +96,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_052952) do
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "etsy_access_token"
+    t.string "etsy_refresh_token"
   end
 
   create_table "variants", force: :cascade do |t|
@@ -110,6 +114,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_052952) do
     t.float "width"
     t.float "weight_lb"
     t.float "weight_oz"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

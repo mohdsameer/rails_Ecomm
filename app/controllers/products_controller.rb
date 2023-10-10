@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
     if current_user&.type.eql?("Admin")
       @products = Product.all.paginate(page: params[:page], per_page: per_page)
     elsif current_user&.type.eql?("Producer")
-      @products = Product.all.paginate(page: params[:page], per_page: per_page)
+      @orders = Order.all.paginate(page: params[:page], per_page: per_page)
     else
       @products = Product.all.paginate(page: params[:page], per_page: per_page)
     end
@@ -35,7 +35,6 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @variants = @product.variants
     @producer = Producer.all
- 
   end
 
   def remove_variant
@@ -63,6 +62,7 @@ class ProductsController < ApplicationController
   def update_producer
     @product_producer_pricing = ProductProducerPricing.find_by(user_id: params[:user_id], product_id: params[:product_id])
     @product = Product.find_by(id: params[:product_id])
+
     if @product_producer_pricing.update(product_producer_params)
       redirect_to edit_product_path(@product), notice: 'Producer was successfully updated.'
     end

@@ -18,9 +18,6 @@ export default class extends Controller {
     const saveButton = this.saveVariantTarget;
     const variantId = this.variantIdValue;
 
-    console.log('save button', saveButton);
-    console.log('variantId', variantId);
-
     $(saveButton).click(function() {
       $.ajax({
         url: `/variants/${variantId}`,

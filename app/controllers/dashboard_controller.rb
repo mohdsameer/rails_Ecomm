@@ -1,6 +1,5 @@
 class DashboardController < ApplicationController
   def index
-
   end
 
   def producer_panel_dasboard
@@ -16,6 +15,5 @@ class DashboardController < ApplicationController
   end
 
   def manual_order
-    
   end
 end
