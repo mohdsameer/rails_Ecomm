@@ -161,6 +161,36 @@
 
 
 //** Main panel navigation Css **//
+// bell icon css
+.create_bell_box {
+  display: flex;
+  padding: 0.463vw;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .create_bell_icon {
+    width: 1.389vw;
+    height: 1.389vw;
+  }
+
+  .create_notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    background: #ff5630;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    font-family: Public Sans;
+    font-size: 0.694vw;
+    font-weight: 400;
+    height: 1.157vw;
+    width: 1.157vw;
+  }
+}
 
 .order_head {
   display: flex;
@@ -177,38 +207,6 @@
     align-items: center;
     gap: 0.463vw;
     flex: 1 0 0;
-
-    // bell icon css
-
-    .create_bell_box {
-      display: flex;
-      padding: 0.463vw;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-
-      .create_bell_icon {
-        width: 1.389vw;
-        height: 1.389vw;
-      }
-
-      .create_notification {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 100%;
-        background: #ff5630;
-        position: absolute;
-        top: 0;
-        right: 0;
-        color: #fff;
-        font-family: Public Sans;
-        font-size: 0.694vw;
-        font-weight: 400;
-        height: 1.157vw;
-        width: 1.157vw;
-      }
-    }
 
     .account_icon {
       display: flex;

@@ -1,17 +1,14 @@
 .inventory_panel_wrapper {
   flex: 1;
-  height: 1287px;
-  padding: 0px 66px 0px 22px;
-  gap: 24px;
-
+  padding: 0px 3.819vw 0px 1.273vw;
 
   .panel_header {
     display: flex;
-    flex: 1;
-    padding: 1.389vw 0px;
-    flex-direction: column;
+    padding: 1.389vw 2.546vw;
+    justify-content: flex-end;
     align-items: center;
-    gap: 2.778vw;
+    width: 100%;
+    margin: 0 0 0.984vw;
 
     .header_box {
       display: flex;
@@ -59,42 +56,41 @@
   }
 
   .inventory_head {
-    color: var(--text-light-primary, #212B36);
-    font-family: Public Sans;
-    font-size: 24px;
+    color: #212B36;
+    font-size: 1.389vw;
     font-weight: 700;
-    line-height: 36px;
+    line-height: 2.083vw;
+    margin: 0 0 1.389vw;
   }
 
   .inventory_content_box {
-    padding: 24px 5px 24px 12px;
+    padding: 1.389vw 0.289vw 1.389vw 0.694vw;
 
     .history_btn {
-      padding: 11px 22px;
-      border-radius: 8px;
-      border: 1px solid var(--secondary-main, #36F);
-      background: var(--grey-700, #454F5B);
-      color: var(--secondary-contrast-text, #FFF);
-      font-family: Public Sans;
-      font-size: 15px;
+      padding: 0.637vw 1.273vw;
+      border-radius: 0.463vw;
+      border: 1px solid #36F;
+      background: #454F5B;
+      color: #FFF;
+      font-size: 0.868vw;
       font-weight: 700;
-      line-height: 26px; /* 173.333% */
+      line-height: 1.505vw;
       text-decoration: none;
     }
 
     .search_box {
       display: flex;
-      margin: 22px 0px;
+      margin: 1.273vw 0px;
       padding: 16px 14px;
       align-items: center;
-      gap: 8px;
-      border-radius: 8px;
+      gap: 0.463vw;
+      border-radius: 0.463vw;
       border: 1px solid rgba(145, 158, 171, 0.32);
 
       .search_input {
         color: var(--text-light-disabled, #919EAB);
         font-family: Public Sans;
-        font-size: 16px;
+        font-size: 0.926vw;
         font-weight: 400;
         line-height: 24px;
         width: 100%;
@@ -107,12 +103,12 @@
 
     .inventory_table_wrap {
       padding: 24px;
-      border-radius: 16px;
+      border-radius: 0.926vw;
       background: var(--background-light-paper, #FFF);
-      box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+      box-shadow: 0px 0.694vw 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
 
       th {
-        padding: 16px 8px;
+        padding: 0.926vw 8px;
         background: var(--text-dark-disabled, #637381);
         border-right: 2px solid white;
         color: var(--text-dark-primary, #FFF);
@@ -123,21 +119,21 @@
         text-align: center;
 
         &.left {
-          border-radius: 12px 0px 0px 0px;
+          border-radius: 0.694vw 0px 0px 0px;
         }
         &.right {
-          border-radius: 0px 12px 0px 0px;
+          border-radius: 0px 0.694vw 0px 0px;
         }
       }
 
       td {
         border-radius: 4px;
         background: #FFF;
-        box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+        box-shadow: 0px 0.694vw 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
         padding: 10px 20px;
         color: var(--text-light-primary, #212B36);
         font-family: Public Sans;
-        font-size: 12px;
+        font-size: 0.694vw;
         font-weight: 600;
         line-height: 24px;
         text-align: center;
@@ -193,7 +189,7 @@
             .icon_text {
               color: var(--error-main, #FF5630);
               font-family: Public Sans;
-              font-size: 12px;
+              font-size: 0.694vw;
               font-weight: 600;
               line-height: 24px;
 
@@ -221,9 +217,9 @@
       .edit_pop_wrap {
         width: 736px;
         padding: 24px;
-        border-radius: 16px;
+        border-radius: 0.926vw;
         background: var(--background-light-paper, #FFF);
-        box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+        box-shadow: 0px 0.694vw 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
 
         &.small_pop {
           width: 370px;
@@ -267,7 +263,7 @@
         }
 
         .input_group {
-          padding: 16px 14px;
+          padding: 0.926vw 14px;
           position: relative;
           border-radius: 8px;
           border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
@@ -280,13 +276,13 @@
             padding: 0px 4px;
             color: var(--text-light-disabled, #919EAB);
             font-family: Public Sans;
-            font-size: 12px;
+            font-size: 0.694vw;
             font-weight: 400;
-            line-height: 12px;
+            line-height: 0.694vw;
           }
           input {
             width: 100%;
-            padding: 0px 12px;
+            padding: 0px 0.694vw;
             border: none;
 
             &:focus {
@@ -298,7 +294,7 @@
         .inventory_edit_btn {
           border-radius: 8px;
           background: var(--primary-main, #00AB55);
-          padding: 6px 16px;
+          padding: 6px 0.926vw;
           color: var(--primary-contrast-text, #FFF);
           text-align: center;
           font-family: Public Sans;
@@ -316,7 +312,7 @@
       align-items: center;
       gap: 24px;
       background: var(--background-light-paper, #FFF);
-      border-radius: 0px 0px 16px 16px;
+      border-radius: 0px 0px 0.926vw 0.926vw;
       color: var(--text-light-primary, #212B36);
       text-align: right;
       font-family: Public Sans;
@@ -351,41 +347,43 @@
 
 
 
-    // user dashboard create manual order css here
+// user dashboard create manual order css here
 
+//** common css **//
 
+.manual_order_header {
+  padding: 1.389vw 7.060vw;
+  background: var(--primary-contrast-text, #FFF);
+  box-shadow: 0px 0.694vw 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+  margin-bottom: 0.926vw;
+
+  .back_btn_wrap {
+    display: flex;
+    padding: 0.231vw 0.579vw;
+    justify-content: center;
+    align-items: center;
+    gap: 0.463vw;
+    border-radius: 0.463vw;
+    background: var(--grey-300, #DFE3E8);
+    color: var(--text-light-primary, #212B36);
+    font-size: 0.810vw;
+    font-weight: 600;
+    line-height: 1.273vw;
+    border: none;
+    margin-bottom: 0.926vw;
+  }
+  .header_text {
+    color: var(--text-light-secondary, #637381);
+    font-family: Public Sans;
+    font-size: 0.926vw;
+    font-weight: 400;
+    line-height: 1.389vw;
+  }
+}
+
+//** common css **//
 
 .manual_order_wrapper {
-  .manual_order_header {
-    padding: 24px 122px;
-    background: var(--primary-contrast-text, #FFF);
-    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
-    margin-bottom: 16px;
-
-    .back_btn_wrap {
-      display: flex;
-      padding: 4px 10px;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      border-radius: 8px;
-      background: var(--grey-300, #DFE3E8);
-      color: var(--text-light-primary, #212B36);
-      font-family: Public Sans;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 22px;
-      border: none;
-      margin-bottom: 16px;
-    }
-    .header_text {
-      color: var(--text-light-secondary, #637381);
-      font-family: Public Sans;
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 24px;
-    }
-  }
 
   .manual_content_wrap {
     display: flex;
@@ -451,7 +449,7 @@
             gap: 4px;
 
             .left_head {
-              padding: 12px 8px;
+              padding: 0.694vw 8px;
               text-align: center;
               color: var(--text-light-secondary, #637381);
               text-align: center;
@@ -486,7 +484,7 @@
                   color: var(--text-light-primary, #212B36);
                   text-align: center;
                   font-family: Public Sans;
-                  font-size: 12px;
+                  font-size: 0.694vw;
                   font-weight: 400;
                   line-height: 18px;
                   padding: 10px 30px;
@@ -531,7 +529,7 @@
                 margin: 8px;
                 border-radius: 4px;
                 background: #FFF;
-                box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+                box-shadow: 0px 0.694vw 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
               }
 
               &.processing_img {
@@ -542,7 +540,7 @@
                 .process_text {
                   color: var(--text-light-secondary, #637381);
                   text-align: center;
-                  font-size: 12px;
+                  font-size: 0.694vw;
                   font-weight: 400;
                   line-height: 18px;
                   gap: 8px;
@@ -573,7 +571,7 @@
 
                   &.upload_txt {
                     color: #637381;
-                    font-size: 12px;
+                    font-size: 0.694vw;
                   }
 
                 }
@@ -615,10 +613,10 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      gap: 12px;
+      gap: 0.694vw;
       background: var(--background-light-paper, #FFF);
-      border-radius: 16px;
-      box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+      border-radius: 0.926vw;
+      box-shadow: 0px 0.694vw 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
 
       .upload_header {
         display: flex;
@@ -630,11 +628,11 @@
           height: 56px;
           justify-content: center;
           align-items: center;
-          padding: 16px 23px;
+          padding: 0.926vw 23px;
           background: var(--background-light-neutral, #F4F6F8);
           color: var(--text-light-secondary, #637381);
           font-family: Public Sans;
-          font-size: 12px;
+          font-size: 0.694vw;
           font-weight: 600;
           line-height: 24px;
         }
@@ -661,7 +659,7 @@
           .body_text {
             color: var(--text-light-disabled, #919EAB);
             font-family: Public Sans;
-            font-size: 12px;
+            font-size: 0.694vw;
             font-weight: 400;
             line-height: 18px;
           }
@@ -674,18 +672,18 @@
     .leave_any {
       position: relative;
       padding: 24px;
-      border-radius: 16px;
+      border-radius: 0.926vw;
       background: var(--background-light-paper, #FFF);
-      box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
-      margin-top: 12px;
+      box-shadow: 0px 0.694vw 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+      margin-top: 0.694vw;
 
       input {
         border-radius: 8px;
         border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
-        padding: 16px 14px;
+        padding: 0.926vw 14px;
         color: var(--text-light-primary, #212B36);
         font-family: Public Sans;
-        font-size: 16px;
+        font-size: 0.926vw;
         font-weight: 400;
         line-height: 24px;
         width: 100%;
@@ -703,9 +701,9 @@
         padding: 0px 4px;
         color: var(--text-light-disabled, #919EAB);
         font-family: Public Sans;
-        font-size: 12px;
+        font-size: 0.694vw;
         font-weight: 400;
-        line-height: 12px;
+        line-height: 0.694vw;
       }
     } 
   }
@@ -743,6 +741,86 @@
     }
   }
 
+  .shipping_pop_wrap {
+    display: inline-flex;
+    width: 66.84vw;
+    flex-direction: column;
+    gap: 2.199vw;
+    background: #FFF;
+
+    .shiping_form {
+      display: flex;
+      width: 66.782vw;
+      padding: 2.546vw 7.176vw;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2.141vw;
+      border-radius: 0.926vw;
+      background: var(--background-light-paper, #FFF);
+      box-shadow: 0px 0.694vw 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+
+      .ship_head {
+        display: flex;
+        width: 38.426vw;
+        height: 3.299vw;
+        justify-content: center;
+        align-items: center;
+        background: var(--background-light-neutral, #F4F6F8);
+        color: var(--text-light-primary, #212B36);
+        font-size: 0.694vw;
+        font-weight: 600;
+        line-height: 1.389vw;
+      }
+      .input_group {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.926vw;
+      }
+      .input_field {
+        width: 18.750vw;
+        padding: 0.926vw 14px;
+        overflow: hidden;
+        color: var(--text-light-disabled, #919EAB);
+        font-size: 0.926vw;
+        font-weight: 400;
+        line-height: 1.389vw;
+        border-radius: 0.463vw;
+        border: 0.058vw solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+        background: inherit;
+        &.big_size {
+          width: 38.426vw;
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .calulate_btn {
+        color: var(--info-contrast-text, #FFF);
+        font-size: 0.926vw;
+        font-weight: 600;
+        line-height: 1.389vw; /* 150% */
+        display: flex;
+        padding: 0.637vw 1.273vw;
+        justify-content: center;
+        align-items: center;
+        gap: 0.463vw;
+        flex: 1 0 0;
+        border-radius: 0.463vw;
+        background: var(--common-black, #000);
+        width: 38.426vw;
+        border: none;
+
+        .icon {
+          width: 1.389vw;
+          height: 1.389vw;
+        }
+      }
+    }
+  }
+
 }
 
 
@@ -751,20 +829,20 @@
         display: flex;
         height: 56px;
         align-items: center;
-        border-radius: 8px;
+        border-radius: 0.463vw;
         background: var(--grey-300, #DFE3E8);
         justify-content: space-between;
-        padding: 8px 24px;
+        padding: 0.463vw 24px;
 
         .icon_wrap {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 0.694vw;
 
           .icon_text {
             color: var(--text-light-primary, #212B36);
             font-family: Public Sans;
-            font-size: 16px;
+            font-size: 0.926vw;
             font-weight: 600;
             line-height: 24px;
           }
