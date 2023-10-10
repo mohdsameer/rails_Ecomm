@@ -1,0 +1,266 @@
+<!-- admin section pop ups here -->
+<!-- More Actions - Processing/Pending Status -->
+<div class="status_wrapper_pop d-none">
+  <a href="#" class="status_content">
+    <%= image_tag "call", alt:"icon", class:"icon" %>
+    <div class="content_text orange_text">Request Cancellation</div>
+  </a>
+  <a href="#" class="status_content">
+    <%= image_tag "flash", alt:"icon", class:"icon" %>
+    <div class="content_text">Mark Order as Urgent</div>
+  </a>
+  <a href="#" class="status_content">
+    <%= image_tag "ic_chat", alt:"icon", class:"icon" %>
+    <div class="content_text">Add Additional Comment</div>
+  </a>
+  <a href="#" class="status_content">
+    <%= image_tag "bxs_copy", alt:"icon", class:"icon" %>
+    <div class="content_text">Request Cancellation
+      <div class="sub_text">Creates a new manual order</div>
+    </div>
+  </a>
+</div>
+
+
+<!-- next popup here -->
+
+<div class="request_cancel_pop d-none">
+  <div class="request_head">Request Cancellation for this order</div>
+  <input class="input_field" type="text" placeholder="Please enter more information">
+  <button class="request_btn" >Submit</button>
+</div>
+
+<!-- flash message -->
+
+<a href="#" class="request_sent_flash d-none">
+  Request sent
+  <div href="#" class="x_icon">x</div>
+</a>
+
+
+<!-- send message to producer popup -->
+
+<div class="add_comment_pop d-none">
+  <div class="heading_text">Send a Message to Producer</div>
+  <div class="input_box">
+    <label class="box_label">Add a Comment</label>
+    <input class="box_input" type="text" placeholder="A product was already printed. Please let me know how to proceed with this order.">
+  </div>
+  <button class="comment_submit">Submit</button>
+</div>
+
+<!-- flash message -->
+
+<div class="received_msg_flash d-none">
+  <a href="#" class="cross_icon">x</a>
+  <div class="msg_box">
+    <%= image_tag "check", alt:"icon", class:"box_img" %>
+    <div class="msg_text">Your Message is successfully sent!</div>
+  </div>
+</div>
+
+
+
+<!-- admin order rejected popup -->
+
+
+<div class="edit_list_pop d-none">
+  <div class="edit_box">
+    <%= image_tag "download", alt:"icon", class:"icon" %>
+    <div class="edit_text">Print ETSY Packing Slip</div>
+  </div>
+  <div class="edit_box">
+    <%= image_tag "info_outline", alt:"icon", class:"icon" %>
+    <div class="edit_text">Request Revision</div>
+  </div>
+  <div class="edit_box">
+    <%= image_tag "orange_user", alt:"icon", class:"icon" %>
+    <div class="edit_text">Remove Assignee from the Order</div>
+  </div>
+</div>
+
+<!-- next popup -->
+
+<div class="cancel_pop d-none">
+  <div class="cancel_head">
+    <%= image_tag "shape", alt: "icon", class:"head_img" %>
+    <div class="head_text">Cancel Order 3?</div>
+  </div>
+  <div class="middle_text">Are you sure you want to cancel this order?</div>
+  <div class="btn_group">
+    <button class="orange_btn">Cancel</button>
+    <button class="outline_btn">Keep it.</button>
+  </div>
+</div>
+
+<div class="cancel_flash d-none">
+  <a href="#" class="cancel" >X</a>
+  <div class="head_text">Order 3 is now cancelled.</div>
+  <div class="cancel_text">Please check cancelled orders tab if you would like to duplicate your order and submit for production again.</div>
+</div>
+
+<!-- next popup -->
+
+<div class="request_pop d-none">
+  <div class="request_head">
+    <%= image_tag "ic_user_group", alt: "icon", class:"head_img" %>
+    <div  class="head_heading">Please include Instructions for Designer</div>
+  </div>
+  <div class="request_input_box">
+    <div class="input_wrap">
+      <input class="input_field" type="text" placeholder="please correct the typographical error in the design of the second item.">
+    </div>
+  </div>
+  <div class="bottom_group">
+    <button class="orange_btn purple">Request Revision</button>
+    <button class="outline_btn">Cancel</button>
+  </div>
+</div>
+
+
+<!-- next popup -->
+
+<div class="status_pop_wrapper">
+  <div class="status_bar">
+    <div class="left_section">
+      <div class="bar_head">Order ID: 1</div>
+      <div class="status_badge">In Production</div>
+    </div>
+    <div class="right_section">
+      Rudy
+      <%= image_tag "check", alt:"icon", class:"right_img" %>
+    </div>
+  </div>
+
+  <div class="create_date">Created Jul 29, 2022 at 11:32 AM</div>
+
+  <div class="msg_section">
+    <%= image_tag "ic_chat", alt:"icon", class:"msg_icon" %>
+    <div class="content_box">
+      <div class="msg_from">
+        <div class="left_text">Message from Admin:</div>
+        <div class="date_text">May 12, 2023</div>
+      </div>
+      <div class="content_text">A product was already produced in this order. Please let me know how to proceed.</div>
+    </div>
+  </div>
+
+  <div class="msg_section order_note">
+    <%= image_tag "chat", alt:"icon", class:"msg_icon" %>
+    <div class="content_box">
+      <div class="msg_from">
+        <div class="left_text">Order Note:</div>
+        <div class="date_text">May 10, 2023</div>
+      </div>
+      <div class="content_text">Priority Order -  Please ship asap! Thanks.</div>
+    </div>
+  </div>
+
+  <div class="msg_section order_rejected">
+    <%= image_tag "reject_info", alt:"icon", class:"msg_icon" %>
+    <div class="content_box">
+      <div class="msg_from">
+        <div class="left_text">Order is rejected.</div>
+        <div class="date_text">May 10, 2023</div>
+      </div>
+      <div class="content_text"><span>Reason for Rejection: </span>Please make sure to upload design image with transparent background. Also, please double check Shipping Address. Once you correct the issues, please resubmit for production. Please contact us if you have any question.</div>
+    </div>
+  </div>
+
+  <div class="order_info_section">
+    <div class="left_section">
+      <div class="left_head">20 oz YETI Tumbler</div>
+      <div class="left_sku">SKU: 9182739817381091830</div>
+      <div class="text_with_img_section">
+        <div class="text_section">
+          <div class="text">Color: <span>BLACK</span></div>
+          <div class="text">Size: <span>20 OZ</span></div>
+          <div class="text">Quantity: <span>2</span></div>
+          <div class="text">Fulfilled By Producer 1</div>
+        </div>
+        <div class="img_section">
+          <%= image_tag "trans_frame", alt:"image", class:"section_img" %>
+          <%= image_tag "trans_frame", alt:"image", class:"section_img" %>
+          <%= image_tag "trans_frame", alt:"image", class:"section_img" %>
+        </div>
+      </div>
+      <div class="cost_section">
+        <div>Production costs</div>
+        <div>USD 10.00</div>
+      </div>
+      <div class="cost_section small">
+        <div>Tracking details</div>
+        <div>--</div>
+      </div>
+    </div>
+    <div class="right_section">
+      <div class="order_info_link">
+        <div class="info_text">ETSY Order ID #: 34568275</div>
+        <%= image_tag "external_link", alt:"icon", class:"info_img" %>
+      </div>
+
+      <div class="buyer_info_section">
+        <div class="buyer_mail">
+          <div class="buyer_head">Customer</div>
+          <div class="buyer_text">Dacid Guerra email@gmail.com</div>
+        </div>
+        <div class="buyer_mail">
+          <div class="buyer_head">Shipping Address</div>
+          <div class="buyer_text">Sabrina Kezzi 55 Main Street Long Island, NY, 02011, US</div>
+        </div>
+      </div>
+
+      <div class="billing_section">
+        <div class="billing_head">Billing</div>
+        <div class="billing_info">
+          <div class="left_text">
+            <div>Production Cost:</div>
+            <div>Shipping Cost:</div>
+            <div class="fw-bold">Total Cost:</div>
+          </div>
+          <div class="right_text">
+            <div>USD 20.00</div>
+            <div>USD 10.00</div>
+            <div class="fw-bold">USD 30.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- next popup -->
+
+<div class="duplicate_pop d-none">
+  <%= image_tag "bxs_copy", alt:"icon", class:"icon" %>
+  <div class="pop_text">
+    <div class="fw-bold">Duplicate Order</div>
+    <div>Creates a new manual order</div>
+  </div>
+</div>
+
+
+
+<!-- next popup save changes -->
+
+<div class="save_changes_pop d-none">
+  <div class="save_head">Save Changes?</div>
+  <div class="save_text">If not saved, any progress made on this order will be lost and cannot be recovered.</div>
+  <div class="btn_group">
+    <button class="outline_btn save_btn">Don’t Save</button>
+    <button class="outline_btn save_btn green_bg">Save</button>
+  </div>
+</div>
+
+
+<!-- next popup -->
+
+<div class="save_changes_pop">
+  <div class="save_head head_alert">
+    <%= image_tag "yellow_alert", alt:"icon", class:"alert_icon" %>
+  It appears that at least one product in your order does not have a print file attached. Please confirm if you still wish to proceed with purchasing a blank product without any personalization.</div>
+  <div class="btn_group">
+    <button class="outline_btn save_btn">Continue Editing</button>
+    <button class="outline_btn save_btn black_bg">Confirm</button>
+  </div>
+</div>

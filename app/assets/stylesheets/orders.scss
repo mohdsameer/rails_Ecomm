@@ -191,6 +191,7 @@
         .menu_drop {
           position: absolute;
           right: 0;
+          z-index: 1;
           margin: 0.579vw 0 0;
           display: none;
           
@@ -652,6 +653,7 @@
                         font-size: 0.868vw;
                         font-weight: 700;
                         line-height: 1.505vw;
+                        text-decoration: none;
 
                         &.accept_btn {
                           background: #ff5630;
@@ -874,6 +876,11 @@
                                     background: rgba(255, 171, 0, 0.16);
                                     color: #B76E00;
                                   }
+
+                                  &.out_of_stock {
+                                    background: var(--transparent-error-16, rgba(255, 86, 48, 0.16));
+                                    color:  #B71D18;
+                                  }
                                 }
                               }
                             }
@@ -1046,8 +1053,9 @@
   width: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1050;
+  display: none;
 
-  .confirm_order_wrapper {
+  .confirm_order_wrapper, .cancel_request_wrapper {
     position: absolute;
     left: 0;
     top: 0;
@@ -1100,6 +1108,9 @@
           font-weight: 700;
           border-radius: 0.463vw;
           border: 1px solid rgba(145, 158, 171, 0.32);
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }
@@ -1117,8 +1128,12 @@
   box-shadow: -40px 40px 80px -8px rgba(145, 158, 171, 0.24);
   position: relative;
 
+  &.show_cancel_flash {
+    display: flex;
+  }
   .complete_icon {
-    margin: 1.389vw 0 0;
+    margin: 1.389vw auto 0;
+    width: fit-content;
 
     svg {
       height: 1.852vw;
@@ -1168,11 +1183,13 @@
     height: 1.62vw;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
 }
 
 
 .reject_popup {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -1193,7 +1210,6 @@
 
     .reject_pop_box {
       display: flex;
-      display: none;
       width: 26.042vw;
       flex-direction: column;
       align-items: center;
@@ -1222,6 +1238,10 @@
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
+
+        .edit_order {
+          width: 100%;
+        }
 
         .send_text {
           display: flex;
@@ -1416,6 +1436,7 @@
 }
 
 .send_msg_popup {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -1515,7 +1536,7 @@
     }
 
     .success_flash {
-      display: flex;
+      display: none;
       padding: 1.389vw 2.546vw;
       flex-direction: column;
       justify-content: center;
@@ -1524,6 +1545,10 @@
       border-radius: 1.389vw;
       background: #F4F6F8;
       position: relative;
+
+      &.show_flash {
+        display: flex;
+      }
 
       .flash_content {
         display: flex;

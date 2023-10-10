@@ -1,0 +1,33 @@
+<turbo-frame id="reject-order-modal">
+  <div id="reject_popup" class="reject_popup" data-controller="modals" data-modals-modal-id-value="reject_popup">
+    <div class="reject_popup_wrapper">
+      <div class="reject_pop_box">
+        <div class="you_sure">Are you sure you want to reject this order?</div>
+        <div class="reject_body">
+
+          <%= form_for @order, url: order_path(@order, request_type: "Reject") do |o| %>
+            <div class="send_text h-100 w-100">
+              <%= o.label :Add_a_Comment %>
+              <%= o.text_area :reject_reason ,class: "w-100", placeholder: "A product was already printed. Please let me know how to proceed with this order" %>
+            </div>
+
+            <div class="reject_foot">
+              <%= o.submit 'Reject', class: "btn orange_btn text-light reject_btn" %>
+              <button class="btn bg-light text-dark btn-outline-dark cancel_btn close_reject_popup">Cancel</button>
+            </div>
+          </div>
+        <%end%>
+      </div>>
+
+      <div class="cancel_flash">
+        <div class="cancel_head">Order is Rejected.</div>
+        <div class="cross_icon close_reject_popup">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M10.0526 8.99555L13.2734 5.78203C13.5671 5.4883 13.5671 5.01207 13.2734 4.71834C12.9797 4.42461 12.5035 4.42461 12.2098 4.71834L8.99651 7.93936L5.78322 4.71834C5.48951 4.42461 5.01331 4.42461 4.71961 4.71834C4.4259 5.01207 4.4259 5.4883 4.71961 5.78203L7.94039 8.99555L4.71961 12.2091C4.57781 12.3497 4.49805 12.5412 4.49805 12.7409C4.49805 12.9407 4.57781 13.1321 4.71961 13.2728C4.86025 13.4146 5.05169 13.4943 5.25141 13.4943C5.45113 13.4943 5.64257 13.4146 5.78322 13.2728L8.99651 10.0517L12.2098 13.2728C12.3505 13.4146 12.5419 13.4943 12.7416 13.4943C12.9413 13.4943 13.1328 13.4146 13.2734 13.2728C13.4152 13.1321 13.495 12.9407 13.495 12.7409C13.495 12.5412 13.4152 12.3497 13.2734 12.2091L10.0526 8.99555Z" fill="white"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</turbo-frame>

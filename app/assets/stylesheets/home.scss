@@ -261,6 +261,7 @@
             gap: 0.463vw;
             border-radius: 1px;
             background: #000;
+            text-decoration: none;
 
             .plus_icon {
               width: 1.157vw;
@@ -276,6 +277,7 @@
               font-weight: 700;
               line-height: 1.389vw;
               margin-bottom: 0px;
+              text-decoration: none;
             }
           }
         }
@@ -2202,6 +2204,11 @@
                   &.low_stock {
                     background: var(--transparent-warning-16, rgba(255, 171, 0, 0.16));
                     color: #B76E00;
+                  }
+
+                  &.out_of_stock {
+                    background: var(--transparent-error-16, rgba(255, 86, 48, 0.16));
+                    color:  #B71D18;
                   }
                 }
 

@@ -203,7 +203,58 @@
       </button>
       <button class="btn_wrap dark_green">Marked as Completed</button>
       <button class="btn_wrap light_green">Save Order for Later</button>
+      <button class="btn_wrap blue_outline fw-bolder">
+        Request Revision
+        <%= image_tag "blue_user_group", alt:"icon", class:"icon" %>
+      </button>
+      <button class="btn_wrap btn_black">Shipping
+        <%= image_tag "endicon", alt:"icon", class:"btn_icon" %>
+      </button>
     </div>
+  </div>
 
+  <!-- popup -->
+  <div class="shipping_pop_wrap">
+    <div class="manual_order_header">
+      <button class="back_btn_wrap">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M10.3723 14.25C10.1453 14.2508 9.93023 14.1487 9.78726 13.9725L6.16476 9.47248C5.93727 9.19573 5.93727 8.79673 6.16476 8.51998L9.91476 4.01998C10.1799 3.70104 10.6533 3.65738 10.9723 3.92248C11.2912 4.18758 11.3349 4.66104 11.0698 4.97998L7.71726 8.99998L10.9573 13.02C11.1445 13.2448 11.184 13.5579 11.0583 13.8222C10.9327 14.0864 10.6648 14.2534 10.3723 14.25Z" fill="#212B36"/>
+        </svg>
+        <span>Back to My Products</span>
+      </button>
+      <div class="header_text">Order ID #1111</div>
+    </div>
+    <div class="shiping_form">
+      <div class="ship_head">Recipient</div>
+      <div class="input_group">
+        <input class="input_field" type="text" placeholder="Full Name" name=""/>
+        <input class="input_field" type="text" placeholder="Last Name" name=""/>
+      </div>
+      <div class="input_group">
+        <select class="input_field">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="opel">Opel</option>
+          <option value="audi">Audi</option>
+        </select>
+        <select class="input_field">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="opel">Opel</option>
+          <option value="audi">Audi</option>
+        </select>
+      </div>
+        <input class="input_field big_size" type="text" placeholder="Address 1" name=""/>
+        <input class="input_field big_size" type="text" placeholder="Address 2 (Optional)" name=""/>
+      <div class="input_group">
+        <input class="input_field" type="text" placeholder="City" name=""/>
+        <input class="input_field" type="text" placeholder="Zip" name=""/>
+      </div>
+
+      <button class="calulate_btn">
+        Calculate Shipping
+        <%= image_tag "endicon", alt:"icon", class:"icon" %>
+      </button>
+    </div>
   </div>
 </div>
