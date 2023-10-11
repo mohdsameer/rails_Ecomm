@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <div class="designer_name">Designer 1</div>
+  <div class="designer_name"><%= current_user.type %></div>
   <div class="total_wrap">
     <div class="total_box">
       <div class="total_head">Total Orders Completed</div>
@@ -88,3 +88,48 @@
     </div>
   </div>
 </div>
+
+
+
+<script type="text/javascript">
+  document.querySelectorAll(".__range-step").forEach(function(ctrl) {
+  var el = ctrl.querySelector('input');        
+  var output = ctrl.querySelector('output'); 
+  var newPoint, newPlace, offset;
+  el.oninput =function(){ 
+    // colorize step options
+    ctrl.querySelectorAll("option").forEach(function(opt) {
+      if(opt.value<=el.valueAsNumber)                
+        opt.style.backgroundColor = '#00AB55';
+      else
+        opt.style.backgroundColor = '#00AB55';
+    });           
+    // colorize before and after
+    var valPercent = (el.valueAsNumber  - parseInt(el.min)) / (parseInt(el.max) - parseInt(el.min));            
+    var style = 'background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, ' +
+    'color-stop(' + valPercent + ', #00AB55), ' +
+    'color-stop(' + valPercent + ', rgba(0, 171, 85, 0.48)));';
+    el.style = style;
+
+    // Popup
+    if((' ' + ctrl.className + ' ').indexOf(' ' + '__range-step-popup' + ' ') > -1)
+    {
+      var selectedOpt=ctrl.querySelector('option[value="'+el.value+'"]');
+      output.innerText= selectedOpt.text;
+      output.style.left = "50%"; 
+      output.style.left = ((selectedOpt.offsetLeft + selectedOpt.offsetWidth/2) - output.offsetWidth/2) + 'px'; 
+    }           
+  };
+  el.oninput();
+});
+
+window.onresize = function(){
+  document.querySelectorAll(".__range").forEach(function(ctrl) {
+    var el = ctrl.querySelector('input');    
+    el.oninput();    
+  });
+};
+
+
+
+</script>

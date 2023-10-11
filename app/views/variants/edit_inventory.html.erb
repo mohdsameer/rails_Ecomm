@@ -1,6 +1,56 @@
-<%= form_for @variant, url: update_inventory_variant_path(@variant), method: :patch do |variant| %>
-    <%= variant.label :inventory %>
-    <%= variant.text_field :inventory ,class: "item_text" %>
+<turbo-frame id="edit-inventory-modal">
+	<div id="edit_invntry_qty_popup" class="edit_invntry_qty_popup" data-controller="modals" data-modals-modal-id-value="edit_invntry_qty_popup">
+	  <div class="popup_wrapper">
+	  	<%= form_tag update_inventory_variant_path(@variant), method: :patch do %>
+		    <div class="edit_pop_wrap">
+		    	<%= image_tag 'close.png', alt:'icon', class: 'cross_icon cancel_qty' %>
+		      <div class="edit_head">Edit Inventory QTY: <%= @variant.product.id %></div>
+		      <div class="current_qty">Current Quantity: <span id="current_qty"><%= @variant.inventory %></span></div>
+		      <div class="current_qty green_box" id="increase_qty">INCREASE QTY</div>
+		      <div class="increase_box">
+		        <div class="input_group">
+            	<%= label_tag :Add_Quantity %>
+    					<%= number_field_tag :increased_inventory ,class: "item_text" %>
+		        </div>
+		        <div class="input_group">
+		        	<%= label_tag :Reason_for_Increase %>
+		          <%= text_field_tag :reason_for_increase %>
+		        </div>
+		        <div class="input_group">
+		          <label>Tracking No</label>
+		          <input type="text" />
+		        </div>
+		        <div class="input_group">
+		          <label>Invoice No</label>
+		          <input type="text" />
+		        </div>
+		      </div>
 
-    <%= variant.submit 'Update inventory', class: "btn btn-primary" %>
-<% end %>
+		      <div class="current_qty orange_box" id="decrease_qty">DECREASE QTY</div>
+		      <div class="decrease_box">
+		        <div class="input_group">
+		          <%= label_tag :Decrease_Quantity %>
+		          <%= number_field_tag :decreased_inventory ,class: "item_text" %>
+		        </div>
+		        <div class="input_group">
+		          <%= label_tag :Reason_for_Decrease %>
+		          <%= text_field_tag :reason_for_decrease %>
+		        </div>
+		      </div>
+		      <div class="current_qty">New Quantity: <span class="quantity_no"><%= @variant.inventory %></span></div>
+		      <div class="inventory_edit_btn">Submit</div>
+		    </div>
+
+		    <div class="new_qty_wrap">
+		      <div class="head current_qty" >
+		        New Quantity: <span class="quantity_no"><%= @variant.inventory %></span>
+		      </div>	
+		      <div class="btn_group">
+		        <%= submit_tag 'Confirm', class: 'btn bg-success text-white' %>
+		        <div class="btn outline_btn cancel_qty">Cancel</div>
+		      </div>
+		    </div>
+		   <%end%>
+	  </div>
+	</div>
+</turbo-frame>
