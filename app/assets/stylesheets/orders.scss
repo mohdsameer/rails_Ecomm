@@ -436,7 +436,7 @@
       align-self: stretch;
       border-radius: 1.097vw;
       background: #fff;
-      box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+      box-shadow: 0px 12px 1.389vw -4px rgba(145, 158, 171, 0.12),
         0px 0px 2px 0px rgba(145, 158, 171, 0.2);
 
 
@@ -1308,13 +1308,13 @@
 
 .send_msg_pop {
   display: flex;
-  padding: 24px 44px;
+  padding: 1.389vw 44px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 24px;
+  gap: 1.389vw;
   flex: 1 0 0;
-  border-radius: 24px;
+  border-radius: 1.389vw;
   background: var(--background-light-neutral, #F4F6F8);
 
   .send_head {
@@ -1328,7 +1328,7 @@
     background: rgba(145, 158, 171, 0.12);
     display: flex;
     height: 61px;
-    padding: 24px 12px 24px 24px;
+    padding: 1.389vw 12px 1.389vw 1.389vw;
     justify-content: center;
     align-items: center;
     gap: 16px;
@@ -1391,12 +1391,12 @@
 
   .success_flash {
     display: flex;
-    padding: 24px 44px;
+    padding: 1.389vw 44px;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 24px;
-    border-radius: 24px;
+    gap: 1.389vw;
+    border-radius: 1.389vw;
     background: var(--background-light-neutral, #F4F6F8);
     position: relative;
 
@@ -1680,7 +1680,7 @@
       align-items: flex-start;
       border-radius: 0.926vw;
       background: var(--background-light-paper, #FFF);
-      box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+      box-shadow: 0px 12px 1.389vw -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
 
       &.finance_box {
         .total_count {
@@ -1786,15 +1786,15 @@
 
 .yellow_badge {
   div {
-    padding: 4px 6px;
-    border-radius: 6px;
+    padding: 0.231vw 0.347vw;
+    border-radius: 0.347vw;
     background: var(--transparent-warning-16, rgba(255, 171, 0, 0.16));
     color: var(--warning-dark, #B76E00);
     text-align: center;
     font-family: Public Sans;
-    font-size: 12px;
+    font-size: 0.694vw;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 1.157vw;
 
     &.green_badge {
       color: #1B806A;
@@ -1823,6 +1823,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 76.215vw;
 
     .header_section {
       display: flex;
@@ -1876,8 +1877,8 @@
         line-height: 1.505vw;
 
         .slip_icon {
-          width: 24px;
-          height: 24px;
+          width: 1.389vw;
+          height: 1.389vw;
         }
 
         &.edit_btn {
@@ -1899,6 +1900,8 @@
     font-size: 0.694vw;
     font-weight: 400;
     line-height: 1.042vw;
+    width: 76.215vw;
+    background: #F4F6F8;
   }
 
   .order_info_section {
@@ -1937,6 +1940,64 @@
       line-height: 1.273vw;
     }
 
+    .info_row_wrapper {
+      display: flex;
+      gap: 0.174vw;
+      width: 70.660vw;
+
+      .row_content {
+        width: 33.33%;
+
+        .content_head {
+          background: var(--grey-300, #DFE3E8);
+          color: var(--text-light-primary, #212B36);
+          font-size: 1.389vw;
+          font-weight: 700;
+          line-height: 2.083vw;
+          padding: 0.463vw;
+          text-align: center;
+        }
+        .content_body {
+          background: var(--background-light-neutral, #F4F6F8);
+          height: 9.259vw;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 1.215vw;
+          margin-bottom: 0.694vw;
+          padding: 0.463vw;
+
+          .content_text {
+            color: var(--text-light-primary, #212B36);
+            font-size: 0.926vw;
+            font-weight: 400;
+            line-height: 1.389vw;
+            width: 12.442vw;
+          }
+
+          .content_list {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+            font-weight: 600;
+            color: var(--text-light-primary, #212B36);
+            font-size: 0.926vw;
+            line-height: 1.389vw;
+
+            li {
+              span {
+                margin-left: 1.100vw;
+              }
+
+              .orange_text {
+                color: #FF5630;
+              }
+            }
+          }
+        }
+      }
+    }
+
     .details_section {
       display: flex;
       flex-direction: column;
@@ -1966,6 +2027,9 @@
           border-right: 0.058vw solid white;
           padding: 0.405vw;
 
+          &.height {
+            width: 12.822vw;
+          }
         }
 
         .head_text {
@@ -1977,6 +2041,7 @@
           font-weight: 600;
           line-height: 1.215vw;
           padding: 0.405vw;
+          width: 100%;
         }
       }
 
@@ -1984,6 +2049,16 @@
         display: flex;
         align-items: center;
         gap: 0.116vw;
+
+        .product_img {
+          margin: 0.579vw;
+          width: 9.664vw;
+          height: 8.854vw;
+          border-radius: 0.289vw;
+          background: #FFF;
+          box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+          padding: 0.463vw;
+        }
 
         .left {
           width: 1.389vw;
@@ -2004,6 +2079,11 @@
           background: #FFF;
           box-shadow: 0px 0.694vw 1.389vw -0.231vw rgba(145, 158, 171, 0.12), 0px 0px 0.116vw 0px rgba(145, 158, 171, 0.2);
           width: 100%;
+          justify-content: center;
+
+            &.sm_height {
+              height: 8.912vw;
+            }
 
           .right_big {
             color: var(--text-light-primary, #212B36);
@@ -2024,6 +2104,13 @@
 
             & span {
               color: var(--text-light-primary, #212B36);
+
+              & span {
+                font-family: Lato;
+                font-size: 0.694vw;
+                font-weight: 400;
+                line-height: 1.042vw;
+              }
             }
           }
 

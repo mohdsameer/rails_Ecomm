@@ -29,19 +29,58 @@
           </div>
           <%end%>
         </div>
+
+        <div class="selected_wrap">
+          <div class="selected_head">
+            <div class="left_items">
+              <%= image_tag "cart", alt:"icon", class:"left_icon" %>
+              <div class="left_text">Products selected</div>
+              <sup class="top_text">(4 item)</sup>
+            </div>
+            <a class="edit_link" href="#">Edit</a>
+          </div>
+          <% 2.times do %>
+          <div class="info_left_section">
+            <div class="left_sku">Product 1</div>
+            <div class="left_head">20 oz YETI Tumbler</div>
+            <div class="text_with_img_section">
+              <div class="text_section">
+                <div class="text">Quantity: <span>2</span></div>
+                <div class="text">Color: <span>BLACK</span></div>
+                <div class="text">Size: <span>20 OZ</span></div>
+                <div class="text">Ships From:<span>Producer 1</span></div>
+              </div>
+              <div class="img_section">
+                <%= image_tag "trans_frame", alt:"image", class:"section_img" %>
+                <%= image_tag "trans_frame", alt:"image", class:"section_img" %>
+                <%= image_tag "trans_frame", alt:"image", class:"section_img" %>
+              </div>
+            </div>
+            <div class="cost_section">
+              <div>Production costs</div>
+              <div>USD 10.00</div>
+            </div>
+          </div>
+          <%end%>
+        </div>
       </div>
 
       <div class="customer_wrap">
-        <div class="right_section">
-
+        <div class="info_right_section">
           <div class="buyer_info_section">
             <div class="buyer_mail">
               <div class="buyer_head">Customer</div>
-              <div class="buyer_text">Dacid Guerra email@gmail.com</div>
+              <div class="buyer_edit">
+                <div class="buyer_text">Dacid Guerra Dacidguerra@gmail.com +1884829203</div>
+                <a class="edit_link" href="#">Edit</a>
+              </div>
             </div>
             <div class="buyer_mail">
               <div class="buyer_head">Shipping Address</div>
-              <div class="buyer_text">Sabrina Kezzi 55 Main Street Long Island, NY, 02011, US</div>
+              <div class="buyer_edit">
+                <div class="buyer_text">Dacid Guerra 86 fycke ln teaneck, NJ, 07666, US</div>
+                <a class="edit_link" href="#">Edit</a>
+              </div>
             </div>
           </div>
 
@@ -61,7 +100,31 @@
             </div>
           </div>
         </div>
+
+        <div class="urgent_section">
+          <input type="checkbox">
+          <div class="urgent_text">MARK ORDER AS URGENT</div>
+        </div>
+
+        <div class="btn_wrap">
+          <button class="later_btn">Save Later</button>
+          <button class="submit_btn">Submit Order
+            <%= image_tag "endicon", alt:"icon", class:"btn_icon" %>
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
+</div>
+
+<!-- this page popup here -->
+
+<div class="order_success_pop">
+  <div class="pop_head">Order is Successfully Submitted for Production</div>
+  <%= image_tag "order_complete", alt:"image_icon", class:"pop_img" %>
+  <button class="back_btn">
+    <%= image_tag "start_icon", alt:"icon", class:"arrow_icon" %>
+    Back to Orders
+  </button>
 </div>

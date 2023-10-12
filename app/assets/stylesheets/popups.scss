@@ -28,9 +28,85 @@
 }
 
 
+.info_left_section {
+  display: flex;
+  padding: 0.694vw 2.778vw;
+  flex-direction: column;
+  gap: 0.579vw;
+  border-radius: 0.463vw;
+  background: var(--grey-100, #F9FAFB);
+  width: 40.046vw;
+  height: 17.072vw;
+
+  .left_head {
+    overflow: hidden;
+    color: var(--text-light-primary, #212B36);
+    font-size: 1.042vw;
+    font-weight: 700;
+    line-height: 1.620vw;
+  }
+  .left_sku {
+    color: var(--text-light-secondary, #637381);
+    font-size: 0.694vw;
+    font-weight: 400;
+    line-height: 1.042vw;
+  }
+
+  .text_with_img_section {
+    display: flex;
+    justify-content: space-between;
+
+    .text_section {
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.463vw;
 
 
-.right_section {
+      .text {
+        color: var(--text-light-secondary, #637381);
+        font-size: 0.694vw;
+        font-weight: 400;
+        line-height: 1.042vw;
+
+        span {
+          text-transform: uppercase;
+          font-weight: 700;
+        }
+      }
+    }
+
+    .img_section {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+
+      .section_img {
+        width: 5.208vw;
+        height: 5.208vw;
+      }
+    }
+  }
+
+  .cost_section {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light-secondary, #637381);
+    font-size: 0.926vw;
+    font-weight: 600;
+    line-height: 1.389vw;
+
+    &.small {
+      color: var(--text-light-secondary, #637381);
+      font-size: 0.810vw;
+      font-weight: 400;
+      line-height: 1.273vw;
+      height: 2.894vw;
+    }
+  }
+}
+
+.info_right_section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -402,7 +478,7 @@
 }
 
 
-.cancel_pop {
+.cancel_popup {
   width: 27.778vw;
   border-radius: 0.926vw;
   background: var(--background-light-paper, #FFF);
@@ -977,6 +1053,115 @@
         border: none;
         color: #fff;
       }
+    }
+  }
+}
+
+
+
+.assign_order_pop {
+  width: 406px;
+  padding: 24px 44px;
+  border-radius: 24px;
+  background: var(--background-light-neutral, #F4F6F8);
+
+  .assign_head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 181px;
+    color: var(--text-light-primary, #212B36);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+    margin-bottom: 14px;
+
+    .assign_icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .check_list {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 318px;
+
+    .radio_input {
+      margin: 10px;
+    }
+  }
+
+  .input_section {
+    display: flex;
+    width: 318px;
+    height: 95px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    background: var(--background-light-paper, #FFF);
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+    margin-top: 14px;
+
+    .input_box {
+      display: flex;
+      padding: 16px 14px;
+      align-items: center;
+      gap: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+      width: 280px;
+      position: relative;
+      height: 56px;
+
+      .label_top {
+        color: var(--text-light-disabled, #919EAB);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 12px;
+        position: absolute;
+        top: -6px;
+        padding: 0px 4px;
+        background: white;
+      }
+
+      .input_text {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        input {
+          border: none;
+          padding: 0px 4px;
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+
+  .date_wrapper {
+    display: flex;
+    width: 318px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    background: var(--background-light-paper, #FFF);
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+    margin-top: 14px;
+
+    .date_head {
+      width: 278px;
+      padding: 10px 5px;
+      color: var(--text-light-disabled, #919EAB);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 18px;
+      text-transform: uppercase;
     }
   }
 }
