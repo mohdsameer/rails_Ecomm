@@ -76,6 +76,9 @@
       font-weight: 700;
       line-height: 1.505vw;
       text-decoration: none;
+      display: flex;
+      width: fit-content;
+      margin: 0 0 1.389vw;
     }
 
     .search_box {
@@ -86,6 +89,8 @@
       gap: 0.463vw;
       border-radius: 0.463vw;
       border: 1px solid rgba(145, 158, 171, 0.32);
+      max-width: initial;
+      margin: 0 0 1.389vw;
 
       .search_input {
         color: var(--text-light-disabled, #919EAB);
@@ -103,27 +108,59 @@
     .inventory_table_wrap {
       padding: 1.389vw;
       border-radius: 0.926vw;
-      background: var(--background-light-paper, #FFF);
-      box-shadow: 0px 0.694vw 1.389vw -0.231vw rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+      background: #FFF;
+      box-shadow: 0px 0.694vw 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
 
-      th {
-        padding: 0.926vw 0.463vw;
-        background: var(--text-dark-disabled, #637381);
-        border-right: 2px solid white;
-        color: var(--text-dark-primary, #FFF);
-        font-family: Public Sans;
-        font-size: 0.810vw;
-        font-weight: 400;
-        line-height: 1.273vw;
-        text-align: center;
+      .inventory_table {
+        width: 100%;
 
-        &.left {
-          border-radius: 0.694vw 0px 0px 0px;
-        }
-        &.right {
-          border-radius: 0px 0.694vw 0px 0px;
+        thead {
+          th {
+            padding: 0.463vw;
+            background: #637381;
+            border-right: 0.116vw solid white;
+            color: #FFF;
+            font-size: 0.810vw;
+            font-weight: 400;
+            line-height: 1.273vw;
+            text-align: center;
+
+            &.one {
+              border-radius: 0.694vw 0px 0px 0px;
+              width: 4.63vw;
+            }
+            &.two {
+              
+            }
+            &.three {
+              
+            }
+            &.four {
+              
+            }
+            &.five {
+              
+            }
+            &.six {
+              
+            }
+            &.seven {
+              
+            }
+            &.eight {
+              
+            }
+            &.nine {
+              
+            }
+            &.ten {
+              border-radius: 0px 0.694vw 0px 0px;
+            }
+          }
         }
       }
+
+      
 
       td {
         border-radius: 0.231vw;
