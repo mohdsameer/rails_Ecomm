@@ -1,12 +1,10 @@
 <div class="designer_dasboard_wrapper">
   <div class="order_head">
     <div class="head_content">
-      <div class="manual_btn">
-        <svg class="plus_icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M15.833 9.16658H10.833V4.16659C10.833 3.70635 10.4599 3.33325 9.99967 3.33325C9.53944 3.33325 9.16634 3.70635 9.16634 4.16659V9.16658H4.16634C3.7061 9.16658 3.33301 9.53968 3.33301 9.99992C3.33301 10.4602 3.7061 10.8333 4.16634 10.8333H9.16634V15.8333C9.16634 16.2935 9.53944 16.6666 9.99967 16.6666C10.4599 16.6666 10.833 16.2935 10.833 15.8333V10.8333H15.833C16.2932 10.8333 16.6663 10.4602 16.6663 9.99992C16.6663 9.53968 16.2932 9.16658 15.833 9.16658Z" fill="white"/>
-        </svg>
-        Create Manual Order
-      </div>
+      <%= link_to new_order_path , class: 'manual_btn' do %>
+        <%= image_tag 'ic_plus.png', alt: 'icon', class: 'plus_icon' %>
+        <span>Create Manual Order</span>
+      <% end %>
       <div class="create_bell_box">
         <%= image_tag("ic_notifications", class:"create_bell_icon") %>
         <div class="create_notification">1</div>
@@ -17,7 +15,7 @@
   <div class="total_wrap">
     <div class="total_box">
       <div class="total_head">Total Orders Completed</div>
-      <div class="total_count">1000</div>
+      <div class="total_count"><%= @orders.count %></div>
     </div>
   </div>
 

@@ -1,4 +1,4 @@
-<div class="orders_wrapper">
+  <div class="orders_wrapper">
   <div class="order_head">
     <div class="head_content">
       <div class="create_bell_box">
@@ -28,7 +28,7 @@
 
       <div id="tabs-content">
         <div id="tab1" class="tab-content">
-          <%= render "all_order",orders: @orders %>
+          <%= render "all_order", orders: @orders %>
         </div>
         <div id="tab2" class="tab-content">
           <%= render "all_order", orders: @orders.new_orders%>

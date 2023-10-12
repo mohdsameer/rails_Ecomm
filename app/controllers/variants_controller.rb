@@ -37,7 +37,8 @@ class VariantsController < ApplicationController
 	end
 
 	def inventory_history
-		@variants = Variant.all
+		per_page = params[:per_page] || 20
+		@variants = Variant.all.paginate(page: params[:page], per_page: per_page)
 	end
 
 	private

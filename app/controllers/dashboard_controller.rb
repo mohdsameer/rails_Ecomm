@@ -1,5 +1,6 @@
 class DashboardController < ApplicationController
   def index
+    @orders = Order.where(order_edit_status: "completed")
   end
 
   def producer_panel_dasboard
