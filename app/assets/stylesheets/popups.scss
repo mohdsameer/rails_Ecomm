@@ -4,8 +4,8 @@
   text-align: center;
   padding: 0.347vw 0.926vw;
   border-radius: 0.463vw;
-  background: var(--error-main, #FF5630);
-  color: var(--error-contrast-text, #FFF);
+  background: #FF5630;
+  color: #FFF;
   font-size: 0.810vw;
   font-weight: 700;
   border: none;
@@ -19,8 +19,8 @@
 .outline_btn {
   padding: 0.347vw 0.926vw;
   border-radius: 0.463vw;
-  border: 0.058vw solid var(--components-button-outlined, rgba(145, 158, 171, 0.32));
-  color: var(--text-light-primary, #212B36);
+  border: 0.058vw solid rgba(145, 158, 171, 0.32);
+  color: #212B36;
   text-align: center;
   font-size: 0.810vw;
   font-weight: 700;
@@ -34,19 +34,19 @@
   flex-direction: column;
   gap: 0.579vw;
   border-radius: 0.463vw;
-  background: var(--grey-100, #F9FAFB);
+  background: #F9FAFB;
   width: 40.046vw;
   height: 17.072vw;
 
   .left_head {
     overflow: hidden;
-    color: var(--text-light-primary, #212B36);
+    color: #212B36;
     font-size: 1.042vw;
     font-weight: 700;
     line-height: 1.620vw;
   }
   .left_sku {
-    color: var(--text-light-secondary, #637381);
+    color: #637381;
     font-size: 0.694vw;
     font-weight: 400;
     line-height: 1.042vw;
@@ -64,7 +64,7 @@
 
 
       .text {
-        color: var(--text-light-secondary, #637381);
+        color: #637381;
         font-size: 0.694vw;
         font-weight: 400;
         line-height: 1.042vw;
@@ -91,13 +91,13 @@
   .cost_section {
     display: flex;
     justify-content: space-between;
-    color: var(--text-light-secondary, #637381);
+    color: #637381;
     font-size: 0.926vw;
     font-weight: 600;
     line-height: 1.389vw;
 
     &.small {
-      color: var(--text-light-secondary, #637381);
+      color: #637381;
       font-size: 0.810vw;
       font-weight: 400;
       line-height: 1.273vw;
@@ -120,10 +120,10 @@
     gap: 0.231vw;
     width: 22.859vw;
     height: 2.199vw;
-    background: var(--background-light-neutral, #F4F6F8);
+    background: #F4F6F8;
 
     .info_text {
-      color: var(--text-light-primary, #212B36);
+      color: #212B36;
       font-size: 1.042vw;
       font-weight: 700;
       line-height: 1.620vw;
@@ -142,20 +142,20 @@
     flex-direction: column;
     gap: 0.579vw;
     border-radius: 0.463vw;
-    background: var(--grey-100, #F9FAFB);
+    background: #F9FAFB;
 
     .buyer_mail {
-      border-bottom: 0.058vw solid var(--grey-400, #C4CDD5);
+      border-bottom: 0.058vw solid #C4CDD5;
       height: 8.565vw;
 
       .buyer_head {
-        color: var(--text-light-primary, #212B36);
+        color: #212B36;
         font-size: 1.389vw;
         font-weight: 700;
         line-height: 2.083vw;
       }
       .buyer_text {
-        color: var(--text-light-primary, #212B36);
+        color: #212B36;
         font-size: 0.926vw;
         font-weight: 400;
         line-height: 1.389vw;
@@ -173,10 +173,10 @@
     gap: 0.579vw;
     align-self: stretch;
     border-radius: 0.463vw;
-    background: var(--grey-100, #F9FAFB);
+    background: #F9FAFB;
 
     .billing_head {
-      color: var(--text-light-primary, #212B36);
+      color: #212B36;
       font-size: 1.389vw;
       font-weight: 700;
       line-height: 2.083vw;
@@ -206,6 +206,64 @@
 }
 
 
+.input_section {
+  display: flex;
+  width: 18.403vw;
+  height: 5.498vw;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.926vw;
+  background: #FFF;
+  box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+  margin-top: 0.81vw;
+
+  .input_box {
+    display: flex;
+    padding: 0.926vw 0.81vw;
+    align-items: center;
+    gap: 0.463vw;
+    border-radius: 0.463vw;
+    border: 1px solid rgba(145, 158, 171, 0.32);
+    width: 16.204vw;
+    position: relative;
+    height: 3.241vw;
+
+    .label_top {
+      color: #919EAB;
+      font-size: 0.694vw;
+      font-weight: 400;
+      line-height: 0.694vw;
+      position: absolute;
+      top: -0.347vw;
+      padding: 0px 0.231vw;
+      background: white;
+    }
+
+    .input_text {
+      display: flex;
+      align-items: center;
+      gap: 0.347vw;
+
+      color: #637381;
+      font-size: 0.926vw;
+      font-weight: 400;
+      line-height: 1.389vw;
+
+      input {
+        border: none;
+        padding: 0px 0.231vw;
+        width: 100%;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}
+
+
+
 //** Common btn end **//
 
 
@@ -214,11 +272,11 @@
 
 
 .status_wrapper_pop {
-  height: 13.889vw;
+  height: 100%;
   width: 18.75vw;
   border-radius: 0.463vw;
-  border: 0.058vw solid var(--components-paper-outlined, rgba(145, 158, 171, 0.24));
-  background: var(--background-light-paper, #FFF);
+  border: 0.058vw solid rgba(145, 158, 171, 0.24);
+  background: #FFF;
 
   .status_content {
     display: flex;
@@ -235,6 +293,13 @@
       margin: 0.579vw 0px 0.579vw 0.579vw;
       width: 1.389vw;
       height: 1.389vw;
+
+
+      color: #637381;
+      text-align: center;
+      font-size: 0.926vw;
+      font-weight: 400;
+      line-height: 1.389vw;
     }
     .content_text {
       font-size: 0.810vw;
@@ -243,14 +308,14 @@
       color: #212B36;
 
       .sub_text {
-        color: var(--text-light-primary, #212B36);
+        color: #212B36;
         font-size: 0.810vw;
         font-weight: 400;
         line-height: 1.273vw;
       }
 
       &.orange_text {
-        color: var(--error-main, #FF5630);
+        color: #FF5630;
       }
     }
   }
@@ -261,12 +326,12 @@
 .request_cancel_pop {
   padding: 1.389vw 2.546vw;
   border-radius: 1.389vw;
-  background: var(--background-light-neutral, #F4F6F8);
+  background: #F4F6F8;
   width: 24.306vw;
   height: 14.468vw;
 
   .request_head {
-    color: var(--text-light-primary, #212B36);
+    color: #212B36;
     font-size: 1.157vw;
     font-weight: 700;
     line-height: 1.736vw;
@@ -276,9 +341,9 @@
   .input_field {
     padding: 0px 0.926vw 0.81vw;
     border-radius: 0.463vw;
-    border: 0.058vw solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+    border: 0.058vw solid rgba(145, 158, 171, 0.32);
     margin-bottom: 1.389vw;
-    color: var(--text-light-secondary, #637381);
+    color: #637381;
     font-size: 0.694vw;
     font-weight: 400;
     line-height: 1.042vw;
@@ -293,8 +358,8 @@
   .request_btn {
     padding: 0.231vw 0.579vw;
     border-radius: 0.463vw;
-    background: var(--primary-main, #00AB55);
-    color: var(--primary-contrast-text, #FFF);
+    background: #00AB55;
+    color: #FFF;
     font-size: 0.752vw;
     font-weight: 700;
     line-height: 1.273vw;
@@ -313,7 +378,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  color: var(--text-light-primary, #212B36);
+  color: #212B36;  
   font-size: 1.157vw;
   font-weight: 700;
   text-decoration: none;
@@ -326,7 +391,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 2.894vw;
-    background: var(--common-black, #000);
+    background: #000;
     color: white;
     text-decoration: none;
     position: absolute;
@@ -338,13 +403,13 @@
 .add_comment_pop {
   padding: 1.389vw 2.546vw;
   border-radius: 1.389vw;
-  background: var(--background-light-neutral, #F4F6F8);
+  background: #F4F6F8;
   width: 41.204vw;
 
   .heading_text {
     padding: 1.389vw 0.694vw 1.389vw 1.389vw;
     background: rgba(145, 158, 171, 0.12);
-    color: var(--text-light-primary, #212B36);
+    color: #212B36;
     text-align: center;
     font-size: 1.157vw;
     font-weight: 700;
@@ -356,12 +421,12 @@
     position: relative;
     padding: 0.926vw 0.81vw;
     border-radius: 0.463vw;
-    border: 0.058vw solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+    border: 0.058vw solid rgba(145, 158, 171, 0.32);
     height: 5.613vw;
     margin-bottom: 1.389vw;
 
     .box_label {
-      color: var(--text-light-disabled, #919EAB);
+      color: #919EAB;
       font-size: 0.694vw;
       font-weight: 400;
       line-height: 0.694vw;
@@ -371,7 +436,7 @@
       background: #F4F6F8;
     }
     .box_input {
-      color: var(--text-light-primary, #212B36);
+      color: #212B36;
       font-size: 0.810vw;
       font-weight: 400;
       line-height: 1.273vw;
@@ -388,8 +453,8 @@
   .comment_submit {
     padding: 0.231vw 0.579vw;
     border-radius: 0.463vw;
-    background: var(--primary-main, #00AB55);
-    color: var(--primary-contrast-text, #FFF);
+    background: #00AB55;
+    color: #FFF;
     font-size: 0.752vw;
     font-weight: 700;
     line-height: 1.273vw;
@@ -402,7 +467,7 @@
   position: relative;
   padding: 1.389vw 2.546vw;
   border-radius: 1.389vw;
-  background: var(--background-light-neutral, #F4F6F8);
+  background: #F4F6F8;
   width: 22.222vw;
 
   .cross_icon {
@@ -413,7 +478,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 2.894vw;
-    background: var(--common-black, #000);
+    background: #000;
     color: white;
     position: absolute;
     right: -0.521vw;
@@ -426,10 +491,10 @@
     padding: 0.81vw 0.926vw 0.81vw 0px;
     align-items: center;
     border-radius: 0.463vw;
-    background: var(--success-lighter, #D8FBDE);
+    background: #D8FBDE;
 
     .msg_text {
-      color: var(--success-darker, #0A5554);
+      color: #0A5554;
       font-size: 0.810vw;
       font-weight: 600;
       line-height: 1.273vw;
@@ -452,8 +517,8 @@
   flex-direction: column;
   align-items: flex-start;
   border-radius: 0.463vw;
-  border: 0.058vw solid var(--components-paper-outlined, rgba(145, 158, 171, 0.24));
-  background: var(--background-light-paper, #FFF);
+  border: 0.058vw solid rgba(145, 158, 171, 0.24);
+  background: #FFF;
 
   .edit_box {
     display: flex;
@@ -469,7 +534,7 @@
     }
 
     .edit_text {
-      color: var(--text-light-primary, #212B36);
+      color: #212B36;
       font-size: 0.810vw;
       font-weight: 600;
       line-height: 1.273vw;
@@ -481,7 +546,7 @@
 .cancel_popup {
   width: 27.778vw;
   border-radius: 0.926vw;
-  background: var(--background-light-paper, #FFF);
+  background: #FFF;
   box-shadow: -40px 40px 80px -0.463vw rgba(145, 158, 171, 0.24);
 
   .cancel_head {
@@ -491,7 +556,7 @@
     gap: 0.926vw; 
 
     .head_text {
-      color: var(--text-light-primary, #212B36);
+      color: #212B36;
       font-size: 1.042vw;
       font-weight: 700;
       line-height: 1.620vw;
@@ -503,7 +568,7 @@
   }
 
   .middle_text {
-    color: var(--text-light-secondary, #637381);
+    color: #637381;
     font-size: 0.926vw;
     font-weight: 400;
     line-height: 1.389vw;
@@ -531,7 +596,7 @@
   align-items: flex-start;
   gap: 1.389vw;
   border-radius: 1.389vw;
-  background: var(--background-light-neutral, #F4F6F8);
+  background: #F4F6F8;
   position: relative;
 
   .cancel {
@@ -542,7 +607,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 2.894vw;
-    background: var(--common-black, #000);
+    background: #000;
     text-decoration: none;
     position: absolute;
     right: -0.984vw;
@@ -551,14 +616,14 @@
   }
 
   .head_text {
-    color: var(--text-light-primary, #212B36);
+    color: #212B36;
     font-size: 1.157vw;
     font-weight: 700;
     line-height: 1.736vw;
   }
 
   .cancel_text {
-    color: var(--text-light-primary, #212B36);
+    color: #212B36;
     font-size: 0.810vw;
     font-weight: 400;
     line-height: 1.273vw;
@@ -571,7 +636,7 @@
 .request_pop {
   width: 31.366vw;
   border-radius: 0.926vw;
-  background: var(--background-light-paper, #FFF);
+  background: #FFF;
   box-shadow: -40px 40px 80px -0.463vw rgba(145, 158, 171, 0.24);
 
 
@@ -587,7 +652,7 @@
       height: 1.389vw;
     }
     .head_heading {
-      color: var(--text-light-primary, #212B36);
+      color: #212B36;
       font-size: 1.157vw;
       font-weight: 700;
       line-height: 1.736vw;
@@ -602,11 +667,11 @@
     .input_wrap {
       padding: 0.926vw 0.81vw;
       border-radius: 0.463vw;
-      border: 0.058vw solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+      border: 0.058vw solid rgba(145, 158, 171, 0.32);
       height: 8.102vw;
 
       .input_field {
-        color: var(--text-light-secondary, #637381);
+        color: #637381;
         font-size: 0.694vw;
         font-weight: 400;
         line-height: 1.042vw;
@@ -653,15 +718,15 @@
 
       .bar_head {
         padding: 0.463vw;
-        color: var(--text-light-primary, #212B36);
+        color: #212B36;
         font-size: 1.042vw;
         font-weight: 700;
-        background: var(--background-light-neutral, #F4F6F8);
+        background: #F4F6F8;
         width: 13.715vw;
         margin-right: 0.579vw;
       }
       .status_badge {
-        color: var(--secondary-main, #36F);
+        color: #36F;
         text-align: center;
         font-size: 0.694vw;
         font-weight: 400;
@@ -690,8 +755,8 @@
       gap: 0.347vw;
       border-radius: 0.347vw;
       border: 0.058vw solid rgba(54, 179, 126, 0.28);
-      background: var(--transparent-success-16, rgba(54, 179, 126, 0.16));
-      color: var(--common-black, #000);
+      background: rgba(54, 179, 126, 0.16);
+      color: #000;
       font-size: 0.694vw;
       font-weight: 400;
       line-height: 1.157vw;
@@ -706,11 +771,11 @@
 
   .create_date {
     margin: 0.463vw;
-    color: var(--text-light-secondary, #637381);
+    color: #637381;
     font-size: 0.694vw;
     font-weight: 400;
     line-height: 1.042vw;
-    background: var(--background-light-neutral, #F4F6F8);
+    background: #F4F6F8;
   }
 
   .msg_section {
@@ -720,10 +785,10 @@
     gap: 0.926vw;
     padding: 0.231vw 0px;
     border-radius: 0.463vw;
-    background: var(--grey-200, #F4F6F8);
+    background: #F4F6F8;
 
     &.order_note {
-      background: var(--grey-300, #DFE3E8);
+      background: #DFE3E8;
       margin: 0px 0px 0.694vw;
 
       .content_box {
@@ -732,7 +797,7 @@
     }
 
     &.order_rejected {
-      background: var(--error-lighter, #FFE9D5);
+      background: #FFE9D5;
       margin: 0px 0px 0.694vw;
 
       .msg_icon {
@@ -764,13 +829,13 @@
         justify-content: space-between;
 
         .left_text {
-          color: var(--warning-contrast-text, #212B36);
+          color: #212B36;
           font-size: 0.926vw;
           font-weight: 600;
           line-height: 1.389vw;
         }
         .date_text {
-          color: var(--warning-contrast-text, #212B36);
+          color: #212B36;
           text-align: right;
           font-size: 0.810vw;
           font-weight: 400;
@@ -778,7 +843,7 @@
         }
       }
       .content_text {
-        color: var(--common-black, #000);
+        color: #000;
         font-size: 0.810vw;
         font-weight: 400;
         line-height: 1.273vw;
@@ -799,19 +864,19 @@
       flex-direction: column;
       gap: 0.579vw;
       border-radius: 0.463vw;
-      background: var(--grey-100, #F9FAFB);
+      background: #F9FAFB;
       width: 40.046vw;
       height: 17.072vw;
 
       .left_head {
         overflow: hidden;
-        color: var(--text-light-primary, #212B36);
+        color: #212B36;
         font-size: 1.042vw;
         font-weight: 700;
         line-height: 1.620vw;
       }
       .left_sku {
-        color: var(--text-light-secondary, #637381);
+        color: #637381;
         font-size: 0.694vw;
         font-weight: 400;
         line-height: 1.042vw;
@@ -829,7 +894,7 @@
 
 
           .text {
-            color: var(--text-light-secondary, #637381);
+            color: #637381;
             font-size: 0.694vw;
             font-weight: 400;
             line-height: 1.042vw;
@@ -851,13 +916,13 @@
       .cost_section {
         display: flex;
         justify-content: space-between;
-        color: var(--text-light-secondary, #637381);
+        color: #637381;
         font-size: 0.926vw;
         font-weight: 600;
         line-height: 1.389vw;
 
         &.small {
-          color: var(--text-light-secondary, #637381);
+          color: #637381;
           font-size: 0.810vw;
           font-weight: 400;
           line-height: 1.273vw;
@@ -880,10 +945,10 @@
         gap: 0.231vw;
         width: 22.859vw;
         height: 2.199vw;
-        background: var(--background-light-neutral, #F4F6F8);
+        background: #F4F6F8;
 
         .info_text {
-          color: var(--text-light-primary, #212B36);
+          color: #212B36;
           font-size: 1.042vw;
           font-weight: 700;
           line-height: 1.620vw;
@@ -902,20 +967,20 @@
         flex-direction: column;
         gap: 0.579vw;
         border-radius: 0.463vw;
-        background: var(--grey-100, #F9FAFB);
+        background: #F9FAFB;
 
         .buyer_mail {
-          border-bottom: 0.058vw solid var(--grey-400, #C4CDD5);
+          border-bottom: 0.058vw solid #C4CDD5;
           height: 8.565vw;
 
           .buyer_head {
-            color: var(--text-light-primary, #212B36);
+            color :#212B36;
             font-size: 1.389vw;
             font-weight: 700;
             line-height: 2.083vw;
           }
           .buyer_text {
-            color: var(--text-light-primary, #212B36);
+            color :#212B36;
             font-size: 0.926vw;
             font-weight: 400;
             line-height: 1.389vw;
@@ -933,10 +998,10 @@
         gap: 0.579vw;
         align-self: stretch;
         border-radius: 0.463vw;
-        background: var(--grey-100, #F9FAFB);
+        background: #F9FAFB;
 
         .billing_head {
-          color: var(--text-light-primary, #212B36);
+          color: #212B36;
           font-size: 1.389vw;
           font-weight: 700;
           line-height: 2.083vw;
@@ -976,8 +1041,8 @@
   width: 18.750vw;
   gap: 0.926vw;
   border-radius: 0.463vw;
-  border: 0.058vw solid var(--components-paper-outlined, rgba(145, 158, 171, 0.24));
-  background: var(--background-light-paper, #FFF);
+  border: 0.058vw solid rgba(145, 158, 171, 0.24);
+  background: #FFF;
 
   .icon {
     width: 1.389vw;
@@ -986,7 +1051,7 @@
   }
 
   .pop_text {
-    color: var(--text-light-primary, #212B36);
+    color: #212B36;
     font-size: 0.810vw;
     font-weight: 400;
     line-height: 1.273vw;
@@ -997,12 +1062,12 @@
 .save_changes_pop {
   width: 26.042vw;
   border-radius: 0.926vw;
-  background: var(--background-light-paper, #FFF);
+  background: #FFF;
   box-shadow: -40px 40px 80px -8px rgba(145, 158, 171, 0.24);
 
   .save_head {
     padding: 1.389vw 0.694vw 1.389vw 1.389vw;
-    color: var(--text-light-primary, #212B36);
+    color: #212B36;
     text-align: center;
     font-size: 1.042vw;
     font-weight: 700;
@@ -1013,7 +1078,7 @@
       display: flex;
       padding: 0.347vw 0.463vw 0.347vw 0px;
       align-items: center;
-      background: var(--warning-lighter, #FFF5CC);
+      background: #FFF5CC;
       border-top-right-radius: 0.463vw;
       border-top-left-radius: 0.463vw;
       text-align: left;
@@ -1027,7 +1092,7 @@
   .save_text {
     display: flex;
     padding: 0px 1.389vw;
-    color: var(--text-light-secondary, #637381);
+    color: #637381;
     font-size: 0.810vw;
     font-weight: 600;
     line-height: 1.273vw;
@@ -1044,7 +1109,7 @@
       width: 11.285vw;
 
       &.green_bg {
-        background: var(--success-main, #36B37E);
+        background: #36B37E;
         color: #fff;
       }
 
@@ -1063,105 +1128,221 @@
   width: 406px;
   padding: 24px 44px;
   border-radius: 24px;
-  background: var(--background-light-neutral, #F4F6F8);
+  background: #F4F6F8;
 
   .assign_head {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
-    width: 181px;
-    color: var(--text-light-primary, #212B36);
-    font-size: 20px;
+    gap: 0.694vw;
+    width: 10.475vw;
+    color: #212B36;
+    font-size: 1.157vw;
     font-weight: 700;
-    line-height: 30px;
-    margin-bottom: 14px;
+    line-height: 1.736vw;
+    margin-bottom: 0.810vw;
 
     .assign_icon {
-      width: 24px;
-      height: 24px;
+      width: 1.389vw;
+      height: 1.389vw;
     }
   }
 
   .check_list {
     display: flex;
     align-items: center;
-    gap: 4px;
-    width: 318px;
+    gap: 0.231vw;
+    width: 18.403vw;
 
     .radio_input {
-      margin: 10px;
+      margin: 0.579vw;
     }
   }
 
-  .input_section {
-    display: flex;
-    width: 318px;
-    height: 95px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 16px;
-    background: var(--background-light-paper, #FFF);
-    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
-    margin-top: 14px;
-
-    .input_box {
-      display: flex;
-      padding: 16px 14px;
-      align-items: center;
-      gap: 8px;
-      border-radius: 8px;
-      border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
-      width: 280px;
-      position: relative;
-      height: 56px;
-
-      .label_top {
-        color: var(--text-light-disabled, #919EAB);
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 12px;
-        position: absolute;
-        top: -6px;
-        padding: 0px 4px;
-        background: white;
-      }
-
-      .input_text {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-
-        input {
-          border: none;
-          padding: 0px 4px;
-
-          &:focus {
-            outline: none;
-          }
-        }
-      }
-    }
-  }
 
   .date_wrapper {
     display: flex;
-    width: 318px;
+    width: 18.403vw;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 16px;
-    background: var(--background-light-paper, #FFF);
+    border-radius: 0.926vw;
+    background: #FFF;
     box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
-    margin-top: 14px;
+    margin-top: 0.810vw;
 
     .date_head {
-      width: 278px;
-      padding: 10px 5px;
-      color: var(--text-light-disabled, #919EAB);
-      font-size: 12px;
+      width: 16.088vw;
+      padding: 0.579vw 0.289vw;
+      color: #919EAB;
+      font-size: 0.694vw;
       font-weight: 700;
-      line-height: 18px;
+      line-height: 1.042vw;
       text-transform: uppercase;
+    }
+  }
+}
+
+
+.filter_pop {
+  width: 7.234vw;
+
+  .filter_head {
+    background: #DFE3E8;
+    color: #212B36;
+    font-size: 0.694vw;
+    font-weight: 600;
+    line-height: 1.389vw;
+    display: flex;
+    padding: 0.463vw;
+    justify-content: center;
+    align-items: center;
+    gap: 0.231vw;
+
+    &.list {
+      background: #fff;
+      justify-content: flex-start;
+      color: #212B36;
+      font-size: 0.810vw;
+      font-weight: 400;
+      line-height: 1.273vw;
+      gap: 0.463vw;
+    }
+
+    .down_img {
+      width: 1.042vw;
+      height: 1.042vw;
+    }
+  }
+}
+
+
+
+
+// INVENTORY POP
+
+.edit_pop_wrap {
+  width: 736px;
+  padding: 1.389vw;
+  border-radius: 0.926vw;
+  background: #FFF;
+  box-shadow: 0px 0.694vw 1.389vw -0.231vw rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+
+  &.small_pop {
+    width: 21.412vw;
+  }
+
+  .edit_head {
+    padding: 1.389vw;
+    background: rgba(145, 158, 171, 0.12);
+    margin-bottom: 1.389vw;
+    color: #212B36;
+    text-align: center;
+    font-size: 1.157vw;
+    font-weight: 700;
+    line-height: 1.736vw;
+  }
+  .current_qty {
+    padding: 0.637vw 1.273vw;
+    border-radius: 0.463vw;
+    border: 0.058vw solid #36F;
+    background: #454F5B;
+    color: #FFF;
+    font-size: 0.868vw;
+    font-weight: 700;
+    line-height: 1.505vw;
+    text-align: center;
+    margin-bottom: 1.389vw;
+    cursor: pointer;
+
+    &.green_box {
+      border-radius: 0.463vw;
+      border: 0.058vw solid #36B37E;
+      background: #00AB55;
+    }
+
+    &.orange_box {
+      border-radius: 0.463vw;
+      border: 0.058vw solid #FF5630;
+      background: #FF5630;
+    }
+  }
+
+  .input_group {
+    padding: 0.926vw 0.810vw;
+    position: relative;
+    border-radius: 0.463vw;
+    border: 0.058vw solid rgba(145, 158, 171, 0.32);
+    margin-bottom: 1.389vw;
+
+    label {
+      position: absolute;
+      top: -6px;
+      background: white;
+      padding: 0px 0.231vw;
+      color: #919EAB;
+      font-size: 0.694vw;
+      font-weight: 400;
+      line-height: 0.694vw;
+    }
+    input {
+      width: 100%;
+      padding: 0px 0.694vw;
+      border: none;
+      color: #919EAB;
+      font-size: 0.926vw;
+      font-weight: 400;
+      line-height: 1.389vw;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .inventory_edit_btn {
+    border-radius: 0.463vw;
+    background: #00AB55;
+    padding: 0.347vw 0.926vw;
+    color: #FFF;
+    text-align: center;
+    font-size: 0.810vw;
+    font-weight: 700;
+    line-height: 1.389vw;
+    cursor: pointer;
+  }
+}
+
+
+
+.edit_pop_wrap {
+  &.small_pop {
+    &.update_assign_pop {
+      border-radius: 1.389vw;
+      background: #F4F6F8;
+      width: 23.495vw;
+      padding: 1.389vw 2.546vw;
+
+      .edit_head {
+        display: flex;
+        gap: 0.926vw;
+        margin-bottom: 0.81vw !important;
+
+        .edit_icon {
+          width: 1.389vw;
+          height: 1.389vw;
+        }
+      }
+      .current_qty {
+        display: flex;
+        gap: 0.463vw;
+        justify-content: center;
+        align-items: center;
+
+        .edit_icon {
+          width: 1.389vw;
+          height: 1.389vw;
+        }
+      }
     }
   }
 }

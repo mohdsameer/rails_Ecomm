@@ -1,7 +1,9 @@
 <div class="orders_wrapper">
   <div class="order_head">
     <div class="head_content">
-      <%= link_to 'Create Manual Order', new_order_path , class: 'btn_text'%>
+      <div class="manual_btn">
+        <%= link_to 'Create Manual Order', new_order_path , class: 'btn_text'%>
+      </div>
       <div class="create_bell_box">
         <%= image_tag "ic_notifications", alt: 'icon', class: "create_bell_icon" %>
         <div class="create_notification">1</div>

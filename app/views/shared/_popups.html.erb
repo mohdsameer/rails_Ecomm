@@ -327,3 +327,76 @@
 <!-- assign order popup incomplete -->
 
 
+<!-- more action assign popup -->
+
+<div class="status_wrapper_pop d-none">
+  <a href="#" class="status_content">
+    <%= image_tag "download", alt:"icon", class:"icon" %>
+    <div class="content_text">Download ETSY Packing Slip</div>
+  </a>
+  <a href="#" class="status_content">
+    <%= image_tag "ic_user_group", alt:"icon", class:"icon" %>
+    <div class="content_text">Assign Order</div>
+  </a>
+  <a href="#" class="status_content">
+    <%= image_tag "orange_user", alt:"icon", class:"icon" %>
+    <div class="content_text">Remove Assignee from the Order</div>
+  </a>
+  <a href="#" class="status_content">
+    <%#= image_tag "ic_user_group", alt:"icon", class:"icon" %>
+    <div class="icon">$</div>
+    <div class="content_text">Update the job price for the assignee.</div>
+  </a>
+  <a href="#" class="status_content">
+    <%= image_tag "info_outline", alt:"icon", class:"icon" %>
+    <div class="content_text">Request Revision from Assignee</div>
+  </a>
+  <a href="#" class="status_content">
+    <%= image_tag "bxs_copy", alt:"icon", class:"icon" %>
+    <div class="content_text">Duplicate Order
+      <div class="sub_text">Creates a new manual order</div>
+    </div>
+  </a>
+</div>
+
+
+
+
+<!-- assign filter pop -->
+
+<div class="filter_pop d-none">
+  <div class="filter_head">
+    Assignee
+    <%= image_tag "download", alt:"image", class:"down_img" %>
+  </div>
+  <% 4.times do%>
+  <div class="filter_head list">
+    <input type="radio" name="">
+    Assignee
+  </div>
+  <%end%>
+</div>
+
+
+<!-- update the job assign pop -->
+
+<div class="edit_pop_wrap small_pop update_assign_pop">
+  <div class="edit_head mb-0 py-3">
+    <%= image_tag "ic_user_group", alt:"icon", class:"edit_icon" %>
+  Job Price for Assignee</div>
+  <div class="current_qty">
+    <%= image_tag "white_user", alt:"icon", class:"edit_icon" %>
+  Assignee: Rudy</div>
+  <div class="current_qty">Current Pricing: Not Priced</div>
+
+  <div class="input_section mb-3">
+    <div class="input_box">
+      <label class="label_top">Enter New Price for this order</label>
+      <div class="input_text">
+        $
+        <input type="text" placeholder="2">
+      </div>
+    </div>
+  </div>
+  <div class="inventory_edit_btn">Submit</div>
+</div>
