@@ -14,6 +14,11 @@ class OrdersController < ApplicationController
   end
 
   def create
+    if params[:commit] == "Save Order for Later"
+      params[:order_edit_status] = 0
+    else
+      params[:order_edit_status] = 1
+    end
     @order = Order.create(order_params)
     @order.shipping_label_image.attach(params[:shipping_label_image])
     @order.packing_slip_image.attach(params[:packing_slip_image])
@@ -90,6 +95,7 @@ class OrdersController < ApplicationController
     params.permit(:etsy_order_id,
                   :customer_name,
                   :additional_comment,
+                  :order_edit_status,
                   :price,
                   :order_status,
                   :order_edit_status,

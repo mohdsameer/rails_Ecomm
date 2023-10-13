@@ -1622,6 +1622,7 @@
   width: 13.6vw;
 }
 
+
 .designer_dasboard_wrapper {
   width: 81.887vw;
   margin-left: 2.025vw;
@@ -1629,26 +1630,6 @@
 
   .order_head {
     margin-bottom: 1.389vw;
-    .head_content {
-      .manual_btn {
-        display: flex;
-        padding: 0.347vw 0.926vw;
-        justify-content: center;
-        align-items: center;
-        gap: 0.463vw;
-        border-radius: 0.058vw;
-        background: var(--common-black, #000);
-        color: var(--primary-contrast-text, #FFF);
-        font-size: 0.810vw;
-        font-weight: 700;
-        line-height: 1.389vw;
-
-        .plus_icon {
-          width: 1.157vw;
-          height: 1.157vw;
-        }
-      }
-    }
   }
 
   .designer_name {

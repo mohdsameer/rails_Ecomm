@@ -84,5 +84,37 @@ export default class extends Controller {
       $('.cancel_request_wrapper').find('.cancel_flash').removeClass('show_cancel_flash');
       $('.cancel_request_wrapper').find('.cancel_request_box').show();
     });
+
+    $('.inventory_edit_btn').click(function() {
+      $('.edit_pop_wrap').hide();
+      $('.new_qty_wrap').show();
+    });
+
+    $('.cancel_qty').click(function() {
+      $('.edit_invntry_qty_popup').hide();
+      $('.edit_pop_wrap').show();
+    });
+
+    $('#increase_qty').click(function() {
+      $('.increase_box').slideToggle();
+    });
+
+    $('#decrease_qty').click(function() {
+      $('.decrease_box').slideToggle();
+    });
+
+    $('#increased_inventory').keyup(function() {
+      var currentQty = $('#current_qty').text();
+      var currentVal = $(this).val();
+      var final_value = parseInt(currentQty) + parseInt(currentVal);
+      $('.quantity_no').text(final_value);
+    })
+
+    $('#decreased_inventory').keyup(function() {
+      var currentQty = $('#current_qty').text();
+      var currentVal = $(this).val();
+      var final_value = parseInt(currentQty) - parseInt(currentVal);
+      $('.quantity_no').text(final_value);
+    })
   };
 };

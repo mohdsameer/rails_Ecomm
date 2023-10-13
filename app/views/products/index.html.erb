@@ -1,5 +1,5 @@
 <div class="hero_wrapper">
-  <div class="orders_page_wrapper <%= current_user.type == "Designer" || current_user.type == "Admin" ? 'designer_orders' : '' %>">
+  <div class="inventory_page_wrapper <%= current_user.type == "Designer" || current_user.type == "Admin" ? 'designer_orders' : '' %>">
     <%= render "shared/sidebar" %>
 
     <% if current_user.type == "Designer" || current_user.type == "Admin" %>

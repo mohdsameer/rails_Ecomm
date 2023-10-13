@@ -1,10 +1,16 @@
 <div class="hero_wrapper">
   <%= render "shared/sidebar" %>
 
-  <% if current_user.type == "Designer" || current_user.type == "Admin" %>
-    <!-- <h1>Dashboard</h1> -->
+  <% if current_user.type == "Admin" %>
+    <%= render "admin_panel_dashboard" %>
+
+   <%elsif current_user.type == "Designer" %>
+   	<%= render "designer_panel_dashboard" %>
+
   <% else %>
-    <%#= render "producer_panel_dashboard" %>
+    <%= render "producer_panel_dashboard" %>
+
   <% end %>
-  <%= render "admin_inventories_export" %>
+  <%#= render "shared/popups" %>
+
 </div>
