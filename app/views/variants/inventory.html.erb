@@ -1,0 +1,40 @@
+<div class="hero_wrapper">
+  <%= render "shared/sidebar" %>
+  <div class="inventory_export_wrap">
+    <div class="order_head">
+      <div class="head_content">
+        <%= link_to new_order_path , class: 'manual_btn' do %>
+          <%= image_tag 'ic_plus', alt: 'icon', class: 'plus_icon' %>
+          <span>Create Manual Order</span>
+        <% end %>
+        <div class="create_bell_box">
+          <%= image_tag("ic_notifications", class:"create_bell_icon") %>
+          <div class="create_notification">1</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="invenory_export_btn">
+      <button>
+        <%= image_tag "download", alt:"icon", class:"download_icon" %>
+        Export
+      </button>
+    </div>
+    <div class="export_list">
+      <div class="export_head">
+        <div class="export_item">Producer </div>
+        <div class="export_item light_text">Ship from Location </div>
+      </div>
+    <% @producers.each do |producer|%>
+        <div class="export_head white_bg">
+          <div class="export_item"><%= producer.name%> </div>
+          <div class="export_item light_text"><%= producer.location%></div>
+          <%= link_to producer_inventory_variant_path(producer) do %>
+            <%= image_tag "grey_view", alt:"icon", class: "eye_icon" %>
+          <% end%>
+
+        </div>
+      <%end%>
+    </div>
+  </div>
+</div>

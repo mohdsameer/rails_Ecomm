@@ -97,3 +97,86 @@
     }
   }
 }
+
+//** admin inventories export css started **//
+
+
+.inventory_export_wrap {
+  flex: 1;
+  margin-left: 4.514vw;
+
+  .invenory_export_btn {
+    display: flex;
+    justify-content: center;
+
+    button {
+      display: flex;
+      height: 3.241vw;
+      padding: 0.463vw 0.926vw;
+      align-items: center;
+      gap: 0.463vw;
+      border-radius: 0.463vw;
+      background: #00B8D9;
+      color: #FFF;
+      font-size: 0.810vw;
+      font-weight: 700;
+      line-height: 1.389vw;
+      border: none;
+      width: 6.134vw;
+      margin: 1.389vw 0px;
+    }
+
+    .download_icon {
+      width: 1.157vw;
+      height: 1.157vw;
+    }
+  }
+  .export_list {
+    width: 76.794vw;
+    border-radius: 0.926vw;
+    background: #FFF;
+    box-shadow: 0px 0.694vw 1.389vw -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+
+    .export_head {
+      background: #F4F6F8;
+      display: flex;
+      width: 100%;
+      padding: 0.694vw;
+      border-top-right-radius: 0.926vw;
+      border-top-left-radius: 0.926vw;
+
+      &.white_bg {
+        background: white;
+        justify-content: space-between;
+        border-bottom-right-radius: 0.926vw;
+        border-bottom-left-radius: 0.926vw;
+
+        .eye_icon {
+          width: 1.157vw;
+          height: 1.157vw;
+          margin: 0.463vw;
+        }
+      }
+      .export_item {
+        width: 36.111vw;
+        display: flex;
+        align-items: center;
+        color: #212B36;
+        font-size: 0.694vw;
+        font-weight: 600;
+        line-height: 1.389vw;
+
+        &.light_text {
+          color: #637381;
+          font-size: 0.810vw;
+          font-weight: 400;
+          line-height: 1.273vw;
+        }
+      }
+    }
+  }
+}
+
+
+
+//** admin inventories export css end **//

@@ -141,6 +141,43 @@
           background: rgba(255, 86, 48, 0.32);
           color: #b71d18;
         }
+
+        .edit_status {
+          gap: 0.347vw;
+
+          &.completed {
+            border: 1px solid rgba(54, 179, 126, 0.28);
+            background: rgba(54, 179, 126, 0.16);
+            color: #007B55;
+          }
+
+          &.incomplete {
+            background: transparent;
+            border: 1px solid #B76E00;
+            color: #B76E00;
+          }
+
+          img {
+            height: 0.926vw;
+            width: 0.926vw;
+          }
+        }
+      }
+
+      .rev_req {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.116vw 0.463vw;
+        border-radius: 0.347vw;
+        gap: 0.347vw;
+        background: rgba(255, 171, 0, 0.16);
+        color: #B76E00;
+
+        img {
+          height: 1.389vw;
+          width: 1.389vw;
+        }
       }
 
       .order_more_action {
@@ -183,6 +220,11 @@
         .drop_icon_box {
           cursor: pointer;
           svg {
+            height: 1.389vw;
+            width: 1.389vw;
+          }
+
+          .more_icon {
             height: 1.389vw;
             width: 1.389vw;
           }
@@ -250,7 +292,6 @@
         }
       }
     }
-
 
     //** Custom Table for ui **//
     
@@ -354,6 +395,145 @@
     }
 
     //** Custom Table for ui **//
+
+    //** Custom Designer Table for ui **//
+    &.designer_info_table {
+      .thead {
+        width: 100%;
+
+        .thead_row {
+          display: flex;
+          width: 100%;
+          margin: 0 0 0.463vw;
+
+          .order_th {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+            background: #F4F6F8;
+            color: #212B36;
+
+            &.first {
+              width: 2.778vw;
+            }
+            &.second {
+              width: 4.398vw;
+            }
+            &.three {
+              width: 9.722vw;
+            }
+            &.four {
+              width: 7.234vw;
+            }
+            &.five {
+              width: 3.762vw;
+              white-space: nowrap;
+            }
+            &.six {
+              width: 5.787vw;
+            }
+            &.seven {
+              width: 5.787vw;
+            }
+            &.eight {
+              width: 8.681vw;
+            }
+            &.nine {
+              width: 11.574vw;
+            }
+            &.ten {
+              width: 5.787vw;
+            }
+            &.eleven {
+              width: 4.977vw;
+
+              .down_arrow {
+                height: 1.042vw;
+                width: 1.042vw;
+              }
+            }
+            &.last {
+              width: 11.4vw;
+            }
+          }
+        }
+      }
+
+      .tbody {
+        .tbody_row {
+          display: flex;
+          flex-wrap: wrap;
+          width: 100%;
+
+          .order_td {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.first {
+              width: 2.778vw;
+            }
+            &.second {
+              width: 4.398vw;
+            }
+            &.three {
+              width: 9.722vw;
+            }
+            &.four {
+              width: 7.234vw;
+            }
+            &.five {
+              width: 3.762vw;
+            }
+            &.six {
+              width: 5.787vw;
+            }
+            &.seven {
+              width: 5.787vw;
+            }
+            &.eight {
+              width: 8.681vw;
+            }
+            &.nine {
+              width: 11.574vw;
+            }
+            &.ten {
+              width: 5.787vw;
+            }
+            &.eleven {
+              width: 4.977vw;
+            }
+            &.last {
+              width: 11.4vw;
+            }
+          }
+
+          .more_menu {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.579vw;
+            padding: 0 1.157vw 0 2.025vw;
+
+            .more_link {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 1.505vw;
+              height: 1.447vw;
+
+              img {
+                height: inherit;
+                width: inherit;
+              }
+            }
+          }
+        }
+      }
+    }
+    //** Custom Designer Table for ui **//
   }
 }
 
@@ -444,6 +624,21 @@
       .tabs_box {
         width: 100%;
 
+        &.designer_tab_box {
+          .tab-content {
+            .orders_details_box {
+              .order_details_data {
+                max-width: 100%;
+
+                .order_table_section {
+                  border-radius: 0 0 0.637vw 0.637vw;
+                  padding-top: 0.463vw;
+                }
+              }
+            }
+          }
+        }
+
         .order_tabs_wrap {
           display: flex;
           height: 2.894vw;
@@ -496,6 +691,15 @@
                 font-size: 0.694vw;
                 color: #B76E00;
                 font-weight: 400;
+
+                &.rejected {
+                  background: rgba(255, 86, 48, 0.16);
+                  color: #B71D18;
+                }
+                &.production {
+                  background: rgba(51, 102, 255, 0.48);
+                  color: #212B36;
+                }
               }
             }
           }

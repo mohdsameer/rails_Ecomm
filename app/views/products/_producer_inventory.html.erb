@@ -4,7 +4,6 @@
       <div class="create_wrap">
         <div class="create_content">
           <%= image_tag("ic_plus", class:"plus_icon") %>
-          <!-- <p class="create_text">Create Manual Order</p> -->
           <%= link_to 'Create Manual Order', new_order_path , class: 'create_text'%>
         </div>
         <div class="create_bell_box">
@@ -18,7 +17,7 @@
   </div>
 
   <div class="inventory_box">
-    <div class="inventory_head"><span>Inventories</span> <span>Producer 1</span> </div>
+    <div class="inventory_head"><span>Inventories</span> <span><%= current_user.name%></span> </div>
     <div class="inventory_content_box">
       <%= link_to 'Click here to Track Inventory History',inventory_history_variants_path, class: 'history_btn'%>
 

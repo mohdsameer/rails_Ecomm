@@ -1,0 +1,136 @@
+<div class="orders_details_box">
+  <div class="order_details_data">
+    <div class="order_table_section">
+      <div class="order_info_table designer_info_table">
+        <div class="thead">
+          <div class="thead_row">
+            <div class="order_th first">&nbsp;</div>
+            <div class="order_th second">Order ID</div>
+            <div class="order_th three">Etsy/Amazon Order ID</div>
+            <div class="order_th four">Customer Name</div>
+            <div class="order_th five">Total Items</div>
+            <div class="order_th six">Price</div>
+            <div class="order_th seven">Order Status</div>
+            <div class="order_th eight">Order Edit Status</div>
+            <div class="order_th nine">Revision</div>
+            <div class="order_th ten">Due Date</div>
+            <div class="order_th eleven">
+              <span>Order by</span>
+              <%= image_tag 'arrow_down.png', alt: 'icon', class: 'down_arrow' %>
+            </div>
+            <div class="order_th last">More Actions</div>
+          </div>
+        </div>
+        <div class="tbody">
+          <% orders.each do |order| %>
+            <div class="tbody_row">
+              <div class="order_td td_icon first">
+                <input type="checkbox" name="">
+              </div>
+              <div class="order_td second">
+                <div class="order_id_icon">
+                  <span class="order_num"><%= order.id %></span>
+                </div>
+              </div>
+              <div class="order_td three"><%= order.etsy_order_id %></div>
+              <div class="order_td four"><%= order.customer_name %></div>
+              <div class="order_td five"><%= order.order_products.pluck(:product_quantity).sum %></div>
+              <div class="order_td six">$<%= order.price %></div>
+              <div class="order_td seven">
+                <div class="order_status_icon">
+                  <div>
+                    <%= order.order_status %>
+                  </div>
+                </div>
+              </div>
+              <div class="order_td eight">
+                <div class="order_priority_icon">
+                  <% if order.order_edit_status == "completed" %>
+                    <div class="edit_status completed">
+                      <span><%= order.order_edit_status %></span>
+                      <span><%= image_tag 'complete.png', alt: 'icon'%></span>
+                    </div>
+                  <% else %>
+                    <div class="edit_status incomplete">
+                      <span><%= order.order_edit_status %></span>
+                      <span><%= image_tag 'incomplete.png', alt: 'icon'%></span>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+              <div class="order_td nine">
+                <div class="rev_req">
+                  <span><%= image_tag 'ic_alert.png', alt: 'icon'%></span>
+                  <span>Revision Requested</span>
+                </div>
+              </div>
+              <div class="order_td ten">
+                <%= order.due_date%> left
+              </div>
+              <div class="order_td eleven">
+                ETSY
+              </div>
+              <div class="order_td last">
+                <div class="more_menu">
+                  <%= link_to 'javascript:;', class: 'more_link' do %>
+                    <%= image_tag 'View.png', alt: 'icon'%>
+                  <% end %>
+                  <%= link_to 'javascript:;', class: 'more_link' do %>
+                    <%= image_tag 'edit_row.png', alt: 'icon'%>
+                  <% end %>
+                  <div class="more_link">
+                    <span>&nbsp;</span>
+                  </div>
+                  <div class="drop_menu">
+                    <div class="drop_icon_box">
+                      <%= image_tag 'ic_more.png', alt: 'icon', class: 'more_icon' %>
+                    </div>
+                    <div class="menu_drop">
+                      content here
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table_footer_wrap">
+    <div class="content_btn">
+      <div class="center">
+        <input type="checkbox" >
+      </div>
+      <div class="content_text">Dense</div>
+    </div>
+    <div class="pages_content">
+      <div>
+        Rows per page:
+      </div>
+      <div>
+        <select id="rowsPerPage" onchange="changeRowsPerPage(this.value)">
+          <option value="">None</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <div><%= orders.current_page%>-<%= orders.limit_value%> of <%= orders.count %></div>
+      <div class="d-flex">
+        <div class="pagination">
+          <%= will_paginate orders %>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+            <path d="M12.0247 15.8337C11.7726 15.8346 11.5336 15.7212 11.3747 15.5254L7.34973 10.5254C7.09697 10.2179 7.09697 9.77458 7.34973 9.46708L11.5164 4.46708C11.8109 4.1127 12.337 4.06419 12.6914 4.35874C13.0458 4.6533 13.0943 5.17936 12.7997 5.53375L9.07473 10.0004L12.6747 14.4671C12.8828 14.7168 12.9266 15.0648 12.787 15.3584C12.6474 15.652 12.3498 15.8375 12.0247 15.8337Z" fill="#919EAB" fill-opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="pagination">
+          <%= will_paginate orders %>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+            <path d="M8.83334 15.8336C8.63863 15.834 8.44993 15.7662 8.3 15.6419C8.12958 15.5007 8.02238 15.2974 8.00206 15.0769C7.98173 14.8565 8.04996 14.637 8.19167 14.4669L11.925 10.0003L8.325 5.52528C8.1852 5.35312 8.11978 5.13233 8.14324 4.91179C8.1667 4.69126 8.2771 4.48917 8.45 4.35028C8.62431 4.19691 8.85469 4.12322 9.08565 4.14695C9.31661 4.17067 9.52719 4.28968 9.66667 4.47528L13.6917 9.47528C13.9444 9.78278 13.9444 10.2261 13.6917 10.5336L9.525 15.5336C9.35545 15.7382 9.09853 15.8496 8.83334 15.8336Z" fill="#212B36"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

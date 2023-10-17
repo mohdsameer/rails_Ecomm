@@ -1,11 +1,23 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: [:update_cancel_status ,:message_create, :update]
+  before_action :find_order, only: [:update_cancel_status ,:message_create, :update , :assignee, :assignee_create]
 
   def index
     per_page = params[:per_page] || 20
 
     @orders = Order.all.paginate(page: params[:page], per_page: per_page)
     @products = Product.all
+  end
+
+  def assignee
+    @designers = User.where(type: "Designer")
+    @assigne = AssignDetail.new()
+  end
+
+  def assignee_create
+    @designer = User.find_by(id: params[:assign_detail][:designer])
+    @assigne = AssignDetail.new(order_id: @order.id, user_id: @designer.id).save
+    AssignDetail.last.update(assigne_params)
+    redirect_to orders_path, notice: 'Assigne Process Done.'
   end
 
   def new
@@ -111,6 +123,10 @@ class OrdersController < ApplicationController
   end
   def message_params
     params.require(:message).permit(:review_message, :from, :to)
+  end
+
+  def assigne_params
+    params.require(:assign_detail).permit(:price_per_design, :price_for_total, :due_date, :additional_comment)
   end
 
   def find_order

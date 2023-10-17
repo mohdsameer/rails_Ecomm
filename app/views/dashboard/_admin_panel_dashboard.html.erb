@@ -1,128 +1,35 @@
-<div class="producer_panel_wrapper">
+<div class="hero_wrapper">
+  <%= render "shared/sidebar" %>
+  <div class="producer_panel_wrapper">
 
-  <div class="order_head">
-    <div class="head_content">
-      <div class="create_bell_box">
-        <%= image_tag("ic_notifications", class:"create_bell_icon") %>
-        <div class="create_notification">
-          <div class="notification_text">1</div>
-        </div>
-      </div>
-      <div class="account_icon"></div>
-    </div>
-  </div>
-
-  <div class="total_wrapper">
-    <div class="total_content">
-      <div class="total_head">Total Earned</div>
-      <div class="total_text">$13,956</div>
-    </div>
-    <div class="total_content">
-      <div class="total_head">Total Number of Orders Completed</div>
-      <div class="total_text">$13,956</div>
-    </div>
-    <div class="total_content">
-      <div class="total_head">Total Number of Items Produced</div>
-      <div class="total_text">$13,956</div>
-    </div>
-  </div>
-
-  <div class="producer_payments">
-    <div class="payment_head">Payments</div>
-    <div class="payment_body">
-      <div class="payment_items">
-        <div class="items_head">Pending Payment</div>
-        <div class="items_text">$1,000.53</div>
-      </div>
-      <div class="payment_items">
-        <div class="items_head">Pending Payment</div>
-        <div class="items_text green_text">$1,000.53</div>
-      </div>
-      <div class="payment_items">
-        <div class="items_head">Pending Payment</div>
-        <div class="items_text blue_text">$1,000.53</div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <div class="next_payment_wrap">
-    <div class="next_head">Next Payment</div>
-    <div class="next_content">
-      <div class="content_head"><sup>$</sup>1,000.53</div>
-        <fieldset class="formSlider">
-          <div class="__range __range-step">
-            <input value="3" type="range" max="5" min="1" step="1" list="ticks1">
-            <datalist id="ticks1">
-              <option value="1"></option>
-              <option value="2"></option>
-              <option value="3"></option>
-              <option value="4"></option>
-              <option value="5"></option>
-            </datalist>
+    <div class="order_head">
+      <div class="head_content">
+        <div class="create_bell_box">
+          <%= image_tag("ic_notifications", class:"create_bell_icon") %>
+          <div class="create_notification">
+            <div class="notification_text">1</div>
           </div>
-        </fieldset>
-        <button class="next_content_btn">Request Payment Now</button>
-    </div>
-  </div>
-
-  <div class="history_wrap">
-    <div class="history_head">Payment History</div>
-    <table class="history_table">
-      <tr class="w-100">
-        <th class="th">Company</th>
-        <th class="th">Contact</th>
-      </tr>
-
-      <% 9.times do %>
-      <tr>
-        <td class="td">00/00/0000</td>
-        <td class="td">$00.00</td>
-      </tr>
-      <%end%>
-    </table>
-    <div class="pages_content">
-      <div>
-        Rows per page:
-      </div>
-      <div class="d-flex align-items-center">
-        <div>20</div>
-        <div>
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-            <path d="M16.3805 9.28957L12.5005 13.1696L8.62047 9.28957C8.23047 8.89957 7.60047 8.89957 7.21047 9.28957C6.82047 9.67957 6.82047 10.3096 7.21047 10.6996L11.8005 15.2896C12.1905 15.6796 12.8205 15.6796 13.2105 15.2896L17.8005 10.6996C18.1905 10.3096 18.1905 9.67957 17.8005 9.28957C17.4105 8.90957 16.7705 8.89957 16.3805 9.28957Z" fill="#212B36"/>
-          </svg>
         </div>
-      </div>
-      <div>6-10 of 11</div>
-      <div class="d-flex">
-        <div>
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-            <path d="M12.0247 15.8337C11.7726 15.8346 11.5336 15.7212 11.3747 15.5254L7.34973 10.5254C7.09697 10.2179 7.09697 9.77458 7.34973 9.46708L11.5164 4.46708C11.8109 4.1127 12.337 4.06419 12.6914 4.35874C13.0458 4.6533 13.0943 5.17936 12.7997 5.53375L9.07473 10.0004L12.6747 14.4671C12.8828 14.7168 12.9266 15.0648 12.787 15.3584C12.6474 15.652 12.3498 15.8375 12.0247 15.8337Z" fill="#919EAB" fill-opacity="0.8"/>
-          </svg>
-        </div>
-        <div>
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-            <path d="M8.83334 15.8336C8.63863 15.834 8.44993 15.7662 8.3 15.6419C8.12958 15.5007 8.02238 15.2974 8.00206 15.0769C7.98173 14.8565 8.04996 14.637 8.19167 14.4669L11.925 10.0003L8.325 5.52528C8.1852 5.35312 8.11978 5.13233 8.14324 4.91179C8.1667 4.69126 8.2771 4.48917 8.45 4.35028C8.62431 4.19691 8.85469 4.12322 9.08565 4.14695C9.31661 4.17067 9.52719 4.28968 9.66667 4.47528L13.6917 9.47528C13.9444 9.78278 13.9444 10.2261 13.6917 10.5336L9.525 15.5336C9.35545 15.7382 9.09853 15.8496 8.83334 15.8336Z" fill="#212B36"/>
-          </svg>
-        </div>
+        <div class="account_icon"></div>
       </div>
     </div>
 
-    <button class="export_btn">
-      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-        <path d="M3.8335 15.8333C3.8335 15.3731 4.20659 15 4.66683 15H16.3335C16.7937 15 17.1668 15.3731 17.1668 15.8333C17.1668 16.2936 16.7937 16.6667 16.3335 16.6667H4.66683C4.20659 16.6667 3.8335 16.2936 3.8335 15.8333Z" fill="white"/>
-        <path d="M4.66683 16.6667C4.20659 16.6667 3.8335 16.2936 3.8335 15.8333V14.1667C3.8335 13.7064 4.20659 13.3333 4.66683 13.3333C5.12707 13.3333 5.50016 13.7064 5.50016 14.1667V15.8333C5.50016 16.2936 5.12707 16.6667 4.66683 16.6667Z" fill="white"/>
-        <path d="M16.3335 16.6667C15.8733 16.6667 15.5002 16.2936 15.5002 15.8333V14.1667C15.5002 13.7064 15.8733 13.3333 16.3335 13.3333C16.7937 13.3333 17.1668 13.7064 17.1668 14.1667V15.8333C17.1668 16.2936 16.7937 16.6667 16.3335 16.6667Z" fill="white"/>
-        <path d="M10.5002 12.5C10.3274 12.5013 10.1585 12.4489 10.0168 12.35L6.6835 10C6.30948 9.73468 6.22011 9.21704 6.4835 8.84167C6.61106 8.65963 6.80606 8.53609 7.02515 8.49854C7.24424 8.46098 7.46925 8.51251 7.65016 8.64167L10.5002 10.6333L13.3335 8.5C13.7017 8.22386 14.224 8.29848 14.5002 8.66667C14.7763 9.03486 14.7017 9.55719 14.3335 9.83333L11.0002 12.3333C10.8559 12.4415 10.6805 12.5 10.5002 12.5Z" fill="white"/>
-        <path d="M10.5002 10.8333C10.0399 10.8333 9.66683 10.4602 9.66683 10V3.33333C9.66683 2.8731 10.0399 2.5 10.5002 2.5C10.9604 2.5 11.3335 2.8731 11.3335 3.33333V10C11.3335 10.4602 10.9604 10.8333 10.5002 10.8333Z" fill="white"/>
-      </svg>
-    Export</button>
+    <div class="producer_payments">
+      <div class="payment_head">Payments</div>
+      <div class="payment_body">
+        <% @users.each do |user|%>
+          <div class="payment_items">
+            <!-- <div class="items_head">Pending Payment</div> -->
+            <!-- <div class="td"><%= user.name%></div> -->
+            <div class="td"> <%= link_to user.name, dashboard_path(user) %></div>
+          </div>
+        <%end%>
+      </div>
+    </div>
   </div>
 </div>
 
-
-
+<!--
 <script type="text/javascript">
   document.querySelectorAll(".__range-step").forEach(function(ctrl) {
   var el = ctrl.querySelector('input');        
@@ -153,15 +60,12 @@
     }           
   };
   el.oninput();
-});
-
-window.onresize = function(){
-  document.querySelectorAll(".__range").forEach(function(ctrl) {
-    var el = ctrl.querySelector('input');    
-    el.oninput();    
   });
-};
 
-
-
-</script>
+  window.onresize = function(){
+    document.querySelectorAll(".__range").forEach(function(ctrl) {
+      var el = ctrl.querySelector('input');
+      el.oninput();
+    });
+  };
+</script> -->

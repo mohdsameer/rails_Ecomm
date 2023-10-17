@@ -4,4 +4,5 @@ class Producer < User
 	validates :location, presence: true
 #Association
 	has_many :product_producer_pricings
+	has_many :orders
 end

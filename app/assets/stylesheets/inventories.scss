@@ -681,6 +681,11 @@
 .manual_order_wrapper {
   width: 100%;
 
+  .manual_order_header {
+    margin: 0;
+    position: relative;
+  }
+
   .manual_content_wrap {
     display: flex;
     flex-direction: column;
