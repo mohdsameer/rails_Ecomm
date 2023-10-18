@@ -85,6 +85,8 @@ export default class extends Controller {
       $('.cancel_request_wrapper').find('.cancel_request_box').show();
     });
 
+// Inventory increase and decrease 
+
     $('.inventory_edit_btn').click(function() {
       $('.edit_pop_wrap').hide();
       $('.new_qty_wrap').show();
@@ -116,5 +118,10 @@ export default class extends Controller {
       var final_value = parseInt(currentQty) - parseInt(currentVal);
       $('.quantity_no').text(final_value);
     })
+
+
+    $('.close_hold').click(function() {
+      $('.on-hold-order-modal').hide();
+    });
   };
 };
