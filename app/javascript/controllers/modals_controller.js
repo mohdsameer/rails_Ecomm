@@ -119,7 +119,6 @@ export default class extends Controller {
       $('.quantity_no').text(final_value);
     })
 
-
     $('.close_hold').click(function() {
       $('.on-hold-order-modal').hide();
     });
