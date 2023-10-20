@@ -30,11 +30,11 @@
           align-items: flex-start;
           gap: 0.463vw;
           border-radius: 0.463vw;
-          background: var(--grey-100, #F9FAFB);
+          background: #F9FAFB;
           margin-bottom: 0.926vw;
 
           .method_head {
-            color: var(--text-light-primary, #212B36);
+            color: #212B36;
             font-size: 1.389vw;
             font-weight: 700;
             line-height: 1.389vw;
@@ -44,9 +44,9 @@
             padding: 0.579vw 0px;
             align-items: center;
             border-radius: 0.463vw;
-            background: var(--warning-light, #FFD666);
+            background: #FFD666;
             width: 44.097vw;
-            color: var(--info-darker, #003768);
+            color: #003768;
             font-size: 0.810vw;
             font-weight: 400;
             line-height: 1.273vw;
@@ -63,14 +63,14 @@
             width: 44.097vw;
             height: 3.588vw;
             align-items: center;
-            background: var(--background-light-neutral, #F4F6F8);
-            margin-bottom: 6px;
+            background: #F4F6F8;
+            margin-bottom: 0.347vw;
 
 
             .list_item {
               width: 44.097vw;
               height: 3.588vw;
-              color: var(--text-light-primary, #212B36);
+              color: #212B36;
               font-size: 0.694vw;
               font-weight: 600;
               line-height: 1.389vw;
@@ -94,13 +94,13 @@
           align-items: flex-start;
           gap: 0.579vw;
           border-radius: 0.463vw;
-          background: var(--grey-100, #F9FAFB);
+          background: #F9FAFB;
 
           .selected_head {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 9px;
+            gap: 0.521vw;
             align-self: stretch;
 
             .left_items {
@@ -114,20 +114,20 @@
               }
 
               .left_text {
-                color: var(--text-light-primary, #212B36);
+                color: #212B36;
                 font-size: 1.389vw;
                 font-weight: 700;
                 line-height: 1.389vw;
               }
               .top_text {
-                color: var(--text-light-secondary, #637381);
+                color: #637381;
                 font-size: 0.810vw;
                 font-weight: 400;
                 line-height: 1.273vw;
               }
             }
             .edit_link {
-              color: var(--success-main, #36B37E);
+              color: #36B37E;
               font-size: 0.926vw;
               font-weight: 400;
               line-height: 1.389vw;
@@ -140,14 +140,14 @@
             padding: 0px;
 
             .left_sku {
-              color: var(--text-light-primary, #212B36);
+              color: #212B36;
               font-size: 0.810vw;
               font-weight: 600;
               line-height: 1.273vw;
             }
 
             .left_head {
-              color: var(--text-light-primary, #212B36);
+              color: #212B36;
               font-size: 1.042vw;
               font-weight: 700;
               line-height: 1.620vw;
@@ -185,7 +185,7 @@
                   padding: 0px;
                 }
                 .edit_link {
-                  color: var(--success-main, #36B37E);
+                  color: #36B37E;
                   font-size: 0.926vw;
                   font-weight: 400;
                   line-height: 1.389vw;
@@ -238,7 +238,7 @@
             border-radius: 0.463vw;
             background: #C8FACD;
             width: 8.333vw;
-            color: var(--grey-800, #212B36);
+            color: #212B36;
             font-size: 0.868vw;
             font-weight: 700;
             line-height: 0.868vw;
@@ -253,9 +253,9 @@
             align-items: center;
             gap: 0.463vw;
             border-radius: 0.463vw;
-            background: var(--primary-main, #00AB55);
+            background: #00AB55;
             border: none;
-            color: var(--info-contrast-text, #FFF);
+            color: #FFF;
             font-size: 0.926vw;
             font-weight: 600;
             line-height: 1.389vw;
@@ -282,11 +282,11 @@
   justify-content: center;
   align-items: center;
   gap: 0.984vw;
-  border: 1.042vw solid var(--secondary-lighter, #D6E4FF);
-  background: var(--background-light-paper, #FFF);
+  border: 1.042vw solid #D6E4FF;
+  background: #FFF;
 
   .pop_head {
-    color: var(--text-light-primary, #212B36);
+    color: #212B36;
     text-align: center;
     font-size: 1.852vw;
     font-weight: 700;
@@ -302,13 +302,13 @@
     justify-content: center;
     align-items: center;
     gap: 0.463vw;
-    color: var(--primary-contrast-text, #FFF);
+    color: #FFF;
     font-size: 0.868vw;
     font-weight: 700;
     line-height: 1.505vw;
     width: 32.407vw;
     border-radius: 0.463vw;
-    background: var(--primary-main, #00AB55);
+    background: #00AB55;
     border: none;
 
     .arrow_icon {
@@ -317,3 +317,6 @@
     }
   }
 }
+
+
+

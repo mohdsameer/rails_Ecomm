@@ -269,7 +269,7 @@
 
 <!-- assign order popup -->
 
-<div class="assign_order_pop d-none">
+<div class="assign_order_pop ">
   <div class="assign_head">
     <%= image_tag "ic_user_group", alt:"icon", class:"assign_icon" %>
     Assign order to
@@ -311,17 +311,15 @@
 
   <div class="date_wrapper">
     <div class="date_head">Due Date (OPTIONAL)</div>
-    <!-- <input type="text" id="date_picker"  placeholder="Calendar"> -->
     <div class="input_section">
       <div class="input_box">
-        <label class="label_top">Price for Total Job(optional)</label>
-        <div class="input_text">
-          <input type="text" id="date_picker" placeholder="Calendar">
+        <div class="input_text w-100">
+          <input placeholder="Date" type="text" name="checkIn" id="datepicker" value="" class="calendar mb-0"><i class="fas fa-calendar-check icon"></i>
           <%= image_tag "calendar", alt:"icon", class:"cal_icon" %>
-        </div>
+        </div>  
       </div>
     </div>
-  </div>
+  <button class="submit_btn">Submit</button>
 </div>
 
 <!-- assign order popup incomplete -->
@@ -380,7 +378,7 @@
 
 <!-- update the job assign pop -->
 
-<div class="edit_pop_wrap small_pop update_assign_pop">
+<div class="edit_pop_wrap small_pop update_assign_pop d-none">
   <div class="edit_head mb-0 py-3">
     <%= image_tag "ic_user_group", alt:"icon", class:"edit_icon" %>
   Job Price for Assignee</div>
@@ -400,3 +398,207 @@
   </div>
   <div class="inventory_edit_btn">Submit</div>
 </div>
+
+
+
+
+<style type="text/css">
+  /* Style for body and footer codepen :)  
+Designed by RuLiweb - ruliweb.it */
+body {
+  background: rgba(59,60,56,0.05);
+  font-family: Arial, Helvetica, sans-serif;
+  text-align:center;
+}
+
+h2{
+  margin-top:30px;
+  margin-bottom:50px;
+}
+.calendar{
+  margin-bottom:200px;
+}
+.class-link{
+  color:#333333;
+  text-decoration:none;
+}
+
+.class-link:hover{
+ color:#ffbb00; 
+}
+
+/* From here you can start to copy */
+
+.calendar {
+  padding:8px;
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #333333;
+  box-shadow: 0px 20px 40px rgba(59,60,56,0.05);
+}
+.ui-datepicker {
+  background: #ffffff;
+  border-radius: 15px;
+  border-radius: 16px;
+  box-shadow: 0px 24px 48px 0px rgba(145, 158, 171, 0.16);
+}
+.ui-datepicker-header {
+  height: 50px;
+  line-height: 50px;
+  color: black;
+  background: #ffff;
+  margin-bottom: 10px;
+  position: relative;
+}
+.ui-datepicker-prev,
+.ui-datepicker-next {
+  width: 20px;
+  height: 20px;
+  text-indent: 9999px;
+  border-radius: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.ui-datepicker-prev {
+  float: left;
+  margin-left: 12px;
+  position: absolute;
+  right: 41px;
+}
+.ui-datepicker-prev:after {
+  transform: rotate(45deg);
+  margin: -43px 0px 0px 8px;
+}
+.ui-datepicker-next {
+  float: right;
+  margin-right: 12px;
+}
+.ui-datepicker-next:after {
+  transform: rotate(-135deg);
+  margin: -43px 0px 0px 6px;
+}
+.ui-datepicker-prev:after,
+.ui-datepicker-next:after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 0.463vw;
+  height: 0.463vw;
+  border-left: 0.116vw solid #637381;
+  border-bottom: 0.116vw solid #637381;
+}
+.ui-datepicker-prev:hover,
+.ui-datepicker-next:hover,
+.ui-datepicker-prev:hover:after,
+.ui-datepicker-next:hover:after {
+  border-color: #333333;
+}
+.ui-datepicker-title {
+  text-align: center;
+  font-size:1.447vw;
+  display: flex;
+  align-items: center;
+  margin-left: 1.389vw;
+}
+
+.ui-datepicker-title span {
+  color: #212B36;
+  font-size: 0.926vw;
+  font-weight: 600;
+  line-height: 1.389vw;
+}
+
+.ui-datepicker-calendar {
+  width: 100%;
+  text-align: center;
+}
+
+
+.ui-datepicker-calendar tbody td {
+  width: 2.083vw;
+  height: 2.083vw;
+}
+
+.ui-datepicker-calendar td:hover {
+  width: 2.083vw;
+  height: 2.083vw;
+}
+
+.ui-datepicker-calendar thead tr th span {
+    display: block;
+    text-decoration: none;
+    color: #637381;
+    text-align: center;
+    font-size: 0.694vw;
+    font-weight: 400;
+    line-height: 1.042vw;
+    border: 0.058vw solid transparent;
+}
+.ui-state-default {
+  display: block;
+  text-decoration: none;
+  color: #212B36;
+  text-align: center;
+  font-size: 0.694vw;
+  font-weight: 400;
+  line-height: 1.042vw;
+  border: 0.058vw solid transparent;
+}
+.ui-state-default:hover {
+  color: black;
+  background: white;
+  border: 1px solid black;
+  transition: all 0.25s cubic-bezier(0.7, -0.12, 0.2, 1.12);
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ui-state-highlight {
+  color: #ffffff;
+  background-color: #007B55;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+}
+.ui-state-active {
+  color: #ffffff;
+  background-color:#31639c;
+  border-radius:50px;
+}
+.ui-datepicker-unselectable .ui-state-default {
+  color: #eee;
+  border: 2px solid transparent;
+}
+
+.icon {
+    margin-left: -30px;
+    margin-top: -26px;
+    position: relative;
+    color: #31639c;
+    font-size:20px;
+}
+
+#ui-datepicker-div {
+  padding: 0.694vw;
+  width: 18.519vw;
+  top: 505.484px !important;
+  left: 207.594px !important;
+}
+</style>
+
+<script type="text/javascript">
+  jQuery(document).ready(function () {
+        jQuery('#datepicker').datepicker({
+            format: 'dd-mm-yyyy',
+            startDate: '+1d'
+        });
+    });
+</script>

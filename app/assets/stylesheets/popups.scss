@@ -10,7 +10,6 @@
   font-weight: 700;
   border: none;
 
-
   &.purple {
     background: #36F;
   }
@@ -1125,9 +1124,9 @@
 
 
 .assign_order_pop {
-  width: 406px;
-  padding: 24px 44px;
-  border-radius: 24px;
+  width: 23.495vw;
+  padding: 1.389vw 2.546vw;
+  border-radius: 1.389vw;
   background: #F4F6F8;
 
   .assign_head {
@@ -1155,6 +1154,15 @@
 
     .radio_input {
       margin: 0.579vw;
+      width: 1.389vw;
+      height: 1.389vw;
+    }
+
+    & span {
+      color: #212B36;
+      font-size: 0.810vw;
+      font-weight: 400;
+      line-height: 1.273vw;
     }
   }
 
@@ -1179,6 +1187,30 @@
       line-height: 1.042vw;
       text-transform: uppercase;
     }
+
+    .input_section {
+      .input_box {
+        .input_text {
+          img {
+            width: 1.389vw;
+            height: 1.389vw;
+          }
+        }
+      }
+    }
+  }
+
+  .submit_btn {
+    padding: 0.231vw 0.579vw;
+    border-radius: 0.463vw;
+    background: #00AB55;
+    width: 18.403vw;
+    border: none;
+    color: #FFF;
+    font-size: 0.752vw;
+    font-weight: 700;
+    line-height: 1.273vw;
+    margin-top: 1.042vw;
   }
 }
 

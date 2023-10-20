@@ -3,25 +3,23 @@
   <%= render partial: 'shared/sidebar' %>
   <div class="new_product_wrap">
     <div class="product_header">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <svg class="search_icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M14.425 13.25L17.2583 16.075C17.4161 16.2315 17.5048 16.4445 17.5048 16.6667C17.5048 16.8889 17.4161 17.1019 17.2583 17.2583C17.1019 17.4161 16.8889 17.5048 16.6667 17.5048C16.4445 17.5048 16.2315 17.4161 16.075 17.2583L13.25 14.425C12.0854 15.3392 10.6472 15.8352 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667C15.8352 10.6472 15.3392 12.0854 14.425 13.25ZM9.16667 4.16667C6.40524 4.16667 4.16667 6.40524 4.16667 9.16667C4.16667 11.9281 6.40524 14.1667 9.16667 14.1667C11.9281 14.1667 14.1667 11.9281 14.1667 9.16667C14.1667 6.40524 11.9281 4.16667 9.16667 4.16667Z" fill="#637381"/>
       </svg>
       <div class="icon_group">
         <div class="flag"><%= image_tag("GB") %></div>
         <div class="create_bell_box">
-          <%= image_tag("ic_notifications", class:"create_bell_icon") %>
-          <div class="create_notification">
-            <p class="notification_text">1</p>
-          </div>
+          <%= image_tag "ic_notifications", alt: 'icon', class: "create_bell_icon" %>
+          <div class="create_notification">1</div>
         </div>
-        <%= image_tag("ic_user_group") %>
-        <%= image_tag("Img_Avatar", class: "user_icon") %>
+        <%= image_tag "ic_user_group", alt:"image", class:"user_icon" %>
+        <%= image_tag "Img_Avatar", alt:"image", class: "user_icon" %>
       </div>
     </div>
     <h5 class="new_head">Create a new product</h5>
 
     <div class="export_btn">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <svg class="download_icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M3.33301 15.8333C3.33301 15.3731 3.7061 15 4.16634 15H15.833C16.2932 15 16.6663 15.3731 16.6663 15.8333C16.6663 16.2936 16.2932 16.6667 15.833 16.6667H4.16634C3.7061 16.6667 3.33301 16.2936 3.33301 15.8333Z" fill="white"/>
         <path d="M4.16634 16.6667C3.7061 16.6667 3.33301 16.2936 3.33301 15.8333V14.1667C3.33301 13.7064 3.7061 13.3333 4.16634 13.3333C4.62658 13.3333 4.99967 13.7064 4.99967 14.1667V15.8333C4.99967 16.2936 4.62658 16.6667 4.16634 16.6667Z" fill="white"/>
         <path d="M15.833 16.6667C15.3728 16.6667 14.9997 16.2936 14.9997 15.8333V14.1667C14.9997 13.7064 15.3728 13.3333 15.833 13.3333C16.2932 13.3333 16.6663 13.7064 16.6663 14.1667V15.8333C16.6663 16.2936 16.2932 16.6667 15.833 16.6667Z" fill="white"/>
@@ -93,40 +91,27 @@
       <div class="horizontal_line"></div>
     </div>
 
-    <div class="product_print_section">
-      <h5 class="print_head">Product Print Area</h5>
-      <table class="print_table">
-        <thead class="w-100">
-          <tr>
-            <th class="py-2 px-3 print_th">Print Area Width (mm) </th>
-            <th class="py-2 px-3 print_th">Print Area Height (mm)  </th>
-            <th class="py-2 px-3 print_th w-50"></th>
-            <th class="py-2 px-3 print_th">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="py-2 px-3 print_td">
-              <div class="foot_content">
-                <span><%= f.text_field :print_area_width, class: "foot_input" %></span>
-              </div>
-            </td>
-            <td class="py-2 px-3 print_td">
-              <div class="foot_content">
-                <span><%= f.text_field :print_area_height, class: "foot_input" %></span>
-              </div>
-            </td>
-            <td class="py-2 px-3 print_td">
-            </td>
-            <td class="text-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8836 3.83273L16.1669 6.11606C16.8052 6.7242 16.8313 7.73411 16.2253 8.3744L8.72525 15.8744C8.45361 16.1438 8.09758 16.3115 7.71692 16.3494L4.24192 16.6661H4.16692C3.94542 16.6673 3.73252 16.5804 3.57525 16.4244C3.39945 16.2492 3.31086 16.0048 3.33358 15.7577L3.69192 12.2827C3.72984 11.9021 3.89756 11.546 4.16692 11.2744L11.6669 3.7744C12.3134 3.22819 13.2667 3.25327 13.8836 3.83273ZM11.1003 6.66606L13.3336 8.8994L15.0003 7.2744L12.7253 4.9994L11.1003 6.66606Z" fill="#212B36"/>
-              </svg>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <div class="product_print_section">
+        <h5 class="print_head">Product Print Area</h5>
+        <div class="print_table">
+          <div class="print_content">
+            <div class="content_item">Print Area Width (mm) </div>
+            <div class="content_item">Print Area Width (mm) </div>
+            <div class="content_item one"></div>
+            <div class="content_item two border-0">Edit</div>
+          </div>
+          <div class="print_content">
+            <div class="content_item white_bg border-0">
+              <input type="text" placeholder="75" class="item_box">
+            </div>
+            <div class="content_item white_bg border-0">
+              <input type="text" placeholder="75" class="item_box">
+            </div>
+            <div class="content_item white_bg border-0 one"></div>
+            <div class="content_item white_bg border-0 two border-0"><%= image_tag "dark_edit",alt:"icon" , class:"edit_icon" %></div>
+          </div>
+        </div>
+      </div>
 
     <div class="bottom_btn_group">
         <%= button_tag 'Cancel', class: "cancel_btn", type: "button", onclick: "window.location.href = '#{products_path}'" %>

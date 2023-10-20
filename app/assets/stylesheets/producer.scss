@@ -42,7 +42,7 @@
         font-size: 0.810vw;
         font-weight: 400;
         line-height: 1.273vw;
-        border-bottom: 2px solid whitesmoke;
+        border-bottom: 0.116vw solid whitesmoke;
       }
     }
     .pages_content {
@@ -52,7 +52,7 @@
       align-items: center;
       gap: 1.389vw;
       width: 100%;
-      border-top: 1px solid rgba(145, 158, 171, 0.24);
+      border-top: 0.058vw solid rgba(145, 158, 171, 0.24);
       background: #ffffff;
       box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
       border-radius: 0px 0px 0.926vw 0.926vw;
@@ -164,20 +164,20 @@
           font-size: 1.852vw;
           font-weight: 700;
           line-height: 2.778vw;
-          background: var(--gradient-warning, linear-gradient(135deg, #FFD666 0%, #FFAB00 100%));
+          background: linear-gradient(135deg, #FFD666 0%, #FFAB00 100%);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
 
           &.green_text {
-            background: var(--gradient-primary, linear-gradient(135deg, #5BE584 0%, #00AB55 100%));
+            background: linear-gradient(135deg, #5BE584 0%, #00AB55 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
           }
 
           &.blue_text {
-            background: var(--gradient-secondary, linear-gradient(135deg, #84A9FF 0%, #1939B7 100%));
+            background: linear-gradient(135deg, #84A9FF 0%, #1939B7 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_05_085203) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_11_085005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_085203) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.integer "from"
+    t.integer "to"
+    t.string "review_message"
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_messages_on_order_id"
+  end
+
   create_table "order_products", force: :cascade do |t|
     t.bigint "product_id"
     t.bigint "order_id"
@@ -64,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_085203) do
     t.datetime "updated_at", null: false
     t.integer "priority", default: 0
     t.string "reject_reason"
+    t.string "additional_comment"
   end
 
   create_table "product_producer_pricings", force: :cascade do |t|
@@ -85,6 +96,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_085203) do
     t.bigint "print_area_height"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.string "type"
+    t.integer "status", default: 0
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_requests_on_order_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -114,6 +134,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_085203) do
     t.float "width"
     t.float "weight_lb"
     t.float "weight_oz"
+    t.string "inventory_reason"
   end
 
   create_table "versions", force: :cascade do |t|
@@ -128,8 +149,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_085203) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "messages", "orders"
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
   add_foreign_key "product_producer_pricings", "products"
   add_foreign_key "product_producer_pricings", "users"
+  add_foreign_key "requests", "orders"
 end

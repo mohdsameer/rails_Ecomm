@@ -26,7 +26,7 @@
         <p class="export_head">Products</p>
         <div class="btn_group">
           <div class="export_btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <svg class="btn_icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M3.33301 15.8333C3.33301 15.3731 3.7061 15 4.16634 15H15.833C16.2932 15 16.6663 15.3731 16.6663 15.8333C16.6663 16.2936 16.2932 16.6667 15.833 16.6667H4.16634C3.7061 16.6667 3.33301 16.2936 3.33301 15.8333Z" fill="white"/>
               <path d="M4.16634 16.6667C3.7061 16.6667 3.33301 16.2936 3.33301 15.8333V14.1667C3.33301 13.7064 3.7061 13.3333 4.16634 13.3333C4.62658 13.3333 4.99967 13.7064 4.99967 14.1667V15.8333C4.99967 16.2936 4.62658 16.6667 4.16634 16.6667Z" fill="white"/>
               <path d="M15.833 16.6667C15.3728 16.6667 14.9997 16.2936 14.9997 15.8333V14.1667C14.9997 13.7064 15.3728 13.3333 15.833 13.3333C16.2932 13.3333 16.6663 13.7064 16.6663 14.1667V15.8333C16.6663 16.2936 16.2932 16.6667 15.833 16.6667Z" fill="white"/>
@@ -36,7 +36,7 @@
             <div class="btn_text">CSV. Export</div>
           </div>
           <div class="export_btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <svg class="btn_icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M15.833 9.16732H10.833V4.16732C10.833 3.70708 10.4599 3.33398 9.99967 3.33398C9.53944 3.33398 9.16634 3.70708 9.16634 4.16732V9.16732H4.16634C3.7061 9.16732 3.33301 9.54041 3.33301 10.0007C3.33301 10.4609 3.7061 10.834 4.16634 10.834H9.16634V15.834C9.16634 16.2942 9.53944 16.6673 9.99967 16.6673C10.4599 16.6673 10.833 16.2942 10.833 15.834V10.834H15.833C16.2932 10.834 16.6663 10.4609 16.6663 10.0007C16.6663 9.54041 16.2932 9.16732 15.833 9.16732Z" fill="white"/>
             </svg>
           <%= link_to 'Create a New Product', new_product_path , class: 'btn_text'%>
@@ -55,37 +55,41 @@
     <div class="table_section">
       <div class="table_content">
         <table>
-          <tr>
-            <th><input type="checkbox"></th>
-            <th class="px-5 py-3 custom_col">Product ID</th>
-            <th class="px-5 py-3 custom_col">Product photo</th>
-            <th class="px-5 py-3 custom_col">Brand Name</th>
-            <th class="px-5 py-3 custom_col">Product Name</th>
-            <th class="px-5 py-3 custom_col">Variations</th>
-            <th class="px-5 py-3 custom_col">Edit/Duplicate</th>
-          </tr>
-          <% @products.each do |product| %>
+          <thead>
             <tr>
-                <td class=" text-center"><input type="checkbox"></td>
-                <td class="p-4 custom_col text-center"><%= product.id %></td>
-                <td class="p-4 custom_col col_shadow text-center">
+              <th class="custom_col text-center"><input type="checkbox"></th>
+              <th class="custom_col">Product ID</th>
+              <th class="custom_col">Product photo</th>
+              <th class="custom_col">Brand Name</th>
+              <th class="custom_col">Product Name</th>
+              <th class="custom_col">Variations</th>
+              <th class="custom_col">Edit/Duplicate</th>
+            </tr>
+          </thead>
+          <% @products.each do |product| %>
+          <tbody>
+            <tr>
+                <td class="text-center"><input type="checkbox"></td>
+                <td class="custom_col text-center"><%= product.id %></td>
+                <td class="custom_col col_shadow text-center">
                   <% if product.image.attached? %>
                     <%= image_tag product.image %>
                   <% else %>
                     <%= image_tag asset_path('dummy-product.png') %>
                   <% end %>
                 </td>
-                <td class="p-4 custom_col col_shadow text-center"><%= product.brand_name %></td>
-                <td class="p-4 custom_col col_shadow text-center"><%= product.name %></td>
-                <td class="p-4 custom_col col_shadow text-center"><%= product.variants.count %></td>
-                <td class="p-4 custom_col col_shadow text-center">
+                <td class="custom_col col_shadow text-center"><%= product.brand_name %></td>
+                <td class="custom_col col_shadow text-center"><%= product.name %></td>
+                <td class="custom_col col_shadow text-center"><%= product.variants.count %></td>
+                <td class="custom_col col_shadow text-center">
                   <a href="<%= edit_product_path(product) %>"> 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                    <svg class="edit_icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4806 4.60084L20.2206 7.34084C20.9866 8.0706 21.0179 9.2825 20.2906 10.0508L11.2906 19.0508C10.9646 19.3741 10.5374 19.5753 10.0806 19.6208L5.91061 20.0008H5.82061C5.55481 20.0024 5.29933 19.898 5.11061 19.7108C4.89965 19.5007 4.79334 19.2074 4.82061 18.9108L5.25061 14.7408C5.29612 14.284 5.49738 13.8568 5.82061 13.5308L14.8206 4.53084C15.5964 3.87539 16.7403 3.90549 17.4806 4.60084ZM14.1406 8.00084L16.8206 10.6808L18.8206 8.73084L16.0906 6.00084L14.1406 8.00084Z" fill="#637381"/>
                     </svg>
                   </a> 
                 </td>
               </tr>
+          </tbody>
             <% end %>
         </table>
       </div>
