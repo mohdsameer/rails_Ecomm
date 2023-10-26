@@ -8,18 +8,20 @@ class Order < ApplicationRecord
   scope :inproduction_order, -> {where(order_status: 'inproduction')}
 
 	# Enumarations
-  enum order_status: { onhold: 0, rejected: 1, inproduction: 2, fullfilled: 3 }
+  enum order_status: { onhold: 0, rejected: 1, inproduction: 2, fullfilled: 3, cancel: 4 }
   enum order_edit_status: { incomplete: 0, completed: 1 }
   enum priority: {URGENT:0}
 
   #Association
-  has_many :order_products
+  has_many :order_products, dependent: :destroy
+  has_many :variants, through: :order_products
   has_many :products, through: :order_products
   has_many :messages
-  has_one  :cancel_request
-  has_many :assign_details
+  has_many :assign_details, dependent: :destroy
 
-  belongs_to :producer ,foreign_key: :user_id, class_name: "User"
+  has_one  :cancel_request
+
+  belongs_to :producer, foreign_key: :user_id, class_name: "User"
 
   #Attachment
   has_one_attached :shipping_label_image
@@ -44,11 +46,15 @@ class Order < ApplicationRecord
     created_at.strftime('%B %e, %Y')
   end
 
+  def order_date_with_time
+    created_at.strftime('%b %d, %Y at %I:%M %p')
+  end
+
   def assignee_name
     assign_details.last.designer.name
   end
 
-  def due_date
+  def order_due_date
     distance_of_time_in_words(Time.current, assign_details.last.due_date)
   end
 end

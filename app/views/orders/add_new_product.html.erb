@@ -1,0 +1,30 @@
+<table>
+	<h1>Available Products</h1>
+	<tr>
+	  <th></th>
+	  <th class="px-5 py-3 custom_col">Product ID</th>
+	  <th class="px-5 py-3 custom_col">Product photo</th>
+	  <th class="px-5 py-3 custom_col">Product Name</th>
+	</tr>
+	<% @products.each do |product| %>
+    <tr>
+      <td class=" text-center"><input type="checkbox"></td>
+      <td class="p-4 custom_col text-center"><%= product.id %></td>
+      <td class="p-4 custom_col col_shadow text-center">
+        <% if product.image.attached? %>
+          <%= image_tag product.image %>
+        <% else %>
+          <%= image_tag asset_path('dummy-product.png') %>
+        <% end %>
+      </td>
+      <td class="p-4 custom_col col_shadow text-center"><%= product.name %></td>
+      <td class="p-4 custom_col col_shadow text-center">
+        <a href="<%= select_variant_orders_path(product_id: product) %>"> 
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4806 4.60084L20.2206 7.34084C20.9866 8.0706 21.0179 9.2825 20.2906 10.0508L11.2906 19.0508C10.9646 19.3741 10.5374 19.5753 10.0806 19.6208L5.91061 20.0008H5.82061C5.55481 20.0024 5.29933 19.898 5.11061 19.7108C4.89965 19.5007 4.79334 19.2074 4.82061 18.9108L5.25061 14.7408C5.29612 14.284 5.49738 13.8568 5.82061 13.5308L14.8206 4.53084C15.5964 3.87539 16.7403 3.90549 17.4806 4.60084ZM14.1406 8.00084L16.8206 10.6808L18.8206 8.73084L16.0906 6.00084L14.1406 8.00084Z" fill="#637381"/>
+          </svg>
+        </a> 
+      </td>
+    </tr>
+  <% end %>
+</table>

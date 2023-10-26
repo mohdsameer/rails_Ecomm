@@ -65,17 +65,21 @@
                 </div>
               </div>
               <div class="order_td ten">
-                <%= order.due_date%> left
+                <% if order.due_date.present?%>
+                  <%= order.order_due_date %> left
+                <% else %>
+                  nil
+                <%end%>
               </div>
               <div class="order_td eleven">
                 ETSY
               </div>
               <div class="order_td last">
                 <div class="more_menu">
-                  <%= link_to 'javascript:;', class: 'more_link' do %>
+                  <a href="<%= on_hold_popup_order_path(order) %>"  data-turbo-frame="on-hold-order-modal" class= "more_link">
                     <%= image_tag 'View.png', alt: 'icon'%>
-                  <% end %>
-                  <%= link_to 'javascript:;', class: 'more_link' do %>
+                  </a>
+                  <%= link_to edit_order_path(order), class: 'more_link' do %>
                     <%= image_tag 'edit_row.png', alt: 'icon'%>
                   <% end %>
                   <div class="more_link">

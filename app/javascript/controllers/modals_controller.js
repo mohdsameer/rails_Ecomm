@@ -119,8 +119,25 @@ export default class extends Controller {
       $('.quantity_no').text(final_value);
     })
 
+// on-hold-order-modal
+
     $('.close_hold').click(function() {
       $('.on-hold-order-modal').hide();
+    });
+
+// all_producer pop model
+
+    // $(".choose-producer").click(function() {
+    //   const producerId = $(this).data("producer_id");
+    //   $("#producerIdField").val(producerId);
+    // });
+
+    $('.close_icon').click(function() {
+      $('.select_pop_wrap_model').hide();
+    });
+
+    $('#close_status_popup').click(function() {
+      $('.status_popup').hide();
     });
   };
 };

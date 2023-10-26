@@ -24,8 +24,19 @@ Rails.application.routes.draw do
       post :message_create
       get :cancel_request
       post :update_cancel_status
+      get :select_variant
       get :assignee
       post :assignee_create
+      get :on_hold_popup
+      get :in_production_popup
+      get :delete_confirmation
+      get :cancel_order
+    end
+    collection do
+      get :add_new_product
+      get :select_variant
+      get :all_producer
+      get :cancel_order_index
     end
   end
 

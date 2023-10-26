@@ -12,8 +12,8 @@ class VariantsController < ApplicationController
   end
 
   def producer_inventory
-    producer = Producer.find_by(id: params[:id])
-    @orders = Order.where(user_id: producer)
+    @producer = Producer.find_by(id: params[:id])
+    @orders = Order.where(user_id: @producer)
   end
 
   def edit_inventory
@@ -47,7 +47,12 @@ class VariantsController < ApplicationController
 
   def inventory_history
     per_page = params[:per_page] || 20
-    @variants = Variant.all.paginate(page: params[:page], per_page: per_page)
+    if params[:producer_id].present?
+      @producer = Producer.find_by(id: params[:producer_id])
+      @variants = @producer.variants.paginate(page: params[:page], per_page: per_page)
+    else
+      @variants = Variant.all.paginate(page: params[:page], per_page: per_page)
+    end
   end
 
   private

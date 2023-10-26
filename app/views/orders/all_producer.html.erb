@@ -1,0 +1,28 @@
+<turbo-frame id="all-producer-order-modal">
+  <div id= "select_pop_wrap_model" class="select_pop_wrap_model" data-controller="modals" data-modals-modal-id-value="select_pop_wrap_model">
+    <div class="select_pop_wrap_outer">
+      <div class="select_pop_wrap">
+        <div class="select_head">
+          Choose a Product
+          <%= image_tag "close", alt:"icon", class:"close_icon" %>
+        </div>
+        <div class="select_content">
+          <div class="scroll_section">
+            <% @producers.each do |producer| %>
+              <div class="scroll_content">
+                <div class="image_text_wrap">
+                  <div class="text_wrap">
+                    <%= producer.name %>
+                    <div class="light_text"><%= producer.location %></div>
+                  </div>
+                  <label class="image_label">LASER ENGRAVING</label>
+                </div>
+                <div class="choose_btn"><%= link_to 'Choose', new_order_path(producer_id: producer.id), data: { 'turbo-frame': '_top' } %></div>
+              </div>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</turbo-frame>
