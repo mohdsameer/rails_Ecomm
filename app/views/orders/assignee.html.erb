@@ -1,0 +1,26 @@
+<h1>Assign order to </h1>
+
+<%= form_for @assigne, url: assignee_create_order_path(@order) do |a| %>
+  <table class="producers_table">
+    <tr>
+      <th class="table_head">Name</th>
+    </tr>
+    <tr>
+      <td class="table_td">
+        <%= a.collection_select(:designer, @designers, :id, :name, { prompt: 'Select Designer' }, class: 'form-control') %>
+      </td>
+    </tr>
+  </table>
+  <%= a.date_field :due_date %>
+
+  <%= a.label :Price_per_design %>
+  <%= a.number_field :price_per_design %>
+
+  <%= a.label :price_for_total %>
+  <%= a.number_field :price_for_total %>
+
+  <%= a.label :additional_comment %>
+  <%= a.text_field :additional_comment %>
+
+  <%= a.submit 'Submit', class: 'btn btn-primary' %>
+<% end %>

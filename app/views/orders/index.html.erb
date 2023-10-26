@@ -1,8 +1,10 @@
 <div class="orders_page_wrapper <%= current_user.type == "Designer" || current_user.type == "Admin" ? 'designer_orders' : '' %>">
   <%= render "shared/sidebar" %>
 
-  <% if current_user.type == "Designer" || current_user.type == "Admin" %>
+  <% if current_user.type == "Designer" %>
     <%= render "designer_index" %>
+  <%elsif current_user.type == "Admin" %>
+    <%= render "admin_index" %>
   <% else %>
     <%= render "producer_index" %>
   <% end %>
@@ -48,6 +50,4 @@
     var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
     $('#count-checked-checkboxes').text(countCheckedCheckboxes);
   });
-
-  
 </script>

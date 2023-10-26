@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'dashboard/manual_order'
   get 'dashboard/choose_shiping'
 
+  resources :dashboard, only: [:show]
   
   
   resources :products, only: [:index, :new, :create,:edit, :update] do
@@ -23,6 +24,19 @@ Rails.application.routes.draw do
       post :message_create
       get :cancel_request
       post :update_cancel_status
+      get :select_variant
+      get :assignee
+      post :assignee_create
+      get :on_hold_popup
+      get :in_production_popup
+      get :delete_confirmation
+      get :cancel_order
+    end
+    collection do
+      get :add_new_product
+      get :select_variant
+      get :all_producer
+      get :cancel_order_index
     end
   end
 
@@ -30,6 +44,8 @@ Rails.application.routes.draw do
     get 'inventory_history', on: :collection
     get 'edit_inventory', on: :member
     patch 'update_inventory', on: :member
+    get :inventory, on: :collection
+    get :producer_inventory, on: :member
   end
 
   # Sessions routes

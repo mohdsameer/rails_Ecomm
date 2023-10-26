@@ -85,6 +85,8 @@ export default class extends Controller {
       $('.cancel_request_wrapper').find('.cancel_request_box').show();
     });
 
+// Inventory increase and decrease 
+
     $('.inventory_edit_btn').click(function() {
       $('.edit_pop_wrap').hide();
       $('.new_qty_wrap').show();
@@ -116,5 +118,26 @@ export default class extends Controller {
       var final_value = parseInt(currentQty) - parseInt(currentVal);
       $('.quantity_no').text(final_value);
     })
+
+// on-hold-order-modal
+
+    $('.close_hold').click(function() {
+      $('.on-hold-order-modal').hide();
+    });
+
+// all_producer pop model
+
+    // $(".choose-producer").click(function() {
+    //   const producerId = $(this).data("producer_id");
+    //   $("#producerIdField").val(producerId);
+    // });
+
+    $('.close_icon').click(function() {
+      $('.select_pop_wrap_model').hide();
+    });
+
+    $('#close_status_popup').click(function() {
+      $('.status_popup').hide();
+    });
   };
 };
