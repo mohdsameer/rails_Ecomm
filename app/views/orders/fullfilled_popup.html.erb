@@ -1,4 +1,4 @@
-<turbo-frame id="in-production-order-modal">
+<turbo-frame id="fullfilled-order-modal">
   <div class="status_popup">
     <div class="status_popup_outer">
       <div id = "status_pop_wrapper" class="status_pop_wrapper" data-controller="modals" data-modals-modal-id-value="status_pop_wrapper">
@@ -8,39 +8,23 @@
         <div class="status_bar">
           <div class="left_section">
             <div class="bar_head">Order ID: <%= @order.id%></div>
-            <% if @order.order_status == "inproduction"%>
-              <div class="status_badge">In Production</div>
+            <% if @order.order_status == "fullfilled"%>
+              <div class="status_badge succes_badge">Fullfilled</div>
             <%end%>
           </div>
           <div class="right_section">
-            <span><%= @assigne %></span>
-            <%= image_tag "check", alt:"icon", class:"right_img" %>
+            <% if @assigne.present? %>
+              <span><%= @assigne %></span>
+              <%= image_tag "check", alt:"icon", class:"right_img" %>
+            <%else%>
+              <span> assigne not assign</span>
+            <%end%>
           </div>
         </div>
         <div class="create_date"><%= @order.order_date_with_time%></div>
-        <div class="msg_section">
-          <%= image_tag "ic_chat", alt:"icon", class:"msg_icon" %>
-          <div class="content_box">
-            <div class="msg_from">
-              <div class="left_text">Message from Admin:</div>
-              <div class="date_text"><%= @order.created_on%></div>
-            </div>
-            <div class="content_text"><%= @order.messages.last.review_message%>.</div>
-          </div>
-        </div>
-        <div class="msg_section order_note">
-          <%= image_tag "chat", alt:"icon", class:"msg_icon" %>
-          <div class="content_box">
-            <div class="msg_from">
-              <div class="left_text">Order Note:</div>
-              <div class="date_text"><%= @order.order_date %></div>
-            </div>
-            <div class="content_text"><%= @order.additional_comment%></div>
-          </div>
-        </div>
         <div class="order_info_section">
           <div class="left_section">
-            <% @order_products.each do |order_product|%>
+            <% @order_products.each do |order_product|%>  
               <div class="left_section_box">
                 <div class="left_head"><%=order_product.product.name%></div>
                 <div class="left_sku">SKU: <%= order_product.variant.Real_variant_SKU%></div>
@@ -59,9 +43,7 @@
                 </div>
                 <div class="cost_section">
                   <div>Production costs</div>
-                  <% record = order_product.product.product_producer_pricings.find_by(user_id: @order.producer.id) %>
-                    <% sum_result = record.front_side_print_price + record.back_side_print_price %>
-                  <div>USD <%= sum_result %></div>
+                  <div>USD 10.00</div>
                 </div>
                 <div class="cost_section small">
                   <div>Tracking details</div>

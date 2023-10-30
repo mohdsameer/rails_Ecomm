@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: [:update_cancel_status ,:message_create, :update ,:edit, :destroy, :assignee, :assignee_create, :on_hold_popup, :in_production_popup]
+  before_action :find_order, only: [:send_message, :update_cancel_status ,:message_create, :update ,:edit, :destroy, :assignee, :assignee_create, :on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup, :assignee_remove_confirmation, :create_cancel_request , :new_cancel_request, :update_priority ,:request_revision, :request_revision_update]
 
   def index
     per_page = params[:per_page] || 20
@@ -19,6 +19,14 @@ class OrdersController < ApplicationController
     Order.find(@order.id).update(due_date: assigne_params[:due_date])
     AssignDetail.last.update(assigne_params)
     redirect_to orders_path, notice: 'Assigne Process Done.'
+  end
+
+  def assignee_remove_confirmation
+    @assigne = @order.assign_details.last
+  end
+
+  def assigne_remove
+    AssignDetail.find_by(id: params[:id]).destroy
   end
 
   def new
@@ -60,8 +68,12 @@ class OrdersController < ApplicationController
   end
 
   def send_message
-    @order = Order.find_by(id: params[:id])
-    @message = Message.new(from: current_user.id, to: Admin.first.id)
+    @message = if current_user.type == "Producer"
+                 Message.new(from: current_user.id, to: Admin.first.id)
+               else
+                 Message.new(from: current_user.id, to: @order.producer.id)
+               end
+      @user = User.find_by(id: @message.to)
   end
 
   def message_create
@@ -108,12 +120,22 @@ class OrdersController < ApplicationController
     end
   end
 
+  def new_cancel_request
+    @cancel_request =  CancelRequest.new
+  end
+
+  def create_cancel_request
+    @cancel_request = CancelRequest.new(order: @order, status: 0, cancel_reason: params[:cancel_request][:cancel_reason])
+    @cancel_request.save
+  end
+
   def cancel_request
     @order = Order.find_by(id: params[:id])
   end
 
   def update_cancel_status
     @order.cancel_request.update(status: 1)
+    @order.update(order_status: 4)
   end
 
   def add_new_product
@@ -133,8 +155,24 @@ class OrdersController < ApplicationController
   end
 
   def in_production_popup
-     @assigne = @order.assign_details.first.designer.name
-     @order_products = @order.order_products
+    if @order.assign_details.present?
+      @assigne = @order.assign_details.first.designer.name
+    end
+    @order_products = @order.order_products
+  end
+
+  def rejected_popup
+    if @order.assign_details.present?
+      @assigne = @order.assign_details.first.designer.name
+    end
+    @order_products = @order.order_products
+  end
+
+  def fullfilled_popup
+    if @order.assign_details.present?
+      @assigne = @order.assign_details.first.designer.name
+    end
+    @order_products = @order.order_products
   end
 
   def cancel_order
@@ -143,6 +181,17 @@ class OrdersController < ApplicationController
 
   def cancel_order_index
     @cancel_orders = Order.where(order_status: "cancel")
+  end
+
+  def update_priority
+    @order.update(priority: 0)
+    redirect_to orders_path
+  end
+
+  def request_revision; end
+
+  def request_revision_update
+    @order.update(request_revision: true, revision_info: params[:order][:revision_info])
   end
 
   private

@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   # Defines the root path route ("/")
   get 'dashboard/producer_panel_dasboard'
-  get 'dashboard/inventories'
-  get 'dashboard/inventories_second'
   get 'dashboard/manual_order'
   get 'dashboard/choose_shiping'
 
@@ -27,10 +25,19 @@ Rails.application.routes.draw do
       get :select_variant
       get :assignee
       post :assignee_create
+      get :assignee_remove_confirmation
+      delete :assigne_remove
       get :on_hold_popup
       get :in_production_popup
+      get :rejected_popup
+      get :fullfilled_popup
       get :delete_confirmation
       get :cancel_order
+      get :new_cancel_request
+      post :create_cancel_request
+      get :update_priority
+      get :request_revision
+      patch :request_revision_update
     end
     collection do
       get :add_new_product

@@ -1,0 +1,12 @@
+<turbo-frame id="assignee-remove-order-modal">
+	<div id= "remove_assign_pop" class="remove_assign_pop" data-controller="modals" data-modals-modal-id-value="remove_assign_pop">
+	  <div class="remove_head">
+	    <%= image_tag "cancel", alt:"icon", class:"cancel_icon" %>
+	    Remove Rudy from Order <%=@assigne.id%>?
+	  </div>
+	  <div class="remove_body">
+	    <%= link_to 'Remove',assigne_remove_order_path(@assigne), data: { 'turbo-method': :delete }, class: ' orange_btn ', data_turbo_frame: 'assignee-remove-order-modal' %>
+	    <a href="#" class="outline_btn">cancel</a>
+	  </div>
+	</div>
+</turbo-frame>

@@ -1,0 +1,9 @@
+<turbo-frame id="cancel-request-order-modal">
+	<%= form_for @cancel_request, url: create_cancel_request_order_path(@order) do |a| %>
+		<div id="request_cancel_pop" class="request_cancel_pop " data-controller="modals" data-modals-modal-id-value="request_cancel_pop">
+		  <div class="request_head">Request Cancellation for this order</div>
+		  <%= a.text_field :cancel_reason, class: "input_field", placeholder: "Please enter more information" %>
+		  <%= a.submit 'Submit', class: 'request_btn' %>
+		</div>
+	<% end %>
+</turbo-frame>

@@ -43,9 +43,8 @@
                 <div class="order_priority_icon">
                   <% if order.assign_details.present? %>
                     <div><%=order.assignee_name%></div>
-                    <!-- <div><%= link_to 'Assignee',assignee_order_path(order) %></div> -->
                   <%else%>
-                    <div><%= link_to 'Assignee',assignee_order_path(order) %></div>
+                    <div><%= link_to 'Assignee',assignee_order_path(order), data: {turbo_frame: "assigne-order-modal"}%></div>
                   <%end%>
                 </div>
               </div>
@@ -59,6 +58,15 @@
                     <a href="<%= on_hold_popup_order_path(order) %>"  data-turbo-frame="on-hold-order-modal" class= "more_link">
                       <%= image_tag 'View.png', alt: 'icon'%>
                     </a>
+                  <% elsif order.order_status == "rejected" %>
+                    <a href="<%= rejected_popup_order_path(order) %>"  data-turbo-frame="rejected-order-modal" class= "more_link">
+                      <%= image_tag 'View.png', alt: 'icon'%>
+                    </a>
+                  <% elsif order.order_status == "fullfilled" %>
+                    <a href="<%= fullfilled_popup_order_path(order) %>"  data-turbo-frame="fullfilled-order-modal" class= "more_link">
+                      <%= image_tag 'View.png', alt: 'icon'%>
+                    </a>
+
                   <% else %>
                     <a href="<%= in_production_popup_order_path(order) %>"  data-turbo-frame="in-production-order-modal" class= "more_link">
                       <%= image_tag 'View.png', alt: 'icon'%>
@@ -90,7 +98,76 @@
                       <%= image_tag 'ic_more.png', alt: 'icon', class: 'more_icon' %>
                     </div>
                     <div class="menu_drop">
-                      content here
+                      <div class="status_wrapper_pop">
+                        <% if order.order_status == "onhold"%>
+                          <a href="#" class="status_content">
+                            <%= image_tag "download", alt:"icon", class:"icon" %>
+                            <div class="content_text">Download ETSY Packing Slip</div>
+                          </a>
+                          <%unless order.assign_details.present? %>
+
+                            <a href="<%= assignee_order_path(order)%>" class="status_content">
+                              <%= image_tag "ic_user_group", alt:"icon", class:"icon" %>
+                              <div class="content_text">Assign Order</div>
+                            </a>
+                          <% else %>
+                            <a href="<%= assignee_remove_confirmation_order_path(order)%>" data-turbo-frame="assignee-remove-order-modal" class="status_content">
+                              <%= image_tag "orange_user", alt:"icon", class:"icon" %>
+                              <div class="content_text">Remove Assignee from the Order</div>
+                            </a>
+                            <a href="#" class="status_content">
+                              <%#= image_tag "ic_user_group", alt:"icon", class:"icon" %>
+                              <div class="icon">$</div>
+                              <div class="content_text">Update the job price for the assignee.</div>
+                            </a>
+                            <a href="#" class="status_content">
+                              <%= image_tag "info_outline", alt:"icon", class:"icon" %>
+                              <div class="content_text">Request Revision from Assignee</div>
+                            </a>
+                          <%end%>
+                        <% elsif order.order_status == "inproduction"%>
+                          <div class="status_wrapper_pop">
+                            <a href="<%=new_cancel_request_order_path(order)%>" data-turbo-frame="cancel-request-order-modal" class="status_content">
+                              <%= image_tag "call", alt:"icon", class:"icon" %>
+                              <div class="content_text orange_text">Request Cancellation</div>
+                            </a>
+                            <a href="<%= update_priority_order_path(order)%>" class="status_content">
+                              <%= image_tag "flash", alt:"icon", class:"icon" %>
+                              <div class="content_text">Mark Order as Urgent</div>
+                            </a>
+                           <!--  <a href="#" class="status_content"> -->
+                            <%= link_to send_message_order_path(order), class: 'status_content', data: {turbo_frame: "send-message-order-modal"} do %>
+                              <%= image_tag "ic_chat", alt:"icon", class:"icon" %>
+                              <div class="content_text">Add Additional Comment</div>
+                            <%end%>
+                          </div>
+                        <% elsif order.order_status == "rejected"%>
+                          <div class="edit_list_pop">
+                            <div class="edit_box">
+                              <%= image_tag "download", alt:"icon", class:"icon" %>
+                              <div class="edit_text">Print ETSY Packing Slip</div>
+                            </div>
+                            <div class="edit_box">
+                              <a href="<%= request_revision_order_path(order)%>" data-turbo-frame="request-revision-order-modal" class="status_content">
+                                <%= image_tag "info_outline", alt:"icon", class:"icon" %>
+                                <div class="edit_text">Request Revision</div>
+                              </a>
+                            </div>
+                            <div class="edit_box">
+                              <a href="<%= assignee_remove_confirmation_order_path(order)%>" data-turbo-frame="assignee-remove-order-modal" class="status_content">
+                                <%= image_tag "orange_user", alt:"icon", class:"icon" %>
+                                <div class="edit_text">Remove Assignee from the Order</div>
+                              </a>
+                            </div>
+                          </div>
+                        <%end%>
+                        <a href="<%= new_order_path(order)%>" class="status_content">
+                          <%= image_tag "bxs_copy", alt:"icon", class:"icon" %>
+                          <div class="content_text">Duplicate Order
+                            <div class="sub_text">Creates a new manual order</div>
+                          </div>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>

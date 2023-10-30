@@ -1,0 +1,20 @@
+<turbo-frame id="request-revision-order-modal">
+  <div id="request_pop" class="request_pop" data-controller="modals" data-modals-modal-id-value="request_pop">
+    <%= form_for @order, url: request_revision_update_order_path(@order) do |a| %>
+      <div class="request_head">
+        <%= image_tag "ic_user_group", alt: "icon", class:"head_img" %>
+        <div  class="head_heading">Please include Instructions for Designer</div>
+      </div>
+      <div class="request_input_box">
+        <div class="input_wrap">
+          <%= a.text_field :revision_info, class: "input_field", placeholder: "please correct the typographical error in the design of the second item." %>
+        </div>
+      </div>
+      <div class="bottom_group">
+        <%= a.submit 'Request Revision', class: 'orange_btn purple' %>
+        <!-- <button class="orange_btn purple">Request Revision</button> -->
+        <button class="outline_btn">Cancel</button>
+      </div>
+    <%end%>
+  </div>
+</turbo-frame>

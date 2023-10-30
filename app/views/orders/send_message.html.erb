@@ -3,7 +3,7 @@
     <div class="send_msg_wrapper">
       <div class="send_msg_pop_box">
 
-        <h5 class="send_head">Send a Message to Admin</h5>
+        <h5 class="send_head">Send a Message to <%= @user.name %></h5>
           <%= form_for @message, html: {class: 'w-100' }, url: message_create_order_path(@order) do |message| %>
             <div class="send_text w-100">
               <%= message.label :Add_a_Comment %>

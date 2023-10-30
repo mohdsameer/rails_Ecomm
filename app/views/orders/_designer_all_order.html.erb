@@ -59,13 +59,17 @@
                 </div>
               </div>
               <div class="order_td nine">
-                <div class="rev_req">
-                  <span><%= image_tag 'ic_alert.png', alt: 'icon'%></span>
-                  <span>Revision Requested</span>
-                </div>
+                <% if order.request_revision? %>
+                  <div class="rev_req">
+                    <span><%= image_tag 'ic_alert.png', alt: 'icon'%></span>
+                    <span>Revision Requested</span>
+                  </div>
+                <%else%>
+                  <span>-</span>
+                <%end%>
               </div>
               <div class="order_td ten">
-                <% if order.due_date.present?%>
+                <% if order.due_date.present? && order.assign_details.present?%>
                   <%= order.order_due_date %> left
                 <% else %>
                   nil

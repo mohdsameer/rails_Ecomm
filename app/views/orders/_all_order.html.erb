@@ -116,14 +116,15 @@
                             <p>Admin will review your message.</p>
                           </div>
                         <% end %>
-                        <a href="<%= send_message_order_path(order) %>"  data-turbo-frame="send-message-order-modal" class= "contact_content contact_admin">
+                        <%= link_to send_message_order_path(order), class: 'contact_content contact_admin', data: {turbo_frame: "send-message-order-modal"} do %>
                           <div class="icon">
                             <%= image_tag 'dollar.png', alt: 'icon', class: 'currency_icon' %>
                           </div>
                           <div class="contact_text">
                             <p>----</p>
                           </div>
-                        </a>
+                        <% end %>
+                        <!-- </a> -->
                       </div>
                     </div>
                   </div>
@@ -152,7 +153,7 @@
                             <div class="msg_head">Cancellation Requested for this order.</div>
                             <div class="msg_date"><%= order.cancel_request.created_at.strftime('%B %e, %Y')%></div>
                           </div>
-                          <div class="msg_bottom_head">Important: If you have not yet started production on this order, please accept the request. If you have already started, please pause the work and contact the administrator for further instructions.</div>
+                          <div class="msg_bottom_head">Important: <%= order.cancel_request.cancel_reason %></div>
                         </div>
                         <div class="cancel_btn_group">
                           <a href="<%= send_message_order_path(order) %>"  data-turbo-frame="send-message-order-modal" class="contact_btn contact_admin " >Contact Admin

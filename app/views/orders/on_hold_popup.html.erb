@@ -21,7 +21,7 @@
                 <%= "Designer is not assign"%>
               <%end%>
             </div>
-            <div class="slip_btn_wrap">
+            <div>
               <%= link_to download_order_path(@order), class: "slip_btn_wrap" do %>
               Download slip
                 <svg class="slip_icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -62,7 +62,7 @@
               <div class="details_body">
                 <div class="left"><%=variant.id%></div>
                 <div class="right">
-                  <div class="right_big">School Logo Tumbler, School Logo Tumbler,School Logo Tumbler,School Logo Tumbler, School </div>
+                  <div class="right_big"><%=variant.product.name%> </div>
                   <div class="right_small">(<%=variant.product.name%>)</div>
                   <div class="right_normal text_black">ETSY SKU: <%= variant.Real_variant_SKU%></div>
                   <div class="right_normal text_black">Quantity: <%= variant.inventory%></div>
