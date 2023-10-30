@@ -757,6 +757,7 @@
         border-radius: 0.463vw;
         background: #637381;
         text-decoration: none;
+        cursor: pointer;        
 
         .cart_icon {
           height: 1.389vw;
@@ -1460,10 +1461,12 @@
         align-items: center;
         border-top-right-radius: 0.926vw;
         border-top-left-radius: 0.926vw;
+        height: 3.472vw;
 
         .close_icon {
           width: 1.389vw;
           height: 1.389vw;
+          cursor: pointer;
         }
       }
 

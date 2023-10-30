@@ -128,6 +128,37 @@ export default class extends Controller {
     $('.close_hold').click(function() {
       $('.on-hold-order-modal').hide();
     });
+    
+    $(".orange_btn").click(function(){
+      $(".cancel_popup_model").hide();
+    });
+
+    // request revision popup hide
+
+    $(".outline_btn").click(function(){
+      $(".request_pop_model").hide();
+    });
+
+    $(".purple").click(function(){
+      $(".request_pop_model").hide();
+    });
+
+    // request cancel order
+
+    $(".request_btn").click(function(){
+      $(".request_cancel_model").hide();
+      $(".request_sent_flash_model").show();
+    });
+
+    $(".x_icon").click(function(){
+      $(".request_sent_flash_model").hide();
+    })
+
+    // remove assign pop
+
+    $(".orange_btn").click(function(){
+      $(".remove_assign_model").hide();
+    });
 
     // all_producer pop model
 

@@ -80,16 +80,19 @@
 </div>
 
 <!-- next popup -->
-
-<div class="cancel_popup d-none">
-  <div class="cancel_head">
-    <%= image_tag "shape", alt: "icon", class:"head_img" %>
-    <div class="head_text">Cancel Order 3?</div>
-  </div>
-  <div class="middle_text">Are you sure you want to cancel this order?</div>
-  <div class="btn_group">
-    <button class="orange_btn">Cancel</button>
-    <button class="outline_btn">Keep it.</button>
+<div class="cancel_popup_model d-none">
+  <div class="cancel_popup_wrapper">
+    <div class="cancel_popup ">
+      <div class="cancel_head">
+        <%= image_tag "shape", alt: "icon", class:"head_img" %>
+        <div class="head_text">Cancel Order 3?</div>
+      </div>
+      <div class="middle_text">Are you sure you want to cancel this order?</div>
+      <div class="btn_group">
+        <button class="orange_btn">Cancel</button>
+        <button class="outline_btn">Keep it.</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -416,6 +419,21 @@
 </div>
 
 
+<div class="cancel_popup_model">
+  <div class="cancel_popup_wrapper">
+    <div class="cancel_popup ">
+      <div class="cancel_head">
+        <%= image_tag "trash", alt: "icon", class:"head_img" %>
+        <div class="head_text">Delete Order?</div>
+      </div>
+      <div class="middle_text">Are you sure you want to delete this order? Deleted orders can not be retrieved.</div>
+      <div class="btn_group">
+        <button class="orange_btn">Delete</button>
+        <button class="outline_btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <style type="text/css">

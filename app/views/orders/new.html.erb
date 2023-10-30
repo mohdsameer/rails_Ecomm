@@ -19,6 +19,11 @@
           <%= image_tag 'shopping_cart.png', alt: 'icon', class: 'cart_icon' %>
           <span class="new_text">Add New Products</span>
         <% end %>
+
+        <div class="new_product_btn">
+          <%= image_tag 'shopping_cart.png', alt: 'icon', class: 'cart_icon' %>
+          <span class="new_text">Add New Products</span>
+        </div>
       </div>
       <%= form_tag orders_path, method: :post,  multipart: true, id: 'regForm', class: 'product_form' do %>
         <div class="tab">
@@ -264,6 +269,140 @@
 
 </div>
 
+
+<div class="select_pop_wrap_model choose" style="display: none;">
+  <div class=" select_pop_wrap_outer">
+    <div class="select_pop_wrap">
+      <div class="select_head">
+        Choose a Product
+        <%= image_tag "red_close", alt:"icon", class:"close_icon" %>
+      </div>
+      <div class="select_content">
+        <div class="content_head">PRODUCER 1</div>
+        <div class="select_search_box">
+          <%= image_tag "search", alt:"icon", class:"search_icon" %>
+          <input class="search_input" type="text" placeholder="Search Product" >
+        </div>
+        <div class="content_text">Available Products</div>
+        <div class="scroll_section">
+          <% 5.times do %>
+          <div class="scroll_content">
+            <div class="image_text_wrap">
+              <%= image_tag "IMG", alt:"image", class:"img_logo" %>
+              20oz YETI Tumbler
+            </div>
+            <%= image_tag "right_arrow", alt:"icon", class:"rigth_arrow" %>
+          </div>
+          <%end%>
+        </div>
+        <div class="back_to_btn_section">
+          <button class="back_to_btn">
+            <%= image_tag "dark_start_icon", alt:"icon", class:"icon" %>
+            <div class="btn_text">Back to Choose a Producer</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- product select variant -->
+<div class="select_pop_wrap_model variant_pop" style="display: none;">
+  <div class=" select_pop_wrap_outer">
+    <div class="select_pop_wrap">
+      <div class="select_head">
+        Choose a Product
+        <%= image_tag "red_close", alt:"icon", class:"close_icon" %>
+      </div>
+      <div class="select_content">
+        <!-- <div class="content_head">PRODUCER 1</div> -->
+        <div class="select_search_box">
+          <%= image_tag "search", alt:"icon", class:"search_icon" %>
+          <input class="search_input" type="text" placeholder="Search Variant" >
+        </div>
+        <div class="product_name">
+          <span>PRODUCER 1</span> 
+          <%= image_tag "Divider", alt:"icon", class:"devider_icon" %> 
+          <%= image_tag "Divider", alt:"icon", class:"devider_icon" %>
+          <span>20 oz YETI Tumbler</span>
+        </div>
+
+        <div class="selected_flash">
+          1 Item Selected
+          <button class="selected_btn">
+            Continue with Selected Items
+            <%= image_tag "add_cart", alt:"icon", class:"add_icon" %>
+          </button>
+        </div>
+
+        <div class="content_text">Available Products</div>
+        <div class="scroll_section">
+          <% 5.times do %>
+          <div class="scroll_content check_content">
+            <div class="image_text_wrap">
+              <input class="check_box" type="checkbox">
+              <%= image_tag "IMG", alt:"image", class:"img_logo" %>
+              20oz YETI Tumbler
+            </div>
+            <%#= image_tag "right_arrow", alt:"icon", class:"rigth_arrow" %>
+          </div>
+          <%end%>
+        </div>
+        <div class="back_to_btn_section">
+          <button class="back_to_btn">
+            <%= image_tag "dark_start_icon", alt:"icon", class:"icon" %>
+            <div class="btn_text">Back to Choose a Producer</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="select_pop_wrap_model choose_producer" style="display: none;">
+  <div class=" select_pop_wrap_outer">
+    <div class="select_pop_wrap">
+      <div class="select_head">
+        Choose a Product
+        <%= image_tag "red_close", alt:"icon", class:"close_icon" %>
+      </div>
+      <div class="select_content">
+    <!--     <div class="content_head">PRODUCER 1</div>
+        <div class="select_search_box">
+          <%#= image_tag "search", alt:"icon", class:"search_icon" %>
+          <input class="search_input" type="text" placeholder="Search Product" >
+        </div>
+        <div class="content_text">Available Products</div> -->
+        <div class="scroll_section">
+          <% 5.times do %>
+          <div class="scroll_content">
+            <div class="image_text_wrap">
+              <%= image_tag "trans_glas", alt:"image", class:"img_logo" %>
+              <div class="text_wrap">
+                Producer 1
+                <div class="light_text">Ships From: Buffalo, NY</div>
+              </div>
+              <label class="image_label">LASER ENGRAVING</label>
+            </div>
+            <button class="choose_btn">Choose</button>
+            <%#= image_tag "right_arrow", alt:"icon", class:"rigth_arrow" %>
+          </div>
+          <%end%>
+        </div>
+    <!--     <div class="back_to_btn_section">
+          <button class="back_to_btn">
+            <%= image_tag "dark_start_icon", alt:"icon", class:"icon" %>
+            <div class="btn_text">Back to Choose a Producer</div>
+          </button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script type="text/javascript">
 
   $('.toggle_icon').click(function() {
@@ -421,6 +560,36 @@
     //... and adds the "active" class on the current step:
     x[n].className += " active";
   }
+
+
+  $(document).ready(function(){
+    $(".new_product_btn").click(function(){
+      $(".choose").show()
+
+      $(".close_icon").click(function(){
+        $(".choose").hide()
+      })      
+    })
+
+    $(".scroll_content").click(function(){
+      $(".choose").hide()
+      $(".variant_pop").show()
+
+      $(".close_icon").click(function(){
+        $(".variant_pop").hide()
+      })
+    })
+
+    $(".check_box").click(function(){
+      if ($(this).is(":checked")){
+        $(".choose_producer").show()
+
+        $(".close_icon").click(function(){
+          $(".choose_producer").hide()
+        })
+      }
+    })
+  })
 </script>
 
 <style type="text/css">

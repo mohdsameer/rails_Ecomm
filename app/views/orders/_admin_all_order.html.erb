@@ -44,7 +44,8 @@
                   <% if order.assign_details.present? %>
                     <div><%=order.assignee_name%></div>
                   <%else%>
-                    <div><%= link_to 'Assignee',assignee_order_path(order), data: {turbo_frame: "assigne-order-modal"}%></div>
+                    <!-- <div><%#= link_to 'Assignee',assignee_order_path(order), data: {turbo_frame: "assigne-order-modal"}%></div> -->
+                    <div><%= link_to 'Assignee',assignee_order_path(order)%></div>
                   <%end%>
                 </div>
               </div>
