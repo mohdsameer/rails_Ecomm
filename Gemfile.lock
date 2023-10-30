@@ -311,6 +311,7 @@ GEM
 PLATFORMS
   x86_64-darwin-20
   x86_64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
@@ -352,3 +353,5 @@ RUBY VERSION
 
 BUNDLED WITH
    2.3.3
+
+bundle lock --add-platform x86_64-linux
