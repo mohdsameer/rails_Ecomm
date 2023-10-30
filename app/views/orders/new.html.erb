@@ -236,8 +236,8 @@
           </div>
         </div>
 
-        <div class="tab">Shipping</div>
-        <div class="tab">Submit Orders</div>
+<!--         <div class="tab">Shipping</div>
+        <div class="tab">Submit Orders</div> -->
 
 
         <div class="btn_wrapper mb-5">
@@ -251,7 +251,6 @@
           </button>
 
           <%= hidden_field_tag :user_id, params[:producer_id] %>
-          <div>Producer Id <%=params[:producer_id]%></div>
           <button class="btn_wrap dark_green"><%= submit_tag 'Marked as Completed', class: 'btn_wrap dark_green'%></button>
           <button class="btn_wrap light_green"><%= submit_tag 'Save Order for Later', class: 'btn_wrap light_green'%></button>
 
