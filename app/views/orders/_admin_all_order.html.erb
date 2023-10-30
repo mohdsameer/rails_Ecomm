@@ -44,8 +44,7 @@
                   <% if order.assign_details.present? %>
                     <div><%=order.assignee_name%></div>
                   <%else%>
-                    <!-- <div><%#= link_to 'Assignee',assignee_order_path(order), data: {turbo_frame: "assigne-order-modal"}%></div> -->
-                    <div><%= link_to 'Assignee',assignee_order_path(order)%></div>
+                    <div><%= link_to 'Assignee',assignee_order_path(order), data: {turbo_frame: "assigne-order-modal"}%></div>
                   <%end%>
                 </div>
               </div>
@@ -67,7 +66,6 @@
                     <a href="<%= fullfilled_popup_order_path(order) %>"  data-turbo-frame="fullfilled-order-modal" class= "more_link">
                       <%= image_tag 'View.png', alt: 'icon'%>
                     </a>
-
                   <% else %>
                     <a href="<%= in_production_popup_order_path(order) %>"  data-turbo-frame="in-production-order-modal" class= "more_link">
                       <%= image_tag 'View.png', alt: 'icon'%>

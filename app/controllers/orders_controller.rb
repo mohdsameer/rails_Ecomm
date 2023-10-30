@@ -40,20 +40,23 @@ class OrdersController < ApplicationController
     else
       params[:order_edit_status] = 1
     end
-    @order = Order.create(order_params)
-    @order.shipping_label_image.attach(params[:shipping_label_image])
-    @order.packing_slip_image.attach(params[:packing_slip_image])
-    @order.gift_message_slip_image.attach(params[:gift_message_slip_image])
-    @order.design_file_1_image.attach(params[:design_file_1_image])
-    @order.design_file_2_image.attach(params[:design_file_2_image])
-    @order.additional_file_image.attach(params[:additional_file_image])
-    @order.front_side_image.attach(params[:front_side_image])
-    @order.back_side_image.attach(params[:back_side_image])
+    if params[:variants].present?
+      @order = Order.create(order_params)
+      @order.shipping_label_image.attach(params[:shipping_label_image])
+      @order.packing_slip_image.attach(params[:packing_slip_image])
+      @order.gift_message_slip_image.attach(params[:gift_message_slip_image])
+      @order.design_file_1_image.attach(params[:design_file_1_image])
+      @order.design_file_2_image.attach(params[:design_file_2_image])
+      @order.additional_file_image.attach(params[:additional_file_image])
+      @order.front_side_image.attach(params[:front_side_image])
+      @order.back_side_image.attach(params[:back_side_image])
+    end
 
     params[:variants].each do |id, quantity|
       if quantity.to_i > 0
         product_id = Variant.find(id).product
         @order.order_products.create(variant_id: id.to_i, product_quantity: quantity.to_i,product_id: product_id.id)
+        @order.create_address(fullname: params[:full_name], lastname: params[:last_name], email: params[:email], country: params[:country], state: params[:state], address1: params[:address1], address2: params[:address2], city: params[:city], zipcode: params[:zip])
       end
     end
     redirect_to orders_path, notice: 'order was successfully created.'
@@ -152,6 +155,7 @@ class OrdersController < ApplicationController
 
   def on_hold_popup
     @variants = @order.variants
+    @customer_detail = @order.address
   end
 
   def in_production_popup
@@ -159,6 +163,7 @@ class OrdersController < ApplicationController
       @assigne = @order.assign_details.first.designer.name
     end
     @order_products = @order.order_products
+    @customer_detail = @order.address
   end
 
   def rejected_popup
@@ -166,6 +171,7 @@ class OrdersController < ApplicationController
       @assigne = @order.assign_details.first.designer.name
     end
     @order_products = @order.order_products
+    @customer_detail = @order.address
   end
 
   def fullfilled_popup
@@ -173,6 +179,7 @@ class OrdersController < ApplicationController
       @assigne = @order.assign_details.first.designer.name
     end
     @order_products = @order.order_products
+    @customer_detail = @order.address
   end
 
   def cancel_order

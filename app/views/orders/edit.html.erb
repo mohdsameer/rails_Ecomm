@@ -35,11 +35,13 @@
                   <% end %>
                 <% end %>
               </div>
+              <turbo-frame id="all-producer-order-modal"></turbo-frame>
               <%= image_tag 'ic_expand_more.png', alt: 'icon', class: 'toggle_icon' %>
             </div>
             <div class="collapse_data">
               <% @order.products.each do |product| %>
                 <% product.variants.each do |variant|%>
+                  <input type="hidden" name="variant" class="variantId" id="<%= variant.id %>">
                   <div class="content_container">
                     <div class="left_wrap">
                       <div class="card_wrapper">
@@ -54,10 +56,10 @@
                               <% end %>
                             </div>
                             <div class="btn_wrap">
-                              <button class="outline_btn"><%= variant.color%></button>
+                              <div class="outline_btn"><%= variant.color%></div>
                               <div class="plus_minus_wrap">
                                 <%= hidden_field_tag "variants[#{variant.id}]", 0, class: "quantity_input qty", maxlength: "12", value: "0" %>
-                                <span class="qty_num">0</span>
+                                <span class="qty_num" id="qty_num_<%= variant.id %>">0</span>
                                 <div class="button-container">
                                   <button class="cart-qty-minus" type="button" value="-">-</button>
                                   <button class="cart-qty-plus" type="button" value="+">+</button>
@@ -72,11 +74,10 @@
                         <div class="card_img_wrapper">
                           <div class="content_img shadow_box">
                             <div class="image_box">
-                              <%#= file_field_tag "front_side_image" %>
                               <div class="avatar-upload">
                                 <div class="avatar-edit">
-                                  <input type='file' id="imageUpload_<%= variant.id %>" accept=".png, .jpg, .jpeg" class="upload_field" />
-                                  <label for="imageUpload_<%= variant.id %>" class="upload_wrapper">
+                                  <%= file_field_tag "front_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{variant.id}" %>
+                                  <label for="front_side_image_<%= variant.id %>" class="upload_wrapper">
                                     <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
                                     <div class="image_type">PNG</div>
                                     <div class="upload_text">Upload Here</div>
@@ -85,7 +86,7 @@
                                 </div>
 
                                 <div class="avatar-preview">
-                                  <div id="imagePreview_<%= variant.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                  <div id="imageFrontPreview_<%= variant.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
                                   </div>
                                 </div>
                               </div>
@@ -104,10 +105,9 @@
                         <div class="card_img_wrapper">
                           <div class="content_img shadow_box">
                             <div class="image_box">
-                              <%#= file_field_tag "back_side_image" %>
                               <div class="avatar-upload">
                                 <div class="avatar-edit">
-                                  <input type='file' id="imageUpload_<%= variant.id %>" accept=".png, .jpg, .jpeg" class="upload_field" />
+                                  <%= file_field_tag "back_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{variant.id}" %>
                                   <label for="imageUpload_<%= variant.id %>" class="upload_wrapper">
                                     <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
                                     <div class="image_type">PNG</div>
@@ -117,7 +117,7 @@
                                 </div>
 
                                 <div class="avatar-preview">
-                                  <div id="imagePreview_<%= variant.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                  <div id="imageBackPreview_<%= variant.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
                                   </div>
                                 </div>
                               </div>
@@ -237,7 +237,7 @@
                       </label>
                     </div>
                   <%end%>
-                </div>             
+                </div>           
               </div>
             </div>
           </div>
@@ -258,9 +258,49 @@
           </div>
         </div>
 
-        <div class="tab">Shipping</div>
-        <div class="tab">Submit Orders</div>
-
+        <div class="tab">
+          <div class="shipping_pop_wrap">
+            <div class="shiping_form">
+              <div class="ship_head">Recipient</div>
+              <div class="input_group">
+                <input class="input_field" type="text" placeholder="Full Name" name="full_name"/>
+                <input class="input_field" type="text" placeholder="Last Name" name="last_name"/>
+                <input class="input_field" type="text" placeholder="Email" name="email"/>
+              </div>
+              <div class="input_group">
+                <select class="input_field" name="country">
+                  <option value= ""selected>Country</option>
+                  <option value="United States">United States</option>
+                  <option value="Australia">Australia</option>
+                  <option value="Canada">Canada</option>
+                  <option value="China">China</option>
+                  <option value="India">India</option>
+                </select>
+                <select class="input_field" name= "state">
+                  <option value="" selected>State</option>
+                  <option value="Michigan">Michigan</option>
+                  <option value="Oklahoma">Oklahoma</option>
+                  <option value="Delaware">Delaware</option>
+                  <option value="Maryland">Maryland</option>
+                  <option value="Delhi">Delhi</option>
+                </select>
+              </div>
+                <input class="input_field big_size" type="text" placeholder="Address 1" name="address1"/>
+                <input class="input_field big_size" type="text" placeholder="Address 2 (Optional)" name="address2"/>
+              <div class="input_group">
+                <input class="input_field" type="text" placeholder="City" name="city"/>
+                <input class="input_field" type="text" placeholder="Zip" name="zip"/>
+              </div>
+              <button class="calulate_btn">
+                Calculate Shipping
+                <%= image_tag "endicon", alt:"icon", class:"icon" %>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="tab">
+          Submit Orders
+        </div>
 
         <div class="btn_wrapper mb-5">
           <button class="btn_wrap">
@@ -271,7 +311,8 @@
             </svg>
             Marked as Completed
           </button>
-          <%= hidden_field_tag :user_id, params[:producer_id], id: "producerIdField" %>
+
+          <%= hidden_field_tag :user_id, params[:producer_id] %>  
           <button class="btn_wrap dark_green"><%= submit_tag 'Marked as Completed', class: 'btn_wrap dark_green'%></button>
           <button class="btn_wrap light_green"><%= submit_tag 'Save Order for Later', class: 'btn_wrap light_green'%></button>
 
@@ -279,7 +320,7 @@
           <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
         </div>
         </div>
-      <%end%>
+      <% end %>
     </div>
   </div>
 
@@ -287,63 +328,80 @@
 
 <script type="text/javascript">
 
-  $(".choose-producer").click(function() {
-    const producerId = $(this).data("producer_id");
-    $("#producerIdField").val(producerId);
-    $("#producerPopup").hide();
-  });
-
-
-
   $('.toggle_icon').click(function() {
     $(this).toggleClass('rotate_icon');
     $(this).closest('.product_list_section').find('.collapse_data').slideToggle();
   });
 
- 
-  var incrementPlus;
-  var incrementMinus;
+  $('.variantId').each(function() {
+    var varientId = $(this).attr('id');
 
-  var buttonPlus  = $(".cart-qty-plus");
-  var buttonMinus = $(".cart-qty-minus");
-
-  var incrementPlus = buttonPlus.click(function() {
-    var $n = $(this)
-      .parent(".button-container")
-      .parent(".plus_minus_wrap")
-      .find(".qty");
-    $n.val(Number($n.val())+1 );
-    $('.qty_num').text(Number($n.val())+1 );
-  });
-
-  var incrementMinus = buttonMinus.click(function() {
-      var $n = $(this)
-      .parent(".button-container")
-      .parent(".plus_minus_wrap")
-      .find(".qty");
-    var amount = Number($n.val());
-    if (amount > 0) {
-      $n.val(amount-1);
-      $('.qty_num').text(amount-1);
-    }
-  });
-
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        $('#imagePreview_1').css('background-image', 'url('+e.target.result +')');
-        $('#imagePreview_1').hide();
-        $('#imagePreview_1').fadeIn(650);
+    function readFrontURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          $('#imageFrontPreview_'+varientId).css('background-image', 'url('+e.target.result +')');
+          $('#imageFrontPreview_'+varientId).hide();
+          $('#imageFrontPreview_'+varientId).fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
       }
-      reader.readAsDataURL(input.files[0]);
     }
-  }
-  $("#imageUpload_1").change(function() {
-    readURL(this);
-    $(this).closest('.avatar-upload').find('.avatar-edit').css('display', 'none');
-    $(this).closest('.avatar-upload').find('.avatar-preview').show();
-    $(this).closest('.content_img').find('.delete_img').css('display', 'flex');
+    $("#front_side_image_"+varientId).change(function() {
+      readFrontURL(this);
+      $(this).closest('.avatar-upload').find('.avatar-edit').css('display', 'none');
+      $(this).closest('.avatar-upload').find('.avatar-preview').show();
+      $(this).closest('.content_img').find('.delete_img').css('display', 'flex');
+    });
+
+    function readBackURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          $('#imageBackPreview_'+varientId).css('background-image', 'url('+e.target.result +')');
+          $('#imageBackPreview_'+varientId).hide();
+          $('#imageBackPreview_'+varientId).fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $("#back_side_image_"+varientId).change(function() {
+      readBackURL(this);
+      $(this).closest('.avatar-upload').find('.avatar-edit').css('display', 'none');
+      $(this).closest('.avatar-upload').find('.avatar-preview').show();
+      $(this).closest('.content_img').find('.delete_img').css('display', 'flex');
+    });
+
+
+    // increment decrement product js
+    var incrementPlus;
+    var incrementMinus;
+
+    var buttonPlus  = $(".cart-qty-plus");
+    var buttonMinus = $(".cart-qty-minus");
+
+    var incrementPlus = buttonPlus.click(function() {
+      var $n = $(this)
+        .parent(".button-container")
+        .parent(".plus_minus_wrap")
+        .find("#variants_"+varientId);
+      $n.val(Number($n.val())+1 );
+      var proVal = $("#variants_"+varientId).val()
+      $('#qty_num_'+varientId).text(proVal);
+    });
+
+    var incrementMinus = buttonMinus.click(function() {
+        var $n = $(this)
+        .parent(".button-container")
+        .parent(".plus_minus_wrap")
+        .find("#variants_"+varientId);
+      var amount = Number($n.val());
+      if (amount > 0) {
+        $n.val(amount-1);
+        var proVal = $("#variants_"+varientId).val()
+        $('#qty_num_'+varientId).text(proVal);
+      }
+    });
   });
 
   $('.delete_img').click(function() {
@@ -369,7 +427,7 @@
     if (n == (x.length - 1)) {
       document.getElementById("nextBtn").innerHTML = "Submit";
     } else {
-      document.getElementById("nextBtn").innerHTML = "Next";
+      document.getElementById("nextBtn").innerHTML = "Shipping";
     }
     //... and run a function that will display the correct step indicator:
     fixStepIndicator(n)
@@ -379,7 +437,9 @@
     // This function will figure out which tab to display
     var x = document.getElementsByClassName("tab");
     // Exit the function if any field in the current tab is invalid:
-    if (n == 1 && !validateForm()) return false;
+    
+    //if (n == 1 && !validateForm()) return false;
+    
     // Hide the current tab:
     x[currentTab].style.display = "none";
     // Increase or decrease the current tab by 1:

@@ -20,7 +20,7 @@ class Order < ApplicationRecord
   has_many :assign_details, dependent: :destroy
 
   has_one  :cancel_request
-  has_one :address
+  has_one :address, dependent: :destroy
 
   belongs_to :producer, foreign_key: :user_id, class_name: "User"
 

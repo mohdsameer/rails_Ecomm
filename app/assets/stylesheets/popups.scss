@@ -1249,97 +1249,118 @@
 }
 
 
+.assign_order_pop_model {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1050;
+  background: rgba(0, 0, 0, 0.5);
 
-.assign_order_pop {
-  width: 23.495vw;
-  padding: 1.389vw 2.546vw;
-  border-radius: 1.389vw;
-  background: #F4F6F8;
-
-  .assign_head {
+  .assign_order_pop_wrapper {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
     display: flex;
-    align-items: flex-start;
-    gap: 0.694vw;
-    width: 10.475vw;
-    color: #212B36;
-    font-size: 1.157vw;
-    font-weight: 700;
-    line-height: 1.736vw;
-    margin-bottom: 0.810vw;
-
-    .assign_icon {
-      width: 1.389vw;
-      height: 1.389vw;
-    }
-  }
-
-  .check_list {
-    display: flex;
-    align-items: center;
-    gap: 0.231vw;
-    width: 18.403vw;
-
-    .radio_input {
-      margin: 0.579vw;
-      width: 1.389vw;
-      height: 1.389vw;
-    }
-
-    & span {
-      color: #212B36;
-      font-size: 0.810vw;
-      font-weight: 400;
-      line-height: 1.273vw;
-    }
-  }
-
-
-  .date_wrapper {
-    display: flex;
-    width: 18.403vw;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 0.926vw;
-    background: #FFF;
-    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
-    margin-top: 0.810vw;
+    position: absolute;
 
-    .date_head {
-      width: 16.088vw;
-      padding: 0.579vw 0.289vw;
-      color: #919EAB;
-      font-size: 0.694vw;
-      font-weight: 700;
-      line-height: 1.042vw;
-      text-transform: uppercase;
-    }
+    .assign_order_pop {
+      width: 23.495vw;
+      padding: 1.389vw 2.546vw;
+      border-radius: 1.389vw;
+      background: #F4F6F8;
 
-    .input_section {
-      .input_box {
-        .input_text {
-          img {
-            width: 1.389vw;
-            height: 1.389vw;
+      .assign_head {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.694vw;
+        width: 10.475vw;
+        color: #212B36;
+        font-size: 1.157vw;
+        font-weight: 700;
+        line-height: 1.736vw;
+        margin-bottom: 0.810vw;
+
+        .assign_icon {
+          width: 1.389vw;
+          height: 1.389vw;
+        }
+      }
+
+      .check_list {
+        display: flex;
+        align-items: center;
+        gap: 0.231vw;
+        width: 18.403vw;
+
+        .radio_input {
+          margin: 0.579vw;
+          width: 1.389vw;
+          height: 1.389vw;
+        }
+
+        & span {
+          color: #212B36;
+          font-size: 0.810vw;
+          font-weight: 400;
+          line-height: 1.273vw;
+        }
+      }
+
+
+      .date_wrapper {
+        display: flex;
+        width: 18.403vw;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.926vw;
+        background: #FFF;
+        box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+        margin-top: 0.810vw;
+
+        .date_head {
+          width: 16.088vw;
+          padding: 0.579vw 0.289vw;
+          color: #919EAB;
+          font-size: 0.694vw;
+          font-weight: 700;
+          line-height: 1.042vw;
+          text-transform: uppercase;
+        }
+
+        .input_section {
+          .input_box {
+            .input_text {
+              img {
+                width: 1.389vw;
+                height: 1.389vw;
+              }
+            }
           }
         }
       }
+
+      .submit_btn {
+        padding: 0.231vw 0.579vw;
+        border-radius: 0.463vw;
+        background: #00AB55;
+        width: 18.403vw;
+        border: none;
+        color: #FFF;
+        font-size: 0.752vw;
+        font-weight: 700;
+        line-height: 1.273vw;
+        margin-top: 1.042vw;
+      }
     }
   }
-
-  .submit_btn {
-    padding: 0.231vw 0.579vw;
-    border-radius: 0.463vw;
-    background: #00AB55;
-    width: 18.403vw;
-    border: none;
-    color: #FFF;
-    font-size: 0.752vw;
-    font-weight: 700;
-    line-height: 1.273vw;
-    margin-top: 1.042vw;
-  }
 }
+
 
 
 .filter_pop {

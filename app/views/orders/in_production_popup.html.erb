@@ -18,16 +18,18 @@
           </div>
         </div>
         <div class="create_date"><%= @order.order_date_with_time%></div>
-        <div class="msg_section">
-          <%= image_tag "ic_chat", alt:"icon", class:"msg_icon" %>
-          <div class="content_box">
-            <div class="msg_from">
-              <div class="left_text">Message from Admin:</div>
-              <div class="date_text"><%= @order.created_on%></div>
+        <% if @order.messages.present? %>
+          <div class="msg_section">
+            <%= image_tag "ic_chat", alt:"icon", class:"msg_icon" %>
+            <div class="content_box">
+              <div class="msg_from">
+                <div class="left_text">Message from Admin:</div>
+                <div class="date_text"><%= @order.created_on%></div>
+              </div>
+              <div class="content_text"><%= @order.messages.last.review_message%>.</div>
             </div>
-            <div class="content_text"><%= @order.messages.last.review_message%>.</div>
           </div>
-        </div>
+        <%end%>
         <div class="msg_section order_note">
           <%= image_tag "chat", alt:"icon", class:"msg_icon" %>
           <div class="content_box">
@@ -38,6 +40,7 @@
             <div class="content_text"><%= @order.additional_comment%></div>
           </div>
         </div>
+        <% sum_result = 0 %>
         <div class="order_info_section">
           <div class="left_section">
             <% @order_products.each do |order_product|%>
@@ -60,8 +63,9 @@
                 <div class="cost_section">
                   <div>Production costs</div>
                   <% record = order_product.product.product_producer_pricings.find_by(user_id: @order.producer.id) %>
-                    <% sum_result = record.front_side_print_price + record.back_side_print_price %>
-                  <div>USD <%= sum_result %></div>
+                    <% cost = record.front_side_print_price + record.back_side_print_price%>
+                    <% sum_result += cost %>
+                  <div>USD <%= cost %></div>
                 </div>
                 <div class="cost_section small">
                   <div>Tracking details</div>
@@ -75,16 +79,21 @@
               <div class="info_text">ETSY Order ID #: 34568275</div>
               <%= image_tag "external_link", alt:"icon", class:"info_img" %>
             </div>
-            <div class="buyer_info_section">
-              <div class="buyer_mail">
-                <div class="buyer_head">Customer</div>
-                <div class="buyer_text">Dacid Guerra email@gmail.com</div>
+            <% if @customer_detail.present? %>
+              <div class="buyer_info_section">
+                <div class="buyer_mail">
+                  <div class="buyer_head">Customer</div>
+                  <div class="buyer_text"><%= @customer_detail.fullname %> <%= @customer_detail.email%></div>
+                </div>
+                <div class="buyer_mail">
+                  <div class="buyer_head">Shipping Address</div>
+                  <div class="buyer_text"><%= @customer_detail.address1%></div>
+                  <% if @customer_detail.address2.present? %>
+                    <div class="buyer_text"><%= @customer_detail.address2%></div>
+                  <%end%>
+                </div>
               </div>
-              <div class="buyer_mail">
-                <div class="buyer_head">Shipping Address</div>
-                <div class="buyer_text">Sabrina Kezzi 55 Main Street Long Island, NY, 02011, US</div>
-              </div>
-            </div>
+            <%end%>
             <div class="billing_section">
               <div class="billing_head">Billing</div>
               <div class="billing_info">
@@ -94,7 +103,7 @@
                   <div class="fw-bold">Total Cost:</div>
                 </div>
                 <div class="right_text">
-                  <div>USD 20.00</div>
+                  <div>USD <%= sum_result %></div>
                   <div>USD 10.00</div>
                   <div class="fw-bold">USD 30.00</div>
                 </div>

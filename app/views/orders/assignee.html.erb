@@ -1,57 +1,68 @@
 <turbo-frame id="assigne-order-modal">
-  <div id="assign_order_pop" class="assign_order_pop" data-controller="modals" data-modals-modal-id-value="assign_order_pop">
-    <div class="assign_head">
-      <%= image_tag "ic_user_group", alt:"icon", class:"assign_icon" %>
-      Assign order to
-    </div>
-    <% 3.times do %>
-    <div class="check_list">
-      <input class="radio_input" type="radio">
-      <span>Jack</span>
-    </div>
-    <%end%>
+  <div class="assign_order_pop_model">
+    <div class="assign_order_pop_wrapper">
+      <div id="assign_order_pop" class="assign_order_pop" data-controller="modals" data-modals-modal-id-value="assign_order_pop">
+        <div class="assign_head">
+          <%= image_tag "ic_user_group", alt:"icon", class:"assign_icon" %>
+          Assign order to
+        </div>
+        <%= form_for @assigne, url: assignee_create_order_path(@order) do |a| %>
+          <div class="check_list">
+            <!-- <input class="radio_input" type="radio"> -->
+            <!-- <span>jack</span> -->
+            <%= a.collection_radio_buttons(:designer, @designers, :id, :name) do |b| %>
+                      <%= b.label { b.radio_button + b.text } %>
+                    <% end %>
+          </div>
 
-    <div class="input_section">
-      <div class="input_box">
-        <label class="label_top">Price per design(optional)</label>
-        <div class="input_text">
-          $
-          <input type="text" placeholder="2">
+          <div class="input_section">
+            <div class="input_box">
+              <label class="label_top">Price per design(optional)</label>
+              <div class="input_text">
+                <!-- $<input type="text" placeholder="2"> -->
+                $<%= a.number_field :price_per_design %>
+              </div>
+            </div>
+          </div>
+
+          <div class="input_section">
+            <div class="input_box">
+              <label class="label_top">Price for Total Job(optional)</label>
+              <div class="input_text">
+                <!-- $<input type="text" placeholder="2"> -->
+                $<%= a.number_field :price_for_total %>
+              </div>
+            </div>
+          </div>
+          <div class="date_wrapper">
+            <div class="date_head">Due Date (OPTIONAL)</div>
+              <div class="input_section">
+                <div class="input_box">
+                  <div class="input_text w-100">
+                  <!-- <input placeholder="Date" type="text" name="checkIn" id="datepicker" value="" class="calendar mb-0"><i class="fas fa-calendar-check icon"></i> -->
+                   <%= a.date_field :due_date %>
+                  <%= image_tag "calendar", alt:"icon", class:"cal_icon" %>
+                </div>  
+              </div>
+            </div>
+
+            <div class="input_section">
+              <div class="input_box">
+                <label class="label_top">Leave any additional comments here</label>
+                <div class="input_text">
+                  <!-- <input type="text" placeholder="Priority Order -  Please complete the job asap! Thanks."> -->
+                  <%= a.text_field :additional_comment, placeholder: "Priority Order -  Please complete the job asap! Thanks." %>
+                </div>
+              </div>
+            </div>
+          <!-- <button class="submit_btn">Submit</button> -->
+          <%= a.submit 'Submit', class: 'submit_btn' %>
+        <%end%>
         </div>
       </div>
-    </div>
-
-    <div class="input_section">
-      <div class="input_box">
-        <label class="label_top">Price for Total Job(optional)</label>
-        <div class="input_text">
-          $<input type="text" placeholder="2">
-        </div>
-      </div>
-    </div>
-
-    <div class="input_section">
-      <div class="input_box">
-        <label class="label_top">Price for Total Job(optional)</label>
-        <div class="input_text">
-          <input type="text" placeholder="Priority Order -  Please complete the job asap! Thanks.">
-        </div>
-      </div>
-    </div>
-
-    <div class="date_wrapper">
-      <div class="date_head">Due Date (OPTIONAL)</div>
-        <div class="input_section">
-          <div class="input_box">
-            <div class="input_text w-100">
-            <input placeholder="Date" type="text" name="checkIn" id="datepicker" value="" class="calendar mb-0"><i class="fas fa-calendar-check icon"></i>
-            <%= image_tag "calendar", alt:"icon", class:"cal_icon" %>
-          </div>  
-        </div>
-      </div>
-      <button class="submit_btn">Submit</button>
     </div>
   </div>
+
 </turbo-frame>
 
 

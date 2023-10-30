@@ -1,7 +1,7 @@
 class ProductProducerPricing < ApplicationRecord
 	before_validation :set_default_price
 	belongs_to :product
-	belongs_to :producer ,foreign_key: :user_id, class_name: "User"
+	belongs_to :producer ,foreign_key: :user_id, class_name: "Producer"
 
 
 	def set_default_price

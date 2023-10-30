@@ -775,7 +775,10 @@
 
     .product_form {
       margin: 1.042vw 0 0;
-
+      
+      .tab {
+        display: none;
+      }
       .ship_from_wrap {
         display: flex;
         height: 3.241vw;

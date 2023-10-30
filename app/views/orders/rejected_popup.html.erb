@@ -67,16 +67,21 @@
               <div class="info_text">ETSY Order ID #: 34568275</div>
               <%= image_tag "external_link", alt:"icon", class:"info_img" %>
             </div>
-            <div class="buyer_info_section">
-              <div class="buyer_mail">
-                <div class="buyer_head">Customer</div>
-                <div class="buyer_text">Dacid Guerra email@gmail.com</div>
+            <% if @customer_detail.present? %>
+              <div class="buyer_info_section">
+                <div class="buyer_mail">
+                  <div class="buyer_head">Customer</div>
+                  <div class="buyer_text"><%= @customer_detail.fullname %> <%= @customer_detail.email%></div>
+                </div>
+                <div class="buyer_mail">
+                  <div class="buyer_head">Shipping Address</div>
+                  <div class="buyer_text"><%= @customer_detail.address1%></div>
+                  <% if @customer_detail.address2.present? %>
+                    <div class="buyer_text"><%= @customer_detail.address2%></div>
+                  <%end%>
+                </div>
               </div>
-              <div class="buyer_mail">
-                <div class="buyer_head">Shipping Address</div>
-                <div class="buyer_text">Sabrina Kezzi 55 Main Street Long Island, NY, 02011, US</div>
-              </div>
-            </div>
+            <%end%>
             <div class="billing_section">
               <div class="billing_head">Billing</div>
               <div class="billing_info">
