@@ -35,6 +35,16 @@ class Order < ApplicationRecord
   has_one_attached :back_side_image
 
   #method
+  def self.search(params)
+    results = all.joins(:products)
+    if params[:query].present?
+      results = results
+                  .where('LOWER(products.name) LIKE :query OR LOWER(orders.customer_name) LIKE :query OR LOWER(orders.etsy_order_id) LIKE :query', query: "%#{params[:query].downcase}%")
+    end
+
+    results
+  end
+
   def order_received
     distance_of_time_in_words(created_at, Time.current)
   end

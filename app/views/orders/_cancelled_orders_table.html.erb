@@ -1,0 +1,42 @@
+<% cancel_orders.each do |order| %>
+  <div class="tbody_row">
+    <div class="order_td td_icon first">
+      <input type="checkbox" name="" />
+    </div>
+
+    <div class="order_td second">
+      <div class="order_id_icon">
+        <span class="order_num"><%= order.id %></span>
+      </div>
+    </div>
+
+    <div class="order_td three"><%= order.etsy_order_id %></div>
+    <div class="order_td four"><%= order.customer_name %></div>
+    <div class="order_td five"><%= order.order_products.pluck(:product_quantity).sum %></div>
+    <div class="order_td six">$<%= order.price %></div>
+
+    <div class="order_td seven">
+      <div class="order_status_icon">
+        <div>
+          <%= order.order_status %>
+        </div>
+      </div>
+    </div>
+
+    <div class="order_td eight">
+      <div class="order_priority_icon">
+        <% if order.assign_details.present? %>
+          <div><%=order.assignee_name%></div>
+        <%else%>
+          <span>-</span>
+        <%end%>
+      </div>
+    </div>
+
+    <div class="order_td nine"><%=order.order_date%></div>
+
+    <div class="order_td ten">
+      Amazon
+    </div>
+  </div>
+<% end %>

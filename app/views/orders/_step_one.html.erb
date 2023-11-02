@@ -17,6 +17,7 @@
 
           <%= image_tag 'ic_expand_more.png', alt: 'icon', class: 'toggle_icon' %>
         </div>
+
         <div class="collapse_data">
           <% products.each do |product| %>
             <% product.variants.each do |variant|%>
@@ -226,16 +227,22 @@
       <%= hidden_field_tag :user_id, params[:producer_id] %>
       <%= hidden_field_tag :submit_type, '', data: { 'order-form-status-target': 'submitType' } %>
 
-      <button class="btn_wrap dark_green">
-        <%= link_to 'Marked as Completed', 'javascript:;', class: 'btn_wrap dark_green', data: { 'order-form-status-target': 'markComplete' } %>
+      <% disabled_class = params[:producer_id].present? ? '' : 'disabled' %>
+
+      <% if !params[:producer_id].present? %>
+        <div class="validation-error small text-danger">Please choose producer before continue</div>
+      <% end %>
+
+      <button class="btn_wrap dark_green <%= disabled_class %>">
+        <%= link_to 'Marked as Completed', 'javascript:;', class: "btn_wrap dark_green #{disabled_class}", data: { 'order-form-status-target': 'markComplete' } %>
       </button>
 
-      <button class="btn_wrap light_green">
-        <%= link_to 'Save Order for Later', 'javascript:;', class: 'btn_wrap light_green', data: { 'order-form-status-target': 'saveLater' } %>
+      <button class="btn_wrap light_green <%= disabled_class %>">
+        <%= link_to 'Save Order for Later', 'javascript:;', class: "btn_wrap light_green #{disabled_class}", data: { 'order-form-status-target': 'saveLater' } %>
       </button>
 
-      <button class="btn_wrap dark_green">
-        <%= link_to 'shipping', 'javascript:;', class: 'btn_wrap dark_green', data: { 'order-form-status-target': 'goShipping' } %>
+      <button class="btn_wrap dark_green <%= disabled_class %>">
+        <%= link_to 'shipping', 'javascript:;', class: "btn_wrap dark_green #{disabled_class}", data: { 'order-form-status-target': 'goShipping' } %>
       </button>
 
       <%= submit_tag 'submit', class: '', data: { 'order-form-status-target': 'submit' }, style: 'display:none;' %>

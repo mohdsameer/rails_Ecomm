@@ -1,11 +1,12 @@
 <div class="hero_wrapper">
   <div class="manual_order_wrapper">
     <div class="manual_order_header">
-      <%= link_to 'javascript:;',  class: "back_btn_wrap" do %>
+      <%= link_to orders_path,  class: "back_btn_wrap" do %>
         <%= image_tag 'start_icon.png', alt: 'icon', class: 'back_icon' %>
-        <span>Back to My Products</span>
+        <span>Back to My Orders</span>
       <% end %>
-      <div class="header_text">Order ID <%= @order.id%></div>
+
+      <div class="header_text">Order ID <%= @order.id %></div>
     </div>
 
     <div class="manual_content_wrap">
@@ -20,7 +21,7 @@
           <span class="new_text">Add New Products</span>
         <% end %>
       </div>
-      <%= form_tag order_path, method: :patch,  multipart: true, id: 'regForm', class: 'product_form' do %>
+      <%= form_tag order_path, method: :patch, multipart: true, id: 'regForm', class: 'product_form' do %>
         <div class="tab">
           <div class="product_list_section">
             <div class="ship_from_wrap">

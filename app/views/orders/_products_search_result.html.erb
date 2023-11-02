@@ -1,0 +1,16 @@
+<% products.each do |product| %>
+  <div class="scroll_content">
+    <div class="image_text_wrap">
+      <% if product.image.attached? %>
+        <%= image_tag product.image %>
+      <% else %>
+        <%= image_tag asset_path('dummy-product.png') %>
+      <% end %>
+      <%= product.name %>
+    </div>
+
+    <a href="<%= select_variant_orders_path(product_id: product) %>" data-turbo-frame="add-new-product-order-modal" class= "choose_pro_link">
+      <%= image_tag "right_arrow", alt:"icon", class:"rigth_arrow" %>
+    </a>
+  </div>
+<% end %>

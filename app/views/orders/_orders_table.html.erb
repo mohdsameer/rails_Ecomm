@@ -1,14 +1,28 @@
-<div class="orders_page_wrapper <%= current_user.type == "Designer" || current_user.type == "Admin" ? 'designer_orders' : '' %>">
-  <%= render "shared/sidebar" %>
+<ul class="order_tabs_wrap" id="tabs-nav">
+  <li class="tabs_items"><a href="#tab1"><span class="tabs_notify"><%= orders.count%></span>All Orders</a></li>
+  <li class="tabs_items"><a href="#tab2"><span class="tabs_notify"><%= orders.new_orders.count%></span> On Hold</a></li>
+  <li class="tabs_items"><a href="#tab3"><span class="tabs_notify rejected"><%= orders.rejected_order.count%></span> Rejected</a></li>
+  <li class="tabs_items"><a href="#tab4"><span class="tabs_notify production"><%= orders.inproduction.count%></span> In Production</a></li>
+  <li class="tabs_items"><a href="#tab5"><span class="tabs_notify production"><%= orders.fullfilled_order.count%></span>Fulfilled</a></li>
+</ul>
 
-  <% if current_user.type == "Designer" %>
-    <%= render "designer_index" %>
-  <% elsif current_user.type == "Admin" %>
-    <%= render "admin_index" %>
-  <% else %>
-    <%= render "producer_index" %>
-  <% end %>
-</div>
+<div id="tabs-content">
+  <div id="tab1" class="tab-content">
+    <%= render "admin_all_order", orders: orders %>
+  </div>
+  <div id="tab2" class="tab-content">
+    <%= render "admin_all_order", orders: orders.new_orders %>
+  </div>
+  <div id="tab3" class="tab-content">
+    <%= render "admin_all_order", orders: orders.rejected_order %>
+  </div>
+  <div id="tab4" class="tab-content">
+    <%= render "admin_all_order", orders: orders.inproduction %>
+  </div>
+  <div id="tab5" class="tab-content">
+    <%= render "admin_all_order", orders: orders.fullfilled_order %>
+  </div>
+</div> <!-- END tabs-content -->
 
 <script type="text/javascript">
   function changeRowsPerPage(value) {

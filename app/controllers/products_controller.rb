@@ -3,12 +3,18 @@ class ProductsController < ApplicationController
   def index
     per_page = params[:per_page] || 20
 
-    if current_user&.type.eql?("Admin")
-      @products = Product.all.paginate(page: params[:page], per_page: per_page)
-    elsif current_user&.type.eql?("Producer")
+    if current_user&.type.eql?("Producer")
       @orders = Order.all.paginate(page: params[:page], per_page: per_page)
     else
-      @products = Product.all.paginate(page: params[:page], per_page: per_page)
+      @products = Product.search(params).paginate(page: params[:page], per_page: per_page)
+    end
+
+    respond_to do |format|
+      format.html
+      format.js do
+        html_data = render_to_string(partial: "products/products_table", locals: { products: @products }, layout: false)
+        render json: { html_data: html_data }
+      end
     end
   end
 

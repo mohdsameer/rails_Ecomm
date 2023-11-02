@@ -4,68 +4,19 @@
 
     <div class="order_head">
       <div class="head_content">
-        <div class="create_bell_box">
-          <%= image_tag("ic_notifications", class:"create_bell_icon") %>
-          <div class="create_notification">
-            <div class="notification_text">1</div>
-          </div>
-        </div>
-        <div class="account_icon"></div>
+        <%= render 'shared/profile_head' %>
       </div>
     </div>
 
     <div class="producer_payments">
       <div class="payment_head">Payments</div>
       <div class="payment_body">
-        <% @users.each do |user|%>
+        <% @users.each do |user| %>
           <div class="payment_items">
-            <!-- <div class="items_head">Pending Payment</div> -->
-            <!-- <div class="td"><%= user.name%></div> -->
             <div class="td"> <%= link_to user.name, dashboard_path(user) %></div>
           </div>
-        <%end%>
+        <% end %>
       </div>
     </div>
   </div>
 </div>
-
-<!--
-<script type="text/javascript">
-  document.querySelectorAll(".__range-step").forEach(function(ctrl) {
-  var el = ctrl.querySelector('input');        
-  var output = ctrl.querySelector('output'); 
-  var newPoint, newPlace, offset;
-  el.oninput =function(){ 
-    // colorize step options
-    ctrl.querySelectorAll("option").forEach(function(opt) {
-      if(opt.value<=el.valueAsNumber)                
-        opt.style.backgroundColor = '#00AB55';
-      else
-        opt.style.backgroundColor = '#00AB55';
-    });           
-    // colorize before and after
-    var valPercent = (el.valueAsNumber  - parseInt(el.min)) / (parseInt(el.max) - parseInt(el.min));            
-    var style = 'background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, ' +
-    'color-stop(' + valPercent + ', #00AB55), ' +
-    'color-stop(' + valPercent + ', rgba(0, 171, 85, 0.48)));';
-    el.style = style;
-
-    // Popup
-    if((' ' + ctrl.className + ' ').indexOf(' ' + '__range-step-popup' + ' ') > -1)
-    {
-      var selectedOpt=ctrl.querySelector('option[value="'+el.value+'"]');
-      output.innerText= selectedOpt.text;
-      output.style.left = "50%"; 
-      output.style.left = ((selectedOpt.offsetLeft + selectedOpt.offsetWidth/2) - output.offsetWidth/2) + 'px'; 
-    }           
-  };
-  el.oninput();
-  });
-
-  window.onresize = function(){
-    document.querySelectorAll(".__range").forEach(function(ctrl) {
-      var el = ctrl.querySelector('input');
-      el.oninput();
-    });
-  };
-</script> -->

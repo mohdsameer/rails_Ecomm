@@ -4,8 +4,17 @@ class OrdersController < ApplicationController
   def index
     per_page = params[:per_page] || 20
 
-    @orders = Order.all.paginate(page: params[:page], per_page: per_page)
+    @orders = Order.search(params).paginate(page: params[:page], per_page: per_page)
     @products = Product.all
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html
+      format.js do
+        html_data = render_to_string(partial: "orders/orders_table", locals: { orders: @orders }, layout: false)
+        render json: { html_data: html_data }
+      end
+    end
   end
 
   def assignee
@@ -178,7 +187,16 @@ class OrdersController < ApplicationController
   end
 
   def add_new_product
-    @products = Product.all
+    @products = Product.search(params)
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html
+      format.js do
+        html_data = render_to_string(partial: "orders/products_search_result", locals: { products: @products }, layout: false)
+        render json: { html_data: html_data }
+      end
+    end
   end
 
   def select_variant
@@ -225,6 +243,18 @@ class OrdersController < ApplicationController
 
   def cancel_order_index
     @cancel_orders = Order.where(order_status: "cancel")
+
+    if params[:query].present?
+      @cancel_orders = @cancel_orders.search(params)
+    end
+
+    respond_to do |format|
+      format.html
+      format.js do
+        html_data = render_to_string(partial: "orders/cancelled_orders_table", locals: { cancel_orders: @cancel_orders }, layout: false)
+        render json: { html_data: html_data }
+      end
+    end
   end
 
   def update_priority

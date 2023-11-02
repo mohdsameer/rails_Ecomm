@@ -1,14 +1,24 @@
 class Product < ApplicationRecord
+  # Association
+  has_many :order_products
+  has_many :orders, through: :order_products
+  has_many :variants
+  has_many :product_producer_pricings
 
-	has_many :variants
-	accepts_nested_attributes_for :variants, reject_if: :all_blank, allow_destroy: true
-	has_many  :product_producer_pricings
-	accepts_nested_attributes_for :product_producer_pricings
-	
-# Attachements
-	has_one_attached :image
-#Association
-	has_many :order_products
-	has_many :orders, through: :order_products
+  # Nested Attributes
+  accepts_nested_attributes_for :variants, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :product_producer_pricings
+  
+  # Attachements
+  has_one_attached :image
 
+  # Instance Methods
+  def self.search(params)
+    results = all
+    if params[:query].present?
+      results = results.where('LOWER(products.name) LIKE ?', "%#{params[:query].downcase}%")
+    end
+
+    results
+  end
 end

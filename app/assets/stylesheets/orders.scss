@@ -554,7 +554,7 @@
 
   &.designer_orders {
     .sidebar_wrapper {
-      width: 13.6vw;
+      width: 17vw;
     }
 
     .orders_wrapper {
@@ -563,7 +563,7 @@
   }
 
   .sidebar_wrapper {
-    width: 12.731vw;
+    width: 17vw;
 
     .sidebar_content {
       .sidebar_logo {
@@ -1828,7 +1828,7 @@
 //** Designer Dasbard Css started here **//
 
 .sidebar_wrapper {
-  width: 13.6vw;
+  width: 17vw;
 }
 
 
@@ -2273,6 +2273,11 @@
     }
   }
 }
+
+.disabled {
+  pointer-events: none;
+}
+
 //** order on hold popup end **//
 
 

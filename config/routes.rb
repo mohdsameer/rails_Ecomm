@@ -1,18 +1,18 @@
 Rails.application.routes.draw do
-  # Defines the root path route ("/")
+  root "dashboard#index"
+
   get 'dashboard/producer_panel_dasboard'
   get 'dashboard/manual_order'
   get 'dashboard/choose_shiping'
 
   resources :dashboard, only: [:show]
-  
-  
+
   resources :products, only: [:index, :new, :create,:edit, :update] do
     delete 'remove_variant', on: :member
     get 'edit_producer', on: :member
     patch 'update_producer', on: :member
   end
-  
+
   resources :orders do
     member do
       get :download
@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       post :create_address
       post :order_update_shipping
     end
+
     collection do
       get :add_new_product
       get :select_variant
@@ -61,8 +62,6 @@ Rails.application.routes.draw do
   get    '/login',  to: 'sessions#new'
   post   '/login',  to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-
-  root "dashboard#index"
 
   get '/etsy/authorize', to: 'etsy#authorize'
   get '/etsy/callback', to: 'etsy#callback'

@@ -1,6 +1,6 @@
 <div class="orders_page_wrapper <%= current_user.type == "Designer" || current_user.type == "Admin" ? 'designer_orders' : '' %>">
   <%= render "shared/sidebar" %>
-  <div class="orders_wrapper">
+  <div class="orders_wrapper" data-controller="search" data-search-url-value="<%= cancel_order_index_orders_path %>">
     <div class="order_head">
       <div class="head_content">
         <%= link_to new_order_path , class: 'manual_btn' do %>
@@ -14,12 +14,13 @@
         <div class="account_icon"></div>
       </div>
     </div>
+
     <div class="search_wrap">
       <div class="search_box">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M17.31 15.9L20.71 19.29C20.8993 19.4778 21.0058 19.7334 21.0058 20C21.0058 20.2666 20.8993 20.5222 20.71 20.71C20.5222 20.8993 20.2666 21.0058 20 21.0058C19.7334 21.0058 19.4778 20.8993 19.29 20.71L15.9 17.31C14.5025 18.407 12.7767 19.0022 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11C19.0022 12.7767 18.407 14.5025 17.31 15.9ZM11 5C7.68629 5 5 7.68629 5 11C5 14.3137 7.68629 17 11 17C14.3137 17 17 14.3137 17 11C17 7.68629 14.3137 5 11 5Z" fill="#919EAB"/>
         </svg>
-        <input class="search_input" type="text" placeholder="Search by order number, customer, or product name" />
+        <input class="search_input" type="text" placeholder="Search by order number, customer, or product name" data-search-target="query" />
       </div>
     </div>
 
@@ -45,81 +46,11 @@
                       <!-- <div class="order_th last"></div> -->
                     </div>
                   </div>
-                  <div class="tbody">
-                    <% @cancel_orders.each do |order| %>
-                      <div class="tbody_row">
-                        <div class="order_td td_icon first">
-                          <input type="checkbox" name="">
-                        </div>
-                        <div class="order_td second">
-                          <div class="order_id_icon">
-                            <span class="order_num"><%= order.id %></span>
-                          </div>
-                        </div>
-                        <div class="order_td three"><%= order.etsy_order_id %></div>
-                        <div class="order_td four"><%= order.customer_name %></div>
-                        <div class="order_td five"><%= order.order_products.pluck(:product_quantity).sum %></div>
-                        <div class="order_td six">$<%= order.price %></div>
-                        <div class="order_td seven">
-                          <div class="order_status_icon">
-                            <div>
-                              <%= order.order_status %>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="order_td eight">
-                          <div class="order_priority_icon">
-                            <% if order.assign_details.present? %>
-                              <div><%=order.assignee_name%></div>
-                            <%else%>
-                              <!-- <div><%#= link_to 'Assignee',assignee_order_path(order) %></div> -->
-                              <span>-</span>
-                            <%end%>
-                          </div>
-                        </div>
-                        <div class="order_td nine"><%=order.order_date%></div>
-                        <div class="order_td ten">
-                          Amazon
-                        </div>
-                        <!-- <div class="order_td last">
-                          <div class="more_menu">
-                            <a href="<%= on_hold_popup_order_path(order) %>"  data-turbo-frame="on-hold-order-modal" class= "more_link">
-                              <%#= image_tag 'View.png', alt: 'icon'%>
-                            </a>
-                            <%# if order.order_status == "rejected" || order.order_status == "onhold" %>
-                              <%#= link_to edit_order_path(order), class: 'more_link' do %>
-                                <%#= image_tag 'edit_row.png', alt: 'icon' %>
-                              <%# end %>
-                              
-                              <%#case order.order_status %>
-                                <%#when "rejected" %>
-                                 <a href="<%= cancel_order_order_path(order) %>"  data-turbo-frame="cancel-order-modal" class= "more_link">
-                                    <%#= image_tag 'close.png', alt: 'icon' %>
-                                  </a>
-                                <% #else %>
-                                  <a href="<%= delete_confirmation_order_path(order) %>"  data-turbo-frame="destroy-order-modal" class= "more_link">
-                                    <%#= image_tag 'delete.png', alt: 'icon' %>
-                                  </a>
-                              <%# end %>
-                            <%# end %>
-
-                            <div class="more_link">
-                              <span>&nbsp;</span>
-                            </div>
-                             <div class="drop_menu">
-                              <div class="drop_icon_box">
-                                <%#= image_tag 'ic_more.png', alt: 'icon', class: 'more_icon' %>
-                              </div>
-                              <div class="menu_drop">
-                                content here
-                              </div>
-                            </div> -->
-                          </div>
-                        </div>
-                      </div>
-                    <% end %>
-                    <turbo-frame id="destroy-order-modal"></turbo-frame>
+                  <div class="tbody" data-search-target="results">
+                    <%= render 'cancelled_orders_table', cancel_orders: @cancel_orders %>
                   </div>
+
+                  <turbo-frame id="destroy-order-modal"></turbo-frame>
                 </div>
               </div>
             </div>
