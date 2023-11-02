@@ -141,7 +141,22 @@ class OrdersController < ApplicationController
     elsif params[:request_type] == "Cancel"
       @order.update(order_status: 4)
     else
-      @order.update(order_edit_status: 1)
+      if params[:submit_type].eql?('mark_complete')
+        params[:order_edit_status] = 1
+      else
+        params[:order_edit_status] = 0
+      end
+      @order.update(order_edit_status: params[:order_edit_status])
+      respond_to do |format|
+        format.turbo_stream do
+          if params[:submit_type].eql?('shipping')
+            render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
+          else
+            redirect_to orders_path
+          end
+        end
+        format.html { redirect_to orders_path }
+      end
     end
   end
 
@@ -219,6 +234,7 @@ class OrdersController < ApplicationController
     end
     @order_products = @order.order_products
     @customer_detail = @order.address
+    @shipping_price = ShippingMethod.find_by(id: @order.shipping_method_id)
   end
 
   def rejected_popup

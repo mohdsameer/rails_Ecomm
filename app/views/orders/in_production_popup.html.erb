@@ -63,7 +63,7 @@
                 <div class="cost_section">
                   <div>Production costs</div>
                   <% record = order_product.product.product_producer_pricings.find_by(user_id: @order.producer.id) %>
-                    <% cost = record.front_side_print_price + record.back_side_print_price%>
+                    <% cost = (record.front_side_print_price + record.back_side_print_price)* order_product.product_quantity%>
                     <% sum_result += cost %>
                   <div>USD <%= cost %></div>
                 </div>
@@ -104,8 +104,13 @@
                 </div>
                 <div class="right_text">
                   <div>USD <%= sum_result %></div>
-                  <div>USD 10.00</div>
-                  <div class="fw-bold">USD 30.00</div>
+                  <% if @shipping_price.present?%>
+                    <div>USD <%= @shipping_price.price%></div>
+                    <div class="fw-bold">USD <%= sum_result + @shipping_price.price %></div>
+                  <%else%>
+                    <div>-</div>
+                    <div class="fw-bold">USD <%= sum_result %></div>
+                  <%end%>
                 </div>
               </div>
             </div>

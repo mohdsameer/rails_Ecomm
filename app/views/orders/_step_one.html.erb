@@ -233,17 +233,15 @@
         <div class="validation-error small text-danger">Please choose producer before continue</div>
       <% end %>
 
-      <button class="btn_wrap dark_green <%= disabled_class %>">
-        <%= link_to 'Marked as Completed', 'javascript:;', class: "btn_wrap dark_green #{disabled_class}", data: { 'order-form-status-target': 'markComplete' } %>
-      </button>
+      <%= link_to 'Marked as Completed', 'javascript:;', class: 'btn_wrap dark_green', data: { 'order-form-status-target': 'markComplete' } %>
 
-      <button class="btn_wrap light_green <%= disabled_class %>">
-        <%= link_to 'Save Order for Later', 'javascript:;', class: "btn_wrap light_green #{disabled_class}", data: { 'order-form-status-target': 'saveLater' } %>
-      </button>
+      <%= link_to 'Save Order for Later', 'javascript:;', class: 'btn_wrap light_green', data: { 'order-form-status-target': 'saveLater' } %>
 
-      <button class="btn_wrap dark_green <%= disabled_class %>">
-        <%= link_to 'shipping', 'javascript:;', class: "btn_wrap dark_green #{disabled_class}", data: { 'order-form-status-target': 'goShipping' } %>
-      </button>
+
+      <%= link_to('javascript:;', class: 'btn_wrap black_bg', data: { 'order-form-status-target': 'goShipping' }) do %>
+          <%= image_tag("white_end", class: "end_icon") %>
+          Shipping
+      <% end %>
 
       <%= submit_tag 'submit', class: '', data: { 'order-form-status-target': 'submit' }, style: 'display:none;' %>
       <!-- <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button> -->

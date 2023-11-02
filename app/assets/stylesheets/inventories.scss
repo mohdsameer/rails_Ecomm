@@ -1332,6 +1332,11 @@
         font-weight: 700;
         line-height: 26px;
       }
+
+      &.black_bg {
+        background: black;
+        flex-direction: row-reverse;
+      }
     }
   }
 

@@ -1268,11 +1268,21 @@
     align-items: center;
     position: absolute;
 
+    .close_icon {
+      width: 2.157vw;
+      height: 2.157vw;
+      position: absolute;
+      right: -6px;
+      top: -7px;
+      cursor: pointer;
+    }
+
     .assign_order_pop {
       width: 23.495vw;
       padding: 1.389vw 2.546vw;
       border-radius: 1.389vw;
       background: #F4F6F8;
+      position: relative;
 
       .assign_head {
         display: flex;
@@ -1296,6 +1306,13 @@
         align-items: center;
         gap: 0.231vw;
         width: 18.403vw;
+
+        label {
+          display: flex;
+          align-items: center;
+          gap: 1.231vw;
+          width: 18.403vw;
+        }
 
         .radio_input {
           margin: 0.579vw;

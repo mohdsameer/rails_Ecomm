@@ -107,8 +107,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_063623) do
     t.bigint "user_id"
     t.string "revision_info"
     t.boolean "request_revision", default: false
-    t.string "etsy_order_id"
     t.bigint "shipping_method_id"
+    t.string "etsy_order_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

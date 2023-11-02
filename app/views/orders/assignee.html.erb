@@ -2,6 +2,7 @@
   <div class="assign_order_pop_model">
     <div class="assign_order_pop_wrapper">
       <div id="assign_order_pop" class="assign_order_pop" data-controller="modals" data-modals-modal-id-value="assign_order_pop">
+        <%= image_tag "close", alt:"icon", class:"close_icon" %>
         <div class="assign_head">
           <%= image_tag "ic_user_group", alt:"icon", class:"assign_icon" %>
           Assign order to
@@ -12,7 +13,7 @@
             <!-- <span>jack</span> -->
             <%= a.collection_radio_buttons(:designer, @designers, :id, :name) do |b| %>
                       <%= b.label { b.radio_button + b.text } %>
-                    <% end %>
+            <% end %>
           </div>
 
           <div class="input_section">
@@ -41,7 +42,7 @@
                   <div class="input_text w-100">
                   <!-- <input placeholder="Date" type="text" name="checkIn" id="datepicker" value="" class="calendar mb-0"><i class="fas fa-calendar-check icon"></i> -->
                    <%= a.date_field :due_date %>
-                  <%= image_tag "calendar", alt:"icon", class:"cal_icon" %>
+                  <%= image_tag "calendar", alt:"icon", class:"cal_icon d-none" %>
                 </div>  
               </div>
             </div>

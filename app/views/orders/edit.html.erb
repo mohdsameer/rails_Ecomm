@@ -5,8 +5,8 @@
         <%= image_tag 'start_icon.png', alt: 'icon', class: 'back_icon' %>
         <span>Back to My Orders</span>
       <% end %>
-
       <div class="header_text">Order ID <%= @order.id %></div>
+      <!-- <div class="header_text">Order ID #1111</div> -->
     </div>
 
     <div class="manual_content_wrap">
@@ -16,319 +16,22 @@
           <span class="step shipping">2</span>
           <span class="step submit_offers">3</span>
         </div>
-        <%= link_to add_new_product_orders_path, class: "new_product_btn" do %>
+        <%= link_to add_new_product_orders_path, class: "new_product_btn", data: {turbo_frame: "add-new-product-order-modal"} do %>
           <%= image_tag 'shopping_cart.png', alt: 'icon', class: 'cart_icon' %>
           <span class="new_text">Add New Products</span>
         <% end %>
       </div>
-      <%= form_tag order_path, method: :patch, multipart: true, id: 'regForm', class: 'product_form' do %>
-        <div class="tab">
-          <div class="product_list_section">
-            <div class="ship_from_wrap">
-              <div class="icon_wrap">
-                <%= image_tag "truck" %>
-                <% if @order.producer.present? %>
-                  <div class="icon_text">Ships from <%=@order.producer.name%></div>
-                <% else %>
-                  <%= link_to all_producer_orders_path, class: 'choose_pro_link' do %>
-                    <span>Choose Producer</span>
-                    <%= image_tag 'edit_row.png', alt: 'icon', class: 'choose_icon' %>
-                  <% end %>
-                <% end %>
-              </div>
-              <turbo-frame id="all-producer-order-modal"></turbo-frame>
-              <%= image_tag 'ic_expand_more.png', alt: 'icon', class: 'toggle_icon' %>
-            </div>
-            <div class="collapse_data">
-              <% @order.products.each do |product| %>
-                <% product.variants.each do |variant|%>
-                  <input type="hidden" name="variant" class="variantId" id="<%= variant.id %>">
-                  <div class="content_container">
-                    <div class="left_wrap">
-                      <div class="card_wrapper">
-                        <div class="card_head"><%=variant.product.name %></div>
-                        <div class="card_img_wrapper">
-                          <div class="content_img">
-                            <div class="image_box">
-                              <% if variant.image.attached? %>
-                                <%= image_tag variant.image %>
-                              <% else %>
-                                <%= image_tag asset_path('dummy-product.png') %>
-                              <% end %>
-                            </div>
-                            <div class="btn_wrap">
-                              <div class="outline_btn"><%= variant.color%></div>
-                              <div class="plus_minus_wrap">
-                                <%= hidden_field_tag "variants[#{variant.id}]", 0, class: "quantity_input qty", maxlength: "12", value: "0" %>
-                                <span class="qty_num" id="qty_num_<%= variant.id %>">0</span>
-                                <div class="button-container">
-                                  <button class="cart-qty-minus" type="button" value="-">-</button>
-                                  <button class="cart-qty-plus" type="button" value="+">+</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card_wrapper">
-                        <div class="card_head">Front Side</div>
-                        <div class="card_img_wrapper">
-                          <div class="content_img shadow_box">
-                            <div class="image_box">
-                              <div class="avatar-upload">
-                                <div class="avatar-edit">
-                                  <%= file_field_tag "front_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{variant.id}" %>
-                                  <label for="front_side_image_<%= variant.id %>" class="upload_wrapper">
-                                    <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
-                                    <div class="image_type">PNG</div>
-                                    <div class="upload_text">Upload Here</div>
-                                    <div class="click_here">Click here to upload</div>
-                                  </label>
-                                </div>
 
-                                <div class="avatar-preview">
-                                  <div id="imageFrontPreview_<%= variant.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
-                                  </div>
-                                </div>
-                              </div>
+      <turbo-frame id="all-producer-order-modal"></turbo-frame>
+      <turbo-frame id="add-new-product-order-modal"></turbo-frame>
+      <turbo-frame id="order-success-popup-modal"></turbo-frame>
 
-                            </div>
-                            <div class="btn_wrap">
-                              <%= link_to 'javascript:;', class: 'delete_img' do %>
-                                <%= image_tag 'ic_trash.png', alt: 'icon' %>
-                              <% end %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card_wrapper">
-                        <div class="card_head">Back Side</div>
-                        <div class="card_img_wrapper">
-                          <div class="content_img shadow_box">
-                            <div class="image_box">
-                              <div class="avatar-upload">
-                                <div class="avatar-edit">
-                                  <%= file_field_tag "back_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{variant.id}" %>
-                                  <label for="imageUpload_<%= variant.id %>" class="upload_wrapper">
-                                    <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
-                                    <div class="image_type">PNG</div>
-                                    <div class="upload_text">Upload Here</div>
-                                    <div class="click_here">Click here to upload</div>
-                                  </label>
-                                </div>
-
-                                <div class="avatar-preview">
-                                  <div id="imageBackPreview_<%= variant.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="btn_wrap">
-                              <%= link_to 'javascript:;', class: 'delete_img' do %>
-                                <%= image_tag 'ic_trash.png', alt: 'icon' %>
-                              <% end %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="right_wrap">
-                      <%= link_to 'javascript:;', class: 'link_box' do %>
-                        <%= image_tag 'ic_trash.png', alt: 'icon', class: 'trash' %>
-                      <% end %>
-                      <%= link_to 'javascript:;', class: 'link_box' do %>
-                        <%= image_tag 'copy.png', alt: 'icon', class: 'copy' %>
-                      <% end %>
-                    </div>
-                  </div>
-                <%end%>
-              <%end%>
-            </div>
-          </div>
-
-          <div class="product_list_section upload_file_wrap">
-            <div class="ship_from_wrap">
-              <div class="icon_wrap">
-                <div class="icon_text">Upload File</div>
-              </div>
-              <%= image_tag 'ic_expand_more.png', alt: 'icon', class: 'toggle_icon' %>
-            </div>
-            <div class="collapse_data">
-              <div class="upload_section">
-                <div class="upload_box">
-                  <div class="upload_header">Shipping Label</div>
-                  <% if @order.shipping_label_image.present?%>
-                     <%= image_tag @order.shipping_label_image, class: "content_img" %>
-                  <%else%>
-                    <div class="upload_item">
-                      <%= file_field_tag "shipping_label_image", class: 'file_upload' %>
-                      <label class="upload_label" for="shipping_label_image">
-                        <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
-                        <div class="upload_text">Upload file</div>
-                      </label>
-                    </div>
-                  <%end%>
-                </div>
-                <div class="upload_box">
-                  <div class="upload_header">Packing Slip</div>
-                  <% if @order.packing_slip_image.present?%>
-                     <%= image_tag @order.packing_slip_image, class: "content_img" %>
-                  <%else%>
-                    <div class="upload_item">
-                      <%= file_field_tag "packing_slip_image", class: 'file_upload' %>
-                      <label class="upload_label" for="packing_slip_image">
-                        <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
-                        <div class="upload_text">Upload file</div>
-                      </label>
-                    </div>
-                  <%end%>
-                </div>
-                <div class="upload_box">
-                  <div class="upload_header">Gift Message Slip</div>
-                  <% if @order.gift_message_slip_image.present?%>
-                     <%= image_tag @order.gift_message_slip_image, class: "content_img" %>
-                  <%else%>
-                    <div class="upload_item">
-                      <%= file_field_tag "gift_message_slip_image", class: 'file_upload' %>
-                      <label class="upload_label" for="gift_message_slip_image">
-                        <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
-                        <div class="upload_text">Upload file</div>
-                      </label>
-                    </div>
-                  <%end%>
-                </div>
-                <div class="upload_box">
-                  <div class="upload_header">Design File 1</div>
-                  <% if @order.design_file_1_image.present?%>
-                     <%= image_tag @order.design_file_1_image, class: "content_img" %>
-                  <%else%>
-                    <div class="upload_item">
-                      <%= file_field_tag "design_file_1_image", class: 'file_upload' %>
-                      <label class="upload_label" for="design_file_1_image">
-                        <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
-                        <div class="upload_text">Upload file</div>
-                      </label>
-                    </div>
-                  <%end%>
-                </div>
-                <div class="upload_box">
-                  <div class="upload_header">Design File 2</div>
-                  <% if @order.design_file_2_image.present?%>
-                     <%= image_tag @order.design_file_2_image, class: "content_img" %>
-                  <%else%>
-                    <div class="upload_item">
-                      <%= file_field_tag "design_file_2_image", class: 'file_upload' %>
-                      <label class="upload_label" for="design_file_2_image">
-                        <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
-                        <div class="upload_text">Upload file</div>
-                      </label>
-                    </div>
-                  <%end%>
-                </div>
-                <div class="upload_box">
-                  <div class="upload_header">Additional File</div>
-                  <% if @order.additional_file_image.present?%>
-                     <%= image_tag @order.additional_file_image, class: "content_img" %>
-                  <%else%>
-                    <div class="upload_item">
-                      <%= file_field_tag "additional_file_image", class: 'file_upload' %>
-                      <label class="upload_label" for="additional_file_image">
-                        <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
-                        <div class="upload_text">Upload file</div>
-                      </label>
-                    </div>
-                  <%end%>
-                </div>           
-              </div>
-            </div>
-          </div>
-
-          <div class="product_list_section additional_comments_wrap">
-            <div class="ship_from_wrap">
-              <div class="icon_wrap">
-                <div class="icon_text"><%= label_tag :additional_comment %></div>
-              </div>
-              <%= image_tag 'ic_expand_more.png', alt: 'icon', class: 'toggle_icon' %>
-            </div>
-            <div class="collapse_data">
-              <div class="leave_any">
-                <label>Leave any additional comments here</label>
-                <%= text_field_tag :additional_comment, @order.additional_comment %>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tab">
-          <div class="shipping_pop_wrap">
-            <div class="shiping_form">
-              <div class="ship_head">Recipient</div>
-              <div class="input_group">
-                <input class="input_field" type="text" placeholder="Full Name" name="full_name"/>
-                <input class="input_field" type="text" placeholder="Last Name" name="last_name"/>
-                <input class="input_field" type="text" placeholder="Email" name="email"/>
-              </div>
-              <div class="input_group">
-                <select class="input_field" name="country">
-                  <option value= ""selected>Country</option>
-                  <option value="United States">United States</option>
-                  <option value="Australia">Australia</option>
-                  <option value="Canada">Canada</option>
-                  <option value="China">China</option>
-                  <option value="India">India</option>
-                </select>
-                <select class="input_field" name= "state">
-                  <option value="" selected>State</option>
-                  <option value="Michigan">Michigan</option>
-                  <option value="Oklahoma">Oklahoma</option>
-                  <option value="Delaware">Delaware</option>
-                  <option value="Maryland">Maryland</option>
-                  <option value="Delhi">Delhi</option>
-                </select>
-              </div>
-                <input class="input_field big_size" type="text" placeholder="Address 1" name="address1"/>
-                <input class="input_field big_size" type="text" placeholder="Address 2 (Optional)" name="address2"/>
-              <div class="input_group">
-                <input class="input_field" type="text" placeholder="City" name="city"/>
-                <input class="input_field" type="text" placeholder="Zip" name="zip"/>
-              </div>
-              <button class="calulate_btn">
-                Calculate Shipping
-                <%= image_tag "endicon", alt:"icon", class:"icon" %>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="tab">
-          Submit Orders
-        </div>
-
-        <div class="btn_wrapper mb-5">
-          <button class="btn_wrap">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M16.62 6.20999C16.4109 6.04445 16.1444 5.96929 15.8796 6.00121C15.6148 6.03314 15.3738 6.1695 15.21 6.37999L8.21001 15.38L4.78001 11.2C4.56095 10.9084 4.20051 10.7592 3.83944 10.8106C3.47837 10.8621 3.17395 11.106 3.04503 11.4472C2.91612 11.7883 2.98318 12.1726 3.22001 12.45L7.39001 17.63C7.58064 17.865 7.86742 18.001 8.17001 18C8.49172 18.0144 8.80067 17.8729 9.00001 17.62L16.83 7.61999C16.9913 7.40592 17.0598 7.13608 17.0204 6.871C16.9809 6.60592 16.8366 6.36778 16.62 6.20999Z" fill="white"/>
-              <path d="M21.62 6.20999C21.4109 6.04445 21.1444 5.96929 20.8796 6.00121C20.6148 6.03314 20.3738 6.1695 20.21 6.37999L13.21 15.38L12.6 14.63L11.34 16.25L12.44 17.62C12.6306 17.855 12.9174 17.991 13.22 17.99C13.5243 17.9886 13.8114 17.8487 14 17.61L21.83 7.60999C21.9881 7.39659 22.0548 7.12907 22.0154 6.86643C21.976 6.6038 21.8337 6.36762 21.62 6.20999Z" fill="white"/>
-              <path d="M8.71001 13.06L10 11.44L9.80001 11.2C9.64048 10.979 9.39763 10.8327 9.12768 10.7949C8.85773 10.7571 8.58406 10.8312 8.37001 11C8.16253 11.1667 8.03005 11.4092 8.00189 11.6738C7.97374 11.9384 8.05224 12.2034 8.22001 12.41L8.71001 13.06Z" fill="white"/>
-            </svg>
-            Marked as Completed
-          </button>
-
-          <%= hidden_field_tag :user_id, params[:producer_id] %>  
-          <button class="btn_wrap dark_green"><%= submit_tag 'Marked as Completed', class: 'btn_wrap dark_green'%></button>
-          <button class="btn_wrap light_green"><%= submit_tag 'Save Order for Later', class: 'btn_wrap light_green'%></button>
-
-          <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-          <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-        </div>
-        </div>
-      <% end %>
+      <%= render 'edit_step_one', order: @order %>
     </div>
   </div>
-
 </div>
 
 <script type="text/javascript">
-
   $('.toggle_icon').click(function() {
     $(this).toggleClass('rotate_icon');
     $(this).closest('.product_list_section').find('.collapse_data').slideToggle();
@@ -412,80 +115,110 @@
   });
 
 
-  var currentTab = 0; // Current tab is set to be the first tab (0)
-  showTab(currentTab); // Display the current tab
+  // var currentTab = 0; // Current tab is set to be the first tab (0)
+  // showTab(currentTab); // Display the current tab
 
-  function showTab(n) {
-    // This function will display the specified tab of the form...
-    var x = document.getElementsByClassName("tab");
-    x[n].style.display = "block";
-    //... and fix the Previous/Next buttons:
-    if (n == 0) {
-      document.getElementById("prevBtn").style.display = "none";
-    } else {
-      document.getElementById("prevBtn").style.display = "inline";
-    }
-    if (n == (x.length - 1)) {
-      document.getElementById("nextBtn").innerHTML = "Submit";
-    } else {
-      document.getElementById("nextBtn").innerHTML = "Shipping";
-    }
-    //... and run a function that will display the correct step indicator:
-    fixStepIndicator(n)
-  }
+  // function showTab(n) {
+  //   // This function will display the specified tab of the form...
+  //   var x = document.getElementsByClassName("tab");
+  //   x[n].style.display = "block";
+  //   //... and fix the Previous/Next buttons:
+  //   if (n == 0) {
+  //     document.getElementById("prevBtn").style.display = "none";
+  //   } else {
+  //     document.getElementById("prevBtn").style.display = "inline";
+  //   }
+  //   if (n == (x.length - 1)) {
+  //     document.getElementById("nextBtn").innerHTML = "Submit";
+  //   } else {
+  //     document.getElementById("nextBtn").innerHTML = "Shipping";
+  //   }
+  //   //... and run a function that will display the correct step indicator:
+  //   fixStepIndicator(n)
+  // }
 
-  function nextPrev(n) {
-    // This function will figure out which tab to display
-    var x = document.getElementsByClassName("tab");
-    // Exit the function if any field in the current tab is invalid:
+  // function nextPrev(n) {
+  //   // This function will figure out which tab to display
+  //   var x = document.getElementsByClassName("tab");
+  //   // Exit the function if any field in the current tab is invalid:
     
-    //if (n == 1 && !validateForm()) return false;
+  //   //if (n == 1 && !validateForm()) return false;
     
-    // Hide the current tab:
-    x[currentTab].style.display = "none";
-    // Increase or decrease the current tab by 1:
-    currentTab = currentTab + n;
-    // if you have reached the end of the form...
-    if (currentTab >= x.length) {
-      // ... the form gets submitted:
-      document.getElementById("regForm").submit();
-      return false;
-    }
-    // Otherwise, display the correct tab:
-    showTab(currentTab);
-  }
+  //   // Hide the current tab:
+  //   x[currentTab].style.display = "none";
+  //   // Increase or decrease the current tab by 1:
+  //   currentTab = currentTab + n;
+  //   // if you have reached the end of the form...
+  //   if (currentTab >= x.length) {
+  //     // ... the form gets submitted:
+  //     document.getElementById("regForm").submit();
+  //     return false;
+  //   }
+  //   // Otherwise, display the correct tab:
+  //   showTab(currentTab);
+  // }
 
-  function validateForm() {
-    // This function deals with validation of the form fields
-    var x, y, i, valid = true;
-    x = document.getElementsByClassName("tab");
-    y = x[currentTab].getElementsByTagName("input");
-    // A loop that checks every input field in the current tab:
-    for (i = 0; i < y.length; i++) {
-      // If a field is empty...
-      if (y[i].value == "") {
-        // add an "invalid" class to the field:
-        y[i].className += " invalid";
-        // and set the current valid status to false
-        valid = false;
-      }
-    }
-    // If the valid status is true, mark the step as finished and valid:
-    if (valid) {
-      document.getElementsByClassName("step")[currentTab].className += " finish";
-    }
-    return valid; // return the valid status
-  }
+  // function validateForm() {
+  //   // This function deals with validation of the form fields
+  //   var x, y, i, valid = true;
+  //   x = document.getElementsByClassName("tab");
+  //   y = x[currentTab].getElementsByTagName("input");
+  //   // A loop that checks every input field in the current tab:
+  //   for (i = 0; i < y.length; i++) {
+  //     // If a field is empty...
+  //     if (y[i].value == "") {
+  //       // add an "invalid" class to the field:
+  //       y[i].className += " invalid";
+  //       // and set the current valid status to false
+  //       valid = false;
+  //     }
+  //   }
+  //   // If the valid status is true, mark the step as finished and valid:
+  //   if (valid) {
+  //     document.getElementsByClassName("step")[currentTab].className += " finish";
+  //   }
+  //   return valid; // return the valid status
+  // }
 
-  function fixStepIndicator(n) {
-    // This function removes the "active" class of all steps...
-    var i, x = document.getElementsByClassName("step");
-    for (i = 0; i < x.length; i++) {
-      x[i].className = x[i].className.replace(" active", "");
-    }
-    //... and adds the "active" class on the current step:
-    x[n].className += " active";
-  }
+  // function fixStepIndicator(n) {
+  //   // This function removes the "active" class of all steps...
+  //   var i, x = document.getElementsByClassName("step");
+  //   for (i = 0; i < x.length; i++) {
+  //     x[i].className = x[i].className.replace(" active", "");
+  //   }
+  //   //... and adds the "active" class on the current step:
+  //   x[n].className += " active";
+  // }
+
+
+  // $(document).ready(function(){
+  //   $(".new_product_btn").click(function(){
+  //     $(".choose").show()
+
+  //     $(".close_icon").click(function(){
+  //       $(".choose").hide()
+  //     })      
+  //   })
+
+  //   $(".scroll_content").click(function(){
+  //     $(".choose").hide()
+  //     $(".variant_pop").show()
+
+  //     $(".close_icon").click(function(){
+  //       $(".variant_pop").hide()
+  //     })
+  //   })
+
+  //   $(".check_box").click(function(){
+  //     if ($(this).is(":checked")){
+  //       $(".choose_producer").show()
+
+  //       $(".close_icon").click(function(){
+  //         $(".choose_producer").hide()
+  //       })
+  //     }
+  //   })
+  // })
 </script>
 
 <style type="text/css">
@@ -495,148 +228,3 @@ input.invalid {
 }
 
 </style>
-
-
-
-
-<!-- <div class="new_product_section">
-  <div class="icon_wrap">
-  </div>
-  <div class="new_product_btn">
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5 8C13.5 8.55 13.05 9 12.5 9C11.95 9 11.5 8.55 11.5 8V6H9.5C8.95 6 8.5 5.55 8.5 5C8.5 4.45 8.95 4 9.5 4H11.5V2C11.5 1.45 11.95 1 12.5 1C13.05 1 13.5 1.45 13.5 2V4H15.5C16.05 4 16.5 4.45 16.5 5C16.5 5.55 16.05 6 15.5 6H13.5V8ZM5.51 20C5.51 18.9 6.4 18 7.5 18C8.6 18 9.5 18.9 9.5 20C9.5 21.1 8.6 22 7.5 22C6.4 22 5.51 21.1 5.51 20ZM17.5 18C16.4 18 15.51 18.9 15.51 20C15.51 21.1 16.4 22 17.5 22C18.6 22 19.5 21.1 19.5 20C19.5 18.9 18.6 18 17.5 18ZM16.05 13H8.6L7.5 15H18.5C19.05 15 19.5 15.45 19.5 16C19.5 16.55 19.05 17 18.5 17H7.5C5.98 17 5.02 15.37 5.75 14.03L7.1 11.59L3.5 4H2.5C1.95 4 1.5 3.55 1.5 3C1.5 2.45 1.95 2 2.5 2H4.14C4.52 2 4.88 2.22 5.04 2.57L9.03 11H16.05L19.44 4.87C19.7 4.39 20.31 4.22 20.79 4.48C21.27 4.75 21.45 5.36 21.18 5.84L17.8 11.97C17.46 12.59 16.8 13 16.05 13Z" fill="white"/>
-    </svg>
-    <div class="new_text"> <%= link_to 'Add New Products',add_new_product_orders_path , class: 'new_text'%></div>
-  </div>
-</div>
-<%= form_tag orders_path, method: :patch,  multipart: true do %>
-  <div class="product_list_section">
-    <div class="ship_from_wrap">
-      <div class="icon_wrap">
-        <%= image_tag "truck" %>
-        <div class="icon_text">Ships from Producer Name 1</div>
-      </div>
-
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M8.11953 14.7099L11.9995 10.8299L15.8795 14.7099C16.2695 15.0999 16.8995 15.0999 17.2895 14.7099C17.6795 14.3199 17.6795 13.6899 17.2895 13.2999L12.6995 8.70994C12.3095 8.31994 11.6795 8.31994 11.2895 8.70994L6.69953 13.2999C6.30953 13.6899 6.30953 14.3199 6.69953 14.7099C7.08953 15.0899 7.72953 15.0999 8.11953 14.7099Z" fill="#212B36"/>
-      </svg>
-    </div>
-    <% @order.products.each do |product| %>
-      <% product.variants.each do |variant|%>
-        <div class="content_container">
-          <div class="left_wrap">
-            <div class="left_content">
-              <div class="left_head"><%=variant.product.name %></div>
-              <div class="content_img">
-                <% if variant.image.attached? %>
-                  <%= image_tag variant.image %>
-                <% else %>
-                  <%= image_tag asset_path('dummy-product.png') %>
-                <% end %>
-                <div class="btn_wrap">
-                  <button class="outline_btn"><%= variant.color%></button>
-                  <div class="plus_minus_wrap">
-                    <span class="icon"><button type="button" class="decrement">-</button></span>
-                    <span><%= number_field_tag "variants[#{variant.id}]", 0, class: "quantity_input" %></span>
-                    <span class="icon right_radius"><button type="button" class="increment">+</button></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="left_content">
-              <div class="left_head">Front Side</div>
-              <div class="content_img shadow_box">
-                <%= label_tag :front_side,'Front Side' %>
-                <%= file_field_tag "front_side_image" %>
-              </div>
-            </div>
-            <div class="left_content">
-              <div class="left_head">Back Side</div>
-              <div class="content_img shadow_box">
-                <%= label_tag :back_side,'Back Side' %>
-                <%= file_field_tag "back_side_image" %>
-              </div>
-            </div>
-          </div>
-          <div class="right_wrap">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <path d="M24.5002 7.00006H18.6668V5.05173C18.6395 4.30485 18.3171 3.5993 17.7703 3.08974C17.2236 2.58018 16.4971 2.30819 15.7502 2.3334H12.2502C11.5032 2.30819 10.7767 2.58018 10.23 3.08974C9.68326 3.5993 9.36087 4.30485 9.3335 5.05173V7.00006H3.50016C3.19074 7.00006 2.894 7.12298 2.6752 7.34177C2.45641 7.56056 2.3335 7.85731 2.3335 8.16673C2.3335 8.47615 2.45641 8.77289 2.6752 8.99169C2.894 9.21048 3.19074 9.3334 3.50016 9.3334H4.66683V22.1667C4.66683 23.095 5.03558 23.9852 5.69196 24.6416C6.34833 25.298 7.23857 25.6667 8.16683 25.6667H19.8335C20.7618 25.6667 21.652 25.298 22.3084 24.6416C22.9647 23.9852 23.3335 23.095 23.3335 22.1667V9.3334H24.5002C24.8096 9.3334 25.1063 9.21048 25.3251 8.99169C25.5439 8.77289 25.6668 8.47615 25.6668 8.16673C25.6668 7.85731 25.5439 7.56056 25.3251 7.34177C25.1063 7.12298 24.8096 7.00006 24.5002 7.00006ZM11.6668 5.05173C11.6668 4.86506 11.9118 4.66673 12.2502 4.66673H15.7502C16.0885 4.66673 16.3335 4.86506 16.3335 5.05173V7.00006H11.6668V5.05173ZM21.0002 22.1667C21.0002 22.4761 20.8772 22.7729 20.6585 22.9917C20.4397 23.2105 20.1429 23.3334 19.8335 23.3334H8.16683C7.85741 23.3334 7.56066 23.2105 7.34187 22.9917C7.12308 22.7729 7.00016 22.4761 7.00016 22.1667V9.3334H21.0002V22.1667Z" fill="#637381"/>
-              <path d="M10.5002 19.8334C10.8096 19.8334 11.1063 19.7105 11.3251 19.4917C11.5439 19.2729 11.6668 18.9761 11.6668 18.6667V14.0001C11.6668 13.6906 11.5439 13.3939 11.3251 13.1751C11.1063 12.9563 10.8096 12.8334 10.5002 12.8334C10.1907 12.8334 9.894 12.9563 9.6752 13.1751C9.45641 13.3939 9.3335 13.6906 9.3335 14.0001V18.6667C9.3335 18.9761 9.45641 19.2729 9.6752 19.4917C9.894 19.7105 10.1907 19.8334 10.5002 19.8334Z" fill="#637381"/>
-              <path d="M17.5002 19.8334C17.8096 19.8334 18.1063 19.7105 18.3251 19.4917C18.5439 19.2729 18.6668 18.9761 18.6668 18.6667V14.0001C18.6668 13.6906 18.5439 13.3939 18.3251 13.1751C18.1063 12.9563 17.8096 12.8334 17.5002 12.8334C17.1907 12.8334 16.894 12.9563 16.6752 13.1751C16.4564 13.3939 16.3335 13.6906 16.3335 14.0001V18.6667C16.3335 18.9761 16.4564 19.2729 16.6752 19.4917C16.894 19.7105 17.1907 19.8334 17.5002 19.8334Z" fill="#637381"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M9 18C8.45 18 7.979 17.804 7.587 17.412C7.195 17.02 6.99934 16.5493 7 16V4C7 3.45 7.196 2.979 7.588 2.587C7.98 2.195 8.45067 1.99934 9 2H18C18.55 2 19.021 2.196 19.413 2.588C19.805 2.98 20.0007 3.45067 20 4V16C20 16.55 19.804 17.021 19.412 17.413C19.02 17.805 18.5493 18.0007 18 18H9ZM9 16H18V4H9V16ZM5 22C4.45 22 3.979 21.804 3.587 21.412C3.195 21.02 2.99934 20.5493 3 20V7C3 6.71667 3.096 6.479 3.288 6.287C3.48 6.095 3.71733 5.99934 4 6C4.28333 6 4.521 6.096 4.713 6.288C4.905 6.48 5.00067 6.71734 5 7V20H15C15.2833 20 15.521 20.096 15.713 20.288C15.905 20.48 16.0007 20.7173 16 21C16 21.2833 15.904 21.521 15.712 21.713C15.52 21.905 15.2827 22.0007 15 22H5Z" fill="#637381"/>
-            </svg>
-          </div>
-        </div>
-      <%end%>
-    <%end%>
-  </div>
-
-  <div class="upload_file_wrap">
-    <div class="ship_from_wrap">
-      <div class="icon_wrap">
-        <div class="icon_text">Upload File</div>
-      </div>
-
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M8.11953 14.7099L11.9995 10.8299L15.8795 14.7099C16.2695 15.0999 16.8995 15.0999 17.2895 14.7099C17.6795 14.3199 17.6795 13.6899 17.2895 13.2999L12.6995 8.70994C12.3095 8.31994 11.6795 8.31994 11.2895 8.70994L6.69953 13.2999C6.30953 13.6899 6.30953 14.3199 6.69953 14.7099C7.08953 15.0899 7.72953 15.0999 8.11953 14.7099Z" fill="#212B36"/>
-      </svg>
-    </div>
-    <div class="upload_section">
-      <div class="upload_header">
-        <div class="header_item">Shipping Label</div>
-        <div class="header_item">Packing Slip</div>
-        <div class="header_item">Gift Message Slip</div>
-        <div class="header_item">Design File 1</div>
-        <div class="header_item">Design File 2</div>
-        <div class="header_item">Additional File</div>
-      </div>
-      <div class="upload_body">
-        <%= file_field_tag "shipping_label_image" %>
-        <%= file_field_tag "packing_slip_image" %>
-        <%= file_field_tag "gift_message_slip_image" %>
-        <%= file_field_tag "design_file_1_image" %>
-        <%= file_field_tag "design_file_2_image" %>
-        <%= file_field_tag "additional_file_image" %>
-        <div class="body_items">
-          <svg class="body_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M21.9 12C21.9 11.89 21.84 11.78 21.81 11.67C21.7637 11.4759 21.7036 11.2854 21.63 11.1C21.58 10.98 21.51 10.86 21.45 10.73C21.39 10.6 21.3 10.43 21.21 10.29C21.12 10.15 21 10.08 21 9.99998C21 9.91998 20.8 9.74998 20.69 9.62998C20.58 9.50998 20.48 9.42998 20.37 9.32998L20 8.99998L19.64 8.75998C19.4987 8.6735 19.3517 8.59665 19.2 8.52998L18.81 8.34998C18.6467 8.28949 18.4797 8.23939 18.31 8.19998C18.1756 8.16044 18.0386 8.13037 17.9 8.10998L17.67 7.99998C17.262 6.82103 16.4966 5.7986 15.4803 5.07494C14.4641 4.35129 13.2476 3.9624 12 3.9624C10.7524 3.9624 9.5359 4.35129 8.51967 5.07494C7.50343 5.7986 6.73804 6.82103 6.33 7.99998L6.15 8.04998C6.0114 8.07037 5.8744 8.10044 5.74 8.13998C5.57034 8.17939 5.40334 8.22949 5.24 8.28998L4.85 8.46998C4.69832 8.53665 4.55132 8.6135 4.41 8.69998L4.05 8.99998L3.68 9.30998C3.57 9.40998 3.46 9.49998 3.36 9.60998C3.26 9.71998 3.15 9.85998 3.05 9.97998C2.95 10.1 2.87 10.21 2.79 10.34C2.71 10.47 2.63 10.63 2.55 10.78C2.47 10.93 2.42 11.03 2.37 11.15C2.29644 11.3354 2.23629 11.5259 2.19 11.72C2.19 11.83 2.12 11.94 2.1 12.05C2.03776 12.3629 2.00428 12.6809 2 13C2.00469 13.3053 2.03479 13.6097 2.09 13.91C2.09 14.01 2.14 14.1 2.16 14.2C2.20943 14.3964 2.26952 14.5901 2.34 14.78L2.46 15.07C2.54803 15.2628 2.64823 15.4499 2.76 15.63L2.9 15.85C2.91439 15.878 2.93111 15.9048 2.95 15.93L3 16C3.46574 16.621 4.06966 17.125 4.76393 17.4721C5.45821 17.8193 6.22377 18 7 18H10V16.63C9.69616 16.8062 9.35126 16.8994 9 16.9C8.45825 16.8949 7.94054 16.6756 7.56 16.29C7.37729 16.101 7.23364 15.8778 7.13726 15.6332C7.04087 15.3886 6.99365 15.1275 6.9983 14.8646C7.00294 14.6018 7.05936 14.3424 7.16432 14.1014C7.26928 13.8604 7.42073 13.6424 7.61 13.46L10.61 10.56C10.9832 10.2002 11.4816 9.99945 12 9.99998C12.5296 10.0022 13.0367 10.2144 13.41 10.59L16.41 13.59C16.7825 13.9647 16.9916 14.4716 16.9916 15C16.9916 15.5284 16.7825 16.0353 16.41 16.41C16.0367 16.7856 15.5296 16.9977 15 17C14.6482 17.0033 14.3023 16.9099 14 16.73V18H17C17.7762 18 18.5418 17.8193 19.2361 17.4721C19.9303 17.125 20.5343 16.621 21 16L21.05 15.95C21.0689 15.9248 21.0856 15.898 21.1 15.87L21.24 15.65C21.3518 15.4699 21.452 15.2828 21.54 15.09L21.66 14.8C21.7305 14.6101 21.7906 14.4164 21.84 14.22C21.84 14.12 21.89 14.03 21.91 13.93C21.9663 13.6231 21.9964 13.312 22 13C21.9988 12.6642 21.9654 12.3293 21.9 12Z" fill="#212B36"/>
-            <path d="M12.71 11.29C12.5231 11.1068 12.2718 11.0041 12.01 11.0041C11.7482 11.0041 11.4969 11.1068 11.31 11.29L8.31 14.19C8.20389 14.2775 8.11699 14.386 8.05473 14.5087C7.99247 14.6314 7.95619 14.7656 7.94816 14.9029C7.94013 15.0403 7.96053 15.1778 8.00807 15.3069C8.05561 15.436 8.12928 15.5539 8.22447 15.6532C8.31965 15.7525 8.43431 15.8311 8.56126 15.8841C8.68822 15.9371 8.82474 15.9633 8.9623 15.9612C9.09985 15.959 9.23547 15.9285 9.36069 15.8715C9.4859 15.8145 9.59801 15.7323 9.69 15.63L11 14.36L11 20C11 20.2652 11.1054 20.5196 11.2929 20.7071C11.4804 20.8946 11.7348 21 12 21C12.2652 21 12.5196 20.8946 12.7071 20.7071C12.8946 20.5196 13 20.2652 13 20L13 14.41L14.29 15.71C14.383 15.8037 14.4936 15.8781 14.6154 15.9289C14.7373 15.9796 14.868 16.0058 15 16.0058C15.132 16.0058 15.2627 15.9796 15.3846 15.9289C15.5064 15.8781 15.617 15.8037 15.71 15.71C15.8037 15.617 15.8781 15.5064 15.9289 15.3846C15.9797 15.2627 16.0058 15.132 16.0058 15C16.0058 14.868 15.9797 14.7373 15.9289 14.6154C15.8781 14.4935 15.8037 14.3829 15.71 14.29L12.71 11.29Z" fill="#212B36"/>
-          </svg>
-          <span class="body_text">Upload file</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="additional_comments_wrap">
-    <div class="ship_from_wrap">
-      <div class="icon_wrap">
-        <div class="icon_text"><%= label_tag :additional_comment %></div>
-      </div>
-
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M8.11953 14.7099L11.9995 10.8299L15.8795 14.7099C16.2695 15.0999 16.8995 15.0999 17.2895 14.7099C17.6795 14.3199 17.6795 13.6899 17.2895 13.2999L12.6995 8.70994C12.3095 8.31994 11.6795 8.31994 11.2895 8.70994L6.69953 13.2999C6.30953 13.6899 6.30953 14.3199 6.69953 14.7099C7.08953 15.0899 7.72953 15.0999 8.11953 14.7099Z" fill="#212B36"/>
-      </svg>
-    </div>
-    <div class="leave_any">
-      <label>Leave any additional comments here</label>
-      <%= text_field_tag :additional_comment %>
-    </div>
-  </div>
-
-  <div class="btn_wrapper mb-5">
-    <button class="btn_wrap">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M16.62 6.20999C16.4109 6.04445 16.1444 5.96929 15.8796 6.00121C15.6148 6.03314 15.3738 6.1695 15.21 6.37999L8.21001 15.38L4.78001 11.2C4.56095 10.9084 4.20051 10.7592 3.83944 10.8106C3.47837 10.8621 3.17395 11.106 3.04503 11.4472C2.91612 11.7883 2.98318 12.1726 3.22001 12.45L7.39001 17.63C7.58064 17.865 7.86742 18.001 8.17001 18C8.49172 18.0144 8.80067 17.8729 9.00001 17.62L16.83 7.61999C16.9913 7.40592 17.0598 7.13608 17.0204 6.871C16.9809 6.60592 16.8366 6.36778 16.62 6.20999Z" fill="white"/>
-        <path d="M21.62 6.20999C21.4109 6.04445 21.1444 5.96929 20.8796 6.00121C20.6148 6.03314 20.3738 6.1695 20.21 6.37999L13.21 15.38L12.6 14.63L11.34 16.25L12.44 17.62C12.6306 17.855 12.9174 17.991 13.22 17.99C13.5243 17.9886 13.8114 17.8487 14 17.61L21.83 7.60999C21.9881 7.39659 22.0548 7.12907 22.0154 6.86643C21.976 6.6038 21.8337 6.36762 21.62 6.20999Z" fill="white"/>
-        <path d="M8.71001 13.06L10 11.44L9.80001 11.2C9.64048 10.979 9.39763 10.8327 9.12768 10.7949C8.85773 10.7571 8.58406 10.8312 8.37001 11C8.16253 11.1667 8.03005 11.4092 8.00189 11.6738C7.97374 11.9384 8.05224 12.2034 8.22001 12.41L8.71001 13.06Z" fill="white"/>
-      </svg>
-      Marked as Completed
-    </button>
-    <button class="btn_wrap dark_green"><%= submit_tag 'Marked as Completed', class: 'btn_wrap dark_green'%></button>
-    <button class="btn_wrap light_green"><%= submit_tag 'Save Order for Later', class: 'btn_wrap light_green'%></button>
-  </div>
-<%end%>
- -->

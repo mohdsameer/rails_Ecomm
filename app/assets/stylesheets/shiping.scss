@@ -231,22 +231,22 @@
 
           .later_btn {
             display: flex;
-            padding: 1.14vw 1.273vw;
             justify-content: center;
             align-items: center;
             gap: 0.463vw;
             border-radius: 0.463vw;
             background: #C8FACD;
-            width: 8.333vw;
+            width: 10.333vw;
             color: #212B36;
             font-size: 0.868vw;
             font-weight: 700;
             line-height: 0.868vw;
             border: none;
+            height: 2.778vw;
           }
 
           .submit_btn {
-            width: 25.463vw;
+            width: 23.463vw;
             display: flex;
             padding: 0.637vw 1.273vw;
             justify-content: center;
@@ -259,6 +259,7 @@
             font-size: 0.926vw;
             font-weight: 600;
             line-height: 1.389vw;
+            height: 2.778vw;
 
             .btn_icon {
               width: 1.389vw;

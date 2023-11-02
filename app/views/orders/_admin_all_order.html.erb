@@ -46,9 +46,16 @@
               <div class="order_td eight">
                 <div class="order_priority_icon">
                   <% if order.assign_details.present? %>
-                    <div><%=order.assignee_name%></div>
+                    <div class="icon_with_name">
+                      <%=order.assignee_name%>
+                      <%= image_tag "complete", alt:"icon", class:"complete_icon" %>  
+                    </div>
                   <%else%>
-                    <div><%= link_to 'Assignee',assignee_order_path(order), data: {turbo_frame: "assigne-order-modal"}%></div>
+                    <div class="icon_with_name not_assign">
+                      <%= link_to 'Assignee',assignee_order_path(order), data: {turbo_frame: "assigne-order-modal"}%>
+                      <%= image_tag "ic_user_group", alt:"icon", class:"complete_icon" %>  
+                        
+                      </div>
                   <%end%>
                 </div>
               </div>

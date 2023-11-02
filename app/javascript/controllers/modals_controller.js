@@ -161,6 +161,12 @@ export default class extends Controller {
       $(".remove_assign_model").hide();
     });
 
+    // hide assing popup with calender
+
+    $(".close_icon").click(function(){
+      $(".assign_order_pop_model").hide();
+    });
+
     // all_producer pop model
 
     $('.close_icon').click(function() {
