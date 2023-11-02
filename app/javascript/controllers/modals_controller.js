@@ -10,6 +10,7 @@ export default class extends Controller {
 
     // confirm order js
 
+    $('.select_pop_wrap_model').hide();
     $(`#${this.modalIdValue}`).show();
 
     $( ".order_confirm" ).each(function(index) {
@@ -164,6 +165,14 @@ export default class extends Controller {
 
     $('.close_icon').click(function() {
       $('.select_pop_wrap_model').hide();
+    });
+
+    $( ".all_producer_model" ).each(function(index) {
+      $(this).on("click", function(){
+        var dataId = $(this).attr('data-id');
+        $('.OrderID').text(dataId);
+        $('.select_pop_wrap_model').show();
+      });
     });
 
     $('#close_status_popup').click(function() {

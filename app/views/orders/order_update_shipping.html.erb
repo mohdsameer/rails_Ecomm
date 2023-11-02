@@ -1,0 +1,14 @@
+<turbo-frame id="order-success-popup-modal" class="h-100">
+	<div class="order_success_pop_model"  id="order_success_pop" data-controller="modals" data-modals-modal-id-value="order_success_pop">
+		<div class="order_success_pop_wrapper">
+		  <div class="order_success_pop">
+		    <div class="pop_head">Order is Successfully Submitted for Production</div>
+		    <%= image_tag "order_complete", alt:"image_icon", class:"pop_img" %>
+		    <a href="<%= orders_path %>" data-turbo-frame="_top" class="back_btn">
+		      <%= image_tag "white_arrow", alt:"icon", class:"arrow_icon" %>
+		      Back to Orders
+		    </a>
+		  </div>  
+		</div>
+	</div>
+</turbo-frame>

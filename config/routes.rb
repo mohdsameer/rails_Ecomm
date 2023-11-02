@@ -38,6 +38,8 @@ Rails.application.routes.draw do
       get :update_priority
       get :request_revision
       patch :request_revision_update
+      post :create_address
+      post :order_update_shipping
     end
     collection do
       get :add_new_product

@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: [:send_message, :update_cancel_status ,:message_create, :update ,:edit, :destroy, :assignee, :assignee_create, :on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup, :assignee_remove_confirmation, :create_cancel_request , :new_cancel_request, :update_priority ,:request_revision, :request_revision_update]
+  before_action :find_order, only: [:send_message, :update_cancel_status ,:message_create, :update ,:edit, :destroy, :assignee, :assignee_create, :on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup, :assignee_remove_confirmation, :create_cancel_request , :new_cancel_request, :update_priority ,:request_revision, :request_revision_update, :create_address, :order_update_shipping]
 
   def index
     per_page = params[:per_page] || 20
@@ -32,14 +32,16 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new
     @products = Product.all
+    @shipping_methods = ShippingMethod.all
   end
 
   def create
-    if params[:commit] == "Save Order for Later"
-      params[:order_edit_status] = 0
-    else
+    if params[:submit_type].eql?('mark_complete')
       params[:order_edit_status] = 1
+    else
+      params[:order_edit_status] = 0
     end
+
     if params[:variants].present?
       @order = Order.create(order_params)
       @order.shipping_label_image.attach(params[:shipping_label_image])
@@ -51,15 +53,49 @@ class OrdersController < ApplicationController
       @order.front_side_image.attach(params[:front_side_image])
       @order.back_side_image.attach(params[:back_side_image])
     end
-
     params[:variants].each do |id, quantity|
       if quantity.to_i > 0
         product_id = Variant.find(id).product
         @order.order_products.create(variant_id: id.to_i, product_quantity: quantity.to_i,product_id: product_id.id)
-        @order.create_address(fullname: params[:full_name], lastname: params[:last_name], email: params[:email], country: params[:country], state: params[:state], address1: params[:address1], address2: params[:address2], city: params[:city], zipcode: params[:zip])
       end
     end
-    redirect_to orders_path, notice: 'order was successfully created.'
+
+    respond_to do |format|
+      format.turbo_stream do
+        if params[:submit_type].eql?('shipping')
+          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
+        else
+          redirect_to orders_path
+        end
+      end
+      format.html { redirect_to orders_path }
+    end
+  end
+
+  def create_address
+    @order.create_address(address_params)
+    @shipping_methods = ShippingMethod.all
+    @order = Order.find_by(id: params[:id])
+    @address = @order.address
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, shipping_methods: @shipping_methods, address: @address })
+      end
+    end
+  end
+
+
+  def order_update_shipping
+    shipping_method_id = params[:shipping_method_id]
+    order_edit_status = params[:commit] == "Save Later" ? 0 : 1
+    priority = params[:priority].present? ? 1 : 0
+    order_status = order_edit_status == 1 ? 2 : 0
+
+    @order.update(shipping_method_id: shipping_method_id, order_edit_status: order_edit_status, priority: priority, order_status: order_status)
+
+    if params[:submit_type].eql?('save_later')
+      redirect_to orders_path
+    end
   end
 
   def confirm
@@ -76,7 +112,7 @@ class OrdersController < ApplicationController
                else
                  Message.new(from: current_user.id, to: @order.producer.id)
                end
-      @user = User.find_by(id: @message.to)
+    @user = User.find_by(id: @message.to)
   end
 
   def message_create
@@ -146,7 +182,8 @@ class OrdersController < ApplicationController
   end
 
   def select_variant
-    @variants = Product.find_by(id: params[:product_id]).variants
+    @product = Product.find_by(id: params[:product_id])
+    @variants = @product.variants
   end
 
   def all_producer
@@ -222,6 +259,19 @@ class OrdersController < ApplicationController
                   :back_side_image,
                   :user_id)
   end
+
+  def address_params
+    params.permit(:fullname,
+                  :num,
+                  :email,
+                  :country,
+                  :state,
+                  :address1,
+                  :address2,
+                  :city,
+                  :zipcode)
+  end
+
   def message_params
     params.require(:message).permit(:review_message, :from, :to)
   end

@@ -1,0 +1,138 @@
+<turbo-frame id="order-form-content" data-controller="order-form">
+  <%= form_tag order_update_shipping_order_path(order), method: :post,  multipart: true, id: 'regForm', class: 'product_form',  data: { 'order-form-target': 'form' } do %>
+    <div class="tab" id="step3">
+      <div class="choose_shiping_wrapper">
+        <div class="shiping_info_wrap">
+          <div class="shiping_head"></div>
+          <div class="shiping_details_wrap">
+            <div class="method_wrap">
+              <div class="method_section">
+                <div class="method_head">Shipping Method</div>
+                <!-- <div class="method_flash"> 
+                  <%#= image_tag "yello_ic_info", alt:"icon", class:"flash_icon" %>
+                  Customer Choose USPS Priority Shipping
+                </div> -->
+                <% shipping_methods.each do |sm|  %>
+                  <div class="method_list">
+                    <input type="radio" name="shipping_method_id" value="<%= sm.id %>" data-order-form-target="shippingCostInput" data-price="<%= sm.price %>">
+                    <%#= radio_button_tag 'shipping_method_id', sm.id, 'data-order-form-target': "shippingCostInput", 'data-price': sm.price %>
+                    <div class="list_item"><%= sm.name%></div>
+                    <div class="list_item"><%= sm.partner%></div>
+                    <div class="list_item"><%= (Date.today - sm.min_date).to_i %> <%= (Date.today - sm.max_date).to_i %> days </div>
+                    <div class="list_item">USD <%= sm.price %></div>
+                  </div>
+                <%end%>
+              </div>
+
+              <div class="selected_wrap">
+                <div class="selected_head">
+<!--                   <div class="left_items">
+                    <%= image_tag "cart", alt:"icon", class:"left_icon" %>
+                    <div class="left_text">Products selected</div>
+                    <sup class="top_text">(4 item)</sup>
+                  </div> -->
+                  <a class="edit_link" href="#">Edit</a>
+                </div>
+                <% sum_result = 0 %>
+                <% @order.order_products.each do |order_product| %>
+                  <div class="info_left_section">
+                    <div class="left_sku"><%= order_product.product.brand_name %></div>
+                    <div class="left_head"><%= order_product.product.name%></div>
+                    <div class="text_with_img_section">
+                      <div class="text_section">
+                        <div class="text">Quantity: <span><%= order_product.product_quantity%></span></div>
+                        <div class="text">Color: <span><%= order_product.variant.color%></span></div>
+                        <div class="text">Size: <span><%= order_product.variant.size%> OZ</span></div>
+                        <div class="text">Ships From: <span><%= order_product.order.producer.name %></span></div>
+                      </div>
+                      <div class="img_section">
+                        <%= display_image(order_product.order.front_side_image, "trans_frame") %>
+                        <%= display_image(order_product.order.back_side_image, "trans_frame") %>
+                        <%= display_image(order_product.variant.image, "trans_frame") %>
+                      </div>
+                    </div>
+                    <div class="cost_section">
+                      <div>Production costs</div>
+                      <% record = order_product.product.product_producer_pricings.find_by(user_id: @order.producer.id) %>
+                      <% cost = (record.front_side_print_price + record.back_side_print_price)*order_product.product_quantity%>
+                      <% sum_result += cost %>
+                      <div>USD <%= cost %></div>
+                    </div>
+                  </div>
+                <%end%>
+              </div>
+            </div>
+
+            <div class="customer_wrap">
+              <div class="info_right_section">
+                <div class="buyer_info_section">
+                  <div class="buyer_mail">
+                    <div class="buyer_head">Customer</div>
+                    <div class="buyer_edit">
+                      <div class="buyer_text">
+                        <span><%= address.fullname%></span>
+                        <span><%= address.email%></span>
+                        <span><%= address.num%></span>
+                      </div>
+                      <a class="edit_link" href="#">Edit</a>
+                    </div>
+                  </div>
+                  <div class="buyer_mail">
+                    <div class="buyer_head">Shipping Address</div>
+                    <div class="buyer_edit">
+                      <div class="buyer_text">
+                        <span><%= address.address1%></span>
+                        <span><%= address.address2%>,</span>
+                        <span><%= address.city%>,</span>
+                        <span><%= address.zipcode%></span>
+                      </div>
+                      <a class="edit_link" href="#">Edit</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="billing_section">
+                  <div class="billing_head">Billing</div>
+                  <div class="billing_info">
+                    <div class="left_text">
+                      <div>Production Cost:</div>
+                      <div>Shipping Cost:</div>
+                      <div class="fw-bold">Total Cost:</div>
+                    </div>
+                    <div class="right_text">
+                      <div>USD <span data-order-form-target="producerPrice" data-price="<%= sum_result %>"><%= sum_result %></span></div>
+                      <div>USD <span data-order-form-target="shippingCostText"></span></div>
+                      <div class="fw-bold">USD <span data-order-form-target="totalPriceText"></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="urgent_section">
+                <%= check_box_tag "priority", true  %>
+                <div class="urgent_text">MARK ORDER AS URGENT</div>
+              </div>
+
+              <%= hidden_field_tag :submit_type, '', data: { 'order-form-target': 'submitType' } %>
+
+              <div class="btn_wrap">
+                <button class="later_btn">
+                  <%= link_to 'Save Order for Later', 'javascript:;', class: 'later_btn', data: { 'order-form-target': 'saveLater' } %>
+                  <%#= submit_tag 'Save Later', class: 'later_btn'%>
+                </button>
+
+                <button class="submit_btn">
+                  <%#= submit_tag 'Marked as Completed', class: 'submit_btn'%>
+                  <%= link_to 'Marked as Completed', 'javascript:;', class: 'submit_btn', data: { 'order-form-target': 'markComplete' } %>
+                  <%= image_tag "endicon", alt:"icon", class:"btn_icon" %>
+                </button>
+
+                <%= submit_tag 'submit', data: { 'order-form-target': 'submit' }, style: 'display:none;' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</turbo-frame>

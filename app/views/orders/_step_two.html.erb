@@ -1,0 +1,50 @@
+<turbo-frame id="order-form-content">
+  <%= form_tag create_address_order_path(order), method: :post,  multipart: true, id: 'regForm', class: 'product_form' do %>
+    <div class="tab" id="step2">
+      <div class="shipping_pop_wrap">
+        <div class="shiping_form">
+          <div class="ship_head">Recipient</div>
+          <div class="input_group">
+            <%= text_field_tag :fullname, '', class: "input_field", placeholder: "Full Name"%>
+            <%= text_field_tag :num, '', class: "input_field", placeholder: "Mobile No."%>
+          </div>
+          <div class="input_group" >
+            <%= text_field_tag :email, '', class: "input_field big_size", placeholder: "Email"%>
+          </div>
+          <div class="input_group">
+            <select class="input_field" 
+                    name="country">
+
+              <option value= ""selected>Country</option>
+              <option value="United States">United States</option>
+              <option value="Australia">Australia</option>
+              <option value="Canada">Canada</option>
+              <option value="China">China</option>
+              <option value="India">India</option>
+            </select>
+            <select class="input_field" 
+                    name= "state">
+
+              <option value="" selected>State</option>
+              <option value="Michigan">Michigan</option>
+              <option value="Oklahoma">Oklahoma</option>
+              <option value="Delaware">Delaware</option>
+              <option value="Maryland">Maryland</option>
+              <option value="Delhi">Delhi</option>
+            </select>
+          </div>
+            <%= text_field_tag :address1, '', class: "input_field big_size", placeholder: "address1"%>
+            <%= text_field_tag :address2, '', class: "input_field big_size", placeholder: "address2"%>
+          <div class="input_group">
+            <%= text_field_tag :city, '', class: "input_field", placeholder: "City"%>
+            <%= text_field_tag :zipcode, '', class: "input_field", placeholder: "zipcode"%>
+          </div>
+          <button class="calulate_btn">
+            <%= submit_tag 'Calculate Shipping', class: 'calulate_btn'%>
+            <%= image_tag "endicon", alt:"icon", class:"icon" %>
+          </button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</turbo-frame>

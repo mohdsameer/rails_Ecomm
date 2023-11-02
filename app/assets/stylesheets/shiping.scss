@@ -350,3 +350,73 @@
 }
 
 //** admin inventories export css end **//
+
+
+
+.order_success_pop_model {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  .order_success_pop_wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .order_success_pop {
+      width: 48.611vw;
+      height: 35.764vw;
+      padding: 7.176vw 3.588vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.984vw;
+      border: 1.042vw solid #D6E4FF;
+      background: #FFF;
+
+      .pop_head {
+        color: #212B36;
+        font-size: 1.620vw;
+        font-weight: 700;
+        line-height: 2.778vw;
+      }
+
+      .pop_img {
+        width: 18.519vw;
+        height: 13.889vw;
+      }
+
+      .back_btn {
+        display: flex;
+        padding: 0.637vw 1.273vw;
+        justify-content: center;
+        align-items: center;
+        gap: 0.463vw;
+        border-radius: 0.463vw;
+        background: #00AB55;
+        width: 32.407vw;
+        height: 2.778vw;
+        border: none;
+        color: #FFF;
+        font-size: 0.868vw;
+        font-weight: 700;
+        line-height: 1.505vw;
+        text-decoration: none;  
+
+        .arrow_icon {
+          width: 1.389vw;
+          height: 1.389vw;
+        }
+      }
+    }
+  }
+}
