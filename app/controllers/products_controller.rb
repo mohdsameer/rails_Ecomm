@@ -20,6 +20,7 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
+    4.times { @product.shipping_labels.build }
     @producers = Producer.all
     @product_producer_pricing = ProductProducerPricing.new
   end
@@ -77,7 +78,7 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :brand_name, :print_area_width, :print_area_height, :image, variants_attributes: [:color, :size, :real_variant_sku, :image, :inventory, :length, :height, :width, :weight_lb, :weight_oz], product_producer_pricing_attributes: [:id, :blank_price, :front_side_print_price, :back_side_print_price, :user_id, :product_id])
+    params.require(:product).permit(:name, :brand_name, :print_area_width, :print_area_height, :image, variants_attributes: [:color, :size, :real_variant_sku, :image, :inventory, :length, :height, :width, :weight_lb, :weight_oz], product_producer_pricing_attributes: [:id, :blank_price, :front_side_print_price, :back_side_print_price, :user_id, :product_id], shipping_labels_attributes: [:item_quantity_min, :item_quantity_max, :length, :height, :width, :weight_lb, :weight_oz])
   end
 
   def product_producer_params

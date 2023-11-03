@@ -1645,7 +1645,8 @@ a {
 
           .content_item {
             padding: 0.926vw 0.463vw;
-            width: 11.574vw;
+            // width: 11.574vw;
+            width: 19.229vw;
             color: #212B36;
             font-size: 0.694vw;
             font-weight: 400;
@@ -1653,6 +1654,95 @@ a {
             text-align: center;
             background: #F4F6F8;
             border-right: 0.116vw solid black;
+
+            &.two_item {
+              // width: 18.229vw;
+              width: 25.229vw;
+
+            }
+
+            .confirm_btn {
+              width: 4.977vw;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 2.083vw;
+              border-radius: 0.463vw;
+              border: 1px solid rgba(0, 171, 85, 0.48);
+              color: #00AB55;
+              font-size: 0.810vw;
+              font-weight: 700;
+            }
+
+          .input_group_wrap {
+            display: flex;
+            gap: 0.579vw;
+            justify-content: center;
+
+            .input_group {
+              width: 4.803vw;
+              height: 2.604vw;
+              border-radius: 0.463vw;
+              border: 1px solid rgba(145, 158, 171, 0.32);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 0 0.289vw;
+              position: relative;
+
+              &.min_max_input {
+                width: 4.613vw;
+                display: flex;
+                padding: 0.926vw 0.81vw;
+                justify-content: center;
+                align-items: center;
+                gap: 0.463vw;
+                border-radius: 0.463vw;
+                border: 0.058vw solid rgba(145, 158, 171, 0.32);
+                margin: auto;
+                color: #637381;
+                text-align: center;
+                font-size: 0.694vw;
+                font-weight: 400;
+                line-height: 1.042vw;
+              }
+
+              .group_label {
+                position: absolute;
+                color: #919EAB;
+                font-size: 0.694vw;
+                background: #fff;
+                font-weight: 400;
+                line-height: 0.694vw;
+                top: -5px;
+                left: 6px;
+                padding: 0 3px;
+              }
+
+              .input_row {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 0.463vw;
+
+                .row_label {
+                  color: #637381;
+                  font-size: 0.926vw;
+                  font-weight: 400;
+                  line-height: 1.389vw;
+                }
+
+                .item_input {
+                  width: 2.199vw;
+                  border: none;
+                  text-align: center;
+                  font-size: 0.926vw;
+                  font-weight: 400;
+                  line-height: 1.389vw;
+                }
+              }
+            }
+          }
 
             input {
               &:focus {

@@ -1,21 +1,25 @@
 <div class="hero_wrapper">
-
   <%= render partial: 'shared/sidebar' %>
+
   <div class="new_product_wrap">
     <div class="product_header">
       <svg class="search_icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M14.425 13.25L17.2583 16.075C17.4161 16.2315 17.5048 16.4445 17.5048 16.6667C17.5048 16.8889 17.4161 17.1019 17.2583 17.2583C17.1019 17.4161 16.8889 17.5048 16.6667 17.5048C16.4445 17.5048 16.2315 17.4161 16.075 17.2583L13.25 14.425C12.0854 15.3392 10.6472 15.8352 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667C15.8352 10.6472 15.3392 12.0854 14.425 13.25ZM9.16667 4.16667C6.40524 4.16667 4.16667 6.40524 4.16667 9.16667C4.16667 11.9281 6.40524 14.1667 9.16667 14.1667C11.9281 14.1667 14.1667 11.9281 14.1667 9.16667C14.1667 6.40524 11.9281 4.16667 9.16667 4.16667Z" fill="#637381"/>
       </svg>
+
       <div class="icon_group">
         <div class="flag"><%= image_tag("GB") %></div>
+
         <div class="create_bell_box">
           <%= image_tag "ic_notifications", alt: 'icon', class: "create_bell_icon" %>
           <div class="create_notification">1</div>
         </div>
+
         <%= image_tag "ic_user_group", alt:"image", class:"user_icon" %>
         <%= image_tag "Img_Avatar", alt:"image", class: "user_icon" %>
       </div>
     </div>
+
     <h5 class="new_head">Create a new product</h5>
 
     <div class="export_btn">
@@ -113,9 +117,106 @@
         </div>
       </div>
 
-    <div class="bottom_btn_group">
+      <div class="product_print_section">
+        <h5 class="print_head">Shipping Label Dimensions & Weight</h5>
+
+        <div class="print_table">
+          <div class="print_content">
+            <div class="content_item">Item Quantity</div>
+            <div class="content_item two_item">Shipping Package Dimensions</div>
+            <div class="content_item">Shipping Package Weight</div>
+            <div class="content_item one"></div>
+            <div class="content_item two border-0">Edit</div>
+          </div>
+
+          <%= f.fields_for :shipping_labels do |shipping_label| %>
+            <div class="print_content">
+              <div class="content_item white_bg border-0">
+                <div class="input_group_wrap">
+                  <div class="input_group min_max_input">
+                    <div class="group_label">Min</div>
+                    <div class="input_row">
+                      <%= shipping_label.number_field :item_quantity_min, class: 'item_input', placeholder: 'xx' %>
+                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
+                    </div>
+                  </div>
+
+                  <div class="input_group min_max_input">
+                    <div class="group_label">Max</div>
+                    <div class="input_row">
+                      <%= shipping_label.number_field :item_quantity_max, class: 'item_input', placeholder: 'xx' %>
+                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
+                    </div>
+                  </div>                
+                </div>
+              </div>
+
+              <div class="content_item white_bg border-0 two_item">
+                <div class="input_group_wrap">
+                  <div class="input_group">
+                    <div class="group_label">Length</div>
+                    <div class="input_row">
+                      <div class="row_label">in</div>
+                      <%= shipping_label.number_field :length, class: 'item_input', placeholder: 'xx' %>
+                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
+                    </div>
+                  </div>
+
+                  <div class="input_group">
+                    <div class="group_label">Height</div>
+                    <div class="input_row">
+                      <div class="row_label">in</div>
+                      <%= shipping_label.number_field :height, class: 'item_input', placeholder: 'xx' %>
+                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
+                    </div>
+                  </div>
+
+                  <div class="input_group">
+                    <div class="group_label">Width</div>
+                    <div class="input_row">
+                      <div class="row_label">in</div>
+                      <%= shipping_label.number_field :width, class: 'item_input', placeholder: 'xx' %>
+                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content_item white_bg border-0">
+                <div class="input_group_wrap">
+                  <div class="input_group">
+                    <div class="group_label">Weight</div>
+                    <div class="input_row">
+                      <div class="row_label">lb</div>
+                      <%= shipping_label.number_field :weight_lb, class: 'item_input', placeholder: 'xx' %>
+                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
+                    </div>
+                  </div>
+
+                  <div class="input_group">
+                    <div class="group_label">Weight</div>
+                    <div class="input_row">
+                      <div class="row_label">oz</div>
+                      <%= shipping_label.number_field :weight_oz, class: 'item_input', placeholder: 'xx' %>
+                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content_item white_bg border-0 one"></div>
+
+              <!-- <div class="content_item white_bg border-0 two border-0">
+                <%#= link_to 'Confirm', 'javascript:;', class: 'confirm_btn' %>  
+              </div> -->
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="bottom_btn_group">
         <%= button_tag 'Cancel', class: "cancel_btn", type: "button", onclick: "window.location.href = '#{products_path}'" %>
         <%= f.submit 'Save', class: "save_btn" %>
-    </div>
+      </div>
     <% end %>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_03_055634) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_03_092517) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -141,6 +141,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_055634) do
     t.datetime "updated_at", null: false
     t.string "cancel_reason"
     t.index ["order_id"], name: "index_requests_on_order_id"
+  end
+
+  create_table "shipping_labels", force: :cascade do |t|
+    t.bigint "product_id"
+    t.integer "item_quantity_min"
+    t.integer "item_quantity_max"
+    t.decimal "length"
+    t.decimal "height"
+    t.decimal "width"
+    t.decimal "weight_lb"
+    t.decimal "weight_oz"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_shipping_labels_on_product_id"
   end
 
   create_table "shipping_methods", force: :cascade do |t|
