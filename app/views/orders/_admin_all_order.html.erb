@@ -145,7 +145,6 @@
                               <%= image_tag "flash", alt:"icon", class:"icon" %>
                               <div class="content_text">Mark Order as Urgent</div>
                             </a>
-                           <!--  <a href="#" class="status_content"> -->
                             <%= link_to send_message_order_path(order), class: 'status_content', data: {turbo_frame: "send-message-order-modal"} do %>
                               <%= image_tag "ic_chat", alt:"icon", class:"icon" %>
                               <div class="content_text">Add Additional Comment</div>
@@ -226,3 +225,11 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $('.drop_icon_box').on('click', function() {
+    var dropdownContent = $(this).closest('.tbody_row').find('.menu_drop')
+    $('.menu_drop').not(dropdownContent).hide();
+    dropdownContent.toggle();
+  });
+</script>

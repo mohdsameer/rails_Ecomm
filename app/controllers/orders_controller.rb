@@ -145,6 +145,7 @@ class OrdersController < ApplicationController
       else
         params[:order_edit_status] = 0
       end
+
       @order.update(order_edit_status: params[:order_edit_status])
       respond_to do |format|
         format.turbo_stream do
