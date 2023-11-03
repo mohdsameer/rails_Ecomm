@@ -1022,6 +1022,11 @@ a {
           align-self: stretch;
           position: relative;
 
+          .uploaded-image {
+            height: 100%;
+            width: 100%;
+          }
+
           .file_type {
             height: 100%;
             position: absolute;

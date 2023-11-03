@@ -55,13 +55,32 @@
                   </div>
                 </div>
                 <div class="order_td three"><%= order.order_products.pluck(:product_quantity).sum %></div>
-                <div class="order_td four">$<%= order.price %></div>
+
+                <% ops = order.order_products %>
+                <% sum_result = 0 %>
+                <% ops. each do |op|%>
+                  <% record = op.product.product_producer_pricings.find_by(user_id: order.producer.id) %>
+                  <% cost = (record.front_side_print_price + record.back_side_print_price)* op.product_quantity%>
+                  <% sum_result += cost %>
+                <%end%>
+
+                <div class="order_td four">$<%= sum_result %></div>
                 <div class="order_td five"><%= order.customer_name %></div>
                 <!-- TODO this part currently static  -->
                 <div class="order_td six">
                   <div class="order_status_icon">
                     <div>
-                      <%= order.order_status %>
+                      <% if order.order_status == "inproduction"%>
+                        In Production
+                      <% elsif order.order_status == "onhold"%>
+                        On Hold
+                      <% elsif order.order_status == "rejected"%>
+                        Rejected 
+                      <% elsif order.order_status == "fullfilled"%>
+                        Fullfilled
+                      <%else%>
+                        Cancel
+                      <%end%>
                     </div>
                   </div>
                 </div>

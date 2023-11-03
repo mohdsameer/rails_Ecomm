@@ -14,9 +14,8 @@
           </div>
 
           <div class="content_text">Available Products</div>
-
           <div class="scroll_section" data-search-target="results">
-            <%= render 'products_search_result', products: @products %>
+            <%= render 'products_search_result', products: @products, order: @order %>
           </div>
         </div>
       </div>

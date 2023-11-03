@@ -9,8 +9,6 @@
         </div>
         <%= form_for @assigne, url: assignee_create_order_path(@order) do |a| %>
           <div class="check_list">
-            <!-- <input class="radio_input" type="radio"> -->
-            <!-- <span>jack</span> -->
             <%= a.collection_radio_buttons(:designer, @designers, :id, :name) do |b| %>
                       <%= b.label { b.radio_button + b.text } %>
             <% end %>
@@ -20,7 +18,6 @@
             <div class="input_box">
               <label class="label_top">Price per design(optional)</label>
               <div class="input_text">
-                <!-- $<input type="text" placeholder="2"> -->
                 $<%= a.number_field :price_per_design %>
               </div>
             </div>
@@ -30,7 +27,6 @@
             <div class="input_box">
               <label class="label_top">Price for Total Job(optional)</label>
               <div class="input_text">
-                <!-- $<input type="text" placeholder="2"> -->
                 $<%= a.number_field :price_for_total %>
               </div>
             </div>
@@ -51,12 +47,10 @@
               <div class="input_box">
                 <label class="label_top">Leave any additional comments here</label>
                 <div class="input_text">
-                  <!-- <input type="text" placeholder="Priority Order -  Please complete the job asap! Thanks."> -->
                   <%= a.text_field :additional_comment, placeholder: "Priority Order -  Please complete the job asap! Thanks." %>
                 </div>
               </div>
             </div>
-          <!-- <button class="submit_btn">Submit</button> -->
           <%= a.submit 'Submit', class: 'submit_btn' %>
         <%end%>
         </div>
@@ -65,36 +59,3 @@
   </div>
 
 </turbo-frame>
-
-
-
-
-
-
-
-<!-- <h1>Assign order to </h1>
-
-<%#= form_for @assigne, url: assignee_create_order_path(@order) do |a| %>
-  <table class="producers_table">
-    <tr>
-      <th class="table_head">Name</th>
-    </tr>
-    <tr>
-      <td class="table_td">
-        <%#= a.collection_select(:designer, @designers, :id, :name, { prompt: 'Select Designer' }, class: 'form-control') %>
-      </td>
-    </tr>
-  </table>
-  <%#= a.date_field :due_date %>
-
-  <%#= a.label :Price_per_design %>
-  <%#= a.number_field :price_per_design %>
-
-  <%#= a.label :price_for_total %>
-  <%#= a.number_field :price_for_total %>
-
-  <%#= a.label :additional_comment %>
-  <%#= a.text_field :additional_comment %>
-
-  <%#= a.submit 'Submit', class: 'btn btn-primary' %>
-<%# end %> -->

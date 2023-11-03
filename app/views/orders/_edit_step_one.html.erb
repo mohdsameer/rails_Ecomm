@@ -17,8 +17,8 @@
 
           <%= image_tag 'ic_expand_more.png', alt: 'icon', class: 'toggle_icon' %>
         </div>
-        <div class="collapse_data">
-          <% order.order_products.each do |order_product| %>
+        <div class="collapse_data" data-controller="quantity" >
+          <% order.order_products.each do |order_product|%>
             <input type="hidden" name="variant" class="variantId" id="<%= order_product.variant.id %>">
             <div class="content_container">
               <div class="left_wrap">
@@ -34,13 +34,19 @@
                         <% end %>
                       </div>
                       <div class="btn_wrap">
-                        <div class="outline_btn"><%= order_product.variant.color%></div>
+                        <div class="outline_btn"><%= order_product.variant.color %></div>
                         <div class="plus_minus_wrap">
-                          <%= hidden_field_tag "variants[#{order_product.variant.id}]", 0, class: "quantity_input qty", maxlength: "12", value: "0" %>
-                          <span class="qty_num" id="qty_num_<%= order_product.variant.id %>"><%=order_product.product_quantity%></span>
+                          <%= hidden_field_tag "variants[#{order_product.variant.id}]", order_product.product_quantity.to_i, class: "quantity_input qty", id: "quantity-input-#{order_product.id}", data: { 'quantity-target': 'quantityInput' } %>
+                          <span class="qty_num" data-quantity-target="quantityText" id="qty_num_<%= order_product.id %>">
+                            <% if order_product.product_quantity.present?%>
+                              <%= order_product.product_quantity %>
+                            <% else %>
+                              0
+                            <%end%>
+                          </span>
                           <div class="button-container">
-                            <button class="cart-qty-minus" type="button" value="-">-</button>
-                            <button class="cart-qty-plus" type="button" value="+">+</button>
+                            <button class="cart-qty-minus" type="button" value="-" data-quantity-target="decrement" data-item-id="<%= order_product.id %>">-</button>
+                            <button class="cart-qty-plus" type="button" value="+" data-quantity-target="increment" data-item-id="<%= order_product.id %>">+</button>
                           </div>
                         </div>
                       </div>

@@ -22,6 +22,7 @@
           </div>
         </div>
         <div class="create_date"><%= @order.order_date_with_time%></div>
+        <% sum_result = 0 %>
         <div class="order_info_section">
           <div class="left_section">
             <% @order_products.each do |order_product|%>  
@@ -43,7 +44,10 @@
                 </div>
                 <div class="cost_section">
                   <div>Production costs</div>
-                  <div>USD 10.00</div>
+                    <% record = order_product.product.product_producer_pricings.find_by(user_id: @order.producer.id) %>
+                    <% cost = (record.front_side_print_price + record.back_side_print_price)* order_product.product_quantity%>
+                    <% sum_result += cost %>
+                  <div>USD <%= cost %></div>
                 </div>
                 <div class="cost_section small">
                   <div>Tracking details</div>
@@ -76,9 +80,14 @@
                   <div class="fw-bold">Total Cost:</div>
                 </div>
                 <div class="right_text">
-                  <div>USD 20.00</div>
-                  <div>USD 10.00</div>
-                  <div class="fw-bold">USD 30.00</div>
+                  <div>USD <%= sum_result %></div>
+                  <% if @shipping_price.present?%>
+                    <div>USD <%= @shipping_price.price%></div>
+                    <div class="fw-bold">USD <%= sum_result + @shipping_price.price %></div>
+                  <%else%>
+                    <div>-</div>
+                  <%end%>
+                  <div class="fw-bold">USD <%= sum_result %></div>
                 </div>
               </div>
             </div>

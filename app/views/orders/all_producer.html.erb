@@ -17,7 +17,11 @@
                   </div>
                   <label class="image_label">LASER ENGRAVING</label>
                 </div>
-                <div class="choose_btn"><%= link_to 'Choose', new_order_path(producer_id: producer.id), data: { 'turbo-frame': '_top' } %></div>
+                <% if params[:order].present? %>
+                    <div class="choose_btn"><%= link_to 'Choose', new_order_product_order_path(id: params[:order], product: params[:product], variant: params[:variant], producer_id: producer.id), data: { 'turbo-frame': '_top' } %></div>
+                <%else%>
+                  <div class="choose_btn"><%= link_to 'Choose', new_order_path(producer_id: producer.id), data: { 'turbo-frame': '_top' } %></div>
+                <%end%>
               </div>
             <%end%>
           </div>

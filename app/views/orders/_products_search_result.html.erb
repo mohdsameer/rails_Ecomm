@@ -8,8 +8,7 @@
       <% end %>
       <%= product.name %>
     </div>
-
-    <a href="<%= select_variant_orders_path(product_id: product) %>" data-turbo-frame="add-new-product-order-modal" class= "choose_pro_link">
+    <a href="<%= select_variant_orders_path(product_id: product, order_id: params[:order]) %>" data-turbo-frame="add-new-product-order-modal" class= "choose_pro_link">
       <%= image_tag "right_arrow", alt:"icon", class:"rigth_arrow" %>
     </a>
   </div>

@@ -22,9 +22,8 @@
             <%= image_tag "Divider", alt:"icon", class:"devider_icon" %>
             <span><%= @product.name %></span>
           </div>
-
           <div class="scroll_section" data-search-target="results">
-            <%= render 'variants_list', variants: @variants %>
+            <%= render 'variants_list', variants: @variants, product: @product, order: @order %>
           </div>
 
           <div class="back_to_btn_section">

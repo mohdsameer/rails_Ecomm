@@ -30,10 +30,14 @@
     <%= form_for @product, url: product_path(@product), method: :patch, html: { multipart: true } do |f| %>
       <div class="group_info_section">
         <div class="image_info">
-          <%= image_tag("illustration_upload", class:"info_img") %>
           <div class="info_content">
+            <% if f.object.image.attached? %>
+                <%= image_tag f.object.image, class: "uploaded-image" %>
+            <%else%>
+              <%= image_tag("illustration_upload", class:"info_img") %>
+              <h5 class="info_head">Main Product Image</h5>
+            <% end %>
             <%= f.file_field :image, class:"file_type" %>
-            <h5 class="info_head">Main Product Image</h5>
             <a class="info_link" href="#">Drop files here or click <span>browse</span> thorough your machine</a>
           </div>
         </div>

@@ -9,8 +9,7 @@
       <% end %>
       <%= variant.color %>
     </div>
-
-    <a href="<%= all_producer_orders_path %>" data-turbo-frame="all-producer-order-modal" class="choose_pro_link">
+    <a href="<%= all_producer_orders_path(variant: variant, product: @product, order: params[:order_id]) %>" data-turbo-frame="all-producer-order-modal" class="choose_pro_link">
       <%= image_tag "right_arrow", alt: "icon", class: "rigth_arrow" %>
     </a>
   </div>
