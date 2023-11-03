@@ -8,7 +8,6 @@ class OrdersController < ApplicationController
     @products = Product.all
 
     respond_to do |format|
-      format.turbo_stream
       format.html
       format.js do
         html_data = render_to_string(partial: "orders/orders_table", locals: { orders: @orders }, layout: false)

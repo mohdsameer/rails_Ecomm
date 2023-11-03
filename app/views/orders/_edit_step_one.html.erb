@@ -56,9 +56,13 @@
                           <div class="avatar-edit">
                             <%= file_field_tag "front_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.variant.id}" %>
                             <label for="front_side_image_<%= order_product.variant.id %>" class="upload_wrapper">
-                              <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
-                              <div class="image_type">PNG</div>
-                              <div class="upload_text">Upload Here</div>
+                              <% if order_product.order.front_side_image.attached? %>
+                                <%= image_tag order_product.order.front_side_image, class: 'upload_icon' %>
+                              <% else %>
+                                <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
+                                <div class="image_type">PNG</div>
+                                <div class="upload_text">Upload Here</div>
+                              <% end %>
                               <div class="click_here">Click here to upload</div>
                             </label>
                           </div>
@@ -87,9 +91,13 @@
                           <div class="avatar-edit">
                             <%= file_field_tag "back_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{order_product.variant.id}" %>
                             <label for="imageUpload_<%= order_product.variant.id %>" class="upload_wrapper">
-                              <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
-                              <div class="image_type">PNG</div>
-                              <div class="upload_text">Upload Here</div>
+                              <% if order_product.order.back_side_image.attached? %>
+                                <%= image_tag order_product.order.back_side_image, class: 'upload_icon' %>
+                              <%else%>
+                                <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
+                                <div class="image_type">PNG</div>
+                                <div class="upload_text">Upload Here</div>
+                              <%end%>
                               <div class="click_here">Click here to upload</div>
                             </label>
                           </div>
