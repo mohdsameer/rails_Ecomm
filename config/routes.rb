@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       patch :request_revision_update
       post :create_address
       post :order_update_shipping
+      delete :remove_product
     end
 
     collection do

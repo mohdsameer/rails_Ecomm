@@ -6,7 +6,7 @@
           <div class="icon_wrap">
             <%= image_tag "truck" %>
             <% if order.producer.present? %>
-              <div class="icon_text">Ships from <%=order.producer.name%></div>
+              <div class="icon_text">Ships from <%= order.producer.name %></div>
             <% else %>
               <a href="<%= all_producer_orders_path %>"  data-turbo-frame="all-producer-order-modal" class= "choose_pro_link">
                 <span>Choose Producer</span>
@@ -118,12 +118,12 @@
                 </div>
               </div>
               <div class="right_wrap">
-                <%= link_to 'javascript:;', class: 'link_box' do %>
+                <%= link_to remove_product_order_path(order, order_product_id: order_product.id), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
                   <%= image_tag 'ic_trash.png', alt: 'icon', class: 'trash' %>
                 <% end %>
-                <%= link_to 'javascript:;', class: 'link_box' do %>
-                  <%= image_tag 'copy.png', alt: 'icon', class: 'copy' %>
-                <% end %>
+                <%#= link_to 'javascript:;', class: 'link_box' do %>
+                  <%#= image_tag 'copy.png', alt: 'icon', class: 'copy' %>
+                <%# end %>
               </div>
             </div>
           <%end%>

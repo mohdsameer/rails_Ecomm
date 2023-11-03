@@ -77,7 +77,7 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :brand_name, :print_area_width, :print_area_height, :image, variants_attributes: [:color, :size, :Real_variant_SKU, :image, :inventory, :length, :height, :width, :weight_lb, :weight_oz], product_producer_pricing_attributes: [:id, :blank_price, :front_side_print_price, :back_side_print_price, :user_id, :product_id])
+    params.require(:product).permit(:name, :brand_name, :print_area_width, :print_area_height, :image, variants_attributes: [:color, :size, :real_variant_sku, :image, :inventory, :length, :height, :width, :weight_lb, :weight_oz], product_producer_pricing_attributes: [:id, :blank_price, :front_side_print_price, :back_side_print_price, :user_id, :product_id])
   end
 
   def product_producer_params

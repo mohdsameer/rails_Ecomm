@@ -111,17 +111,17 @@
                     </div>
                   </div>
                 </div>
-                <div class="right_wrap">
-                  <%= link_to 'javascript:;', class: 'link_box' do %>
-                    <%= image_tag 'ic_trash.png', alt: 'icon', class: 'trash' %>
-                  <% end %>
-                  <%= link_to 'javascript:;', class: 'link_box' do %>
-                    <%= image_tag 'copy.png', alt: 'icon', class: 'copy' %>
-                  <% end %>
-                </div>
+                <!-- <div class="right_wrap"> -->
+                  <%#= link_to 'javascript:;', class: 'link_box' do %>
+                    <%#= image_tag 'ic_trash.png', alt: 'icon', class: 'trash' %>
+                  <%# end %>
+                  <%#= link_to 'javascript:;', class: 'link_box' do %>
+                    <%#= image_tag 'copy.png', alt: 'icon', class: 'copy' %>
+                  <%# end %>
+                <!-- </div> -->
               </div>
             <%end%>
-          <%end%>
+          <% end %>
         </div>
       </div>
 
@@ -228,10 +228,6 @@
       <%= hidden_field_tag :submit_type, '', data: { 'order-form-status-target': 'submitType' } %>
 
       <% disabled_class = params[:producer_id].present? ? '' : 'disabled' %>
-
-      <% if !params[:producer_id].present? %>
-        <div class="validation-error small text-danger">Please choose producer before continue</div>
-      <% end %>
 
       <%= link_to 'Marked as Completed', 'javascript:;', class: 'btn_wrap dark_green', data: { 'order-form-status-target': 'markComplete' } %>
 

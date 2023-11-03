@@ -27,7 +27,7 @@
             <% @order_products.each do |order_product|%>  
               <div class="left_section_box">
                 <div class="left_head"><%=order_product.product.name%></div>
-                <div class="left_sku">SKU: <%= order_product.variant.Real_variant_SKU%></div>
+                <div class="left_sku">SKU: <%= order_product.variant.real_variant_sku%></div>
                 <div class="text_with_img_section">
                   <div class="text_section">
                     <div class="text">Color: <span><%= order_product.variant.color%></span></div>

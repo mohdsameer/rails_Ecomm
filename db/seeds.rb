@@ -30,7 +30,7 @@ end
 #creating variants
 Product.all.each do |product|
 	puts "Creating variants"
-	variant = product.variants.create!(color: "Red", size: 20, Real_variant_SKU: 827381723, inventory: 10, specification: [{"product_length": 5, "product_height": 5, "product_width": 5, "product_weight":2.5, unit: "lb/oz"}])
+	variant = product.variants.create!(color: "Red", size: 20, real_variant_sku: 827381723, inventory: 10, specification: [{"product_length": 5, "product_height": 5, "product_width": 5, "product_weight":2.5, unit: "lb/oz"}])
 	puts "variant created"
 end
 

@@ -4,7 +4,6 @@ class Variant < ApplicationRecord
 	has_one_attached :image
 	has_paper_trail
 
-
 	def user_type
 		id = versions&.last&.whodunnit
 		User.find(id).type

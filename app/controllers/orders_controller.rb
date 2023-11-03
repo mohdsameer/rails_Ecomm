@@ -1,5 +1,25 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: [:send_message, :update_cancel_status ,:message_create, :update ,:edit, :destroy, :assignee, :assignee_create, :on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup, :assignee_remove_confirmation, :create_cancel_request , :new_cancel_request, :update_priority ,:request_revision, :request_revision_update, :create_address, :order_update_shipping]
+  before_action :find_order, only: [:send_message,
+                                    :update_cancel_status,
+                                    :message_create,
+                                    :update,
+                                    :edit,
+                                    :destroy,
+                                    :assignee,
+                                    :assignee_create,
+                                    :on_hold_popup,
+                                    :in_production_popup,
+                                    :rejected_popup,
+                                    :fullfilled_popup,
+                                    :assignee_remove_confirmation,
+                                    :create_cancel_request,
+                                    :new_cancel_request,
+                                    :update_priority,
+                                    :request_revision,
+                                    :request_revision_update,
+                                    :create_address,
+                                    :order_update_shipping,
+                                    :remove_product]
 
   def index
     per_page = params[:per_page] || 20
@@ -31,6 +51,20 @@ class OrdersController < ApplicationController
 
   def assignee_remove_confirmation
     @assigne = @order.assign_details.last
+  end
+
+  def remove_product
+    order_product = OrderProduct.find_by(id: params[:order_product_id])
+    order_product.destroy if order_product.present?
+
+    @order.reload
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('order-form-content', partial: 'orders/edit_step_one', locals: { order: @order })
+      end
+    end
   end
 
   def assigne_remove
@@ -205,7 +239,6 @@ class OrdersController < ApplicationController
     @products = Product.search(params)
 
     respond_to do |format|
-      format.turbo_stream
       format.html
       format.js do
         html_data = render_to_string(partial: "orders/products_search_result", locals: { products: @products }, layout: false)
@@ -217,6 +250,18 @@ class OrdersController < ApplicationController
   def select_variant
     @product = Product.find_by(id: params[:product_id])
     @variants = @product.variants
+
+    if params[:query].present?
+      @variants = @variants.where('LOWER(variants.color) LIKE :query OR LOWER(variants.real_variant_sku) LIKE :query', query: "%#{params[:query].downcase}%")
+    end
+
+    respond_to do |format|
+      format.html
+      format.js do
+        html_data = render_to_string(partial: "orders/variants_list", locals: { variants: @variants }, layout: false)
+        render json: { html_data: html_data }
+      end
+    end
   end
 
   def all_producer

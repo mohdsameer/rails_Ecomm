@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_02_063623) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_03_055634) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,8 +107,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_063623) do
     t.bigint "user_id"
     t.string "revision_info"
     t.boolean "request_revision", default: false
-    t.bigint "shipping_method_id"
     t.string "etsy_order_id"
+    t.bigint "shipping_method_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -171,7 +171,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_063623) do
     t.jsonb "specification", default: "{}", null: false
     t.string "color"
     t.integer "size"
-    t.integer "Real_variant_SKU"
     t.integer "inventory"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -184,6 +183,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_063623) do
     t.string "design_style"
     t.string "font"
     t.string "text"
+    t.string "real_variant_sku"
   end
 
   create_table "versions", force: :cascade do |t|

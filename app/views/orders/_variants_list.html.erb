@@ -1,0 +1,17 @@
+<% variants.each do |variant| %>
+  <div class="scroll_content check_content">
+    <div class="image_text_wrap">
+      <input class="check_box" type="checkbox">
+      <% if variant.image.attached? %>
+        <%= image_tag variant.image %>
+      <% else %>
+        <%= image_tag asset_path('dummy-product.png') %>
+      <% end %>
+      <%= variant.color %>
+    </div>
+
+    <a href="<%= all_producer_orders_path %>" data-turbo-frame="all-producer-order-modal" class="choose_pro_link">
+      <%= image_tag "right_arrow", alt: "icon", class: "rigth_arrow" %>
+    </a>
+  </div>
+<% end %>
