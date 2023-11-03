@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       post :create_address
       post :order_update_shipping
       delete :remove_product
+      get :new_order_product
     end
 
     collection do
