@@ -32,21 +32,24 @@
       </svg>
       <div class="btn_text">CSV. Export</div>
     </div>
+
     <%= form_for @product, html: { multipart: true } do |f| %>
       <div class="group_info_section">
         <div class="image_info">
-          <%= image_tag("illustration_upload", class:"info_img") %>
           <div class="info_content">
-            <%= f.file_field :image, class:"file_type" %>
+            <%= image_tag "illustration_upload", class: "info_img", id: "main-product-image" %>
             <h5 class="info_head">Main Product Image</h5>
+            <%= f.file_field :image, class: "file_type" %>
             <a class="info_link" href="#">Drop files here or click <span>browse</span> thorough your machine</a>
           </div>
         </div>
+
         <div class="right_info_content">
           <div class="right_item">
             <%= f.label :name %>
-            <%= f.text_field :name ,class: "item_text" %>
+            <%= f.text_field :name, class: "item_text" %>
           </div>
+
           <div class="right_item">
             <%= f.label :brand_name %>
             <%= f.text_field :brand_name, class: "item_text" %>
@@ -54,8 +57,8 @@
         </div>
       </div>
 
-    <div class="producers_section">
-      <h5 class="producers_head">Producers</h5>
+      <div class="producers_section">
+        <h5 class="producers_head">Producers</h5>
         <table class="producers_table">
           <tr>
             <th class="table_head"> Producer Company Name</th>
@@ -64,36 +67,49 @@
             <th class="table_head">Front Side Print Price</th>
             <th class="table_head">Back Side Print Price</th>
             <th class="table_head">  </th>
-            <!-- <th class="table_head">Edit Pricing</th> -->
-         </tr>
-            <% @producers.each do |producer| %>
-              <tr>
-                <td class="table_td"><%= producer.company_name %></td>
-                <td class="table_td"><%= producer.location %></td>
-                <td class="table_td" ><%= @product_producer_pricing.set_default_price %></td>
-                <td class="table_td" ><%= @product_producer_pricing.set_default_price %></td>
-                <td class="table_td" ><%= @product_producer_pricing.set_default_price %></td>
-              </tr>
-            <% end %>
+          </tr>
+
+          <%= f.fields_for :product_producer_pricings do |ppp| %>
+            <%= ppp.hidden_field :user_id %>
+            <tr>
+              <td class="table_td"><%= ppp.object&.producer&.company_name %></td>
+              <td class="table_td"><%= ppp.object&.producer&.location %></td>
+              <td class="table_td">
+                <%= ppp.number_field :blank_price %>
+                <%#= @product_producer_pricing.set_default_price %>
+              </td>
+              <td class="table_td">
+                <%= ppp.number_field :front_side_print_price %>
+                <%#= @product_producer_pricing.set_default_price %>
+              </td>
+              <td class="table_td">
+                <%= ppp.number_field :back_side_print_price %>
+                <%#= @product_producer_pricing.set_default_price %>
+              </td>
             </tr>
+          <% end %>
         </table>
-    </div>
-    <div class="variations_section">
-      <h5 class="variantions_head">products</h5>
-      <div class="links add_variation">
-        <svg class="add_icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-          <path d="M19.5 11H13.5V5C13.5 4.44772 13.0523 4 12.5 4C11.9477 4 11.5 4.44772 11.5 5V11H5.5C4.94772 11 4.5 11.4477 4.5 12C4.5 12.5523 4.94772 13 5.5 13H11.5V19C11.5 19.5523 11.9477 20 12.5 20C13.0523 20 13.5 19.5523 13.5 19V13H19.5C20.0523 13 20.5 12.5523 20.5 12C20.5 11.4477 20.0523 11 19.5 11Z" fill="white"/>
-        </svg>
-        <%= link_to_add_association f, :variants, class: 'add_head' do %>
-          Add Variants          
-        <% end %>
       </div>
 
-      <%= f.fields_for :variants do |variation_form| %>
-        <%= render 'variant_fields', f: variation_form %>
-      <% end %>
-      <div class="horizontal_line"></div>
-    </div>
+      <div class="variations_section">
+        <h5 class="variantions_head">products</h5>
+
+        <div class="links add_variation">
+          <svg class="add_icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+            <path d="M19.5 11H13.5V5C13.5 4.44772 13.0523 4 12.5 4C11.9477 4 11.5 4.44772 11.5 5V11H5.5C4.94772 11 4.5 11.4477 4.5 12C4.5 12.5523 4.94772 13 5.5 13H11.5V19C11.5 19.5523 11.9477 20 12.5 20C13.0523 20 13.5 19.5523 13.5 19V13H19.5C20.0523 13 20.5 12.5523 20.5 12C20.5 11.4477 20.0523 11 19.5 11Z" fill="white"/>
+          </svg>
+
+          <%= link_to_add_association f, :variants, class: 'add_head' do %>
+            Add Variants          
+          <% end %>
+        </div>
+
+        <%= f.fields_for :variants do |variation_form| %>
+          <%= render 'variant_fields', f: variation_form %>
+        <% end %>
+
+        <div class="horizontal_line"></div>
+      </div>
 
       <div class="product_print_section">
         <h5 class="print_head">Product Print Area</h5>
@@ -104,6 +120,7 @@
             <div class="content_item one"></div>
             <div class="content_item two border-0">Edit</div>
           </div>
+
           <div class="print_content">
             <div class="content_item white_bg border-0">
               <input type="text" placeholder="75" class="item_box">
@@ -112,7 +129,7 @@
               <input type="text" placeholder="75" class="item_box">
             </div>
             <div class="content_item white_bg border-0 one"></div>
-            <div class="content_item white_bg border-0 two border-0"><%= image_tag "dark_edit",alt:"icon" , class:"edit_icon" %></div>
+            <div class="content_item white_bg border-0 two border-0"><%= image_tag "dark_edit", alt: "icon", class:"edit_icon" %></div>
           </div>
         </div>
       </div>
@@ -137,7 +154,6 @@
                     <div class="group_label">Min</div>
                     <div class="input_row">
                       <%= shipping_label.number_field :item_quantity_min, class: 'item_input', placeholder: 'xx' %>
-                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
                     </div>
                   </div>
 
@@ -145,7 +161,6 @@
                     <div class="group_label">Max</div>
                     <div class="input_row">
                       <%= shipping_label.number_field :item_quantity_max, class: 'item_input', placeholder: 'xx' %>
-                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
                     </div>
                   </div>                
                 </div>
@@ -158,7 +173,6 @@
                     <div class="input_row">
                       <div class="row_label">in</div>
                       <%= shipping_label.number_field :length, class: 'item_input', placeholder: 'xx' %>
-                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
                     </div>
                   </div>
 
@@ -167,7 +181,6 @@
                     <div class="input_row">
                       <div class="row_label">in</div>
                       <%= shipping_label.number_field :height, class: 'item_input', placeholder: 'xx' %>
-                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
                     </div>
                   </div>
 
@@ -176,7 +189,6 @@
                     <div class="input_row">
                       <div class="row_label">in</div>
                       <%= shipping_label.number_field :width, class: 'item_input', placeholder: 'xx' %>
-                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
                     </div>
                   </div>
                 </div>
@@ -189,7 +201,6 @@
                     <div class="input_row">
                       <div class="row_label">lb</div>
                       <%= shipping_label.number_field :weight_lb, class: 'item_input', placeholder: 'xx' %>
-                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
                     </div>
                   </div>
 
@@ -198,7 +209,6 @@
                     <div class="input_row">
                       <div class="row_label">oz</div>
                       <%= shipping_label.number_field :weight_oz, class: 'item_input', placeholder: 'xx' %>
-                      <!-- <input type="text" class="item_input" value="" placeholder="xx"> -->
                     </div>
                   </div>
                 </div>
@@ -219,4 +229,5 @@
         <%= f.submit 'Save', class: "save_btn" %>
       </div>
     <% end %>
+  </div>
 </div>

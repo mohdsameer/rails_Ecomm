@@ -22,16 +22,18 @@ class ProductsController < ApplicationController
     @product = Product.new
     4.times { @product.shipping_labels.build }
     @producers = Producer.all
-    @product_producer_pricing = ProductProducerPricing.new
+
+    @producers.each do |producer|
+      @product
+        .product_producer_pricings
+        .build(producer: producer, blank_price: 0, front_side_print_price: 0, back_side_print_price: 0)
+    end
   end
 
   def create
     @product = Product.new(product_params)
+
     if @product.save
-      @producers = Producer.all
-      @producers.each do |producer|
-        ProductProducerPricing.create(user_id:producer.id, product_id: @product.id)
-      end
       redirect_to products_path, notice: 'Product was successfully created.'
     else
       render :new
@@ -39,9 +41,9 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find(params[:id])
-    @variants = @product.variants
-    @producer = Producer.all
+    @product   = Product.find(params[:id])
+    @variants  = @product.variants
+    @producers = Producer.all
   end
 
   def remove_variant
@@ -53,6 +55,9 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
+
+    @product.shipping_labels.destroy_all    
+
     if @product.update(product_params)
       redirect_to products_path, notice: 'Product was successfully updated.'
     else
@@ -78,7 +83,43 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :brand_name, :print_area_width, :print_area_height, :image, variants_attributes: [:color, :size, :real_variant_sku, :image, :inventory, :length, :height, :width, :weight_lb, :weight_oz], product_producer_pricing_attributes: [:id, :blank_price, :front_side_print_price, :back_side_print_price, :user_id, :product_id], shipping_labels_attributes: [:item_quantity_min, :item_quantity_max, :length, :height, :width, :weight_lb, :weight_oz])
+    params
+      .require(:product)
+      .permit(:name,
+              :brand_name,
+              :print_area_width,
+              :print_area_height,
+              :image,
+              variants_attributes: [
+                :color,
+                :size,
+                :real_variant_sku,
+                :image,
+                :inventory,
+                :length,
+                :height,
+                :width,
+                :weight_lb,
+                :weight_oz
+              ],
+              product_producer_pricings_attributes: [
+                :id,
+                :blank_price,
+                :front_side_print_price,
+                :back_side_print_price,
+                :user_id,
+                :product_id
+              ],
+              shipping_labels_attributes: [
+                :item_quantity_min,
+                :item_quantity_max,
+                :length,
+                :height,
+                :width,
+                :weight_lb,
+                :weight_oz
+              ]
+            )
   end
 
   def product_producer_params
