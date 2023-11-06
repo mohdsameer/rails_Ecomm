@@ -36,17 +36,18 @@
                 <div class="order_td four">-</div>
               <%end%>
               <% if order.order_products.pluck(:product_quantity).present? %>
-                <div class="order_td five"><%= order.order_products.pluck(:product_quantity).sum %></div>
+                <div class="order_td five"><%= order.order_products.pluck(:product_quantity).compact.sum %></div>
               <% else%>
                 <div class="order_td five">-</div>
               <%end%>
               <% ops = order.order_products %>
               <% sum_result = 0 %>
+
               <% ops. each do |op|%>
                 <% record = op.product.product_producer_pricings.find_by(user_id: order.producer.id) %>
                 <% cost = (record.front_side_print_price + record.back_side_print_price)* op.product_quantity%>
                 <% sum_result += cost %>
-              <%end%>
+              <% end %>
 
               <div class="order_td six">$<%= sum_result %></div>
               <div class="order_td seven">
