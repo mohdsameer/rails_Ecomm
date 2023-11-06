@@ -38,11 +38,12 @@
 
               <% ops = order.order_products %>
               <% sum_result = 0 %>
+
               <% ops. each do |op|%>
-                <% record = op.product.product_producer_pricings.find_by(user_id: order.producer.id) %>
+                <% record = op.product.product_producer_pricings.find_by(user_id: op.producer.id) %>
                 <% cost = (record.front_side_print_price + record.back_side_print_price)* op.product_quantity%>
                 <% sum_result += cost %>
-              <%end%>
+              <% end %>
 
               <div class="order_td six">$<%= sum_result %></div>
               <div class="order_td seven">

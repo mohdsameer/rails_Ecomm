@@ -19,8 +19,7 @@ class OrdersController < ApplicationController
                                     :request_revision_update,
                                     :create_address,
                                     :order_update_shipping,
-                                    :remove_product,
-                                    :new_order_product]
+                                    :remove_product]
 
   def index
     per_page = params[:per_page] || 20
@@ -37,45 +36,9 @@ class OrdersController < ApplicationController
     end
   end
 
-  def assignee
-    @designers = User.where(type: "Designer")
-    @assigne = AssignDetail.new()
-  end
-
-  def assignee_create
-    @designer = User.find_by(id: params[:assign_detail][:designer])
-    @assigne = AssignDetail.new(order_id: @order.id, user_id: @designer.id).save
-    Order.find(@order.id).update(due_date: assigne_params[:due_date])
-    AssignDetail.last.update(assigne_params)
-    redirect_to orders_path, notice: 'Assigne Process Done.'
-  end
-
-  def assignee_remove_confirmation
-    @assigne = @order.assign_details.last
-  end
-
-  def remove_product
-    order_product = OrderProduct.find_by(id: params[:order_product_id])
-    order_product.destroy if order_product.present?
-
-    @order.reload
-
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('order-form-content', partial: 'orders/edit_step_one', locals: { order: @order })
-      end
-    end
-  end
-
-  def assigne_remove
-    AssignDetail.find_by(id: params[:id]).destroy
-  end
-
   def new
-    @order = Order.new
-    @products = Product.all
-    @shipping_methods = ShippingMethod.all
+    @order = Order.create(order_status: :onhold, order_edit_status: :incomplete)
+    redirect_to edit_order_path(@order)
   end
 
   def create
@@ -96,10 +59,11 @@ class OrdersController < ApplicationController
       @order.front_side_image.attach(params[:front_side_image])
       @order.back_side_image.attach(params[:back_side_image])
     end
+
     params[:variants].each do |id, quantity|
       if quantity.to_i > 0
-        product_id = Variant.find(id).product
-        @order.order_products.create(variant_id: id.to_i, product_quantity: quantity.to_i,product_id: product_id.id)
+        product = Variant.find(id).product
+        @order.order_products.create(variant_id: id.to_i, product_quantity: quantity.to_i, product_id: product.id)
       end
     end
 
@@ -111,59 +75,14 @@ class OrdersController < ApplicationController
           redirect_to orders_path
         end
       end
+
       format.html { redirect_to orders_path }
     end
   end
 
-  def create_address
-    @order.create_address(address_params)
-    @shipping_methods = ShippingMethod.all
-    @order = Order.find_by(id: params[:id])
-    @address = @order.address
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, shipping_methods: @shipping_methods, address: @address })
-      end
-    end
-  end
-
-  def order_update_shipping
-    shipping_method_id = params[:shipping_method_id]
-    order_edit_status = params[:commit] == "Save Later" ? 0 : 1
-    priority = params[:priority].present? ? 1 : 0
-    order_status = order_edit_status == 1 ? 2 : 0
-
-    @order.update(shipping_method_id: shipping_method_id, order_edit_status: order_edit_status, priority: priority, order_status: order_status)
-
-    if params[:submit_type].eql?('save_later')
-      redirect_to orders_path
-    end
-  end
-
-  def confirm
-    @order = Order.find_by(id: params[:id])
-  end
-
-  def reject
-    @order = Order.find_by(id: params[:id])
-  end
-
-  def send_message
-    @message = if current_user.type == "Producer"
-                 Message.new(from: current_user.id, to: Admin.first.id)
-               else
-                 Message.new(from: current_user.id, to: @order.producer.id)
-               end
-    @user = User.find_by(id: @message.to)
-  end
-
-  def message_create
-    @message = @order.messages.new(message_params)
-    @message.save
-  end
-
   def edit
     @order = Order.find_by(id: params[:id])
+    @producers = Producer.all
   end
 
   def update
@@ -210,17 +129,108 @@ class OrdersController < ApplicationController
     end
   end
 
+  def destroy
+    @order.destroy
+  end
+
+  def assignee
+    @designers = User.where(type: "Designer")
+    @assigne = AssignDetail.new()
+  end
+
+  def assignee_create
+    @designer = User.find_by(id: params[:assign_detail][:designer])
+    @assigne = AssignDetail.new(order_id: @order.id, user_id: @designer.id).save
+    Order.find(@order.id).update(due_date: assigne_params[:due_date])
+    AssignDetail.last.update(assigne_params)
+    redirect_to orders_path, notice: 'Assigne Process Done.'
+  end
+
+  def assignee_remove_confirmation
+    @assigne = @order.assign_details.last
+  end
+
+  def remove_product
+    order_product = OrderProduct.find_by(id: params[:order_product_id])
+    order_product.destroy if order_product.present?
+
+    @order.reload
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('order-form-content', partial: 'orders/edit_step_one', locals: { order: @order })
+      end
+    end
+  end
+
+  def assigne_remove
+    AssignDetail.find_by(id: params[:id]).destroy
+  end
+
+  def create_address
+    @order.create_address(address_params)
+    @shipping_methods = ShippingMethod.all
+    @order = Order.find_by(id: params[:id])
+    @address = @order.address
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, shipping_methods: @shipping_methods, address: @address })
+      end
+    end
+  end
+
+  def order_update_shipping
+    shipping_method_id = params[:shipping_method_id]
+    order_edit_status = params[:commit] == "Save Later" ? 0 : 1
+    priority = params[:priority].present? ? 1 : 0
+    order_status = order_edit_status == 1 ? 2 : 0
+
+    @order.update(shipping_method_id: shipping_method_id, order_edit_status: order_edit_status, priority: priority, order_status: order_status)
+
+    if params[:submit_type].eql?('save_later')
+      redirect_to orders_path
+    end
+  end
+
+  def confirm
+    @order = Order.find_by(id: params[:id])
+  end
+
+  def reject
+    @order = Order.find_by(id: params[:id])
+  end
+
+  def send_message
+    @message = if current_user.type == "Producer"
+                 Message.new(from: current_user.id, to: Admin.first.id)
+               else
+                 Message.new(from: current_user.id, to: @order.producer.id)
+               end
+
+    @user = User.find_by(id: @message.to)
+  end
+
+  def message_create
+    @message = @order.messages.new(message_params)
+    @message.save
+  end
+
   def new_order_product
-    @order.order_products.create(variant_id: params[:variant], product_id: params[:product])
+    @order  = Order.find(params[:order_id])
+
+    params[:variant_ids].each do |variant_id|
+      @order.order_products.create(variant_id: variant_id,
+                                   product_id: params[:product_id],
+                                   user_id:    params[:producer_id],
+                                   product_quantity: 1)
+    end
+
     redirect_to edit_order_path(@order)
   end
 
   def delete_confirmation
     @order = Order.find_by(id: params[:id])
-  end
-
-  def destroy
-    @order.destroy
   end
 
   def download
@@ -257,6 +267,7 @@ class OrdersController < ApplicationController
   end
 
   def add_new_product
+    @order = Order.find(params[:order_id])
     @products = Product.search(params)
 
     respond_to do |format|
@@ -269,6 +280,7 @@ class OrdersController < ApplicationController
   end
 
   def select_variant
+    @order = Order.find(params[:order_id])
     @product = Product.find_by(id: params[:product_id])
     @variants = @product.variants
 
@@ -286,7 +298,10 @@ class OrdersController < ApplicationController
   end
 
   def all_producer
-    @producers = Producer.all
+    @variant_ids = params[:variant_ids]
+    @product_id  = params[:product_id]
+    @order_id    = params[:order_id]
+    @producers   = Producer.all
   end
 
   def on_hold_popup

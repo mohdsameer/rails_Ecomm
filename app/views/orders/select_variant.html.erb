@@ -22,8 +22,14 @@
             <%= image_tag "Divider", alt:"icon", class:"devider_icon" %>
             <span><%= @product.name %></span>
           </div>
+
           <div class="scroll_section" data-search-target="results">
-            <%= render 'variants_list', variants: @variants, product: @product, order: @order %>
+            <%= form_tag all_producer_orders_path, method: :get, data: { 'turbo-frame': 'all-producer-order-modal' } do %>
+              <%= hidden_field_tag :product_id, @product.id %>
+              <%= hidden_field_tag :order_id, @order.id %>
+              <%= render 'variants_list', variants: @variants, product: @product, order: @order %>
+              <%= submit_tag 'Continue' %>
+            <% end %>
           </div>
 
           <div class="back_to_btn_section">

@@ -43,7 +43,7 @@
                         <div class="text">Quantity: <span><%= order_product.product_quantity%></span></div>
                         <div class="text">Color: <span><%= order_product.variant.color%></span></div>
                         <div class="text">Size: <span><%= order_product.variant.size%> OZ</span></div>
-                        <div class="text">Ships From: <span><%= order_product.order.producer.name %></span></div>
+                        <div class="text">Ships From: <span><%= order_product.producer.name %></span></div>
                       </div>
                       <div class="img_section">
                         <%= display_image(order_product.order.front_side_image, "trans_frame") %>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="cost_section">
                       <div>Production costs</div>
-                      <% record = order_product.product.product_producer_pricings.find_by(user_id: @order.producer.id) %>
+                      <% record = order_product.product.product_producer_pricings.find_by(user_id: order_product.producer.id) %>
                       <% cost = (record.front_side_print_price + record.back_side_print_price)*order_product.product_quantity%>
                       <% sum_result += cost %>
                       <div>USD <%= cost %></div>
