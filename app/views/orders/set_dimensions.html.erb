@@ -1,0 +1,41 @@
+<turbo-frame id="set-dimensions">
+  <div id= "all_producer_model" class="select_pop_wrap_model" data-controller="modals" data-modals-modal-id-value="all_producer_model">
+    <div class="select_pop_wrap_outer">
+      <div class="select_pop_wrap">
+        <div class="select_head">
+          Shipping Package Details
+          <%= image_tag "close", alt: "icon", class: "close_icon" %>
+        </div>
+
+        <%= form_tag update_dimensions_order_path(@order), data: { 'turbo-frame': '_top' } do %>
+          <div class="form-group">
+            <%= label_tag 'Length' %>
+            <%= number_field_tag :custom_length, class: 'form-control', placeholder: 'xx' %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag 'Height' %>
+            <%= number_field_tag :custom_height, class: 'item_input', placeholder: 'xx' %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag 'Width' %>
+            <%= number_field_tag :custom_width, class: 'item_input', placeholder: 'xx' %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag 'Weight LB' %>
+            <%= number_field_tag :custom_weight_lb, class: 'item_input', placeholder: 'xx' %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag 'Weight OZ' %>
+            <%= number_field_tag :custom_weight_oz, class: 'item_input', placeholder: 'xx' %>
+          </div>
+
+          <%= submit_tag 'save' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</turbo-frame>

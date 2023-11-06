@@ -19,7 +19,9 @@ class OrdersController < ApplicationController
                                     :request_revision_update,
                                     :create_address,
                                     :order_update_shipping,
-                                    :remove_product]
+                                    :remove_product,
+                                    :set_dimensions,
+                                    :update_dimensions]
 
   def index
     per_page = params[:per_page] || 20
@@ -83,6 +85,8 @@ class OrdersController < ApplicationController
   def edit
     @order = Order.find_by(id: params[:id])
     @producers = Producer.all
+
+    @shipping_methods = ShippingMethod.all
   end
 
   def update
@@ -129,6 +133,16 @@ class OrdersController < ApplicationController
   def destroy
     @order.destroy
     redirect_to orders_path
+  end
+
+  def set_dimensions
+
+  end
+
+  def update_dimensions
+    @order.update(dimensions_params)
+    @order.update(dimensions_is_manual: true)
+    redirect_to edit_order_path(@order, step: :shipping_method)
   end
 
   def assignee
@@ -407,5 +421,9 @@ class OrdersController < ApplicationController
 
   def find_order
     @order = Order.find_by(id: params[:id])
+  end
+
+  def dimensions_params
+    params.permit(:custom_length, :custom_height, :custom_width, :custom_weight_lb, :custom_weight_oz)
   end
 end

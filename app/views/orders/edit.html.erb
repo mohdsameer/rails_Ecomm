@@ -24,8 +24,13 @@
       <turbo-frame id="all-producer-order-modal"></turbo-frame>
       <turbo-frame id="add-new-product-order-modal"></turbo-frame>
       <turbo-frame id="order-success-popup-modal"></turbo-frame>
+      <turbo-frame id="set-dimensions"></turbo-frame>
 
-      <%= render 'edit_step_one', order: @order %>
+      <% if params[:step].present? && params[:step].eql?('shipping_method') %>
+        <%= render 'step_three', order: @order, shipping_methods: @shipping_methods, address: @order.address %>
+      <% else %>
+        <%= render 'edit_step_one', order: @order %>
+      <% end %>
     </div>
   </div>
 </div>

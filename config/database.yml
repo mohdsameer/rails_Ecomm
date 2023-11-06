@@ -3,6 +3,6 @@ development:
   encoding: unicode
   database: rails_ecomm_dev
   host: localhost
-  username: postgres
+  username: postgres1
   password: postgres
   pool: 5

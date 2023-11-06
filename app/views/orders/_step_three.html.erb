@@ -8,6 +8,15 @@
             <div class="method_wrap">
               <div class="method_section">
                 <div class="method_head">Shipping Method</div>
+                <div class="package-dimensions">
+                  <div class="package-dimensions-detail">Package Dimensions: <%= order.package_dimensions %></div>
+                  <div class="package-dimensions-actions">
+                    <%= link_to set_dimensions_order_path(order), class: 'btn btn-primary', data: { 'turbo-frame': 'set-dimensions' } do %>
+                      Enter Manual Dimensions and Weight
+                    <% end %>
+                  </div>
+                </div>
+
                 <% shipping_methods.each do |sm|  %>
                   <div class="method_list">
                     <input type="radio" name="shipping_method_id" value="<%= sm.id %>" data-order-form-target="shippingCostInput" data-price="<%= sm.price %>">

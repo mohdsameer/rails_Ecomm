@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_06_110921) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_06_130535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -108,8 +108,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_110921) do
     t.bigint "user_id"
     t.string "revision_info"
     t.boolean "request_revision", default: false
-    t.string "etsy_order_id"
     t.bigint "shipping_method_id"
+    t.string "etsy_order_id"
+    t.boolean "dimensions_is_manual", default: false
+    t.decimal "custom_length"
+    t.decimal "custom_height"
+    t.decimal "custom_width"
+    t.decimal "custom_weight_lb"
+    t.decimal "custom_weight_oz"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
