@@ -11,9 +11,9 @@
                 <% shipping_methods.each do |sm|  %>
                   <div class="method_list">
                     <input type="radio" name="shipping_method_id" value="<%= sm.id %>" data-order-form-target="shippingCostInput" data-price="<%= sm.price %>">
-                    <div class="list_item"><%= sm.name%></div>
-                    <div class="list_item"><%= sm.partner%></div>
-                    <div class="list_item"><%= (Date.today - sm.min_date).to_i %> <%= (Date.today - sm.max_date).to_i %> days </div>
+                    <div class="list_item"><%= sm.name %></div>
+                    <div class="list_item"><%= sm.partner %></div>
+                    <div class="list_item"><%= sm.min_day %> - <%= sm.max_day %> days </div>
                     <div class="list_item">USD <%= sm.price %></div>
                   </div>
                 <% end %>

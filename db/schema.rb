@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_06_071437) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_06_110921) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -113,6 +113,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_071437) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "producers_variants", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "variant_id"
+    t.integer "inventory"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_producers_variants_on_user_id"
+    t.index ["variant_id"], name: "index_producers_variants_on_variant_id"
+  end
+
   create_table "product_producer_pricings", force: :cascade do |t|
     t.float "blank_price", default: 0.0
     t.float "front_side_print_price", default: 0.0
@@ -164,8 +174,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_071437) do
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "min_date"
-    t.date "max_date"
+    t.integer "min_day"
+    t.integer "max_day"
   end
 
   create_table "users", force: :cascade do |t|
@@ -220,6 +230,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_071437) do
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
   add_foreign_key "orders", "users"
+  add_foreign_key "producers_variants", "users"
+  add_foreign_key "producers_variants", "variants"
   add_foreign_key "product_producer_pricings", "products"
   add_foreign_key "product_producer_pricings", "users"
   add_foreign_key "requests", "orders"
