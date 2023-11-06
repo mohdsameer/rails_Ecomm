@@ -43,9 +43,9 @@
               <% ops = order.order_products %>
               <% sum_result = 0 %>
 
-              <% ops. each do |op|%>
+              <% ops.each do |op| %>
                 <% record = op.product.product_producer_pricings.find_by(user_id: order.producer.id) %>
-                <% cost = (record.front_side_print_price + record.back_side_print_price)* op.product_quantity%>
+                <% cost   = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * op.product_quantity.to_i %>
                 <% sum_result += cost %>
               <% end %>
 
