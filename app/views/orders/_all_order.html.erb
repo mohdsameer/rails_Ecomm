@@ -214,7 +214,8 @@
                   <div class="order_items_section">
                     <div class="items_wrapper">
                       <% i = 1 %>
-                      <% order.order_products.each do |order_product| %>
+                      <% order_products =  order.order_products.where(user_id: current_user.id)%>
+                      <% order_products.each do |order_product| %>
                         <% variant = Variant.find(order_product.variant_id) %>
                         <div class="order_items_row">
                           <div class="items_num"><%=i %></div>
@@ -283,19 +284,21 @@
                                   </td>
                                   <td>
                                     <div class="content_item">
-                                      <div class="table_data">
-                                        <div class="value_row"><span><b>Aisle:</b></span> G21 </div>
-                                        <div class="value_row"><span><b>Qty:</b></span><%=variant.inventory %></div>
-                                      </div>
 
-                                      <% if variant.inventory > 100 %>
-                                        <div class="item_status">In Stock</div>
-                                      <% elsif variant.inventory < 100 && variant.inventory > 0 %>
-                                        <div class="item_status low_stock">Low Stock</div>
-                                      <%else%>
-                                        <div class="item_status out_of_stock">Out of stock</div>
+                                      <% ProducersVariant.where(variant_id: order_product.variant_id, user_id: order_product.producer.id).each do |pv| %>
+                                        <div class="table_data">
+                                          <div class="value_row"><span><b>Aisle:</b></span> G21 </div>
+                                          <div class="value_row"><span><b>Qty:</b></span><%= pv.inventory %></div>
+                                        </div>
+
+                                        <% if  pv.inventory > 100 %>
+                                          <div class="item_status">In Stock</div>
+                                        <% elsif pv.inventory < 100 && pv.inventory > 0 %>
+                                          <div class="item_status low_stock">Low Stock</div>
+                                        <%else%>
+                                          <div class="item_status out_of_stock">Out of stock</div>
+                                        <%end%>
                                       <%end%>
-
                                     </div>
                                   </td>
                                 </tr>
