@@ -8,29 +8,19 @@
             <div class="method_wrap">
               <div class="method_section">
                 <div class="method_head">Shipping Method</div>
-                <!-- <div class="method_flash"> 
-                  <%#= image_tag "yello_ic_info", alt:"icon", class:"flash_icon" %>
-                  Customer Choose USPS Priority Shipping
-                </div> -->
                 <% shipping_methods.each do |sm|  %>
                   <div class="method_list">
                     <input type="radio" name="shipping_method_id" value="<%= sm.id %>" data-order-form-target="shippingCostInput" data-price="<%= sm.price %>">
-                    <%#= radio_button_tag 'shipping_method_id', sm.id, 'data-order-form-target': "shippingCostInput", 'data-price': sm.price %>
                     <div class="list_item"><%= sm.name%></div>
                     <div class="list_item"><%= sm.partner%></div>
                     <div class="list_item"><%= (Date.today - sm.min_date).to_i %> <%= (Date.today - sm.max_date).to_i %> days </div>
                     <div class="list_item">USD <%= sm.price %></div>
                   </div>
-                <%end%>
+                <% end %>
               </div>
 
               <div class="selected_wrap">
                 <div class="selected_head">
-<!--                   <div class="left_items">
-                    <%= image_tag "cart", alt:"icon", class:"left_icon" %>
-                    <div class="left_text">Products selected</div>
-                    <sup class="top_text">(4 item)</sup>
-                  </div> -->
                   <a class="edit_link" href="#">Edit</a>
                 </div>
                 <% sum_result = 0 %>
@@ -118,11 +108,9 @@
               <div class="btn_wrap">
                 <button class="later_btn">
                   <%= link_to 'Save Order for Later', 'javascript:;', class: 'later_btn', data: { 'order-form-target': 'saveLater' } %>
-                  <%#= submit_tag 'Save Later', class: 'later_btn'%>
                 </button>
 
                 <button class="submit_btn">
-                  <%#= submit_tag 'Marked as Completed', class: 'submit_btn'%>
                   <%= link_to 'Marked as Completed', 'javascript:;', class: 'submit_btn', data: { 'order-form-target': 'markComplete' } %>
                   <%= image_tag "endicon", alt:"icon", class:"btn_icon" %>
                 </button>

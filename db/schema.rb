@@ -161,11 +161,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_071437) do
   create_table "shipping_methods", force: :cascade do |t|
     t.string "name"
     t.string "partner"
-    t.date "min_date"
-    t.date "max_date"
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "min_date"
+    t.date "max_date"
   end
 
   create_table "users", force: :cascade do |t|
