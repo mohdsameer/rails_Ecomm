@@ -13,16 +13,28 @@ class VariantsController < ApplicationController
 
   def producer_inventory
     @producer = Producer.find_by(id: params[:id])
-    @orders = Order.where(user_id: @producer)
+    @pv = @producer.producers_variants
   end
 
   def edit_inventory
     @variant = Variant.find(params[:id])
+    if params[:producerId].present?
+      @pv = @variant.producers_variants.find_by(user_id: params[:producerId])
+    else
+      @pv = @variant.producers_variants.find_by(user_id: current_user.id)
+    end
   end
 
   def update_inventory
     @variant = Variant.find(params[:id])
-    existing = @variant.inventory
+
+    if params[:producerId].present?
+      @pv = @variant.producers_variants.find_by(user_id: params[:producerId])
+    else
+      @pv = @variant.producers_variants.find_by(user_id: current_user.id)
+    end
+
+    existing = @pv.inventory
 
     if params[:increased_inventory].present?
       update_inventory = existing + params[:increased_inventory].to_i
@@ -38,7 +50,10 @@ class VariantsController < ApplicationController
     end
 
     @variant.versions
-    if @variant.update(inventory: update_inventory, inventory_reason: update_reason)
+    @pv.versions
+    if @variant.update(inventory_reason: update_reason)
+      @pv.update(inventory: update_inventory)
+
       redirect_to products_path, notice: 'inventory was successfully updated.'
     else
       render :edit_inventory
@@ -48,9 +63,12 @@ class VariantsController < ApplicationController
   def inventory_history
     per_page = params[:per_page] || 20
     if params[:producer_id].present?
+      @products = Product.all
       @producer = Producer.find_by(id: params[:producer_id])
-      @variants = @producer.variants.paginate(page: params[:page], per_page: per_page)
+      # @variants = @producer.variants.paginate(page: params[:page], per_page: per_page)
+      @variants = Variant.all.paginate(page: params[:page], per_page: per_page)
     else
+      @products = Product.all
       @variants = Variant.all.paginate(page: params[:page], per_page: per_page)
     end
   end

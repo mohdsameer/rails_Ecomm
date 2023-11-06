@@ -2,13 +2,7 @@ class ProductsController < ApplicationController
 
   def index
     per_page = params[:per_page] || 20
-
-    if current_user&.type.eql?("Producer")
-      @orders = Order.all.paginate(page: params[:page], per_page: per_page)
-    else
-      @products = Product.search(params).paginate(page: params[:page], per_page: per_page)
-    end
-
+    @products = Product.search(params).paginate(page: params[:page], per_page: per_page)
     respond_to do |format|
       format.html
       format.js do
@@ -32,11 +26,10 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-
     if @product.save
       redirect_to products_path, notice: 'Product was successfully created.'
     else
-      render :new
+      redirect_to new_product_path
     end
   end
 
@@ -100,7 +93,13 @@ class ProductsController < ApplicationController
                 :height,
                 :width,
                 :weight_lb,
-                :weight_oz
+                :weight_oz,
+                producers_variants_attributes: [
+                  :id,
+                  :user_id,
+                  :variant_id,
+                  :inventory
+                ],
               ],
               product_producer_pricings_attributes: [
                 :id,

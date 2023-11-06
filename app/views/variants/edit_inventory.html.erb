@@ -1,11 +1,11 @@
 <turbo-frame id="edit-inventory-modal">
 	<div id="edit_invntry_qty_popup" class="edit_invntry_qty_popup" data-controller="modals" data-modals-modal-id-value="edit_invntry_qty_popup">
 	  <div class="popup_wrapper">
-	  	<%= form_tag update_inventory_variant_path(@variant), method: :patch do %>
+	  	<%= form_tag update_inventory_variant_path(@variant, producerId: @pv.producer.id), method: :patch do %>
 		    <div class="edit_pop_wrap">
 		    	<%= image_tag 'close.png', alt:'icon', class: 'cross_icon cancel_qty' %>
 		      <div class="edit_head">Edit Inventory QTY: <%= @variant.product.id %></div>
-		      <div class="current_qty">Current Quantity: <span id="current_qty"><%= @variant.inventory %></span></div>
+		      <div class="current_qty">Current Quantity: <span id="current_qty"><%= @pv.inventory %></span></div>
 		      <div class="current_qty green_box" id="increase_qty">INCREASE QTY</div>
 		      <div class="increase_box">
 		        <div class="input_group">
@@ -37,13 +37,13 @@
 		          <%= text_field_tag :reason_for_decrease %>
 		        </div>
 		      </div>
-		      <div class="current_qty">New Quantity: <span class="quantity_no"><%= @variant.inventory %></span></div>
+		      <div class="current_qty">New Quantity: <span class="quantity_no"><%= @pv.inventory %></span></div>
 		      <div class="inventory_edit_btn">Submit</div>
 		    </div>
 
 		    <div class="new_qty_wrap">
 		      <div class="head current_qty" >
-		        New Quantity: <span class="quantity_no"><%= @variant.inventory %></span>
+		        New Quantity: <span class="quantity_no"><%= @pv.inventory %></span>
 		      </div>	
 		      <div class="btn_group">
 		        <%= submit_tag 'Confirm', class: 'btn bg-success text-white' %>

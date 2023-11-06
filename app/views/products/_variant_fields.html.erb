@@ -24,11 +24,19 @@
         <label>Real Variant SKU</label>
         <%= f.text_field :real_variant_sku, class: "item_text" %>
       </div>
-      
-      <div class="right_item">
-        <label>Inventory</label>
-        <%= f.text_field :inventory, class: "item_text" %>
-      </div>
+
+      <% @producers.each do |producer| %>
+        <% f.object.producers_variants.build(producer: producer) %>
+      <% end %>
+
+      <%= f.fields_for :producers_variants do |pv| %>
+        <%= pv.hidden_field :user_id %>
+        <%= pv.hidden_field :variant_id, value: f.object.id %>
+        <div class="right_item">
+          <label><%= pv.object.producer.name %> inventory</label>
+          <%= pv.text_field :inventory, class: "item_text" %>
+        </div>
+      <% end %>
 
       <div class="right_item">
         <label>Product Length</label>

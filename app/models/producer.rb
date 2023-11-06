@@ -6,4 +6,7 @@ class Producer < User
 	has_many :product_producer_pricings, foreign_key: :user_id
 	has_many :orders, foreign_key: :user_id
 	has_many :variants, through: :orders
+
+	has_many :producers_variants, foreign_key: :user_id
+  has_many :variants, through: :producers_variants
 end

@@ -141,7 +141,11 @@
                   </button>
                 </td>
 
-                <td class="table_td w-75"><%= variant.inventory %></td>
+                <% if variant.producers_variants.present? %>
+                  <td class="table_td w-75"><%= variant.producers_variants.pluck(:inventory).sum %></td>
+                <% else %>
+                  <td class="table_td w-75"><%= variant.inventory%></td>
+                <% end %>
 
                 <td class="table_td icon_delete">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">

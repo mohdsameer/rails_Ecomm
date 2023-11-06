@@ -1,8 +1,14 @@
 class Variant < ApplicationRecord
 	belongs_to :product
-	# Attachements
+# Attachements
 	has_one_attached :image
 	has_paper_trail
+
+#Association
+	has_many :producers_variants
+	has_many :producers, through: :producers_variants
+
+	accepts_nested_attributes_for :producers_variants
 
 	def user_type
 		id = versions&.last&.whodunnit
