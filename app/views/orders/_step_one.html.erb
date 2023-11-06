@@ -6,7 +6,7 @@
           <div class="icon_wrap">
             <%= image_tag "truck" %>
             <% if order.producer.present? %>
-              <div class="icon_text">Ships from <%=order.producer.name%></div>
+              <div class="icon_text">Ships from <%= order.producer.name %></div>
             <% else %>
               <a href="<%= all_producer_orders_path %>"  data-turbo-frame="all-producer-order-modal" class= "choose_pro_link">
                 <span>Choose Producer</span>
@@ -112,7 +112,7 @@
                   </div>
                 </div>
               </div>
-            <%end%>
+            <% end %>
           <% end %>
         </div>
       </div>
@@ -215,10 +215,10 @@
       <% if !params[:producer_id].present? %>
         <div class="validation-error small text-danger">Please choose producer before continue</div>
       <% end %>
+
       <%= link_to 'Marked as Completed', 'javascript:;', class: "btn_wrap dark_green #{disabled_class}", data: { 'order-form-status-target': 'markComplete' } %>
 
       <%= link_to 'Save Order for Later', 'javascript:;', class: "btn_wrap light_green #{disabled_class}", data: { 'order-form-status-target': 'saveLater' } %>
-
 
       <%= link_to('javascript:;', class: "btn_wrap black_bg #{disabled_class}", data: { 'order-form-status-target': 'goShipping' }) do %>
         <%= image_tag("white_end", class: "end_icon") %>

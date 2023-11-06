@@ -2,138 +2,145 @@
   <%= form_tag order_path, method: :patch,  multipart: true, id: 'regForm', class: 'product_form', data: { controller: 'order-form-status', 'order-form-status-target': 'form' } do %>
     <div class="tab" id="step1">
       <div class="product_list_section">
-        <div class="ship_from_wrap">
-          <div class="icon_wrap">
-            <%= image_tag "truck" %>
-            <% if order.producer.present? %>
-              <div class="icon_text">Ships from <%= order.producer.name %></div>
-            <% else %>
-              <a href="<%= all_producer_orders_path %>"  data-turbo-frame="all-producer-order-modal" class= "choose_pro_link">
-                <span>Choose Producer</span>
-                <%= image_tag 'edit_row.png', alt: 'icon', class: 'choose_icon' %>
-              </a>
-            <% end %>
-          </div>
+        <% order.order_products.group_by(&:user_id).each do |producer_id, order_products| %>
+          <% if order_products.present? && producer_id.present? %>
+            <% producer = Producer.find(producer_id) %>
 
-          <%= image_tag 'ic_expand_more.png', alt: 'icon', class: 'toggle_icon' %>
-        </div>
-        <div class="collapse_data" data-controller="quantity" >
-          <% order.order_products.each do |order_product|%>
-            <input type="hidden" name="variant" class="variantId" id="<%= order_product.variant.id %>">
-            <div class="content_container">
-              <div class="left_wrap">
-                <div class="card_wrapper">
-                  <div class="card_head"><%=order_product.product.name %></div>
-                  <div class="card_img_wrapper">
-                    <div class="content_img">
-                      <div class="image_box">
-                        <% if order_product.variant.image.attached? %>
-                          <%= image_tag order_product.variant.image %>
-                        <% else %>
-                          <%= image_tag asset_path('dummy-product.png') %>
-                        <% end %>
-                      </div>
-                      <div class="btn_wrap">
-                        <div class="outline_btn"><%= order_product.variant.color %></div>
-                        <div class="plus_minus_wrap">
-                          <%= hidden_field_tag "variants[#{order_product.variant.id}]", order_product.product_quantity.to_i, class: "quantity_input qty", id: "quantity-input-#{order_product.id}", data: { 'quantity-target': 'quantityInput' } %>
-                          <span class="qty_num" data-quantity-target="quantityText" id="qty_num_<%= order_product.id %>">
-                            <% if order_product.product_quantity.present?%>
-                              <%= order_product.product_quantity %>
-                            <% else %>
-                              0
-                            <%end%>
-                          </span>
-                          <div class="button-container">
-                            <button class="cart-qty-minus" type="button" value="-" data-quantity-target="decrement" data-item-id="<%= order_product.id %>">-</button>
-                            <button class="cart-qty-plus" type="button" value="+" data-quantity-target="increment" data-item-id="<%= order_product.id %>">+</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card_wrapper">
-                  <div class="card_head">Front Side</div>
-                  <div class="card_img_wrapper">
-                    <div class="content_img shadow_box">
-                      <div class="image_box">
-                        <div class="avatar-upload">
-                          <div class="avatar-edit">
-                            <%= file_field_tag "front_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.variant.id}" %>
-                            <label for="front_side_image_<%= order_product.variant.id %>" class="upload_wrapper">
-                              <% if order_product.order.front_side_image.attached? %>
-                                <%= image_tag order_product.order.front_side_image, class: 'upload_icon' %>
-                              <% else %>
-                                <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
-                                <div class="image_type">PNG</div>
-                                <div class="upload_text">Upload Here</div>
-                              <% end %>
-                              <div class="click_here">Click here to upload</div>
-                            </label>
-                          </div>
-
-                          <div class="avatar-preview">
-                            <div id="imageFrontPreview_<%= order_product.variant.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                      <div class="btn_wrap">
-                        <%= link_to 'javascript:;', class: 'delete_img' do %>
-                          <%= image_tag 'ic_trash.png', alt: 'icon' %>
-                        <% end %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card_wrapper">
-                  <div class="card_head">Back Side</div>
-                  <div class="card_img_wrapper">
-                    <div class="content_img shadow_box">
-                      <div class="image_box">
-                        <div class="avatar-upload">
-                          <div class="avatar-edit">
-                            <%= file_field_tag "back_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{order_product.variant.id}" %>
-                            <label for="imageUpload_<%= order_product.variant.id %>" class="upload_wrapper">
-                              <% if order_product.order.back_side_image.attached? %>
-                                <%= image_tag order_product.order.back_side_image, class: 'upload_icon' %>
-                              <%else%>
-                                <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
-                                <div class="image_type">PNG</div>
-                                <div class="upload_text">Upload Here</div>
-                              <%end%>
-                              <div class="click_here">Click here to upload</div>
-                            </label>
-                          </div>
-
-                          <div class="avatar-preview">
-                            <div id="imageBackPreview_<%= order_product.variant.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="btn_wrap">
-                        <%= link_to 'javascript:;', class: 'delete_img' do %>
-                          <%= image_tag 'ic_trash.png', alt: 'icon' %>
-                        <% end %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="right_wrap">
-                <%= link_to remove_product_order_path(order, order_product_id: order_product.id), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
-                  <%= image_tag 'ic_trash.png', alt: 'icon', class: 'trash' %>
+            <div class="ship_from_wrap">
+              <div class="icon_wrap">
+                <%= image_tag "truck" %>
+                <% if producer.present? %>
+                  <div class="icon_text">Ships from <%= producer.name %></div>
+                <% else %>
+                  <a href="<%= all_producer_orders_path %>"  data-turbo-frame="all-producer-order-modal" class= "choose_pro_link">
+                    <span>Choose Producer</span>
+                    <%= image_tag 'edit_row.png', alt: 'icon', class: 'choose_icon' %>
+                  </a>
                 <% end %>
-                <%#= link_to 'javascript:;', class: 'link_box' do %>
-                  <%#= image_tag 'copy.png', alt: 'icon', class: 'copy' %>
-                <%# end %>
               </div>
+
+              <%= image_tag 'ic_expand_more.png', alt: 'icon', class: 'toggle_icon' %>
+            </div>
+
+            <div class="collapse_data" data-controller="quantity">
+              <% order_products.each do |order_product| %>
+                <input type="hidden" name="variant" class="variantId" id="<%= order_product.variant.id %>" />
+                <div class="content_container">
+                  <div class="left_wrap">
+                    <div class="card_wrapper">
+                      <div class="card_head"><%=order_product.product.name %></div>
+                      <div class="card_img_wrapper">
+                        <div class="content_img">
+                          <div class="image_box">
+                            <% if order_product.variant.image.attached? %>
+                              <%= image_tag order_product.variant.image %>
+                            <% else %>
+                              <%= image_tag asset_path('dummy-product.png') %>
+                            <% end %>
+                          </div>
+                          <div class="btn_wrap">
+                            <div class="outline_btn"><%= order_product.variant.color %></div>
+                            <div class="plus_minus_wrap">
+                              <%= hidden_field_tag "variants[#{order_product.variant.id}]", order_product.product_quantity.to_i, class: "quantity_input qty", id: "quantity-input-#{order_product.id}", data: { 'quantity-target': 'quantityInput' } %>
+                              <span class="qty_num" data-quantity-target="quantityText" id="qty_num_<%= order_product.id %>">
+                                <% if order_product.product_quantity.present?%>
+                                  <%= order_product.product_quantity %>
+                                <% else %>
+                                  0
+                                <% end %>
+                              </span>
+                              <div class="button-container">
+                                <button class="cart-qty-minus" type="button" value="-" data-quantity-target="decrement" data-item-id="<%= order_product.id %>">-</button>
+                                <button class="cart-qty-plus" type="button" value="+" data-quantity-target="increment" data-item-id="<%= order_product.id %>">+</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card_wrapper">
+                      <div class="card_head">Front Side</div>
+                      <div class="card_img_wrapper">
+                        <div class="content_img shadow_box">
+                          <div class="image_box">
+                            <div class="avatar-upload">
+                              <div class="avatar-edit">
+                                <%= file_field_tag "front_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.variant.id}" %>
+                                <label for="front_side_image_<%= order_product.variant.id %>" class="upload_wrapper">
+                                  <% if order_product.order.front_side_image.attached? %>
+                                    <%= image_tag order_product.order.front_side_image, class: 'upload_icon' %>
+                                  <% else %>
+                                    <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
+                                    <div class="image_type">PNG</div>
+                                    <div class="upload_text">Upload Here</div>
+                                  <% end %>
+                                  <div class="click_here">Click here to upload</div>
+                                </label>
+                              </div>
+
+                              <div class="avatar-preview">
+                                <div id="imageFrontPreview_<%= order_product.variant.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="btn_wrap">
+                            <%= link_to 'javascript:;', class: 'delete_img' do %>
+                              <%= image_tag 'ic_trash.png', alt: 'icon' %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card_wrapper">
+                      <div class="card_head">Back Side</div>
+                      <div class="card_img_wrapper">
+                        <div class="content_img shadow_box">
+                          <div class="image_box">
+                            <div class="avatar-upload">
+                              <div class="avatar-edit">
+                                <%= file_field_tag "back_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{order_product.variant.id}" %>
+                                <label for="imageUpload_<%= order_product.variant.id %>" class="upload_wrapper">
+                                  <% if order_product.order.back_side_image.attached? %>
+                                    <%= image_tag order_product.order.back_side_image, class: 'upload_icon' %>
+                                  <%else%>
+                                    <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
+                                    <div class="image_type">PNG</div>
+                                    <div class="upload_text">Upload Here</div>
+                                  <%end%>
+                                  <div class="click_here">Click here to upload</div>
+                                </label>
+                              </div>
+
+                              <div class="avatar-preview">
+                                <div id="imageBackPreview_<%= order_product.variant.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="btn_wrap">
+                            <%= link_to 'javascript:;', class: 'delete_img' do %>
+                              <%= image_tag 'ic_trash.png', alt: 'icon' %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="right_wrap">
+                    <%= link_to remove_product_order_path(order, order_product_id: order_product.id), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
+                      <%= image_tag 'ic_trash.png', alt: 'icon', class: 'trash' %>
+                    <% end %>
+                    <%#= link_to 'javascript:;', class: 'link_box' do %>
+                      <%#= image_tag 'copy.png', alt: 'icon', class: 'copy' %>
+                    <%# end %>
+                  </div>
+                </div>
+              <% end %>
             </div>
           <% end %>
-        </div>
+        <% end %>
       </div>
 
       <div class="product_list_section upload_file_wrap">
@@ -143,6 +150,7 @@
           </div>
           <%= image_tag 'ic_expand_more.png', alt: 'icon', class: 'toggle_icon' %>
         </div>
+
         <div class="collapse_data">
           <div class="upload_section">
             <div class="upload_box">
@@ -159,6 +167,7 @@
                 </div>
               <%end%>
             </div>
+
             <div class="upload_box">
               <div class="upload_header">Packing Slip</div>
               <% if @order.packing_slip_image.present?%>
@@ -173,6 +182,7 @@
                 </div>
               <%end%>
             </div>
+
             <div class="upload_box">
               <div class="upload_header">Gift Message Slip</div>
               <% if @order.gift_message_slip_image.present?%>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_03_092517) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_06_071437) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,6 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_092517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "variant_id"
+    t.integer "user_id"
     t.index ["order_id"], name: "index_order_products_on_order_id"
     t.index ["product_id"], name: "index_order_products_on_product_id"
   end
@@ -160,11 +161,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_092517) do
   create_table "shipping_methods", force: :cascade do |t|
     t.string "name"
     t.string "partner"
-    t.date "min_date"
-    t.date "max_date"
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "min_date"
+    t.date "max_date"
   end
 
   create_table "users", force: :cascade do |t|

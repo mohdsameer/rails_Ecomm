@@ -1,7 +1,8 @@
 <% variants.each do |variant| %>
   <div class="scroll_content check_content">
     <div class="image_text_wrap">
-      <input class="check_box" type="checkbox">
+      <%= check_box_tag 'variant_ids[]', variant.id, class: "check_box" %>
+
       <% if variant.image.attached? %>
         <%= image_tag variant.image %>
       <% else %>
@@ -9,8 +10,12 @@
       <% end %>
       <%= variant.color %>
     </div>
-    <a href="<%= all_producer_orders_path(variant: variant, product: @product, order: params[:order_id]) %>" data-turbo-frame="all-producer-order-modal" class="choose_pro_link">
-      <%= image_tag "right_arrow", alt: "icon", class: "rigth_arrow" %>
-    </a>
+
+    <!-- <a href="<%#= all_producer_orders_path(variant: variant, product: @product, order: params[:order_id]) %>"
+       data-turbo-frame="all-producer-order-modal"
+       class="choose_pro_link"> -->
+
+      <%#= image_tag "right_arrow", alt: "icon", class: "rigth_arrow" %>
+    <!-- </a> -->
   </div>
 <% end %>

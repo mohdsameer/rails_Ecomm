@@ -19,8 +19,7 @@ class OrdersController < ApplicationController
                                     :request_revision_update,
                                     :create_address,
                                     :order_update_shipping,
-                                    :remove_product,
-                                    :new_order_product]
+                                    :remove_product]
 
   def index
     per_page = params[:per_page] || 20
@@ -35,6 +34,101 @@ class OrdersController < ApplicationController
         render json: { html_data: html_data }
       end
     end
+  end
+
+  def new
+    @order = Order.create(order_status: :onhold, order_edit_status: :incomplete)
+    redirect_to edit_order_path(@order)
+  end
+
+  def create
+    if params[:submit_type].eql?('mark_complete')
+      params[:order_edit_status] = 1
+    else
+      params[:order_edit_status] = 0
+    end
+
+    if params[:variants].present?
+      @order = Order.create(order_params)
+      @order.shipping_label_image.attach(params[:shipping_label_image])
+      @order.packing_slip_image.attach(params[:packing_slip_image])
+      @order.gift_message_slip_image.attach(params[:gift_message_slip_image])
+      @order.design_file_1_image.attach(params[:design_file_1_image])
+      @order.design_file_2_image.attach(params[:design_file_2_image])
+      @order.additional_file_image.attach(params[:additional_file_image])
+      @order.front_side_image.attach(params[:front_side_image])
+      @order.back_side_image.attach(params[:back_side_image])
+    end
+
+    params[:variants].each do |id, quantity|
+      if quantity.to_i > 0
+        product = Variant.find(id).product
+        @order.order_products.create(variant_id: id.to_i, product_quantity: quantity.to_i, product_id: product.id)
+      end
+    end
+
+    respond_to do |format|
+      format.turbo_stream do
+        if params[:submit_type].eql?('shipping')
+          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
+        else
+          redirect_to orders_path
+        end
+      end
+
+      format.html { redirect_to orders_path }
+    end
+  end
+
+  def edit
+    @order = Order.find_by(id: params[:id])
+    @producers = Producer.all
+  end
+
+  def update
+    if params[:request_type] == "Confirm"
+      @order.update(order_edit_status: 1)
+    elsif params[:request_type] == "Reject"
+      @order.update(order_status: 1, reject_reason: params[:order][:reject_reason])
+    elsif params[:request_type] == "Cancel"
+      @order.update(order_status: 4)
+    else
+      if params[:submit_type].eql?('mark_complete')
+        params[:order_edit_status] = 1
+      else
+        params[:order_edit_status] = 0
+      end
+
+      @order.update(order_edit_status: params[:order_edit_status], additional_comment: params[:additional_comment])
+      @order.shipping_label_image.attach(params[:shipping_label_image])
+      @order.packing_slip_image.attach(params[:packing_slip_image])
+      @order.gift_message_slip_image.attach(params[:gift_message_slip_image])
+      @order.design_file_1_image.attach(params[:design_file_1_image])
+      @order.design_file_2_image.attach(params[:design_file_2_image])
+      @order.additional_file_image.attach(params[:additional_file_image])
+      @order.front_side_image.attach(params[:front_side_image])
+      @order.back_side_image.attach(params[:back_side_image])
+
+      params[:variants].each do |id, quantity|
+        @order.order_products.find_by(variant_id: id)&.update(product_quantity: quantity.to_i)
+      end
+    end
+
+    respond_to do |format|
+      format.turbo_stream do
+        if params[:submit_type].eql?('shipping')
+          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
+        else
+          redirect_to orders_path
+        end
+      end
+      format.html { redirect_to orders_path }
+    end
+  end
+
+  def destroy
+    @order.destroy
+    redirect_to orders_path
   end
 
   def assignee
@@ -70,49 +164,6 @@ class OrdersController < ApplicationController
 
   def assigne_remove
     AssignDetail.find_by(id: params[:id]).destroy
-  end
-
-  def new
-    @order = Order.new
-    @products = Product.all
-    @shipping_methods = ShippingMethod.all
-  end
-
-  def create
-    if params[:submit_type].eql?('mark_complete')
-      params[:order_edit_status] = 1
-    else
-      params[:order_edit_status] = 0
-    end
-
-    if params[:variants].present?
-      @order = Order.create(order_params)
-      @order.shipping_label_image.attach(params[:shipping_label_image])
-      @order.packing_slip_image.attach(params[:packing_slip_image])
-      @order.gift_message_slip_image.attach(params[:gift_message_slip_image])
-      @order.design_file_1_image.attach(params[:design_file_1_image])
-      @order.design_file_2_image.attach(params[:design_file_2_image])
-      @order.additional_file_image.attach(params[:additional_file_image])
-      @order.front_side_image.attach(params[:front_side_image])
-      @order.back_side_image.attach(params[:back_side_image])
-    end
-    params[:variants].each do |id, quantity|
-      if quantity.to_i > 0
-        product_id = Variant.find(id).product
-        @order.order_products.create(variant_id: id.to_i, product_quantity: quantity.to_i,product_id: product_id.id)
-      end
-    end
-
-    respond_to do |format|
-      format.turbo_stream do
-        if params[:submit_type].eql?('shipping')
-          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
-        else
-          redirect_to orders_path
-        end
-      end
-      format.html { redirect_to orders_path }
-    end
   end
 
   def create_address
@@ -154,6 +205,7 @@ class OrdersController < ApplicationController
                else
                  Message.new(from: current_user.id, to: @order.producer.id)
                end
+
     @user = User.find_by(id: @message.to)
   end
 
@@ -162,65 +214,21 @@ class OrdersController < ApplicationController
     @message.save
   end
 
-  def edit
-    @order = Order.find_by(id: params[:id])
-  end
-
-  def update
-    if params[:request_type] == "Confirm"
-      @order.update(order_edit_status: 1)
-    elsif params[:request_type] == "Reject"
-      @order.update(order_status: 1, reject_reason: params[:order][:reject_reason])
-    elsif params[:request_type] == "Cancel"
-      @order.update(order_status: 4)
-    else
-
-      if params[:submit_type].eql?('mark_complete')
-        params[:order_edit_status] = 1
-      else
-        params[:order_edit_status] = 0
-      end
-      @order.update(order_edit_status: params[:order_edit_status], additional_comment: params[:additional_comment])
-
-      @order.shipping_label_image.attach(params[:shipping_label_image])
-      @order.packing_slip_image.attach(params[:packing_slip_image])
-      @order.gift_message_slip_image.attach(params[:gift_message_slip_image])
-      @order.design_file_1_image.attach(params[:design_file_1_image])
-      @order.design_file_2_image.attach(params[:design_file_2_image])
-      @order.additional_file_image.attach(params[:additional_file_image])
-      @order.front_side_image.attach(params[:front_side_image])
-      @order.back_side_image.attach(params[:back_side_image])
-
-      params[:variants].each do |id, quantity|
-      if quantity.to_i > 0
-        product_id = Variant.find(id).product
-        @order.order_products.update(variant_id: id.to_i, product_quantity: quantity.to_i,product_id: product_id.id)
-      end
-    end
-      respond_to do |format|
-        format.turbo_stream do
-          if params[:submit_type].eql?('shipping')
-            render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
-          else
-            redirect_to orders_path
-          end
-        end
-        format.html { redirect_to orders_path }
-      end
-    end
-  end
-
   def new_order_product
-    @order.order_products.create(variant_id: params[:variant], product_id: params[:product])
+    @order  = Order.find(params[:order_id])
+
+    params[:variant_ids].each do |variant_id|
+      @order.order_products.create(variant_id: variant_id,
+                                   product_id: params[:product_id],
+                                   user_id:    params[:producer_id],
+                                   product_quantity: 1)
+    end
+
     redirect_to edit_order_path(@order)
   end
 
   def delete_confirmation
     @order = Order.find_by(id: params[:id])
-  end
-
-  def destroy
-    @order.destroy
   end
 
   def download
@@ -257,6 +265,7 @@ class OrdersController < ApplicationController
   end
 
   def add_new_product
+    @order = Order.find(params[:order_id])
     @products = Product.search(params)
 
     respond_to do |format|
@@ -269,6 +278,7 @@ class OrdersController < ApplicationController
   end
 
   def select_variant
+    @order = Order.find(params[:order_id])
     @product = Product.find_by(id: params[:product_id])
     @variants = @product.variants
 
@@ -286,7 +296,10 @@ class OrdersController < ApplicationController
   end
 
   def all_producer
-    @producers = Producer.all
+    @variant_ids = params[:variant_ids]
+    @product_id  = params[:product_id]
+    @order_id    = params[:order_id]
+    @producers   = Producer.all
   end
 
   def on_hold_popup

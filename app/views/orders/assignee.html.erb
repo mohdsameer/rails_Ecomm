@@ -4,13 +4,13 @@
       <div id="assign_order_pop" class="assign_order_pop" data-controller="modals" data-modals-modal-id-value="assign_order_pop">
         <%= image_tag "close", alt:"icon", class:"close_icon" %>
         <div class="assign_head">
-          <%= image_tag "ic_user_group", alt:"icon", class:"assign_icon" %>
+          <%= image_tag "ic_user_group", alt: "icon", class: "assign_icon" %>
           Assign order to
         </div>
         <%= form_for @assigne, url: assignee_create_order_path(@order) do |a| %>
           <div class="check_list">
             <%= a.collection_radio_buttons(:designer, @designers, :id, :name) do |b| %>
-                      <%= b.label { b.radio_button + b.text } %>
+              <%= b.label { b.radio_button + b.text } %>
             <% end %>
           </div>
 
