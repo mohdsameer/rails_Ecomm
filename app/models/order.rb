@@ -68,4 +68,32 @@ class Order < ApplicationRecord
   def order_due_date
     distance_of_time_in_words(Time.current, assign_details.last.due_date)
   end
+
+  def package_dimensions
+    dimensions  = nil
+    total_items = order_products.size
+
+    if dimensions_is_manual
+      dimensions = "#{custom_length}x#{custom_height}x#{custom_width}, #{custom_weight_lb}lb#{custom_weight_oz}oz"
+    else
+      matched_shipping_label = nil
+
+      products.each do |product|
+        if product.shipping_labels.present?
+          product.shipping_labels.each do |shipping_label|
+            if shipping_label.item_quantity_min <= total_items && shipping_label.item_quantity_max >= total_items
+              matched_shipping_label = shipping_label
+              break
+            end
+          end
+        end
+      end
+
+      if matched_shipping_label.present?
+        dimensions = matched_shipping_label.dimenstions_to_str
+      end
+    end
+
+    dimensions
+  end
 end
