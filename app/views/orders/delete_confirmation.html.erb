@@ -9,7 +9,7 @@
           </div>
           <div class="middle_text">Are you sure you want to delete this order? Deleted orders can not be retrieved.</div>
           <div class="btn_group">
-            <%= link_to 'Delete',order_path(@order), data: { 'turbo-method': :delete }, class: 'orange_btn', data_turbo_frame: 'destroy-order-modal' %>
+            <%= link_to 'Delete', order_path(@order), data: { 'turbo-method': :delete, 'turbo-frame': '_top' }, class: 'orange_btn' %>
             <button class="outline_btn">Cancel</button>
           </div>
         </div>
