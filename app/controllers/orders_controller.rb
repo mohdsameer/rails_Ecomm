@@ -93,14 +93,13 @@ class OrdersController < ApplicationController
     elsif params[:request_type] == "Cancel"
       @order.update(order_status: 4)
     else
-
       if params[:submit_type].eql?('mark_complete')
         params[:order_edit_status] = 1
       else
         params[:order_edit_status] = 0
       end
-      @order.update(order_edit_status: params[:order_edit_status], additional_comment: params[:additional_comment])
 
+      @order.update(order_edit_status: params[:order_edit_status], additional_comment: params[:additional_comment])
       @order.shipping_label_image.attach(params[:shipping_label_image])
       @order.packing_slip_image.attach(params[:packing_slip_image])
       @order.gift_message_slip_image.attach(params[:gift_message_slip_image])
@@ -111,21 +110,19 @@ class OrdersController < ApplicationController
       @order.back_side_image.attach(params[:back_side_image])
 
       params[:variants].each do |id, quantity|
-      if quantity.to_i > 0
-        product_id = Variant.find(id).product
-        @order.order_products.update(variant_id: id.to_i, product_quantity: quantity.to_i,product_id: product_id.id)
+        @order.order_products.find_by(variant_id: id)&.update(product_quantity: quantity.to_i)
       end
     end
-      respond_to do |format|
-        format.turbo_stream do
-          if params[:submit_type].eql?('shipping')
-            render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
-          else
-            redirect_to orders_path
-          end
+
+    respond_to do |format|
+      format.turbo_stream do
+        if params[:submit_type].eql?('shipping')
+          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
+        else
+          redirect_to orders_path
         end
-        format.html { redirect_to orders_path }
       end
+      format.html { redirect_to orders_path }
     end
   end
 
