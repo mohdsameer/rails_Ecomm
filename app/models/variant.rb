@@ -1,11 +1,11 @@
 class Variant < ApplicationRecord
 	belongs_to :product
-# Attachements
+	# Attachements
 	has_one_attached :image
 	has_paper_trail
 
-#Association
-	has_many :producers_variants
+	#Association
+	has_many :producers_variants, dependent: :destroy
 	has_many :producers, through: :producers_variants
 
 	accepts_nested_attributes_for :producers_variants
