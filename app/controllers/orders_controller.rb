@@ -180,7 +180,7 @@ class OrdersController < ApplicationController
 
   def order_update_shipping
     shipping_method_id = params[:shipping_method_id]
-    order_edit_status = params[:commit] == "Save Later" ? 0 : 1
+    order_edit_status = params[:submit_type] == "save_later" ? 0 : 1
     priority = params[:priority].present? ? 1 : 0
     order_status = order_edit_status == 1 ? 2 : 0
 
