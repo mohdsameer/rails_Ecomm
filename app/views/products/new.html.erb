@@ -36,10 +36,10 @@
     <%= form_for @product, html: { multipart: true } do |f| %>
       <div class="group_info_section">
         <div class="image_info">
-          <div class="info_content">
-            <%= image_tag "illustration_upload", class: "info_img", id: "main-product-image" %>
+          <div class="info_content" data-controller="image-upload">
+            <%= image_tag "illustration_upload", class: "info_img", id: "main-product-image", data: { 'image-upload-target': 'imageTag' } %>
             <h5 class="info_head">Main Product Image</h5>
-            <%= f.file_field :image, class: "file_type" %>
+            <%= f.file_field :image, class: "file_type", data: { 'image-upload-target': 'imageInput' } %>
             <a class="info_link" href="#">Drop files here or click <span>browse</span> thorough your machine</a>
           </div>
         </div>

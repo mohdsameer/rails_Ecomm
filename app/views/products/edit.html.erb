@@ -37,15 +37,11 @@
       <div class="group_info_section">
 
         <div class="image_info">
-          <div class="info_content">
-            <% if f.object.image.attached? %>
-              <%= image_tag f.object.image, class: "uploaded-image", id: "main-product-image" %>
-            <% else %>
-              <%= image_tag "illustration_upload", class: "info_img", id: "main-product-image" %>
-              <h5 class="info_head">Main Product Image</h5>
-            <% end %>
-
-            <%= f.file_field :image, class: "file_type" %>
+          <div class="info_content" data-controller="image-upload">
+            <% product_main_image = f.object.image.attached? ? f.object.image : 'illustration_upload' %>
+            <%= image_tag product_main_image, class: "info_img", id: "main-product-image", data: { 'image-upload-target': 'imageTag' } %>
+            <h5 class="info_head">Main Product Image</h5>
+            <%= f.file_field :image, class: "file_type", data: { 'image-upload-target': 'imageInput' } %>
             <a class="info_link" href="#">Drop files here or click <span>browse</span> thorough your machine</a>
           </div>
         </div>
