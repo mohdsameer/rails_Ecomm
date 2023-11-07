@@ -3,8 +3,9 @@
     <div class="send_msg_wrapper">
       <div class="send_msg_pop_box">
 
-        <h5 class="send_head">Send a Message to <%= @user.name %></h5>
-          <%= form_for @message, html: {class: 'w-100' }, url: message_create_order_path(@order) do |message| %>
+        <h5 class="send_head">Send a Message to producer </h5>
+        <!-- <h5 class="send_head">Send a Message to <%#= @users.name %></h5> -->
+          <%= form_for @messages, html: {class: 'w-100' }, url: message_create_order_path(@order) do |message| %>
             <div class="send_text w-100">
               <%= message.label :Add_a_Comment %>
               <%= message.text_area :review_message ,class: "w-100", placeholder: "A product was already printed. Please let me know how to proceed with this order" %>

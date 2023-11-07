@@ -239,13 +239,18 @@ class OrdersController < ApplicationController
   end
 
   def send_message
-    @message = if current_user.type == "Producer"
-                 Message.new(from: current_user.id, to: Admin.first.id)
-               else
-                 Message.new(from: current_user.id, to: @order.producer.id)
-               end
-
-    @user = User.find_by(id: @message.to)
+     @messages = []
+    if current_user.type == "Producer"
+     @message = Message.new(from: current_user.id, to: Admin.first.id)
+     @messages << @message
+    else
+      @order.order_products.each do |order_product|
+       @message =  Message.new(from: current_user.id, to: order_product.producer.id)
+       @messages << @message
+      end
+    end
+    # @users = User.where(id: @messages.map(&:to))
+    # @user = User.find_by(id: @message.to)
   end
 
   def message_create
