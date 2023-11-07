@@ -108,6 +108,8 @@ GEM
     cocoon (1.2.15)
     coderay (1.1.3)
     concurrent-ruby (1.2.2)
+    countries (5.7.0)
+      unaccent (~> 0.3)
     crass (1.0.6)
     date (3.3.3)
     debug (1.8.0)
@@ -305,6 +307,7 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unaccent (0.4.0)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
@@ -339,6 +342,7 @@ DEPENDENCIES
   bootstrap
   capybara
   cocoon
+  countries (~> 5.7)
   debug
   dotenv-rails
   image_processing (~> 1.2)
