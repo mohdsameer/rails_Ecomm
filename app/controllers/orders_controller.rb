@@ -21,7 +21,8 @@ class OrdersController < ApplicationController
                                     :order_update_shipping,
                                     :remove_product,
                                     :set_dimensions,
-                                    :update_dimensions]
+                                    :update_dimensions,
+                                    :download_slip]
 
   def index
     per_page = params[:per_page] || 20
@@ -137,6 +138,19 @@ class OrdersController < ApplicationController
   def destroy
     @order.destroy
     redirect_to orders_path
+  end
+
+  def download_slip
+    respond_to do |format|
+      format.pdf { send_pdf }
+    end
+  end
+
+  def send_pdf
+    send_data @order.receipt.render,
+      filename:    "#{@order.created_at.strftime("%Y-%m-%d")}-receipt.pdf",
+      type:        "application/pdf",
+      disposition: :attachment
   end
 
   def set_dimensions; end

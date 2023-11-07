@@ -77,7 +77,7 @@
                       <% if order.assign_details.last.price_for_total.present? %>
                         <span class="price">$<%= order.assign_details.last.price_for_total %></span>
                       <% else %>
-                        <span class="price">$<%= order.assign_details.last.price_per_design * (order.order_products.pluck(:product_quantity).compact.sum) %></span>
+                        <span class="price">$<%= order.assign_details&.last&.price_per_design.to_f * order.order_products.pluck(:product_quantity).compact.sum.to_i %></span>
                       <% end %>
 
                       <%= image_tag "complete", alt:"icon", class:"complete_icon" %>  

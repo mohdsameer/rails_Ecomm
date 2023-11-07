@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       delete :remove_product
       get :set_dimensions
       post :update_dimensions
+      get :download_slip
     end
 
     collection do
