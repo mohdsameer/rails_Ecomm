@@ -8,32 +8,32 @@
         </div>
 
         <%= form_tag update_dimensions_order_path(@order), data: { 'turbo-frame': '_top' } do %>
-          <div class="form-group">
+          <div class="form-group px-4">
             <%= label_tag 'Length' %>
-            <%= number_field_tag :custom_length, class: 'form-control', placeholder: 'xx' %>
+            <%= number_field_tag :custom_length, @order.custom_length, step: 0.1, class: 'form-control', placeholder: 'xx' %>
           </div>
 
-          <div class="form-group">
+          <div class="form-group px-4">
             <%= label_tag 'Height' %>
-            <%= number_field_tag :custom_height, class: 'item_input', placeholder: 'xx' %>
+            <%= number_field_tag :custom_height, @order.custom_height, step: 0.1, class: 'form-control', placeholder: 'xx' %>
           </div>
 
-          <div class="form-group">
+          <div class="form-group px-4">
             <%= label_tag 'Width' %>
-            <%= number_field_tag :custom_width, class: 'item_input', placeholder: 'xx' %>
+            <%= number_field_tag :custom_width, @order.custom_width, step: 0.1, class: 'form-control', placeholder: 'xx' %>
           </div>
 
-          <div class="form-group">
+          <div class="form-group px-4">
             <%= label_tag 'Weight LB' %>
-            <%= number_field_tag :custom_weight_lb, class: 'item_input', placeholder: 'xx' %>
+            <%= number_field_tag :custom_weight_lb, @order.custom_weight_lb, step: 0.1, class: 'form-control', placeholder: 'xx' %>
           </div>
 
-          <div class="form-group">
+          <div class="form-group px-4">
             <%= label_tag 'Weight OZ' %>
-            <%= number_field_tag :custom_weight_oz, class: 'item_input', placeholder: 'xx' %>
+            <%= number_field_tag :custom_weight_oz, @order.custom_weight_oz, step: 0.1, class: 'form-control', placeholder: 'xx' %>
           </div>
 
-          <%= submit_tag 'save' %>
+          <%= submit_tag 'save', class: 'btn btn-success ms-4 my-4' %>
         <% end %>
       </div>
     </div>

@@ -75,15 +75,15 @@
               <td class="table_td"><%= ppp.object&.producer&.company_name %></td>
               <td class="table_td"><%= ppp.object&.producer&.location %></td>
               <td class="table_td">
-                <%= ppp.number_field :blank_price %>
+                <%= ppp.number_field :blank_price, step: 0.1 %>
                 <%#= @product_producer_pricing.set_default_price %>
               </td>
               <td class="table_td">
-                <%= ppp.number_field :front_side_print_price %>
+                <%= ppp.number_field :front_side_print_price, step: 0.1 %>
                 <%#= @product_producer_pricing.set_default_price %>
               </td>
               <td class="table_td">
-                <%= ppp.number_field :back_side_print_price %>
+                <%= ppp.number_field :back_side_print_price, step: 0.1 %>
                 <%#= @product_producer_pricing.set_default_price %>
               </td>
             </tr>
@@ -153,14 +153,14 @@
                   <div class="input_group min_max_input">
                     <div class="group_label">Min</div>
                     <div class="input_row">
-                      <%= shipping_label.number_field :item_quantity_min, class: 'item_input', placeholder: 'xx' %>
+                      <%= shipping_label.number_field :item_quantity_min, step: 1, class: 'item_input', placeholder: 'xx' %>
                     </div>
                   </div>
 
                   <div class="input_group min_max_input">
                     <div class="group_label">Max</div>
                     <div class="input_row">
-                      <%= shipping_label.number_field :item_quantity_max, class: 'item_input', placeholder: 'xx' %>
+                      <%= shipping_label.number_field :item_quantity_max, step: 1, class: 'item_input', placeholder: 'xx' %>
                     </div>
                   </div>                
                 </div>
@@ -172,7 +172,7 @@
                     <div class="group_label">Length</div>
                     <div class="input_row">
                       <div class="row_label">in</div>
-                      <%= shipping_label.number_field :length, class: 'item_input', placeholder: 'xx' %>
+                      <%= shipping_label.number_field :length, step: 0.1, class: 'item_input', placeholder: 'xx' %>
                     </div>
                   </div>
 
@@ -180,7 +180,7 @@
                     <div class="group_label">Height</div>
                     <div class="input_row">
                       <div class="row_label">in</div>
-                      <%= shipping_label.number_field :height, class: 'item_input', placeholder: 'xx' %>
+                      <%= shipping_label.number_field :height, step: 0.1, class: 'item_input', placeholder: 'xx' %>
                     </div>
                   </div>
 
@@ -188,7 +188,7 @@
                     <div class="group_label">Width</div>
                     <div class="input_row">
                       <div class="row_label">in</div>
-                      <%= shipping_label.number_field :width, class: 'item_input', placeholder: 'xx' %>
+                      <%= shipping_label.number_field :width, step: 0.1, class: 'item_input', placeholder: 'xx' %>
                     </div>
                   </div>
                 </div>
@@ -200,7 +200,7 @@
                     <div class="group_label">Weight</div>
                     <div class="input_row">
                       <div class="row_label">lb</div>
-                      <%= shipping_label.number_field :weight_lb, class: 'item_input', placeholder: 'xx' %>
+                      <%= shipping_label.number_field :weight_lb, step: 0.1, class: 'item_input', placeholder: 'xx' %>
                     </div>
                   </div>
 
@@ -208,7 +208,7 @@
                     <div class="group_label">Weight</div>
                     <div class="input_row">
                       <div class="row_label">oz</div>
-                      <%= shipping_label.number_field :weight_oz, class: 'item_input', placeholder: 'xx' %>
+                      <%= shipping_label.number_field :weight_oz, step: 0.1, class: 'item_input', placeholder: 'xx' %>
                     </div>
                   </div>
                 </div>

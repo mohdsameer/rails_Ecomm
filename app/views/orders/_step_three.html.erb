@@ -32,33 +32,38 @@
                 <div class="selected_head">
                   <a class="edit_link" href="#">Edit</a>
                 </div>
+
                 <% sum_result = 0 %>
+
                 <% @order.order_products.each do |order_product| %>
                   <div class="info_left_section">
                     <div class="left_sku"><%= order_product.product.brand_name %></div>
-                    <div class="left_head"><%= order_product.product.name%></div>
+                    <div class="left_head"><%= order_product.product.name %></div>
+
                     <div class="text_with_img_section">
                       <div class="text_section">
-                        <div class="text">Quantity: <span><%= order_product.product_quantity%></span></div>
-                        <div class="text">Color: <span><%= order_product.variant.color%></span></div>
-                        <div class="text">Size: <span><%= order_product.variant.size%> OZ</span></div>
+                        <div class="text">Quantity: <span><%= order_product.product_quantity %></span></div>
+                        <div class="text">Color: <span><%= order_product.variant.color %></span></div>
+                        <div class="text">Size: <span><%= order_product.variant.size %> OZ</span></div>
                         <div class="text">Ships From: <span><%= order_product.producer.name %></span></div>
                       </div>
+
                       <div class="img_section">
                         <%= display_image(order_product.order.front_side_image, "trans_frame") %>
                         <%= display_image(order_product.order.back_side_image, "trans_frame") %>
                         <%= display_image(order_product.variant.image, "trans_frame") %>
                       </div>
                     </div>
+
                     <div class="cost_section">
                       <div>Production costs</div>
                       <% record = order_product.product.product_producer_pricings.find_by(user_id: order_product.producer.id) %>
-                      <% cost = (record.front_side_print_price + record.back_side_print_price)*order_product.product_quantity%>
+                      <% cost = (record.front_side_print_price + record.back_side_print_price)*order_product.product_quantity %>
                       <% sum_result += cost %>
                       <div>USD <%= cost %></div>
                     </div>
                   </div>
-                <%end%>
+                <% end %>
               </div>
             </div>
 
