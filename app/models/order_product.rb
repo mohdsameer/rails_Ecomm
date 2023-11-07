@@ -6,6 +6,6 @@ class OrderProduct < ApplicationRecord
 
   def max_inventory
     producer_variant = ProducersVariant.find_by(user_id: producer.id, variant_id: variant.id)
-    producer_variant.inventory
+    producer_variant&.inventory.to_i
   end
 end
