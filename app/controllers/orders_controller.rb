@@ -114,7 +114,8 @@ class OrdersController < ApplicationController
       @order.back_side_image.attach(params[:back_side_image])
 
       params[:variants].each do |id, quantity|
-        @order.order_products.find_by(variant_id: id)&.update(product_quantity: quantity.to_i)
+        product = Variant.find(id).product
+        @order.order_products.find_by(variant_id: id)&.update(variant_id: id.to_i, product_quantity: quantity.to_i, product_id: product.id)
       end
     end
 
@@ -135,9 +136,7 @@ class OrdersController < ApplicationController
     redirect_to orders_path
   end
 
-  def set_dimensions
-
-  end
+  def set_dimensions; end
 
   def update_dimensions
     @order.update(dimensions_params)

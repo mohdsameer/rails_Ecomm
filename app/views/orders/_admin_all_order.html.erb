@@ -53,18 +53,17 @@
               <div class="order_td seven">
                 <div class="order_status_icon">
                   <div>
-                    <%#= order.order_status %> 
-                    <% if order.order_status == "inproduction"%>
+                    <% if order.order_status == "inproduction" %>
                       In Production
                     <% elsif order.order_status == "onhold"%>
                       On Hold
-                    <% elsif order.order_status == "rejected"%>
+                    <% elsif order.order_status == "rejected" %>
                       Rejected 
-                    <% elsif order.order_status == "fullfilled"%>
+                    <% elsif order.order_status == "fullfilled" %>
                       Fullfilled
-                    <%else%>
+                    <% else %>
                       Cancel
-                    <%end%>
+                    <% end %>
                   </div>
                 </div>
               </div>
@@ -72,7 +71,14 @@
                 <div class="order_priority_icon">
                   <% if order.assign_details.present? %>
                     <div class="icon_with_name">
-                      <%=order.assignee_name%>
+
+                      <span class="assign_name"><%= order.assignee_name %></span>
+                      <% if order.assign_details.last.price_for_total.present? %>
+                        <span class="price">$<%= order.assign_details.last.price_for_total %></span>
+                      <% else %>
+                        <span class="price">$<%= order.assign_details.last.price_per_design * (order.order_products.pluck(:product_quantity).compact.sum) %></span>
+                      <% end %>
+
                       <%= image_tag "complete", alt:"icon", class:"complete_icon" %>  
                     </div>
                   <%else%>

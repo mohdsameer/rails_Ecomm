@@ -2,11 +2,17 @@
   <div class="scroll_content">
     <div class="image_text_wrap">
       <% if product.image.attached? %>
-        <%= image_tag product.image %>
+        <div class="img_box">
+          <%= image_tag product.image %>
+        </div>
       <% else %>
-        <%= image_tag asset_path('dummy-product.png') %>
+        <div class="img_box">
+          <%= image_tag asset_path('dummy-product.png') %>
+        </div>
       <% end %>
-      <%= product.name %>
+      <div class="img_text_box">
+        <div class="product_name"><%= product.name %></div>
+      </div>
     </div>
     <a href="<%= select_variant_orders_path(product_id: product.id, order_id: order.id) %>" data-turbo-frame="add-new-product-order-modal" class= "choose_pro_link">
       <%= image_tag "right_arrow", alt:"icon", class:"rigth_arrow" %>

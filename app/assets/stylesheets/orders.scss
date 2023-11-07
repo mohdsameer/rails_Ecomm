@@ -167,6 +167,20 @@
             }
           }
 
+          .assign_name {
+            width: 1.736vw;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          .price {
+            padding: 0 0.174vw;
+            border: 1px solid rgba(145, 158, 169, 0.5);
+            border-top: none;
+            border-bottom: none;
+          }
+
           .complete_icon {
             width: 0.926vw;
             height: 0.926vw;

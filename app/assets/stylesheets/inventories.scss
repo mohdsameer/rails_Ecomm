@@ -1604,6 +1604,22 @@
               width: 36.863vw;
               position: relative;
 
+              .img_box {
+                width: 5.787vw;
+                height: 5.787vw;
+                border: 1px solid #919EAB;
+                background: lightgray;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                  height: auto;
+                  width: 100%;
+                  object-fit: contain;
+                }
+              }
+
               .text_wrap {
                 color: var(--text-light-primary, #212B36);
                 font-size: 1.042vw;
