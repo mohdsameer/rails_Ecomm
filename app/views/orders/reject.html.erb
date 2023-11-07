@@ -12,7 +12,7 @@
             </div>
 
             <div class="reject_foot">
-              <%= o.submit 'Reject', class: "btn orange_btn text-light reject_btn" %>
+              <%= o.submit 'Reject', data: { 'turbo-frame': '_top' },class: "btn orange_btn text-light reject_btn" %>
               <button type="button" class="btn bg-light text-dark btn-outline-dark cancel_btn close_reject_popup">Cancel</button>
             </div>
           <%end%>

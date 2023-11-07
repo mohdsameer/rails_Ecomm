@@ -33,7 +33,13 @@
                 </div>
               </div>
               <div class="order_td three"><%= order.etsy_order_id %></div>
-              <div class="order_td four"><%= order.customer_name %></div>
+
+              <% if order.address.present?%>
+                <div class="order_td four"><%= order.address.fullname %></div>
+              <%else%>
+                <div class="order_td four">-</div>
+              <%end%>
+
               <div class="order_td five"><%= order.order_products.pluck(:product_quantity).sum %></div>
 
               <% ops = order.order_products %>

@@ -7,7 +7,7 @@
           Remove <%=@assigne.designer.name%> from Order <%=@assigne.id%>?
         </div>
         <div class="remove_body">
-          <%= link_to 'Remove',assigne_remove_order_path(@assigne), data: { 'turbo-method': :delete }, class: ' orange_btn ', data_turbo_frame: 'assignee-remove-order-modal' %>
+          <%= link_to 'Remove',assigne_remove_order_path(@assigne), data: { 'turbo-method': :delete, 'turbo-frame': '_top' }, class: ' orange_btn ', data_turbo_frame: 'assignee-remove-order-modal' %>
           <a href="#" class="outline_btn">cancel</a>
         </div>
       </div>

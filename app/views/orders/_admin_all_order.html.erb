@@ -35,6 +35,7 @@
               <%else%>
                 <div class="order_td four">-</div>
               <%end%>
+
               <% if order.order_products.pluck(:product_quantity).present? %>
                 <div class="order_td five"><%= order.order_products.pluck(:product_quantity).compact.sum %></div>
               <% else%>
@@ -147,7 +148,7 @@
                           </a>
                           <%unless order.assign_details.present? %>
 
-                            <a href="<%= assignee_order_path(order)%>" class="status_content">
+                            <a href="<%= assignee_order_path(order)%>" data-turbo-frame="assigne-order-modal" class="status_content">
                               <%= image_tag "ic_user_group", alt:"icon", class:"icon" %>
                               <div class="content_text">Assign Order</div>
                             </a>

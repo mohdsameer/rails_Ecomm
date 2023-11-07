@@ -177,6 +177,7 @@ class OrdersController < ApplicationController
 
   def assigne_remove
     AssignDetail.find_by(id: params[:id]).destroy
+    redirect_to orders_path, notice: 'Assigne Removed.'
   end
 
   def create_address
