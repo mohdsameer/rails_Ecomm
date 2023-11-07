@@ -62,10 +62,10 @@ class OrdersController < ApplicationController
       @order.back_side_image.attach(params[:back_side_image])
     end
 
-    params[:variants].each do |id, quantity|
-      if quantity.to_i > 0
-        product = Variant.find(id).product
-        @order.order_products.create(variant_id: id.to_i, product_quantity: quantity.to_i, product_id: product.id)
+    params[:producers_variants].each do |producer_id, variants|
+      variants.each do |variant_id, quantity|
+        product = Variant.find_by(id: variant_id).product
+        @order.order_products.find_by(variant_id: variant_id, user_id: producer_id)&.update(product_quantity: quantity.to_i)
       end
     end
 
@@ -113,9 +113,11 @@ class OrdersController < ApplicationController
       @order.front_side_image.attach(params[:front_side_image])
       @order.back_side_image.attach(params[:back_side_image])
 
-      params[:variants].each do |id, quantity|
-        product = Variant.find(id).product
-        @order.order_products.find_by(variant_id: id)&.update(variant_id: id.to_i, product_quantity: quantity.to_i, product_id: product.id)
+      params[:producers_variants].each do |producer_id, variants|
+        variants.each do |variant_id, quantity|
+          product = Variant.find_by(id: variant_id).product
+          @order.order_products.find_by(variant_id: variant_id, user_id: producer_id)&.update(product_quantity: quantity.to_i)
+        end
       end
     end
 
@@ -127,6 +129,7 @@ class OrdersController < ApplicationController
           redirect_to orders_path
         end
       end
+
       format.html { redirect_to orders_path }
     end
   end

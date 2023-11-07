@@ -8,20 +8,22 @@ export default class extends Controller {
  
     const incrementTarget = $(this.incrementTargets)
     const decrementTarget = $(this.decrementTargets)
-    // const quantityText = $(this.quantityTextTargets)
-    // const quantityInput = $(this.quantityInputTargets)
-
 
     incrementTarget.click(function(event) {
       const itemId = $(this).data().itemId;
       const quantityInput = $(`#quantity-input-${itemId}`);
       const quantityText  = $(`#qty_num_${itemId}`);
 
+      const maxQuantity     = quantityInput.data().maxValue
       const currentQuantity = quantityInput.val();
       const updatedQuantity = parseInt(currentQuantity) + 1
 
-      quantityInput.val(updatedQuantity);
-      quantityText.text(updatedQuantity);
+      if (updatedQuantity <= maxQuantity) {
+        quantityInput.val(updatedQuantity);
+        quantityText.text(updatedQuantity);
+      } else {
+        return false;
+      }
     });
 
     decrementTarget.click(function(event) {
@@ -32,29 +34,12 @@ export default class extends Controller {
       const currentQuantity = quantityInput.val();
       const updatedQuantity = parseInt(currentQuantity) - 1
 
-      quantityInput.val(updatedQuantity);
-      quantityText.text(updatedQuantity);
+      if (updatedQuantity >= 0) {
+        quantityInput.val(updatedQuantity);
+        quantityText.text(updatedQuantity);
+      } else {
+        return false;
+      }
     });
-
-    // markCompleteTarget.click(function(e) {
-    //   e.preventDefault();
-    //   formTarget.attr('data-turbo-frame', '_top');
-    //   submitTypeTarget.val('mark_complete');
-    //   submitTarget.click();
-    // })
-
-    // saveLaterTarget.click(function(e) {
-    //   e.preventDefault();
-    //   formTarget.attr('data-turbo-frame', '_top');
-    //   submitTypeTarget.val('save_later');
-    //   submitTarget.click();
-    // })
-
-    // goShippingTarget.click(function(e) {
-    //   e.preventDefault();
-    //   formTarget.attr('data-turbo-frame', null);
-    //   submitTypeTarget.val('shipping');
-    //   submitTarget.click();
-    // })
   }
 }
