@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       get :set_dimensions
       post :update_dimensions
       get :download_slip
+      get :get_states
     end
 
     collection do

@@ -12,25 +12,16 @@
             <%= text_field_tag :email, '', class: "input_field big_size", placeholder: "Email"%>
           </div>
           <div class="input_group">
-            <select class="input_field" 
-                    name="country">
 
-              <option value= ""selected>Country</option>
-              <option value="United States">United States</option>
-              <option value="Australia">Australia</option>
-              <option value="Canada">Canada</option>
-              <option value="China">China</option>
-              <option value="India">India</option>
+            <select class="input_field" name="country" id="country">
+              <option value="" selected>Country</option>
+              <% countries.each do |country| %>
+                <option value="<%= country.alpha2 %>"><%= country.iso_short_name %></option>
+              <% end %>
             </select>
-            <select class="input_field" 
-                    name= "state">
 
-              <option value="" selected>State</option>
-              <option value="Michigan">Michigan</option>
-              <option value="Oklahoma">Oklahoma</option>
-              <option value="Delaware">Delaware</option>
-              <option value="Maryland">Maryland</option>
-              <option value="Delhi">Delhi</option>
+            <select class="input_field" name="state" id="state">
+              <option value="">State</option>
             </select>
           </div>
             <%= text_field_tag :address1, '', class: "input_field big_size", placeholder: "address1"%>
@@ -48,3 +39,28 @@
     </div>
   <% end %>
 </turbo-frame>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  $('#country').change(function () {
+    var selectedCountry = $(this).val();
+
+    $.ajax({
+      type: 'GET',
+      url: '/orders/:id/get_states',
+      data: { country: selectedCountry },
+      dataType: 'json',
+      success: function (data) {
+        var stateDropdown = $('#state');
+        stateDropdown.empty();
+
+        $.each(data.states, function (key, value) {
+          stateDropdown.append($("<option></option>")
+            .attr("value", value.name)
+            .text(value.name));
+        });
+      }
+    });
+  });
+});
+</script>

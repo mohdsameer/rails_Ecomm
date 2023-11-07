@@ -81,7 +81,7 @@ class Order < ApplicationRecord
       products.each do |product|
         if product.shipping_labels.present?
           product.shipping_labels.each do |shipping_label|
-            if shipping_label.item_quantity_min <= total_items && shipping_label.item_quantity_max >= total_items
+            if shipping_label.item_quantity_min.to_i <= total_items.to_i && shipping_label.item_quantity_max.to_i >= total_items.to_i
               matched_shipping_label = shipping_label
               break
             end

@@ -94,3 +94,4 @@ gem 'rest-client'
 gem 'stripe'
 gem 'aws-sdk-s3'
 # gem 'receipts'
+gem "countries", "~> 5.7"

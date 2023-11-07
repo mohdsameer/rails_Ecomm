@@ -103,6 +103,7 @@ class OrdersController < ApplicationController
       else
         params[:order_edit_status] = 0
       end
+      @countries = ISO3166::Country.all
 
       @order.update(order_edit_status: params[:order_edit_status], additional_comment: params[:additional_comment])
       @order.shipping_label_image.attach(params[:shipping_label_image])
@@ -125,7 +126,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         if params[:submit_type].eql?('shipping')
-          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
+          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order, countries: @countries })
         else
           redirect_to orders_path
         end
@@ -133,6 +134,13 @@ class OrdersController < ApplicationController
 
       format.html { redirect_to orders_path }
     end
+  end
+
+  def get_states
+    selected_country = params[:country]
+    country = ISO3166::Country.find_country_by_alpha2(selected_country)
+    states = country.subdivisions
+    render json: { states: states }
   end
 
   def destroy
