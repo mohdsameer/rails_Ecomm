@@ -14,6 +14,7 @@ class Order < ApplicationRecord
 
   #Association
   has_many :order_products, dependent: :destroy
+  has_many :producers, through: :order_products, source: :producer
   has_many :variants, through: :order_products
   has_many :products, through: :order_products
   has_many :messages, dependent: :destroy
@@ -36,7 +37,7 @@ class Order < ApplicationRecord
 
   #method
   def self.search(params)
-    results = all.includes(:products)
+    results = all.includes(:products, :producers)
     if params[:query].present?
       results = results
                   .where('LOWER(products.name) LIKE :query OR LOWER(orders.customer_name) LIKE :query OR LOWER(orders.etsy_order_id) LIKE :query', query: "%#{params[:query].downcase}%")

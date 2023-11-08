@@ -30,6 +30,10 @@ class OrdersController < ApplicationController
     @orders = Order.search(params).paginate(page: params[:page], per_page: per_page)
     @products = Product.all
 
+    if current_user.type.eql?('Producer')
+      @orders = @orders.where(producers: { id: current_user.id })
+    end
+
     respond_to do |format|
       format.html
       format.js do
