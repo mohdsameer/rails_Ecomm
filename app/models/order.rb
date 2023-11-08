@@ -32,12 +32,12 @@ class Order < ApplicationRecord
   has_one_attached :design_file_1_image
   has_one_attached :design_file_2_image
   has_one_attached :additional_file_image
-  has_one_attached :front_side_image
-  has_one_attached :back_side_image
+  # has_one_attached :front_side_image
+  # has_one_attached :back_side_image
 
   #method
   def self.search(params)
-    results = all.includes(:products, :producers)
+    results = all.includes(:products, :order_products)
     if params[:query].present?
       results = results
                   .where('LOWER(products.name) LIKE :query OR LOWER(orders.customer_name) LIKE :query OR LOWER(orders.etsy_order_id) LIKE :query', query: "%#{params[:query].downcase}%")

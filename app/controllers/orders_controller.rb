@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
     @products = Product.all
 
     if current_user.type.eql?('Producer')
-      @orders = @orders.where(producers: { id: current_user.id })
+      @orders = @orders.where(order_products: { user_id: current_user.id })
     end
 
     respond_to do |format|
@@ -63,8 +63,8 @@ class OrdersController < ApplicationController
       @order.design_file_1_image.attach(params[:design_file_1_image])
       @order.design_file_2_image.attach(params[:design_file_2_image])
       @order.additional_file_image.attach(params[:additional_file_image])
-      @order.front_side_image.attach(params[:front_side_image])
-      @order.back_side_image.attach(params[:back_side_image])
+      # @order.front_side_image.attach(params[:front_side_image])
+      # @order.back_side_image.attach(params[:back_side_image])
     end
 
     params[:producers_variants].each do |producer_id, variants|
@@ -116,13 +116,26 @@ class OrdersController < ApplicationController
       @order.design_file_1_image.attach(params[:design_file_1_image])
       @order.design_file_2_image.attach(params[:design_file_2_image])
       @order.additional_file_image.attach(params[:additional_file_image])
-      @order.front_side_image.attach(params[:front_side_image])
-      @order.back_side_image.attach(params[:back_side_image])
+      # @order.front_side_image.attach(params[:front_side_image])
+      # @order.back_side_image.attach(params[:back_side_image])
 
       params[:producers_variants].each do |producer_id, variants|
         variants.each do |variant_id, quantity|
           product = Variant.find_by(id: variant_id).product
-          @order.order_products.find_by(variant_id: variant_id, user_id: producer_id)&.update(product_quantity: quantity.to_i)
+
+          order_product = @order.order_products.find_by(variant_id: variant_id, user_id: producer_id)
+          order_product.update(product_quantity: quantity.to_i)
+
+          front_side_image = params["front_side_image_#{order_product.variant_id}".to_sym]
+          back_side_image = params["back_side_image_#{order_product.variant_id}".to_sym]
+
+          if front_side_image.present?
+            order_product.front_side_image.attach(front_side_image)
+          end
+
+          if back_side_image.present?
+            order_product.back_side_image.attach(back_side_image)
+          end
         end
       end
     end
@@ -243,7 +256,7 @@ class OrdersController < ApplicationController
   end
 
   def send_message
-     @messages = []
+    @messages = []
     if current_user.type == "Producer"
      @message = Message.new(from: current_user.id, to: Admin.first.id)
      @messages << @message
@@ -280,13 +293,14 @@ class OrdersController < ApplicationController
   end
 
   def download
-    order = Order.find_by(id: params[:id])
+    order_product = OrderProduct.find_by(id: params[:id])
 
     if params[:type] == "gift"
+      order = Order.find_by(id: params[:id])
       send_data order.gift_message_slip_image.download, filename: 'image.png', type: 'image/png'
 
-    elsif order.front_side_image.attached?
-      send_data order.front_side_image.download, filename: 'image.png', type: 'image/png'
+    elsif order_product.front_side_image.attached?
+      send_data order_product.front_side_image.download, filename: 'image.png', type: 'image/png'
 
     else
       flash[:error] = 'Image not found.'
@@ -428,8 +442,6 @@ class OrdersController < ApplicationController
                   :design_file_1_image,
                   :design_file_2_image,
                   :additional_file_image,
-                  :front_side_image,
-                  :back_side_image,
                   :user_id)
   end
 

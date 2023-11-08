@@ -1925,7 +1925,7 @@
             margin-bottom: 0.926vw;
 
             .text_head {
-              color: var(--text-light-secondary, #637381);
+              color: #637381;
               font-size: 0.810vw;
               font-weight: 400;
               line-height: 1.273vw;
@@ -2067,6 +2067,7 @@
       background: #FFF;
       box-shadow: 0px 0.694vw 1.389vw -0.231vw rgba(145, 158, 171, 0.12), 0px 0px 0.116vw 0px rgba(145, 158, 171, 0.20);
       position: relative;
+      max-height: 95vh;
 
       .close_hold {
         position: absolute;
@@ -2153,7 +2154,7 @@
 
       .create_date {
         margin: 0.463vw 0px;
-        color: var(--text-light-secondary, #637381);
+        color: #637381;
         font-size: 0.694vw;
         font-weight: 400;
         line-height: 1.042vw;
@@ -2164,6 +2165,15 @@
         border-radius: 0.463vw;
         background: var(--grey-100, #F9FAFB);
         width: 76.215vw;
+        height: calc(95vh - 8.672vw);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
 
         .etsy_box {
           display: flex;
@@ -2299,7 +2309,7 @@
 
         .bottom_line {
           padding: 0.463vw;
-          color: var(--text-light-secondary, #637381);
+          color: #637381;
           text-align: center;
           font-size: 0.694vw;
           font-weight: 400;
