@@ -157,7 +157,7 @@
                               <%= image_tag "orange_user", alt:"icon", class:"icon" %>
                               <div class="content_text">Remove Assignee from the Order</div>
                             </a>
-                            <a href="#" class="status_content">
+                            <a href="<%= update_job_price_order_path(order)%>" data-turbo-frame="update-job-price-order-modal" class="status_content">
                               <%#= image_tag "ic_user_group", alt:"icon", class:"icon" %>
                               <div class="icon">$</div>
                               <div class="content_text">Update the job price for the assignee.</div>

@@ -1,0 +1,41 @@
+<turbo-frame id="update-job-price-order-modal">
+  <div class="update_job_price_model">
+    <div class="update_job_price_model_outer">
+      <div  id="edit_pop_wrap small_pop update_assign_pop" class="edit_pop_wrap small_pop update_assign_pop" data-controller="modals" data-modals-modal-id-value="dit_pop_wrap small_pop update_assign_pop">
+        <%= link_to 'javascript:;', class: 'close_update_model' do %>
+          <%= image_tag 'close.png', alt: 'icon' %>
+        <% end %>
+        <div class="edit_head mb-0 py-3">
+          <%= image_tag "ic_user_group", alt:"icon", class:"edit_icon" %>
+        Job Price for Assignee</div>
+        <div class="current_qty">
+          <%= image_tag "white_user", alt:"icon", class:"edit_icon" %>
+        Assignee: <%= @order.assignee_name %></div>
+        <div class="current_qty">Current Pricing: 
+          <% if @order.assign_details.last.price_for_total.present? %>
+            <span class="price">$<%= @order.assign_details.last.price_for_total %></span>
+          <% else %>
+            <span class="price">$<%= @order.assign_details&.last&.price_per_design.to_f * @order.order_products.pluck(:product_quantity).compact.sum.to_i %></span>
+          <% end %>
+        </div>
+        <%= form_for @assigne, url: assigne_update_price_order_path(@order, assigne_id: @assigne), data: { 'turbo-frame': '_top' } do |a| %>
+          <div class="input_section mb-3">
+            <div class="input_box">
+              <label class="label_top">Enter New Price per design</label>
+              <div class="input_text">
+                $<%= a.number_field :price_per_design, step: 0.1, placeholder: "2" %>
+              </div>
+            </div>
+            <div class="input_box">
+              <label class="label_top">Enter New Price for total</label>
+              <div class="input_text">
+                 $<%= a.number_field :price_for_total, step: 0.1, placeholder: "2" %>
+              </div>
+            </div>
+          </div> 
+          <%= a.submit 'Submit', class: 'inventory_edit_btn' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</turbo-frame>

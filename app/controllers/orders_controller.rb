@@ -22,7 +22,8 @@ class OrdersController < ApplicationController
                                     :remove_product,
                                     :set_dimensions,
                                     :update_dimensions,
-                                    :download_slip]
+                                    :download_slip,
+                                    :update_job_price]
 
   def index
     per_page = params[:per_page] || 20
@@ -214,6 +215,17 @@ class OrdersController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace('order-form-content', partial: 'orders/edit_step_one', locals: { order: @order })
       end
+    end
+  end
+
+  def update_job_price
+    @assigne = @order.assign_details.last
+  end
+
+  def assigne_update_price
+    @assigne = AssignDetail.find_by(id: params[:assigne_id])
+    if @assigne.update(assigne_params)
+      redirect_to orders_path, notice: 'Assigne Removed.'
     end
   end
 

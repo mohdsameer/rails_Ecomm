@@ -1506,10 +1506,55 @@
     font-weight: 700;
     line-height: 1.389vw;
     cursor: pointer;
+    border: none;
   }
 }
 
+.update_job_price_model {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
 
+  .update_job_price_model_outer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .update_assign_pop {
+      position: relative;
+
+      .close_update_model {
+        position: absolute;
+        right: -0.4vw;
+        top: -0.4vw;
+
+        img {
+          height: 1.389vw;
+        }
+      }
+    }
+
+    .input_section {
+      flex-direction: column;
+      padding: 0.926vw;
+      gap: 0.926vw;
+      height: auto;
+    }
+
+    .inventory_edit_btn {
+      width: 100%;
+    }
+  }
+}
 
 .edit_pop_wrap {
   &.small_pop {

@@ -45,6 +45,8 @@ Rails.application.routes.draw do
       post :update_dimensions
       get :download_slip
       get :get_states
+      get :update_job_price
+      patch :assigne_update_price
     end
 
     collection do

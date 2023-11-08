@@ -194,5 +194,9 @@ export default class extends Controller {
     $('.keep_it').click(function() {
       $('.cancel_popup_model').hide();
     })
+
+    $('.close_update_model').click(function() {
+      $('.update_job_price_model').hide();
+    });
   };
 };
