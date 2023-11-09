@@ -93,5 +93,6 @@ gem 'oauth2'
 gem 'rest-client'
 gem 'stripe'
 gem 'aws-sdk-s3'
-# gem 'receipts'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 gem "countries", "~> 5.7"

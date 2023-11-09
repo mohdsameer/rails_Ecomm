@@ -18,11 +18,11 @@
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M1.8335 7.99992C1.8335 4.31802 4.81826 1.33325 8.50016 1.33325C10.2683 1.33325 11.964 2.03563 13.2142 3.28587C14.4645 4.53612 15.1668 6.23181 15.1668 7.99992C15.1668 11.6818 12.1821 14.6666 8.50016 14.6666C4.81826 14.6666 1.8335 11.6818 1.8335 7.99992ZM8.50016 8.66659H11.1668C11.535 8.66659 11.8335 8.36811 11.8335 7.99992C11.8335 7.63173 11.535 7.33325 11.1668 7.33325H9.16683V5.33325C9.16683 4.96506 8.86835 4.66659 8.50016 4.66659C8.13197 4.66659 7.8335 4.96506 7.8335 5.33325V7.99992C7.8335 8.36811 8.13197 8.66659 8.50016 8.66659Z" fill="#FFD666"/>
                 </svg>
               <% else %>
-                <%= "Designer is not assign"%>
-              <%end%>
+                <%= "Designer is not assign" %>
+              <% end %>
             </div>
             <div>
-              <%= link_to download_slip_order_path(@order, format: :pdf), class: "slip_btn_wrap" do %>
+              <%= link_to order_slip_order_path(@order, format: :pdf), class: "slip_btn_wrap" do %>
                 Download slip
                 <svg class="slip_icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                   <path d="M4.5 19C4.5 18.4477 4.94772 18 5.5 18H19.5C20.0523 18 20.5 18.4477 20.5 19C20.5 19.5523 20.0523 20 19.5 20H5.5C4.94772 20 4.5 19.5523 4.5 19Z" fill="black"/>
@@ -62,7 +62,7 @@
 
             <% @order.order_products.each do |order_product| %>
               <div class="details_body">
-                <div class="left"><%=order_product.variant.id %></div>
+                <div class="left"><%= order_product.variant.id %></div>
                 <div class="right">
                   <div class="right_big"><%= order_product.product.name %></div>
                   <div class="right_small">(<%= order_product.product.name %>)</div>
@@ -75,9 +75,7 @@
               </div>
             <% end %>
           </div>
-
           <div class="bottom_line">...</div>
-
         </div>
       </div>
     </div>

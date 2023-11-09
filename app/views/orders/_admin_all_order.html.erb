@@ -80,15 +80,14 @@
                         <span class="price">$<%= order.assign_details&.last&.price_per_design.to_f * order.order_products.pluck(:product_quantity).compact.sum.to_i %></span>
                       <% end %>
 
-                      <%= image_tag "complete", alt:"icon", class:"complete_icon" %>  
+                      <%= image_tag "complete", alt: "icon", class: "complete_icon" %>  
                     </div>
-                  <%else%>
+                  <% else %>
                     <div class="icon_with_name not_assign">
-                      <%= link_to 'Assignee',assignee_order_path(order), data: {turbo_frame: "assigne-order-modal"}%>
-                      <%= image_tag "ic_user_group", alt:"icon", class:"complete_icon" %>  
-                        
-                      </div>
-                  <%end%>
+                      <%= link_to 'Assignee',assignee_order_path(order), data: {turbo_frame: "assigne-order-modal"} %>
+                      <%= image_tag "ic_user_group", alt:"icon", class:"complete_icon" %>
+                    </div>
+                  <% end %>
                 </div>
               </div>
               <div class="order_td nine"><%=order.order_date%></div>
@@ -142,12 +141,11 @@
                     <div class="menu_drop">
                       <div class="status_wrapper_pop">
                         <% if order.order_status == "onhold"%>
-                          <a href="#" class="status_content">
+                          <a href="<%= order_slip_order_path(order, format: :pdf) %>" class="status_content">
                             <%= image_tag "download", alt:"icon", class:"icon" %>
                             <div class="content_text">Download ETSY Packing Slip</div>
                           </a>
-                          <%unless order.assign_details.present? %>
-
+                          <% unless order.assign_details.present? %>
                             <a href="<%= assignee_order_path(order)%>" data-turbo-frame="assigne-order-modal" class="status_content">
                               <%= image_tag "ic_user_group", alt:"icon", class:"icon" %>
                               <div class="content_text">Assign Order</div>
@@ -166,7 +164,7 @@
                               <%= image_tag "info_outline", alt:"icon", class:"icon" %>
                               <div class="content_text">Request Revision from Assignee</div>
                             </a>
-                          <%end%>
+                          <% end %>
                         <% elsif order.order_status == "inproduction"%>
                           <div class="status_wrapper_pop">
                             <a href="<%=new_cancel_request_order_path(order)%>" data-turbo-frame="cancel-request-order-modal" class="status_content">
@@ -184,16 +182,18 @@
                           </div>
                         <% elsif order.order_status == "rejected"%>
                           <div class="edit_list_pop">
-                            <div class="edit_box">
+                            <%= link_to order_slip_order_path(order, format: :pdf), class: 'edit_box' do %>
                               <%= image_tag "download", alt:"icon", class:"icon" %>
                               <div class="edit_text">Print ETSY Packing Slip</div>
-                            </div>
+                            <% end %>
+
                             <div class="edit_box">
                               <a href="<%= request_revision_order_path(order)%>" data-turbo-frame="request-revision-order-modal" class="status_content">
                                 <%= image_tag "info_outline", alt:"icon", class:"icon" %>
                                 <div class="edit_text">Request Revision</div>
                               </a>
                             </div>
+
                             <div class="edit_box">
                               <a href="<%= assignee_remove_confirmation_order_path(order)%>" data-turbo-frame="assignee-remove-order-modal" class="status_content">
                                 <%= image_tag "orange_user", alt:"icon", class:"icon" %>
@@ -201,7 +201,7 @@
                               </a>
                             </div>
                           </div>
-                        <%end%>
+                        <% end %>
                         <a href="<%= new_order_path(order)%>" class="status_content">
                           <%= image_tag "bxs_copy", alt:"icon", class:"icon" %>
                           <div class="content_text">Duplicate Order

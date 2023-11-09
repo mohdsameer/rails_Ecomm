@@ -22,8 +22,8 @@ class OrdersController < ApplicationController
                                     :remove_product,
                                     :set_dimensions,
                                     :update_dimensions,
-                                    :download_slip,
-                                    :update_job_price]
+                                    :update_job_price,
+                                    :order_slip]
 
   def index
     per_page = params[:per_page] || 20
@@ -164,19 +164,6 @@ class OrdersController < ApplicationController
   def destroy
     @order.destroy
     redirect_to orders_path
-  end
-
-  def download_slip
-    respond_to do |format|
-      format.pdf { send_pdf }
-    end
-  end
-
-  def send_pdf
-    send_data @order.receipt.render,
-      filename:    "#{@order.created_at.strftime("%Y-%m-%d")}-receipt.pdf",
-      type:        "application/pdf",
-      disposition: :attachment
   end
 
   def set_dimensions; end
@@ -376,8 +363,25 @@ class OrdersController < ApplicationController
     @producers   = Producer.all
   end
 
+  def order_slip
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf:         "Order Id: #{@order.id}",
+               disposition: "attachment",
+               page_size:   "A4",
+               template:    "orders/order_slip",
+               orientation: "Landscape",
+               lowquality:  true,
+               zoom:        1,
+               dpi:         75,
+               layout:      'pdf'
+      end
+    end
+  end
+
   def on_hold_popup
-    @variants = @order.variants
+    @variants        = @order.variants
     @customer_detail = @order.address
   end
 

@@ -43,10 +43,10 @@ Rails.application.routes.draw do
       delete :remove_product
       get :set_dimensions
       post :update_dimensions
-      get :download_slip
       get :get_states
       get :update_job_price
       patch :assigne_update_price
+      get :order_slip
     end
 
     collection do

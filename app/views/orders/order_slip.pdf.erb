@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style type="text/css">
+    /*.order_info_section {
+      padding: 1.389vw 2.778vw;
+      border-radius: 0.463vw;
+      background: var(--grey-100, #F9FAFB);
+      width: 76.215vw;
+    }
+
+    .note_seller {
+      padding: 0.81vw 0.926vw 0.81vw 0.463vw;
+      border-radius: 0.463vw;
+      background: var(--warning-lighter, #FFF5CC);
+      color: var(--warning-darker, #7A4100);
+
+      font-size: 0.810vw;
+      font-weight: 400;
+      line-height: 1.273vw;
+    }
+
+    .details_section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.215vw;
+      border-radius: 0.81vw;
+      background: var(--background-light-paper, #FFF);
+      box-shadow: 0px 17.09828px 34.19656px -3.41966px rgba(145, 158, 171, 0.16);
+      width: 70.66vw;
+    }
+
+    .etsy_box {
+      display: flex;
+      padding: 0.463vw;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.231vw;
+      color: var(--text-light-primary, #212B36);
+      font-family: Public Sans;
+      font-size: 1.042vw;
+      font-weight: 700;
+      line-height: 1.620vw;
+      background: var(--background-light-neutral, #F4F6F8);
+      width: 23.438vw;
+    }
+
+    .icon {
+      width: 1.389vw;
+      height: 1.389vw;
+    }
+
+    .right_small {
+      color: var(--text-light-primary, #212B36);
+      font-size: 0.463vw;
+      font-weight: 700;
+      line-height: 0.289vw;
+      text-transform: uppercase;
+    }
+
+    .right_big {
+      color: var(--text-light-primary, #212B36);
+      font-family: Lato;
+      font-size: 0.810vw;
+      font-weight: 900;
+      line-height: 0.752vw;
+      padding: 0.174vw;
+    }
+
+    .right_normal {
+      font-family: Lato;
+      font-size: 0.694vw;
+      padding: 0.174vw;
+      font-weight: 700;
+      line-height: 1.042vw;
+      color: #FF5630;
+    }
+
+    .left {
+      width: 1.389vw;
+      height: 1.389vw;
+      color: var(--grey-900, #161C24);
+      text-align: center;
+      font-size: 0.810vw;
+      font-weight: 400;
+      line-height: 1.273vw;
+    }
+
+    .right {
+      display: flex;
+      padding: 0.579vw;
+      flex-direction: column;
+      gap: 0.058vw;
+      border-radius: 0.231vw;
+      background: #FFF;
+      box-shadow: 0px 0.694vw 1.389vw -0.231vw rgba(145, 158, 171, 0.12), 0px 0px 0.116vw 0px rgba(145, 158, 171, 0.2);
+      width: 100%;
+    }
+
+    .bottom_line {
+      padding: 0.463vw;
+      color: var(--text-light-secondary, #637381);
+      text-align: center;
+      font-size: 0.694vw;
+      font-weight: 400;
+      line-height: 1.042vw;
+      background: var(--background-light-neutral, #F4F6F8);
+      height: 2.257vw;
+      text-align: center;
+      margin-top: 1.100vw;
+    }
+
+    .details_body {
+      display: flex;
+      align-items: center;
+      gap: 0.116vw;
+    }
+
+    .number {
+      align-self: stretch;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      border-right: 0.058vw solid white;
+      padding: 0.405vw;
+
+    }
+
+    .head_text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--text-light-primary, #212B36);
+      font-size: 0.637vw;
+      font-weight: 600;
+      line-height: 1.215vw;
+      padding: 0.405vw;
+    }
+
+    .details_header {
+      display: flex;
+      height: 2.836vw;
+      align-items: center;
+      gap: 0.116vw;
+      background: var(--grey-300, #DFE3E8);
+      color: var(--text-light-primary, #212B36);
+      font-size: 0.637vw;
+      font-weight: 600;
+      line-height: 1.215vw;
+    }*/
+  </style>
+</head>
+
+<body>
+  <div class="order_info_section">
+    <div class="etsy_box">ETSY Order ID: <%= @order.etsy_order_id %></div>
+
+    <div class="details_section">
+      <div class="details_header">
+        <div class="number">No.</div>
+        <div class="head_text w-100">Product & Personalization Info</div>
+      </div>
+
+      <% @order.order_products.each do |order_product| %>
+        <div class="details_body">
+          <div class="left"><%= order_product.variant.id %></div>
+          <div class="right">
+            <div class="right_big"><%= order_product.product.name %></div>
+            <div class="right_small">(<%= order_product.product.name %>)</div>
+            <div class="right_normal text_black">ETSY SKU: <%= order_product.variant.real_variant_sku %></div>
+            <div class="right_normal text_black">Quantity: <%= order_product.product_quantity %></div>
+            <div class="right_normal">Design Style:<span>Design 1 - YT114-10</span> </div>
+            <div class="right_normal">Brand / Color:<span><%= order_product.product.brand_name %> - <%= order_product.variant.color %></span> </div>
+            <div class="right_normal">Personalization: <br><span>Font: Azonix <br> Text: Jack’s Daily Cup</span> </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>
