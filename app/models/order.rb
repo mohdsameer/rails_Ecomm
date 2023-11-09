@@ -42,7 +42,6 @@ class Order < ApplicationRecord
       results = results
                   .where('LOWER(products.name) LIKE :query OR LOWER(orders.customer_name) LIKE :query OR LOWER(orders.etsy_order_id) LIKE :query', query: "%#{params[:query].downcase}%")
     end
-
     results
   end
 

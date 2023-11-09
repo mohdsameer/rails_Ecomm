@@ -30,7 +30,7 @@
   });
 
   $('.collapse_show').click(function () {
-    $(this).closest('.tbody_row').find('.collapse_data').slideDown(800);
+    $(this).closest('.tbody_row').find('.collapse_data').slideToggle(800);
   });
   $('.collapse_hide').click(function () {
     $(this).closest('.tbody_row').find('.collapse_data').slideUp(800);

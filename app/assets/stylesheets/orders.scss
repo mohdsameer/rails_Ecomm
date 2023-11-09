@@ -108,16 +108,13 @@
         }
       }
 
-      .ship_to {
-
-      }
 
       .order_status_icon {
         display: flex;
         align-items: center;
         justify-content: center;
 
-        & div {
+        .custom_badge {
           border-radius: 0.347vw;
           background: rgba(255, 171, 0, 0.16);
           color: #b76e00;
@@ -127,6 +124,22 @@
           justify-content: center;
           align-items: center;
           padding: 0 0.463vw;
+
+
+          &.in_production {
+            color: #36F;
+            background: rgba(51, 102, 255, 0.24);
+          }
+
+          &.rejectd {
+            color: #B71D18;
+            background: rgba(255, 86, 48, 0.16);
+          }
+
+          &.fulfiled {
+            color: #1B806A;
+            background: rgba(54, 179, 126, 0.16);
+          }
         }
       }
 

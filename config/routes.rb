@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       get :update_job_price
       patch :assigne_update_price
       get :order_slip
+      get :duplicate_order
     end
 
     collection do

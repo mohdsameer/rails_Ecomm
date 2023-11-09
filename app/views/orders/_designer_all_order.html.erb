@@ -47,26 +47,42 @@
 
               <% ops. each do |op|%>
                 <% record = op.product.product_producer_pricings.find_by(user_id: op.producer.id) %>
-                <% cost = (record.front_side_print_price + record.back_side_print_price)* op.product_quantity%>
+                <%  if op.front_side_image.attached? && op.back_side_image.attached? %>
+                  <% cost   = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * op.product_quantity.to_i %>
+                <% elsif op.front_side_image.attached? %>
+                  <% cost   = record.front_side_print_price.to_f  * op.product_quantity.to_i %>
+                <% elsif op.back_side_image.attached? %>
+                   <% cost   = record.back_side_print_price.to_f  * op.product_quantity.to_i %>
+                <% else %>
+                  <% cost   = record.blank_price.to_f  * op.product_quantity.to_i %>
+                <% end %>
                 <% sum_result += cost %>
               <% end %>
 
               <div class="order_td six">$<%= sum_result %></div>
               <div class="order_td seven">
                 <div class="order_status_icon">
-                  <div>
-                    <% if order.order_status == "inproduction"%>
+                  <% if order.order_status == "inproduction" %>
+                    <div class="in_production custom_badge">
                       In Production
-                    <% elsif order.order_status == "onhold"%>
+                    </div>
+                  <% elsif order.order_status == "onhold"%>
+                    <div class="custom_badge">
                       On Hold
-                    <% elsif order.order_status == "rejected"%>
+                    </div>
+                  <% elsif order.order_status == "rejected" %>
+                    <div class="rejectd custom_badge">
                       Rejected 
-                    <% elsif order.order_status == "fullfilled"%>
+                    </div>
+                  <% elsif order.order_status == "fullfilled" %>
+                    <div class="fulfiled custom_badge">
                       Fullfilled
-                    <%else%>
+                    </div>
+                  <% else %>
+                    <div class="rejectd custom_badge">
                       Cancel
-                    <%end%>
-                  </div>
+                    </div>
+                  <% end %>
                 </div>
               </div>
               <div class="order_td eight">

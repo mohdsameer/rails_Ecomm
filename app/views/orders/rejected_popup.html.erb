@@ -55,7 +55,16 @@
                 <div class="cost_section">
                   <div>Production costs</div>
                   <% record = order_product.product.product_producer_pricings.find_by(user_id: order_product.producer.id) %>
-                    <% cost = (record.front_side_print_price + record.back_side_print_price)* order_product.product_quantity%>
+
+                     <%  if order_product.front_side_image.attached? && order_product.back_side_image.attached? %>
+                        <% cost   = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * order_product.product_quantity.to_i %>
+                      <% elsif order_product.front_side_image.attached? %>
+                        <% cost   = record.front_side_print_price.to_f  * order_product.product_quantity.to_i %>
+                      <% elsif order_product.back_side_image.attached? %>
+                         <% cost   = record.back_side_print_price.to_f  * order_product.product_quantity.to_i %>
+                      <% else %>
+                        <% cost   = record.blank_price.to_f  * order_product.product_quantity.to_i %>
+                      <% end %>
                     <% sum_result += cost %>
                   <div>USD <%= cost %></div>
                 </div>

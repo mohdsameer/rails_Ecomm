@@ -59,9 +59,19 @@
                 <!-- <div class="order_td three"><%#= order_product.product_quantity %></div> -->
 
                 <% sum_result = 0 %>
-                <% order_products.each do | order_product|%>
+                <% order_products.each do |order_product|%>
                   <% record = order_product.product.product_producer_pricings.find_by(user_id: order_product.producer.id) %>
-                  <% cost = (record.front_side_print_price + record.back_side_print_price)* order_product.product_quantity %>
+
+                  <%  if order_product.front_side_image.attached? && order_product.back_side_image.attached? %>
+                    <% cost   = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * order_product.product_quantity.to_i %>
+                  <% elsif order_product.front_side_image.attached? %>
+                    <% cost   = record.front_side_print_price.to_f  * order_product.product_quantity.to_i %>
+                  <% elsif order_product.back_side_image.attached? %>
+                     <% cost   = record.back_side_print_price.to_f  * order_product.product_quantity.to_i %>
+                  <% else %>
+                    <% cost   = record.blank_price.to_f  * order_product.product_quantity.to_i %>
+                  <% end %>
+
                   <% sum_result += cost %>
                 <% end %>
 
@@ -72,21 +82,29 @@
                   <div class="order_td five">-</div>
                 <%end%>
                 <div class="order_td six">
-                  <div class="order_status_icon">
-                    <div>
-                      <% if order.order_status == "inproduction"%>
-                        In Production
-                      <% elsif order.order_status == "onhold"%>
-                        On Hold
-                      <% elsif order.order_status == "rejected"%>
-                        Rejected 
-                      <% elsif order.order_status == "fullfilled"%>
-                        Fullfilled
-                      <%else%>
-                        Cancel
-                      <%end%>
+                <div class="order_status_icon">
+                  <% if order.order_status == "inproduction" %>
+                    <div class="in_production custom_badge">
+                      In Production
                     </div>
-                  </div>
+                  <% elsif order.order_status == "onhold"%>
+                    <div class="custom_badge">
+                      On Hold
+                    </div>
+                  <% elsif order.order_status == "rejected" %>
+                    <div class="rejectd custom_badge">
+                      Rejected
+                    </div>
+                  <% elsif order.order_status == "fullfilled" %>
+                    <div class="fulfiled custom_badge">
+                      Fullfilled
+                    </div>
+                  <% else %>
+                    <div class="rejectd custom_badge">
+                      Cancel
+                    </div>
+                  <% end %>
+                </div>
                 </div>
                 <div class="order_td seven">
                   <div class="order_priority_icon">

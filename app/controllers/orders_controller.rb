@@ -23,16 +23,19 @@ class OrdersController < ApplicationController
                                     :set_dimensions,
                                     :update_dimensions,
                                     :update_job_price,
-                                    :order_slip]
+                                    :order_slip,
+                                    :duplicate_order]
 
   def index
     per_page = params[:per_page] || 20
 
-    @orders = Order.search(params).paginate(page: params[:page], per_page: per_page)
+    @orders   = Order.search(params).paginate(page: params[:page], per_page: per_page)
     @products = Product.all
 
     if current_user.type.eql?('Producer')
-      @orders = @orders.where(order_products: { user_id: current_user.id })
+      @orders = @orders.where(order_products: { user_id: current_user.id }).where.not(order_status: "cancel").order(priority: :desc, created_at: :desc)
+    else
+      @orders = @orders.order(created_at: :desc)
     end
 
     respond_to do |format|
@@ -159,6 +162,29 @@ class OrdersController < ApplicationController
     country = ISO3166::Country.find_country_by_alpha2(selected_country)
     states = country.subdivisions
     render json: { states: states }
+  end
+
+  def duplicate_order
+    new_order = @order.dup
+
+    if new_order.save
+      @order.order_products.each do |order_product|
+        new_order_product = order_product.dup
+        new_order_product.order_id = new_order.id
+
+        if order_product.front_side_image.attached?
+          new_order_product.front_side_image.attach(order_product.front_side_image.blob)
+        end
+        if order_product.back_side_image.attached?
+          new_order_product.back_side_image.attach(order_product.back_side_image.blob)
+        end
+        new_order_product.save
+      end
+
+      redirect_to orders_path, notice: 'Order duplicated successfully.'
+    else
+      redirect_to orders_path, alert: 'Failed to duplicate order.'
+    end
   end
 
   def destroy
@@ -431,7 +457,7 @@ class OrdersController < ApplicationController
   end
 
   def update_priority
-    @order.update(priority: 0)
+    @order.update(priority: 1)
     redirect_to orders_path
   end
 

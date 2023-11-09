@@ -30,7 +30,7 @@
       </div>
       <div class="bottom_btn_group">
         <%= link_to 'Cancel', edit_product_path(@product), class: 'btn btn-secondary' %>
-        <%= f.submit 'Update producer', class: "btn btn-primary" %>
+        <%= f.submit 'Update producer', data: { 'turbo-frame': '_top' }, class: "btn btn-primary" %>
       </div>
     </div>
   <% end %>

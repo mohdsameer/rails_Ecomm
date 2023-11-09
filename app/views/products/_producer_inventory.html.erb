@@ -12,6 +12,9 @@
             <p class="notification_text">1</p>
           </div>
         </div>
+        <% if current_user %>
+          <%= link_to 'Log Out', logout_path, method: :delete, class: "btn btn-danger" %>
+        <% end %>
       </div>
     </div>
   </div>
