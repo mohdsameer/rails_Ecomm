@@ -96,3 +96,4 @@ gem 'aws-sdk-s3'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem "countries", "~> 5.7"
+gem 'csv'

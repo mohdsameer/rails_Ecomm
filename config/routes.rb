@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :dashboard, only: [:show]
 
-  resources :products, only: [:index, :new, :create,:edit, :update] do
+  resources :products, only: [:index, :show, :new, :create,:edit, :update] do
     delete 'remove_variant', on: :member
     get 'edit_producer', on: :member
     patch 'update_producer', on: :member

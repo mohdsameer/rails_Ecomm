@@ -265,8 +265,8 @@ class OrdersController < ApplicationController
        @messages << @message
       end
     end
-    # @users = User.where(id: @messages.map(&:to))
-    # @user = User.find_by(id: @message.to)
+
+    @user = User.find_by(id: @message.to)
   end
 
   def message_create

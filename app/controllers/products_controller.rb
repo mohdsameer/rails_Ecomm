@@ -5,10 +5,19 @@ class ProductsController < ApplicationController
     @products = Product.search(params).paginate(page: params[:page], per_page: per_page)
     respond_to do |format|
       format.html
+      format.csv { send_data Product.to_csv, filename: "products-#{Date.today}.csv" }
       format.js do
         html_data = render_to_string(partial: "products/products_table", locals: { products: @products }, layout: false)
         render json: { html_data: html_data }
       end
+    end
+  end
+
+  def show
+    @product = Product.find(params[:id])
+
+    respond_to do |format|
+      format.csv { send_data @product.to_csv, filename: "product-#{Date.today}.csv" }
     end
   end
 

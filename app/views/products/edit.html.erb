@@ -21,7 +21,7 @@
 
     <h5 class="new_head">Edit product</h5>
 
-    <div class="export_btn">
+    <a href="<%= product_path(@product, format: :csv) %>" class="export_btn">
       <svg class="download_icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M3.33301 15.8333C3.33301 15.3731 3.7061 15 4.16634 15H15.833C16.2932 15 16.6663 15.3731 16.6663 15.8333C16.6663 16.2936 16.2932 16.6667 15.833 16.6667H4.16634C3.7061 16.6667 3.33301 16.2936 3.33301 15.8333Z" fill="white"/>
         <path d="M4.16634 16.6667C3.7061 16.6667 3.33301 16.2936 3.33301 15.8333V14.1667C3.33301 13.7064 3.7061 13.3333 4.16634 13.3333C4.62658 13.3333 4.99967 13.7064 4.99967 14.1667V15.8333C4.99967 16.2936 4.62658 16.6667 4.16634 16.6667Z" fill="white"/>
@@ -31,7 +31,7 @@
       </svg>
 
       <div class="btn_text">CSV. Export</div>
-    </div>
+    </a>
 
     <%= form_for @product, url: product_path(@product), method: :patch, html: { multipart: true } do |f| %>
       <div class="group_info_section">

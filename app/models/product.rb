@@ -14,7 +14,7 @@ class Product < ApplicationRecord
   # Attachements
   has_one_attached :image
 
-  # Instance Methods
+  # Class Methods
   def self.search(params)
     results = all
     if params[:query].present?
@@ -22,5 +22,32 @@ class Product < ApplicationRecord
     end
 
     results
+  end
+
+  def self.to_csv
+    attributes = [:color, :size, :real_variant_sku, :total_inventory, :length, :height, :width, :weight_lb, :weight_oz,
+                  :product_name, :brand_name]
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      Variant.all.each do |variant|
+        csv << attributes.map { |attr| variant.send(attr) }
+      end
+    end
+  end
+
+  # Instance Methods
+  def to_csv
+    attributes = [:color, :size, :real_variant_sku, :total_inventory, :length, :height, :width, :weight_lb, :weight_oz,
+                  :product_name, :brand_name]
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      variants.each do |variant|
+        csv << attributes.map { |attr| variant.send(attr) }
+      end
+    end
   end
 end

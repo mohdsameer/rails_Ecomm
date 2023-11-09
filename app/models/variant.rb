@@ -18,4 +18,16 @@ class Variant < ApplicationRecord
 	def created_at
 		versions.last.created_at.strftime('%d/%m/%Y')
 	end
+
+	def total_inventory
+		producers_variants.sum(:inventory)
+	end
+
+	def product_name
+		product.name
+	end
+
+	def brand_name
+		product.brand_name
+	end
 end
