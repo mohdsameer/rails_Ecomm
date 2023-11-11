@@ -37,11 +37,13 @@ class Order < ApplicationRecord
 
   #method
   def self.search(params)
-    results = all.includes(:products, :order_products)
+    results = all.joins(:products, :address).group(:id)
+
     if params[:query].present?
       results = results
-                  .where('LOWER(products.name) LIKE :query OR LOWER(orders.customer_name) LIKE :query OR LOWER(orders.etsy_order_id) LIKE :query', query: "%#{params[:query].downcase}%")
+                  .where('LOWER(products.name) LIKE :query OR LOWER(addresses.fullname) LIKE :query OR LOWER(orders.etsy_order_id) LIKE :query', query: "%#{params[:query].downcase}%")
     end
+
     results
   end
 
