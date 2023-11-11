@@ -258,7 +258,7 @@
           <option value="100">100</option>
         </select>
       </div>
-      <div><%= orders.current_page%>-<%= orders.limit_value%> of <%= orders.count %></div>
+      <div><%= orders.current_page%>-<%= orders.limit_value%> of <%= orders.length %></div>
       <div class="d-flex">
         <div class="pagination">
           <%= will_paginate orders %>

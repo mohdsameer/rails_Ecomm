@@ -24,9 +24,9 @@
   <div class="order_info_wrap">
     <div class="tabs_box">
       <ul class="order_tabs_wrap" id="tabs-nav">
-        <li class="tabs_items"><a href="#tab1"><span class="tabs_notify"><%= @orders.count %></span>All Orders</a></li>
-        <li class="tabs_items"><a href="#tab2"><span class="tabs_notify"><%= @orders.new_orders.count %></span>New Order</a></li>
-        <li class="tabs_items"><a href="#tab3"><span class="tabs_notify"><%= @orders.fullfilled_order.count %></span>Fulfilled Orders</a></li>
+        <li class="tabs_items"><a href="#tab1"><span class="tabs_notify"><%= @orders.length %></span>All Orders</a></li>
+        <li class="tabs_items"><a href="#tab2"><span class="tabs_notify"><%= @orders.new_orders.length %></span>New Order</a></li>
+        <li class="tabs_items"><a href="#tab3"><span class="tabs_notify"><%= @orders.fullfilled_order.length %></span>Fulfilled Orders</a></li>
       </ul>
 
       <div id="tabs-content">
