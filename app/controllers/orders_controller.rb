@@ -281,46 +281,49 @@ class OrdersController < ApplicationController
       dimensions_hash[:weight]    = 0.0
     end
 
-    parcel = Shippo::Parcel.create(dimensions_hash)
+    begin
+      parcel = Shippo::Parcel.create(dimensions_hash)
 
-    address_from = Shippo::Address.create(
-      name:    @sender.address.fullname,
-      street1: @sender.address.address1,
-      street2: @sender.address.address2,
-      city:    @sender.address.city,
-      state:   @sender.address.state,
-      zip:     @sender.address.zipcode,
-      country: @sender.address.country,
-      phone:   @sender.address.num,
-      email:   @sender.address.email
-    )
+      address_from = Shippo::Address.create(
+        name:    @sender.address.fullname,
+        street1: @sender.address.address1,
+        street2: @sender.address.address2,
+        city:    @sender.address.city,
+        state:   @sender.address.state,
+        zip:     @sender.address.zipcode,
+        country: @sender.address.country,
+        phone:   @sender.address.num,
+        email:   @sender.address.email
+      )
 
-    address_to = Shippo::Address.create(
-      name:    params[:fullname],
-      street1: params[:address1],
-      street2: params[:address2],
-      city:    params[:city],
-      state:   params[:state],
-      zip:     params[:zipcode],
-      country: params[:country],
-      phone:   params[:num],
-      email:   params[:email]
-    )
+      address_to = Shippo::Address.create(
+        name:    params[:fullname],
+        street1: params[:address1],
+        street2: params[:address2],
+        city:    params[:city],
+        state:   params[:state],
+        zip:     params[:zipcode],
+        country: params[:country],
+        phone:   params[:num],
+        email:   params[:email]
+      )
 
-    shipment = Shippo::Shipment.create(
-      address_from: address_from,
-      address_to:   address_to,
-      parcels:      parcel,
-      async:        false
-    )
+      shipment = Shippo::Shipment.create(
+        address_from: address_from,
+        address_to:   address_to,
+        parcels:      parcel,
+        async:        false
+      )
 
-    @order.create_address(address_params)
+      @order.create_address(address_params)
 
-    @order.update(shippo_shipment_id: shipment["object_id"])
-    @order.address.update(shippo_address_id: address_to["object_id"])
-    @order.sender.address.update(shippo_address_id: address_from["object_id"])
-
-    @rates = shipment["rates"]
+      @order.update(shippo_shipment_id: shipment["object_id"])
+      @order.address.update(shippo_address_id: address_to["object_id"])
+      @order.sender.address.update(shippo_address_id: address_from["object_id"])
+      @rates = shipment["rates"]
+    rescue
+      @rates = []
+    end
   end
 
   def create_address
@@ -342,55 +345,59 @@ class OrdersController < ApplicationController
     @sender = @order.sender
     @sender.address.update(address_params)
 
-    address_from = Shippo::Address.create(
-      name:    @sender.address.fullname,
-      street1: @sender.address.address1,
-      street2: @sender.address.address2,
-      city:    @sender.address.city,
-      state:   @sender.address.state,
-      zip:     @sender.address.zipcode,
-      country: @sender.address.country,
-      phone:   @sender.address.num,
-      email:   @sender.address.email
-    )
+    begin
+      address_from = Shippo::Address.create(
+        name:    @sender.address.fullname,
+        street1: @sender.address.address1,
+        street2: @sender.address.address2,
+        city:    @sender.address.city,
+        state:   @sender.address.state,
+        zip:     @sender.address.zipcode,
+        country: @sender.address.country,
+        phone:   @sender.address.num,
+        email:   @sender.address.email
+      )
 
-    @sender.address.update(shippo_address_id: address_from["object_id"])
+      @sender.address.update(shippo_address_id: address_from["object_id"])
 
-    address_to = Shippo::Address.get(@order.address.shippo_address_id)
+      address_to = Shippo::Address.get(@order.address.shippo_address_id)
 
-    dimensions = @order.package_dimensions
+      dimensions = @order.package_dimensions
 
-    dimensions_hash = {
-      length:        dimensions[:length],
-      width:         dimensions[:height],
-      height:        dimensions[:width],
-      distance_unit: :in,
-    }
+      dimensions_hash = {
+        length:        dimensions[:length],
+        width:         dimensions[:height],
+        height:        dimensions[:width],
+        distance_unit: :in,
+      }
 
-    if dimensions[:weight_lb].present?
-      dimensions_hash[:mass_unit] = :lb
-      dimensions_hash[:weight]    = dimensions[:weight_lb]
-    elsif dimensions[:weight_oz].present?
-      dimensions_hash[:mass_unit] = :oz
-      dimensions_hash[:weight]    = dimensions[:weight_oz]
-    else
-      dimensions_hash[:mass_unit] = :lb
-      dimensions_hash[:weight]    = 0.0
+      if dimensions[:weight_lb].present?
+        dimensions_hash[:mass_unit] = :lb
+        dimensions_hash[:weight]    = dimensions[:weight_lb]
+      elsif dimensions[:weight_oz].present?
+        dimensions_hash[:mass_unit] = :oz
+        dimensions_hash[:weight]    = dimensions[:weight_oz]
+      else
+        dimensions_hash[:mass_unit] = :lb
+        dimensions_hash[:weight]    = 0.0
+      end
+
+      parcel = Shippo::Parcel.create(dimensions_hash)
+
+      shipment = Shippo::Shipment.create(
+        address_from: address_from,
+        address_to:   address_to,
+        parcels:      parcel,
+        async:        false
+      )
+
+      @order.update(shippo_shipment_id: shipment["object_id"])
+
+      @rates = shipment["rates"]
+    rescue
+      @rates = []
     end
 
-    parcel = Shippo::Parcel.create(dimensions_hash)
-
-    shipment = Shippo::Shipment.create(
-      address_from: address_from,
-      address_to:   address_to,
-      parcels:      parcel,
-      async:        false
-    )
-
-    @order.update(shippo_shipment_id: shipment["object_id"])
-
-    @rates = shipment["rates"]
-    
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @sender })

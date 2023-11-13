@@ -17,14 +17,18 @@
                   </div>
                 </div>
 
-                <% rates.each_with_index do |rate, index|  %>
-                  <div class="method_list">
-                    <input type="radio" name="shippo_rate_id" value="<%= rate["object_id"] %>" data-order-form-target="shippingCostInput" data-price="<%= rate["amount"] %>">
-                    <div class="list_item"><%= rate["servicelevel"]["name"] %></div>
-                    <div class="list_item"><%= rate["provider"] %></div>
-                    <div class="list_item"><%= rate["estimated_days"] %> days</div>
-                    <div class="list_item"><%= "#{rate['currency']} #{rate['amount']}" %></div>
-                  </div>
+                <% if rates.present? %>
+                  <% rates.each_with_index do |rate, index|  %>
+                    <div class="method_list">
+                      <input type="radio" name="shippo_rate_id" value="<%= rate["object_id"] %>" data-order-form-target="shippingCostInput" data-price="<%= rate["amount"] %>">
+                      <div class="list_item"><%= rate["servicelevel"]["name"] %></div>
+                      <div class="list_item"><%= rate["provider"] %></div>
+                      <div class="list_item"><%= rate["estimated_days"] %> days</div>
+                      <div class="list_item"><%= "#{rate['currency']} #{rate['amount']}" %></div>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <div class="rates-not-present">Rates not present</div>
                 <% end %>
 
                 <div class="method_list upload_list">
