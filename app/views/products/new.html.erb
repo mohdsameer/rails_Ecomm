@@ -64,15 +64,15 @@
               <td class="table_td"><%= ppp.object&.producer&.company_name %></td>
               <td class="table_td"><%= ppp.object&.producer&.location %></td>
               <td class="table_td">
-                <%= ppp.number_field :blank_price, step: 0.1 %>
+                <%= ppp.number_field :blank_price, step: 0.01 %>
                 <%#= @product_producer_pricing.set_default_price %>
               </td>
               <td class="table_td">
-                <%= ppp.number_field :front_side_print_price, step: 0.1 %>
+                <%= ppp.number_field :front_side_print_price, step: 0.01 %>
                 <%#= @product_producer_pricing.set_default_price %>
               </td>
               <td class="table_td">
-                <%= ppp.number_field :back_side_print_price, step: 0.1 %>
+                <%= ppp.number_field :back_side_print_price, step: 0.01 %>
                 <%#= @product_producer_pricing.set_default_price %>
               </td>
             </tr>

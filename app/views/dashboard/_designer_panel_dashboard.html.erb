@@ -11,7 +11,13 @@
           <%= render 'shared/profile_head' %>
       </div>
     </div>
-    <div class="designer_name"><%= current_user.type %></div>
+
+    <% if @user.present?%>
+      <div class="designer_name"><%= @user.type %></div>
+    <% else %>
+      <div class="designer_name"><%= current_user.type %></div>
+    <% end %>
+
     <div class="total_wrap">
       <div class="total_box">
         <div class="total_head">Total Orders Completed</div>

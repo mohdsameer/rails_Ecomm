@@ -1880,15 +1880,10 @@
 
 //** Designer Dasbard Css started here **//
 
-.sidebar_wrapper {
-  width: 17vw;
-}
-
-
 .designer_dasboard_wrapper {
-  width: 81.887vw;
-  margin-left: 2.025vw;
+  flex: 1;
   margin-bottom: 7.118vw;
+  padding: 0px 2.315vw 0px 2.025vw;
 
   .order_head {
     margin-bottom: 1.389vw;
@@ -1899,8 +1894,8 @@
     justify-content: center;
     align-items: center;
     height: 3.53vw;
-    background: #919EAB;
-    color: var(--text-light-primary, #212B36);
+    background: rgba(145, 158, 171, 0.12);
+    color: #212B36;
     font-size: 1.157vw;
     font-weight: 700;
     margin-bottom: 1.389vw;

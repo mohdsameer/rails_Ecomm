@@ -245,6 +245,22 @@
       }
     }
   }
+
+  .designer_name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3.53vw;
+    background: rgba(145, 158, 171, 0.12);
+    color: #212B36;
+    font-size: 1.157vw;
+    font-weight: 700;
+    margin-bottom: 1.389vw;
+
+    &.finance {
+      background: rgba(145, 158, 171, 0.12);
+    }
+  }
 }
 
 

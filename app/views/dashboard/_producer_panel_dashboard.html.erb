@@ -7,7 +7,11 @@
         <%= render 'shared/profile_head' %>
       </div>
     </div>
-
+    <% if @user.present?%>
+      <div class="designer_name"><%= @user.type %></div>
+    <% else %>
+      <div class="designer_name"><%= current_user.type %></div>
+    <% end %>
     <div class="total_wrapper">
       <div class="total_content">
         <div class="total_head">Total Earned</div>
