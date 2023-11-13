@@ -1,41 +1,40 @@
 class Order < ApplicationRecord
   include ActionView::Helpers::DateHelper
 
-  #scope
-  scope :new_orders, -> { where(order_status: 'onhold') }
-  scope :fullfilled_order, -> {where(order_status: 'fullfilled')}
-  scope :rejected_order, -> {where(order_status: 'rejected')}
-  scope :inproduction_order, -> {where(order_status: 'inproduction')}
-
-	# Enumarations
-  enum order_status: { onhold: 0, rejected: 1, inproduction: 2, fullfilled: 3, cancel: 4 }
-  enum order_edit_status: { incomplete: 0, completed: 1 }
-  enum priority: { GENERAL:0, URGENT:1 }
-
-  #Association
+  # Associations
   has_many :order_products, dependent: :destroy
   has_many :producers, through: :order_products, source: :producer
   has_many :variants, through: :order_products
   has_many :products, through: :order_products
   has_many :messages, dependent: :destroy
   has_many :assign_details, dependent: :destroy
+  has_many :shippo_labels, dependent: :destroy
 
-  has_one  :cancel_request, dependent: :destroy
-  has_one :address, dependent: :destroy
+  has_one :cancel_request, dependent: :destroy
+  has_one :address, as: :addressable, dependent: :destroy
+  has_one :sender, dependent: :destroy
 
-  # belongs_to :producer, foreign_key: :user_id, class_name: "User"
-
-  #Attachment
+  # Attachments
   has_one_attached :shipping_label_image
   has_one_attached :packing_slip_image
   has_one_attached :gift_message_slip_image
   has_one_attached :design_file_1_image
   has_one_attached :design_file_2_image
   has_one_attached :additional_file_image
-  # has_one_attached :front_side_image
-  # has_one_attached :back_side_image
+  has_one_attached :custom_label
 
-  #method
+  # Scopes
+  scope :new_orders,         -> { where(order_status: 'onhold') }
+  scope :fullfilled_order,   -> { where(order_status: 'fullfilled') }
+  scope :rejected_order,     -> { where(order_status: 'rejected') }
+  scope :inproduction_order, -> { where(order_status: 'inproduction') }
+
+  # Enumarations
+  enum order_status:      { onhold: 0, rejected: 1, inproduction: 2, fullfilled: 3, cancel: 4 }
+  enum order_edit_status: { incomplete: 0, completed: 1 }
+  enum priority:          { GENERAL: 0, URGENT: 1 }
+
+  # Class Methods
   def self.search(params)
     results = all.joins(:products, :address).group(:id)
 
@@ -47,6 +46,7 @@ class Order < ApplicationRecord
     results
   end
 
+  # Instance Methods
   def order_received
     distance_of_time_in_words(created_at, Time.current)
   end
@@ -75,60 +75,51 @@ class Order < ApplicationRecord
     dimensions  = nil
     total_items = order_products.size
 
-    if dimensions_is_manual
-      dimensions = "#{custom_length}x#{custom_height}x#{custom_width}, #{custom_weight_lb}lb#{custom_weight_oz}oz"
-    else
-      matched_shipping_label = nil
+    matched_shipping_label = nil
 
-      products.each do |product|
-        if product.shipping_labels.present?
-          product.shipping_labels.each do |shipping_label|
-            if shipping_label.item_quantity_min.to_i <= total_items.to_i && shipping_label.item_quantity_max.to_i >= total_items.to_i
-              matched_shipping_label = shipping_label
-              break
-            end
+    products.each do |product|
+      if product.shipping_labels.present?
+        product.shipping_labels.each do |shipping_label|
+          if shipping_label.item_quantity_min.to_i <= total_items.to_i && shipping_label.item_quantity_max.to_i >= total_items.to_i
+            matched_shipping_label = shipping_label
+            break
           end
         end
       end
+    end
 
-      if matched_shipping_label.present?
-        dimensions = matched_shipping_label.dimenstions_to_str
-      end
+    if matched_shipping_label.present?
+      dimensions = matched_shipping_label.dimensions
+    end
+
+    if !dimensions.present? && dimensions_is_manual
+      dimensions = {
+        length:    custom_length.to_f,
+        height:    custom_height.to_f,
+        width:     custom_width.to_f,
+        weight_lb: custom_weight_lb.to_f,
+        weight_oz: custom_weight_oz.to_f
+      }
     end
 
     dimensions
   end
 
-  def receipt
-    Receipts::Receipt.new(
-      title: "Receipt",
-      details: [
-        ["Receipt Number", "123"],
-        ["Date paid", Date.today],
-        ["Payment method", "ACH super long super long super long super long super long"]
-      ],
-      company: {
-        name: "Example, LLC",
-        address: "123 Fake Street\nNew York City, NY 10012",
-        email: "support@example.com"
-      },
-      recipient: [
-        "Customer",
-        "Their Address",
-        "City, State Zipcode",
-        nil,
-        "customer@example.org"
-      ],
-      line_items: [
-        ["<b>Item</b>", "<b>Unit Cost</b>", "<b>Quantity</b>", "<b>Amount</b>"],
-        ["Subscription", "$19.00", "1", "$19.00"],
-        [nil, nil, "Subtotal", "$19.00"],
-        [nil, nil, "Tax", "$1.12"],
-        [nil, nil, "Total", "$20.12"],
-        [nil, nil, "<b>Amount paid</b>", "$20.12"],
-        [nil, nil, "Refunded on #{Date.today}", "$5.00"]
-      ],
-      footer: "Thanks for your business. Please contact us if you have any questions."
-    )
+  def package_dimensions_str
+    dimensions_str = ""
+
+    if package_dimensions.present?
+      dimensions_str = "#{package_dimensions[:length]}x#{package_dimensions[:height]}x#{package_dimensions[:width]}, #{package_dimensions[:weight_lb]}lb#{package_dimensions[:weight_oz]}oz"
+    end
+
+    dimensions_str
+  end
+
+  def shipping_label_attachement
+    return custom_label if shippo_rate_id&.eql?('manual_upload') && custom_label.attached?
+
+    shippo_label = shippo_labels.find_by(shippo_rate_id: shippo_rate_id)
+
+    shippo_label&.shipo_transaction_label
   end
 end

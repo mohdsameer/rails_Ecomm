@@ -97,3 +97,4 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem "countries", "~> 5.7"
 gem 'csv'
+gem 'shippo'

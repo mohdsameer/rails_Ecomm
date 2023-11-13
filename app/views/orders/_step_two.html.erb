@@ -1,37 +1,43 @@
 <turbo-frame id="order-form-content">
-  <%= form_tag create_address_order_path(order), method: :post,  multipart: true, id: 'regForm', class: 'product_form text-center' do %>
+  <%= form_tag create_address_order_path(order), method: :post,  multipart: true, id: 'regForm', class: 'product_form text-center', data: { controller: 'address' } do %>
     <div class="tab" id="step2">
       <div class="shipping_pop_wrap">
         <div class="shiping_form">
           <div class="ship_head">Recipient</div>
-          <div class="input_group">
-            <%= text_field_tag :fullname, '', class: "input_field", placeholder: "Full Name"%>
-            <%= text_field_tag :num, '', class: "input_field", placeholder: "Mobile No."%>
-          </div>
-          <div class="input_group" >
-            <%= text_field_tag :email, '', class: "input_field big_size", placeholder: "Email"%>
-          </div>
-          <div class="input_group">
 
-            <select class="input_field" name="country" id="country">
+          <% address = order.address %>
+          <div class="input_group">
+            <%= text_field_tag :fullname, address&.fullname, class: "input_field", placeholder: "Full Name", required: true %>
+            <%= text_field_tag :num, address&.num, class: "input_field", placeholder: "Mobile No.", required: true %>
+          </div>
+
+          <div class="input_group" >
+            <%= text_field_tag :email, address&.email, class: "input_field big_size", placeholder: "Email", required: true %>
+          </div>
+
+          <div class="input_group">
+            <select class="input_field" name="country" id="country" data-address-target="countryInput">
               <option value="" selected>Country</option>
               <% countries.each do |country| %>
                 <option value="<%= country.alpha2 %>"><%= country.iso_short_name %></option>
               <% end %>
             </select>
 
-            <select class="input_field" name="state" id="state">
+            <select class="input_field" name="state" id="state" data-address-target="stateInput">
               <option value="">State</option>
             </select>
           </div>
-            <%= text_field_tag :address1, '', class: "input_field big_size", placeholder: "address1"%>
-            <%= text_field_tag :address2, '', class: "input_field big_size", placeholder: "address2"%>
+
+          <%= text_field_tag :address1, address&.address1, class: "input_field big_size", placeholder: "address1", required: true %>
+          <%= text_field_tag :address2, address&.address2, class: "input_field big_size", placeholder: "address2" %>
+
           <div class="input_group">
-            <%= text_field_tag :city, '', class: "input_field", placeholder: "City"%>
-            <%= text_field_tag :zipcode, '', class: "input_field", placeholder: "zipcode"%>
+            <%= text_field_tag :city, address&.city, class: "input_field", placeholder: "City", required: true %>
+            <%= text_field_tag :zipcode, address&.zipcode, class: "input_field", placeholder: "zipcode", required: true %>
           </div>
+
           <button class="calulate_btn">
-            <%= submit_tag 'Calculate Shipping', class: 'calulate_btn'%>
+            <%= submit_tag 'Calculate Shipping', class: 'calulate_btn' %>
             <%= image_tag "endicon", alt:"icon", class:"icon" %>
           </button>
         </div>
@@ -39,28 +45,3 @@
     </div>
   <% end %>
 </turbo-frame>
-
-<script type="text/javascript">
-$(document).ready(function () {
-  $('#country').change(function () {
-    var selectedCountry = $(this).val();
-
-    $.ajax({
-      type: 'GET',
-      url: '/orders/:id/get_states',
-      data: { country: selectedCountry },
-      dataType: 'json',
-      success: function (data) {
-        var stateDropdown = $('#state');
-        stateDropdown.empty();
-
-        $.each(data.states, function (key, value) {
-          stateDropdown.append($("<option></option>")
-            .attr("value", value.name)
-            .text(value.name));
-        });
-      }
-    });
-  });
-});
-</script>

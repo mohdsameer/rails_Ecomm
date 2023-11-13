@@ -70,6 +70,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     autoprefixer-rails (10.4.15.0)
       execjs (~> 2)
+    awesome_print (1.9.2)
     aws-eventstream (1.2.0)
     aws-partitions (1.845.0)
     aws-sdk-core (3.186.0)
@@ -285,6 +286,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    shippo (4.0.0)
+      activesupport (>= 4)
+      awesome_print
+      hashie (>= 3.5.2)
+      rest-client (>= 2.1, < 2.2)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
@@ -368,6 +374,7 @@ DEPENDENCIES
   ruby-etsy
   sassc-rails
   selenium-webdriver
+  shippo
   sprockets-rails
   stimulus-rails
   stripe

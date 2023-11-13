@@ -1,5 +1,5 @@
 <turbo-frame id="order-form-content" data-controller="order-form">
-  <%= form_tag order_update_shipping_order_path(order), method: :post,  multipart: true, id: 'regForm', class: 'product_form',  data: { 'order-form-target': 'form' } do %>
+  <%= form_tag order_update_shipping_order_path(order), method: :post,  multipart: true, id: 'regForm', class: 'product_form',  data: { 'order-form-target': 'form', 'turbo-frame': '_top' } do %>
     <div class="tab" id="step3">
       <div class="choose_shiping_wrapper">
         <div class="shiping_info_wrap">
@@ -9,7 +9,7 @@
               <div class="method_section">
                 <div class="method_head">Shipping Method</div>
                 <div class="package-dimensions">
-                  <div class="package-dimensions-detail">Package Dimensions: <%= order.package_dimensions %></div>
+                  <div class="package-dimensions-detail">Package Dimensions: <%= order.package_dimensions_str %></div>
                   <div class="package-dimensions-actions">
                     <%= link_to set_dimensions_order_path(order), class: 'btn btn-primary', data: { 'turbo-frame': 'set-dimensions' } do %>
                       Enter Manual Dimensions and Weight
@@ -17,15 +17,57 @@
                   </div>
                 </div>
 
-                <% shipping_methods.each do |sm|  %>
+                <% rates.each_with_index do |rate, index|  %>
                   <div class="method_list">
-                    <input type="radio" name="shipping_method_id" value="<%= sm.id %>" data-order-form-target="shippingCostInput" data-price="<%= sm.price %>">
-                    <div class="list_item"><%= sm.name %></div>
-                    <div class="list_item"><%= sm.partner %></div>
-                    <div class="list_item"><%= sm.min_day %> - <%= sm.max_day %> days </div>
-                    <div class="list_item">USD <%= sm.price %></div>
+                    <input type="radio" name="shippo_rate_id" value="<%= rate["object_id"] %>" data-order-form-target="shippingCostInput" data-price="<%= rate["amount"] %>">
+                    <div class="list_item"><%= rate["servicelevel"]["name"] %></div>
+                    <div class="list_item"><%= rate["provider"] %></div>
+                    <div class="list_item"><%= rate["estimated_days"] %> days</div>
+                    <div class="list_item"><%= "#{rate['currency']} #{rate['amount']}" %></div>
                   </div>
                 <% end %>
+
+                <div class="method_list upload_list">
+                  <input type="radio" name="shippo_rate_id" value="manual_upload" class="upload_checkbox" />
+                  <div class="upload_wrapper">
+                    <div class="upload_label">UPLOAD SHIPPING LABEL</div>
+                  </div>
+
+                  <div class="upload_box">
+                    <input type="file" name="manual_upload_file" class="upload_file" id="upload_file" />
+                    <label for="upload_file" class="upload_label">
+                      <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_icon' %>
+                      <div class="upload_text">Upload file</div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="action_wrapper">
+                  <%= submit_tag 'Purchase Shipping Label', class: 'pur_link' %>
+                  <%#= link_to 'Shipping Label Purchased Successfully', 'javascript:;', class: 'ship_link' %>
+
+                  <% @order.shippo_labels.each do |shippo_label| %>
+                    <% if shippo_label.shipo_transaction_label.attached? %>
+                      <% shipo_transaction_label = shippo_label.shipo_transaction_label %>
+                      <div class="pdf_box">
+                        <div class="pdf_name"><%= shipo_transaction_label.filename %></div>
+                        <div class="pdf_actions">
+                          <%= link_to rails_blob_url(shipo_transaction_label, only_path: true), class: 'pdf_link', target: '_blank' do %>
+                            <%= image_tag 'light_eye.png', alt: 'icon', class: 'eye' %>
+                          <% end %>
+
+                          <%= link_to rails_blob_url(shipo_transaction_label, only_path: true, disposition: "attachment"), class: 'pdf_link', data: { 'turbo-frame': '_top' } do %>
+                            <%= image_tag 'download.png', alt: 'icon' %>
+                          <% end %>
+
+                          <%= link_to remove_shipo_lable_order_path(@order, shippo_label_id: shippo_label.id), data: { 'turbo-method': :delete, 'turbo-frame': '_top' }, class: 'pdf_link' do %>
+                            <%= image_tag 'light_trash.png', alt: 'icon' %>
+                          <% end %>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
               </div>
 
               <div class="selected_wrap">
@@ -59,14 +101,15 @@
                       <div>Production costs</div>
 
                       <% record = order_product.product.product_producer_pricings.find_by(user_id: order_product.producer.id) %>
+
                       <%  if order_product.front_side_image.attached? && order_product.back_side_image.attached? %>
-                        <% cost   = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * order_product.product_quantity.to_i %>
+                        <% cost = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * order_product.product_quantity.to_i %>
                       <% elsif order_product.front_side_image.attached? %>
-                        <% cost   = record.front_side_print_price.to_f  * order_product.product_quantity.to_i %>
+                        <% cost = record.front_side_print_price.to_f  * order_product.product_quantity.to_i %>
                       <% elsif order_product.back_side_image.attached? %>
-                         <% cost   = record.back_side_print_price.to_f  * order_product.product_quantity.to_i %>
+                        <% cost = record.back_side_print_price.to_f  * order_product.product_quantity.to_i %>
                       <% else %>
-                        <% cost   = record.blank_price.to_f  * order_product.product_quantity.to_i %>
+                        <% cost = record.blank_price.to_f  * order_product.product_quantity.to_i %>
                       <% end %>
 
                       <% sum_result += cost %>
@@ -81,12 +124,25 @@
               <div class="info_right_section">
                 <div class="buyer_info_section">
                   <div class="buyer_mail">
+                    <div class="buyer_head">Sender</div>
+                    <% sender_address = sender.address %>
+                    <div class="buyer_edit">
+                      <div class="buyer_text">
+                        <span class="d-block"><%= sender_address.fullname %></span>
+                        <span><%= sender_address.to_str %></span>
+                      </div>
+                      <%= link_to edit_sender_order_path(order), class: 'edit_link', data: { 'turbo-frame': 'edit-sender' } do %>
+                        Edit
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="buyer_mail">
                     <div class="buyer_head">Customer</div>
                     <div class="buyer_edit">
                       <div class="buyer_text">
-                        <span><%= address.fullname%></span>
-                        <span><%= address.email%></span>
-                        <span><%= address.num%></span>
+                        <span><%= address.fullname %></span>
+                        <span><%= address.email %></span>
+                        <span><%= address.num %></span>
                       </div>
                       <a class="edit_link" href="#">Edit</a>
                     </div>
@@ -95,10 +151,10 @@
                     <div class="buyer_head">Shipping Address</div>
                     <div class="buyer_edit">
                       <div class="buyer_text">
-                        <span><%= address.address1%></span>
-                        <span><%= address.address2%>,</span>
-                        <span><%= address.city%>,</span>
-                        <span><%= address.zipcode%></span>
+                        <span><%= address.address1 %></span>
+                        <span><%= address.address2 %>,</span>
+                        <span><%= address.city %>,</span>
+                        <span><%= address.zipcode %></span>
                       </div>
                       <a class="edit_link" href="#">Edit</a>
                     </div>
@@ -136,7 +192,7 @@
 
                 <button class="submit_btn">
                   <%= link_to 'Marked as Completed', 'javascript:;', class: 'submit_btn', data: { 'order-form-target': 'markComplete' } %>
-                  <%= image_tag "endicon", alt:"icon", class:"btn_icon" %>
+                  <%= image_tag "endicon", alt: "icon", class: "btn_icon" %>
                 </button>
 
                 <%= submit_tag 'submit', data: { 'order-form-target': 'submit' }, style: 'display:none;' %>

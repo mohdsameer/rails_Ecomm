@@ -1,0 +1,55 @@
+<turbo-frame id="edit-sender">
+  <div id="edit-sender-modal" class="edit-sender-modal on-hold-order-modal" data-controller="modals address" data-modals-modal-id-value="edit-sender-modal" >
+    <div class="on-hold-order-outer">
+      <div class="on_hold_pop_wrapper">
+        <% sender_address = @order.sender.address %>
+        <%= image_tag 'close.png', alt: 'icon', class: 'close_hold' %>
+
+        <%= form_tag update_sender_order_path(@order), method: :post, id: 'regForm', class: 'product_form text-center', data: { 'turbo-frame': '_top' } do %>
+          <div class="tab" id="step2">
+            <div class="shipping_pop_wrap">
+              <div class="shiping_form">
+                <div class="ship_head">Sender</div>
+
+                <div class="input_group">
+                  <%= text_field_tag :fullname, sender_address.fullname, class: "input_field", placeholder: "Full Name", required: true %>
+                  <%= text_field_tag :num, sender_address.num, class: "input_field", placeholder: "Mobile No.", required: true %>
+                </div>
+
+                <div class="input_group" >
+                  <%= text_field_tag :email, sender_address.email, class: "input_field big_size", placeholder: "Email", required: true %>
+                </div>
+
+                <div class="input_group">
+                  <select class="input_field" name="country" id="sender-country" data-address-target="countryInput">
+                    <option value="">Country</option>
+                    <% ISO3166::Country.all.each do |country| %>
+                      <option value="<%= country.alpha2 %>"><%= country.iso_short_name %></option>
+                    <% end %>
+                  </select>
+
+                  <select class="input_field" name="state" id="sender-state" data-address-target="stateInput">
+                    <option value="">State</option>
+                  </select>
+                </div>
+
+                <%= text_field_tag :address1, sender_address.address1, class: "input_field big_size", placeholder: "address1", required: true %>
+                <%= text_field_tag :address2, sender_address.address2, class: "input_field big_size", placeholder: "address2" %>
+
+                <div class="input_group">
+                  <%= text_field_tag :city, sender_address.city, class: "input_field", placeholder: "City", required: true %>
+                  <%= text_field_tag :zipcode, sender_address.zipcode, class: "input_field", placeholder: "zipcode", required: true %>
+                </div>
+
+                <button class="calulate_btn">
+                  <%= submit_tag 'Save', class: 'calulate_btn' %>
+                  <%= image_tag "endicon", alt:"icon", class:"icon" %>
+                </button>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</turbo-frame>

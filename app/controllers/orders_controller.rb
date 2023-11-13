@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class OrdersController < ApplicationController
   before_action :find_order, only: [:send_message,
                                     :update_cancel_status,
@@ -24,7 +26,12 @@ class OrdersController < ApplicationController
                                     :update_dimensions,
                                     :update_job_price,
                                     :order_slip,
-                                    :duplicate_order]
+                                    :duplicate_order,
+                                    :edit_sender,
+                                    :update_sender,
+                                    :remove_shipo_lable,
+                                    :download_shippo_label]
+  before_action :initialize_shippo
 
   def index
     per_page = params[:per_page] || 20
@@ -92,10 +99,13 @@ class OrdersController < ApplicationController
   end
 
   def edit
-    @order = Order.find_by(id: params[:id])
+    @order     = Order.find_by(id: params[:id])
     @producers = Producer.all
 
-    @shipping_methods = ShippingMethod.all
+    if @order.shippo_shipment_id.present?
+      shipment = Shippo::Shipment.get(@order.shippo_shipment_id)
+      @rates = shipment['rates']
+    end
   end
 
   def update
@@ -155,13 +165,6 @@ class OrdersController < ApplicationController
 
       format.html { redirect_to orders_path }
     end
-  end
-
-  def get_states
-    selected_country = params[:country]
-    country = ISO3166::Country.find_country_by_alpha2(selected_country)
-    states = country.subdivisions
-    render json: { states: states }
   end
 
   def duplicate_order
@@ -247,28 +250,213 @@ class OrdersController < ApplicationController
     redirect_to orders_path, notice: 'Assigne Removed.'
   end
 
-  def create_address
+  def create_shipment
+    Shippo::API.token = ENV['SHIPPO_API_KEY']
+
+    producer   = @order.producers.last
+    dimensions = @order.package_dimensions
+
+    @sender    = @order.create_sender
+
+    @sender.create_address(producer.address.attributes.except('id', 'addressable_id', 'addressable_type',
+                                                      'shippo_address_id', 'created_at', 'updated_at'))
+
+    @sender.address.update(fullname: producer.name, email: producer.email)
+
+    dimensions_hash = {
+      length:        dimensions[:length],
+      width:         dimensions[:height],
+      height:        dimensions[:width],
+      distance_unit: :in,
+    }
+
+    if dimensions[:weight_lb].present?
+      dimensions_hash[:mass_unit] = :lb
+      dimensions_hash[:weight]    = dimensions[:weight_lb]
+    elsif dimensions[:weight_oz].present?
+      dimensions_hash[:mass_unit] = :oz
+      dimensions_hash[:weight]    = dimensions[:weight_oz]
+    else
+      dimensions_hash[:mass_unit] = :lb
+      dimensions_hash[:weight]    = 0.0
+    end
+
+    parcel = Shippo::Parcel.create(dimensions_hash)
+
+    address_from = Shippo::Address.create(
+      name:    @sender.address.fullname,
+      street1: @sender.address.address1,
+      street2: @sender.address.address2,
+      city:    @sender.address.city,
+      state:   @sender.address.state,
+      zip:     @sender.address.zipcode,
+      country: @sender.address.country,
+      phone:   @sender.address.num,
+      email:   @sender.address.email
+    )
+
+    address_to = Shippo::Address.create(
+      name:    params[:fullname],
+      street1: params[:address1],
+      street2: params[:address2],
+      city:    params[:city],
+      state:   params[:state],
+      zip:     params[:zipcode],
+      country: params[:country],
+      phone:   params[:num],
+      email:   params[:email]
+    )
+
+    shipment = Shippo::Shipment.create(
+      address_from: address_from,
+      address_to:   address_to,
+      parcels:      parcel,
+      async:        false
+    )
+
     @order.create_address(address_params)
-    @shipping_methods = ShippingMethod.all
+
+    @order.update(shippo_shipment_id: shipment["object_id"])
+    @order.address.update(shippo_address_id: address_to["object_id"])
+    @order.sender.address.update(shippo_address_id: address_from["object_id"])
+
+    @rates = shipment["rates"]
+  end
+
+  def create_address
     @order = Order.find_by(id: params[:id])
-    @address = @order.address
+
+    create_shipment
+
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, shipping_methods: @shipping_methods, address: @address })
+        render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @sender })
+      end
+    end
+  end
+
+  def edit_sender
+  end
+
+  def update_sender
+    @sender = @order.sender
+    @sender.address.update(address_params)
+
+    address_from = Shippo::Address.create(
+      name:    @sender.address.fullname,
+      street1: @sender.address.address1,
+      street2: @sender.address.address2,
+      city:    @sender.address.city,
+      state:   @sender.address.state,
+      zip:     @sender.address.zipcode,
+      country: @sender.address.country,
+      phone:   @sender.address.num,
+      email:   @sender.address.email
+    )
+
+    @sender.address.update(shippo_address_id: address_from["object_id"])
+
+    address_to = Shippo::Address.get(@order.address.shippo_address_id)
+
+    dimensions = @order.package_dimensions
+
+    dimensions_hash = {
+      length:        dimensions[:length],
+      width:         dimensions[:height],
+      height:        dimensions[:width],
+      distance_unit: :in,
+    }
+
+    if dimensions[:weight_lb].present?
+      dimensions_hash[:mass_unit] = :lb
+      dimensions_hash[:weight]    = dimensions[:weight_lb]
+    elsif dimensions[:weight_oz].present?
+      dimensions_hash[:mass_unit] = :oz
+      dimensions_hash[:weight]    = dimensions[:weight_oz]
+    else
+      dimensions_hash[:mass_unit] = :lb
+      dimensions_hash[:weight]    = 0.0
+    end
+
+    parcel = Shippo::Parcel.create(dimensions_hash)
+
+    shipment = Shippo::Shipment.create(
+      address_from: address_from,
+      address_to:   address_to,
+      parcels:      parcel,
+      async:        false
+    )
+
+    @order.update(shippo_shipment_id: shipment["object_id"])
+
+    @rates = shipment["rates"]
+    
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @sender })
       end
     end
   end
 
   def order_update_shipping
-    shipping_method_id = params[:shipping_method_id]
-    order_edit_status = params[:submit_type] == "save_later" ? 0 : 1
-    priority = params[:priority].present? ? 1 : 0
-    order_status = order_edit_status == 1 ? 2 : 0
+    if params[:commit].eql?('Purchase Shipping Label')
+      if params[:shippo_rate_id].present?
+        shippo_label = @order.shippo_labels.create(shippo_rate_id: params[:shippo_rate_id])
 
-    @order.update(shipping_method_id: shipping_method_id, order_edit_status: order_edit_status, priority: priority, order_status: order_status)
+        if params[:shippo_rate_id].eql?('manual_upload')
+          if params[:manual_upload_file].present?
+            shippo_label.shipo_transaction_label.attach(io: params[:manual_upload_file], filename: "order-label-#{@order.id}-#{shippo_label.id}")
+          end
+        else
+          transaction = Shippo::Transaction.create(rate: params[:shippo_rate_id], label_file_type: "PDF", async: false)
 
-    if params[:submit_type].eql?('save_later')
-      redirect_to orders_path
+          if transaction["status"] == "SUCCESS"
+            pdf_file = URI.open(transaction["label_url"])
+
+            shippo_label.update(shippo_transaction_id: transaction["object_id"])
+            shippo_label.shipo_transaction_label.attach(io: pdf_file, filename: "order-label-#{@order.id}-#{shippo_label.id}")
+          else
+            error_message = transaction["messages"]&.pluck("text")&.join(", ")
+            flash[:alert] = error_message
+          end
+        end
+      end
+
+      redirect_to edit_order_path(@order, step: :shipping_method)
+    else
+      order_edit_status = params[:submit_type] == "save_later" ? 0 : 1
+      priority          = params[:priority].present? ? 1 : 0
+      order_status      = order_edit_status == 1 ? 2 : 0
+
+      @order.update(shippo_rate_id:     params[:shippo_rate_id],
+                    order_edit_status:  order_edit_status,
+                    priority:           priority,
+                    order_status:       order_status)
+
+      if params[:manual_upload_file].present?
+        @order.custom_label.attach(io: params[:manual_upload_file], filename: "order-label-#{@order.id}")
+      end
+
+      if params[:submit_type].eql?('save_later')
+        redirect_to orders_path
+      end
+    end
+  end
+
+  def remove_shipo_lable
+    @order.shippo_labels.find_by(id: params[:shippo_label_id])&.destroy
+
+    redirect_to edit_order_path(@order, step: :shipping_method)
+  end
+
+  def download_shippo_label
+    respond_to do |format|
+      format.pdf do
+        if @order.shipping_label_attachement
+          send_data @order.shipping_label_attachement.download, filename: @order.shipping_label_attachement.filename.to_s, type: "application/pdf"
+          return
+        end
+      end
     end
   end
 
@@ -415,9 +603,10 @@ class OrdersController < ApplicationController
     if @order.assign_details.present?
       @assigne = @order.assign_details.first.designer.name
     end
-    @order_products = @order.order_products
+
+    @order_products  = @order.order_products
     @customer_detail = @order.address
-    @shipping_price = ShippingMethod.find_by(id: @order.shipping_method_id)
+    @shipping_price  = ShippingMethod.find_by(id: @order.shipping_method_id)
   end
 
   def rejected_popup
@@ -513,5 +702,9 @@ class OrdersController < ApplicationController
 
   def dimensions_params
     params.permit(:custom_length, :custom_height, :custom_width, :custom_weight_lb, :custom_weight_oz)
+  end
+
+  def initialize_shippo
+    Shippo::API.token = ENV['SHIPPO_API_KEY']
   end
 end

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'dashboard/producer_panel_dasboard'
   get 'dashboard/manual_order'
   get 'dashboard/choose_shiping'
+  get '/states', to: 'addresses#get_states'
 
   resources :dashboard, only: [:show]
 
@@ -43,11 +44,14 @@ Rails.application.routes.draw do
       delete :remove_product
       get :set_dimensions
       post :update_dimensions
-      get :get_states
       get :update_job_price
       patch :assigne_update_price
       get :order_slip
       get :duplicate_order
+      get :edit_sender
+      post :update_sender
+      delete :remove_shipo_lable
+      get :download_shippo_label
     end
 
     collection do

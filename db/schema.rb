@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_06_130535) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_13_105659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,12 +51,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_130535) do
     t.string "address2"
     t.string "city"
     t.string "zipcode"
-    t.bigint "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
-    t.bigint "num"
-    t.index ["order_id"], name: "index_addresses_on_order_id"
+    t.string "shippo_address_id"
+    t.string "num"
+    t.integer "addressable_id"
+    t.string "addressable_type"
   end
 
   create_table "assign_details", force: :cascade do |t|
@@ -108,14 +109,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_130535) do
     t.bigint "user_id"
     t.string "revision_info"
     t.boolean "request_revision", default: false
-    t.bigint "shipping_method_id"
     t.string "etsy_order_id"
+    t.bigint "shipping_method_id"
     t.boolean "dimensions_is_manual", default: false
     t.decimal "custom_length"
     t.decimal "custom_height"
     t.decimal "custom_width"
     t.decimal "custom_weight_lb"
     t.decimal "custom_weight_oz"
+    t.string "shippo_rate_id"
+    t.string "shippo_shipment_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -160,6 +163,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_130535) do
     t.index ["order_id"], name: "index_requests_on_order_id"
   end
 
+  create_table "senders", force: :cascade do |t|
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_senders_on_order_id"
+  end
+
   create_table "shipping_labels", force: :cascade do |t|
     t.bigint "product_id"
     t.integer "item_quantity_min"
@@ -182,6 +192,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_130535) do
     t.datetime "updated_at", null: false
     t.integer "min_day"
     t.integer "max_day"
+  end
+
+  create_table "shippo_labels", force: :cascade do |t|
+    t.bigint "order_id"
+    t.string "shippo_rate_id"
+    t.string "shippo_transaction_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_shippo_labels_on_order_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -229,7 +248,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_06_130535) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "addresses", "orders"
   add_foreign_key "assign_details", "orders"
   add_foreign_key "assign_details", "users"
   add_foreign_key "messages", "orders"

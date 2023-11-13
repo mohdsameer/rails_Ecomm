@@ -66,7 +66,6 @@
             background: #F4F6F8;
             margin-bottom: 0.347vw;
 
-
             .list_item {
               width: 44.097vw;
               height: 3.588vw;
@@ -82,6 +81,138 @@
               margin: 0.463vw;
               width: 1.389vw;
               height: 1.389vw;
+            }
+
+            &.upload_list {
+              position: relative;
+              align-items: stretch;
+
+              .upload_checkbox {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+              }
+
+              .upload_wrapper {
+                width: 50%;
+                background: #E3E3E3;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                .upload_label {
+                  color: #212B36;
+                  font-size: 0.694vw;
+                  font-weight: 600;
+                  line-height: 1.389vw;
+                }
+              }
+
+              .upload_box {
+                position: relative;
+                width: 50%;
+                background: #ffffff;
+
+                .upload_file {
+                  position: absolute;
+                  height: 100%;
+                  cursor: pointer;
+                  width: 100%;
+                  opacity: 0;
+                }
+
+                .upload_label {
+                  width: 100%;
+                  display: flex;
+                  justify-content: center;
+                  height: 100%;
+                  align-items: center;
+                  flex-direction: column;
+
+                  .upload_icon {
+                    height: 1.389vw;
+                    width: 1.389vw;
+                  }
+
+                  .upload_text {
+                    color: #919EAB;
+                    font-size: 0.694vw;
+                    font-weight: 400;
+                    line-height: 1.042vw;
+                  }
+                }
+              }
+            }
+          }
+
+          .action_wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 0.579vw;
+            width: 100%;
+
+            .pur_link {
+              display: flex;
+              height: 2.662vw;
+              border: none;
+              justify-content: center;
+              align-items: center;
+              border-radius: 0.463vw;
+              background: #00AB55;
+              color: #FFF;
+              font-size: 0.926vw;
+              font-weight: 600;
+              line-height: 1.389vw;
+              padding: 0.637vw 1.273vw;
+            }
+
+            .ship_link {
+              display: flex;
+              height: 2.662vw;
+              border: none;
+              justify-content: center;
+              align-items: center;
+              border-radius: 0.463vw;
+              background: #00793C;
+              color: #FFF;
+              font-size: 0.926vw;
+              font-weight: 600;
+              line-height: 1.389vw;
+              padding: 0.637vw 1.273vw;
+            }
+
+            .pdf_box {
+              display: flex;
+              height: 2.662vw;
+              border: none;
+              justify-content: space-between;
+              align-items: center;
+              border-radius: 0.463vw;
+              background: #919EAB;
+              color: #FFF;
+              font-size: 0.926vw;
+              font-weight: 600;
+              line-height: 1.389vw;
+              padding: 0.637vw 1.273vw;
+
+              .pdf_actions {
+                display: flex;
+                align-items: center;
+                gap: 0.984vw;
+
+                .pdf_link {
+                  display: flex;
+
+                  img {
+                    height: 1.62vw;
+
+                    &.eye {
+                      height: 1vw;
+                    }
+                  }
+                }
+              }
             }
           }
         }

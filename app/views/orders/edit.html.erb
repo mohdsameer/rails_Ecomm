@@ -26,9 +26,10 @@
       <turbo-frame id="add-new-product-order-modal"></turbo-frame>
       <turbo-frame id="order-success-popup-modal"></turbo-frame>
       <turbo-frame id="set-dimensions"></turbo-frame>
+      <turbo-frame id="edit-sender"></turbo-frame>
 
-      <% if params[:step].present? && params[:step].eql?('shipping_method') %>
-        <%= render 'step_three', order: @order, shipping_methods: @shipping_methods, address: @order.address %>
+      <% if (params[:step].present? && params[:step].eql?('shipping_method')) || @order.shippo_shipment_id.present? %>
+        <%= render 'step_three', order: @order, rates: @rates, address: @order.address, sender: @order.sender %>
       <% else %>
         <%= render 'edit_step_one', order: @order %>
       <% end %>

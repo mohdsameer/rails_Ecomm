@@ -1,5 +1,5 @@
 <div class="orders_details_box">
-  <div class="toolbar_section">
+  <!-- <div class="toolbar_section">
     <h5 class="toolbar_head"><span id="count-checked-checkboxes">0</span>&nbsp;orders selected</h5>
     <div class="toolbar_btn">
       Download Design Files
@@ -21,7 +21,7 @@
         <path d="M12 13C11.4477 13 11 12.5523 11 12V4C11 3.44772 11.4477 3 12 3C12.5523 3 13 3.44772 13 4V12C13 12.5523 12.5523 13 12 13Z" fill="#637381"/>
       </svg>
     </div>
-  </div>
+  </div> -->
 
   <div class="order_details_data">
     <div class="order_table_section">
@@ -115,9 +115,10 @@
                 <div class="order_td nine">
                   <div class="order_more_action">
                     <div class="more_icon_group">
-                      <div class="icon blue">
+                      <%= link_to download_shippo_label_order_path(order, format: :pdf), class: 'icon blue', data: { 'turbo-frame': '_top' } do %>
                         <%= image_tag("fluent_vehicle") %>
-                      </div>
+                      <% end %>
+
                       <div class="icon order_reject" id="order_reject_<%= order.id %>" data-id="<%= order.id %>">
                         <a href="<%= reject_order_path(order) %>"  data-turbo-frame="reject-order-modal">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">

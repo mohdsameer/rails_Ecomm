@@ -33,13 +33,13 @@ export default class extends Controller {
       formTarget.attr('data-turbo-frame', '_top');
       submitTypeTarget.val('save_later');
       submitTarget.click();
-    })
+    });
 
     markCompleteTarget.click(function(e) {
       e.preventDefault();
       formTarget.attr('data-turbo-frame', 'order-success-popup-modal');
       submitTypeTarget.val('mark_complete');
       submitTarget.click();
-    })
+    });
   }
 }
