@@ -281,45 +281,49 @@ class OrdersController < ApplicationController
       dimensions_hash[:weight]    = 0.0
     end
 
-    parcel = Shippo::Parcel.create(dimensions_hash)
+    begin
+      parcel = Shippo::Parcel.create(dimensions_hash)
 
-    address_from = Shippo::Address.create(
-      name:    @sender.address.fullname,
-      street1: @sender.address.address1,
-      street2: @sender.address.address2,
-      city:    @sender.address.city,
-      state:   @sender.address.state,
-      zip:     @sender.address.zipcode,
-      country: @sender.address.country,
-      phone:   @sender.address.num,
-      email:   @sender.address.email
-    )
+      address_from = Shippo::Address.create(
+        name:    @sender.address.fullname,
+        street1: @sender.address.address1,
+        street2: @sender.address.address2,
+        city:    @sender.address.city,
+        state:   @sender.address.state,
+        zip:     @sender.address.zipcode,
+        country: @sender.address.country,
+        phone:   @sender.address.num,
+        email:   @sender.address.email
+      )
 
-    address_to = Shippo::Address.create(
-      name:    params[:fullname],
-      street1: params[:address1],
-      street2: params[:address2],
-      city:    params[:city],
-      state:   params[:state],
-      zip:     params[:zipcode],
-      country: params[:country],
-      phone:   params[:num],
-      email:   params[:email]
-    )
+      address_to = Shippo::Address.create(
+        name:    params[:fullname],
+        street1: params[:address1],
+        street2: params[:address2],
+        city:    params[:city],
+        state:   params[:state],
+        zip:     params[:zipcode],
+        country: params[:country],
+        phone:   params[:num],
+        email:   params[:email]
+      )
 
-    shipment = Shippo::Shipment.create(
-      address_from: address_from,
-      address_to:   address_to,
-      parcels:      parcel,
-      async:        false
-    )
+      shipment = Shippo::Shipment.create(
+        address_from: address_from,
+        address_to:   address_to,
+        parcels:      parcel,
+        async:        false
+      )
 
-    @order.create_address(address_params)
+      @order.create_address(address_params)
 
-    @order.update(shippo_shipment_id: shipment["object_id"])
-    @order.address.update(shippo_address_id: address_to["object_id"])
-    @order.sender.address.update(shippo_address_id: address_from["object_id"])
-    @rates = shipment["rates"]
+      @order.update(shippo_shipment_id: shipment["object_id"])
+      @order.address.update(shippo_address_id: address_to["object_id"])
+      @order.sender.address.update(shippo_address_id: address_from["object_id"])
+      @rates = shipment["rates"]
+    rescue
+      @rates = []
+    end
   end
 
   def create_address
@@ -390,8 +394,9 @@ class OrdersController < ApplicationController
       @order.update(shippo_shipment_id: shipment["object_id"])
 
       @rates = shipment["rates"]
-    rescue
+    rescue => e
       @rates = []
+      puts e.message
     end
 
     respond_to do |format|
