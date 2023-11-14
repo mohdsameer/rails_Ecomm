@@ -200,6 +200,46 @@ class OrdersController < ApplicationController
   def update_dimensions
     @order.update(dimensions_params)
     @order.update(dimensions_is_manual: true)
+
+    begin
+      address_from = Shippo::Address.get(@order.sender.address.shippo_address_id)
+      address_to   = Shippo::Address.get(@order.address.shippo_address_id)
+
+      dimensions   = @order.package_dimensions
+
+      dimensions_hash = {
+        length:        dimensions[:length],
+        width:         dimensions[:width],
+        height:        dimensions[:height],
+        distance_unit: :in,
+      }
+
+      if dimensions[:weight_lb].present?
+        dimensions_hash[:mass_unit] = :lb
+        dimensions_hash[:weight]    = dimensions[:weight_lb]
+      elsif dimensions[:weight_oz].present?
+        dimensions_hash[:mass_unit] = :oz
+        dimensions_hash[:weight]    = dimensions[:weight_oz]
+      else
+        dimensions_hash[:mass_unit] = :lb
+        dimensions_hash[:weight]    = 0.0
+      end
+
+      parcel = Shippo::Parcel.create(dimensions_hash)
+
+      shipment = Shippo::Shipment.create(
+        address_from: address_from,
+        address_to:   address_to,
+        parcels:      parcel,
+        async:        false
+      )
+
+      @order.update(shippo_shipment_id: shipment["object_id"])
+      @rates = shipment["rates"]
+    rescue
+      @rates = []
+    end
+
     redirect_to edit_order_path(@order, step: :shipping_method)
   end
 
@@ -394,7 +434,6 @@ class OrdersController < ApplicationController
       @rates = shipment["rates"]
     rescue => e
       @rates = []
-      puts e.message
     end
 
     respond_to do |format|

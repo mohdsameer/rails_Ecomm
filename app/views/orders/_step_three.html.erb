@@ -76,7 +76,10 @@
 
               <div class="selected_wrap">
                 <div class="selected_head">
-                  <a class="edit_link" href="#">Edit</a>
+                  <%= link_to edit_order_path(order), class: 'edit_link', data: { 'turbo-frame': '_top' } do %>
+                    Edit
+                  <% end %>
+                  <!-- <a class="edit_link" href="#">Edit</a> -->
                 </div>
 
                 <% sum_result = 0 %>
@@ -148,7 +151,10 @@
                         <span><%= address.email %></span>
                         <span><%= address.num %></span>
                       </div>
-                      <a class="edit_link" href="#">Edit</a>
+                      <%= link_to edit_order_path(order, step: :customer), class: 'edit_link', data: { 'turbo-frame': '_top' } do %>
+                        Edit
+                      <% end %>
+                      <!-- <a class="edit_link" href="#">Edit</a> -->
                     </div>
                   </div>
                   <div class="buyer_mail">
@@ -160,7 +166,10 @@
                         <span><%= address.city %>,</span>
                         <span><%= address.zipcode %></span>
                       </div>
-                      <a class="edit_link" href="#">Edit</a>
+                      <%= link_to edit_order_path(order, step: :customer), class: 'edit_link', data: { 'turbo-frame': '_top' } do %>
+                        Edit
+                      <% end %>
+                      <!-- <a class="edit_link" href="#">Edit</a> -->
                     </div>
                   </div>
                 </div>
@@ -175,8 +184,8 @@
                     </div>
                     <div class="right_text">
                       <div>USD <span data-order-form-target="producerPrice" data-price="<%= sum_result %>"><%= sum_result %></span></div>
-                      <div>USD <span data-order-form-target="shippingCostText"></span></div>
-                      <div class="fw-bold">USD <span data-order-form-target="totalPriceText"></span></div>
+                      <div>USD <span data-order-form-target="shippingCostText">0.0</span></div>
+                      <div class="fw-bold">USD <span data-order-form-target="totalPriceText"><%= sum_result %></span></div>
                     </div>
                   </div>
                 </div>
