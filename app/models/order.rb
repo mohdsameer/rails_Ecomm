@@ -80,33 +80,33 @@ class Order < ApplicationRecord
       weight_oz: 1.0
     }
 
-    total_items = order_products.size
+    if dimensions_is_manual
+      dimensions = {
+        length:    custom_length.to_f    > 0.0 ? custom_length.to_f    : 1.0,
+        height:    custom_height.to_f    > 0.0 ? custom_height.to_f    : 1.0,
+        width:     custom_width.to_f     > 0.0 ? custom_width.to_f     : 1.0,
+        weight_lb: custom_weight_lb.to_f > 0.0 ? custom_weight_lb.to_f : 1.0,
+        weight_oz: custom_weight_oz.to_f > 0.0 ? custom_weight_oz.to_f : 1.0
+      }
+    else
+      total_items = order_products.pluck(:product_quantity).sum
 
-    matched_shipping_label = nil
+      matched_shipping_label = nil
 
-    products.each do |product|
-      if product.shipping_labels.present?
-        product.shipping_labels.each do |shipping_label|
-          if shipping_label.item_quantity_min.to_i <= total_items.to_i && shipping_label.item_quantity_max.to_i >= total_items.to_i
-            matched_shipping_label = shipping_label
-            break
+      products.each do |product|
+        if product.shipping_labels.present?
+          product.shipping_labels.each do |shipping_label|
+            if shipping_label.item_quantity_min.to_i <= total_items.to_i && shipping_label.item_quantity_max.to_i >= total_items.to_i
+              matched_shipping_label = shipping_label
+              break
+            end
           end
         end
       end
-    end
 
-    if matched_shipping_label.present?
-      dimensions = matched_shipping_label.dimensions
-    end
-
-    if !dimensions.present? && dimensions_is_manual
-      dimensions = {
-        length:    custom_length.to_f,
-        height:    custom_height.to_f,
-        width:     custom_width.to_f,
-        weight_lb: custom_weight_lb.to_f,
-        weight_oz: custom_weight_oz.to_f
-      }
+      if matched_shipping_label.present?
+        dimensions = matched_shipping_label.dimensions
+      end
     end
 
     dimensions
