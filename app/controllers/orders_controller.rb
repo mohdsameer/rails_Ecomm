@@ -251,22 +251,20 @@ class OrdersController < ApplicationController
   end
 
   def create_shipment
-    Shippo::API.token = ENV['SHIPPO_API_KEY']
-
     producer   = @order.producers.last
     dimensions = @order.package_dimensions
 
     @sender    = @order.create_sender
 
     @sender.create_address(producer.address.attributes.except('id', 'addressable_id', 'addressable_type',
-                                                      'shippo_address_id', 'created_at', 'updated_at'))
+                                                              'shippo_address_id', 'created_at', 'updated_at'))
 
     @sender.address.update(fullname: producer.name, email: producer.email)
 
     dimensions_hash = {
       length:        dimensions[:length],
-      width:         dimensions[:height],
-      height:        dimensions[:width],
+      width:         dimensions[:width],
+      height:        dimensions[:height],
       distance_unit: :in,
     }
 

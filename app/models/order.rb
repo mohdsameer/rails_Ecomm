@@ -72,7 +72,14 @@ class Order < ApplicationRecord
   end
 
   def package_dimensions
-    dimensions  = {}
+    dimensions  = {
+      length:    1.0,
+      height:    1.0,
+      width:     1.0,
+      weight_lb: 1.0,
+      weight_oz: 1.0
+    }
+
     total_items = order_products.size
 
     matched_shipping_label = nil
