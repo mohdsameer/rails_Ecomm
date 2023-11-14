@@ -185,6 +185,7 @@
                     <div class="right_text">
                       <div>USD <span data-order-form-target="producerPrice" data-price="<%= sum_result %>"><%= sum_result %></span></div>
                       <div>USD <span data-order-form-target="shippingCostText">0.0</span></div>
+                      <%= hidden_field_tag :shipping_cost %>
                       <div class="fw-bold">USD <span data-order-form-target="totalPriceText"><%= sum_result %></span></div>
                     </div>
                   </div>

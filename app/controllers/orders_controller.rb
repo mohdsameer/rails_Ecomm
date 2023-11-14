@@ -101,6 +101,7 @@ class OrdersController < ApplicationController
   def edit
     @order     = Order.find_by(id: params[:id])
     @producers = Producer.all
+    @error_message = params[:error_message]
 
     if @order.shippo_shipment_id.present?
       shipment = Shippo::Shipment.get(@order.shippo_shipment_id)
@@ -444,30 +445,31 @@ class OrdersController < ApplicationController
   end
 
   def order_update_shipping
-    if params[:commit].eql?('Purchase Shipping Label')
-      if params[:shippo_rate_id].present?
-        shippo_label = @order.shippo_labels.create(shippo_rate_id: params[:shippo_rate_id])
+    if params[:shippo_rate_id].present?
+      shippo_label = @order.shippo_labels.create(shippo_rate_id: params[:shippo_rate_id])
 
-        if params[:shippo_rate_id].eql?('manual_upload')
-          if params[:manual_upload_file].present?
-            shippo_label.shipo_transaction_label.attach(io: params[:manual_upload_file], filename: "order-label-#{@order.id}-#{shippo_label.id}")
-          end
+      if params[:shippo_rate_id].eql?('manual_upload')
+        if params[:manual_upload_file].present?
+          shippo_label.shipo_transaction_label.attach(io: params[:manual_upload_file], filename: "order-label-#{@order.id}-#{shippo_label.id}")
+        end
+      else
+        transaction = Shippo::Transaction.create(rate: params[:shippo_rate_id], label_file_type: "PDF", async: false)
+
+        if transaction["status"] == "SUCCESS"
+          pdf_file = URI.open(transaction["label_url"])
+
+          shippo_label.update(shippo_transaction_id: transaction["object_id"])
+          shippo_label.shipo_transaction_label.attach(io: pdf_file, filename: "order-label-#{@order.id}-#{shippo_label.id}")
         else
-          transaction = Shippo::Transaction.create(rate: params[:shippo_rate_id], label_file_type: "PDF", async: false)
-
-          if transaction["status"] == "SUCCESS"
-            pdf_file = URI.open(transaction["label_url"])
-
-            shippo_label.update(shippo_transaction_id: transaction["object_id"])
-            shippo_label.shipo_transaction_label.attach(io: pdf_file, filename: "order-label-#{@order.id}-#{shippo_label.id}")
-          else
-            error_message = transaction["messages"]&.pluck("text")&.join(", ")
-            flash[:alert] = error_message
-          end
+          @error_message = transaction["messages"]&.pluck("text")&.join(", ")
         end
       end
+    else
+      @error_message = "Please select a shipping label"
+    end
 
-      redirect_to edit_order_path(@order, step: :shipping_method)
+    if params[:commit].eql?('Purchase Shipping Label') || @error_message.present?
+      redirect_to edit_order_path(@order, step: :shipping_method, error_message: @error_message)
     else
       order_edit_status = params[:submit_type] == "save_later" ? 0 : 1
       priority          = params[:priority].present? ? 1 : 0
@@ -477,10 +479,6 @@ class OrdersController < ApplicationController
                     order_edit_status:  order_edit_status,
                     priority:           priority,
                     order_status:       order_status)
-
-      if params[:manual_upload_file].present?
-        @order.custom_label.attach(io: params[:manual_upload_file], filename: "order-label-#{@order.id}")
-      end
 
       if params[:submit_type].eql?('save_later')
         redirect_to orders_path

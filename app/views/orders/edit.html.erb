@@ -28,6 +28,10 @@
       <turbo-frame id="set-dimensions"></turbo-frame>
       <turbo-frame id="edit-sender"></turbo-frame>
 
+      <% if @error_message.present? %>
+        <div class="text-center w-full text-danger"><%= @error_message %></div>
+      <% end %>
+
       <% if params[:step].present? && params[:step].eql?('shipping_method') && @order.shippo_shipment_id.present? %>
         <%= render 'step_three', order: @order, rates: @rates, address: @order.address, sender: @order.sender %>
       <% elsif params[:step].present? && params[:step].eql?('customer') %>

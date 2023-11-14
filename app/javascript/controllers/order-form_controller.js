@@ -2,15 +2,12 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = [ "shippingCostInput", "shippingCostText", "producerPrice", "totalPriceText", "form", "submitType", "saveLater", "markComplete", "submit"]
-  // static values  = {
-  //   producerPrice: Number
-  // }
 
   connect() {
     console.log('Order form controller connected');
 
     const shippingCostInput = $(this.shippingCostInputTargets);
-    const producerPriceText = $(this.producerPriceTarget)
+    const producerPriceText = $(this.producerPriceTarget);
     const shippingCostText  = $(this.shippingCostTextTarget);
     const totalPriceText    = $(this.totalPriceTextTarget);
     const formTarget        = $(this.formTarget);
