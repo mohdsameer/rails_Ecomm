@@ -251,18 +251,20 @@
         <div class="print_table">
           <div class="print_content">
             <div class="content_item">Print Area Width (mm) </div>
-            <div class="content_item">Print Area Width (mm) </div>
+            <div class="content_item">Print Area Height (mm) </div>
             <div class="content_item one"></div>
             <div class="content_item two border-0">Edit</div>
           </div>
 
           <div class="print_content">
             <div class="content_item white_bg border-0">
-              <input type="text" class="item_box" placeholder="75" >
+              <!-- <input type="text" class="item_box" placeholder="75" > -->
+              <%= f.text_field :print_area_width, class: "item_box", placeholder: "75" %>
             </div>
 
             <div class="content_item white_bg border-0">
-              <input type="text" class="item_box" placeholder="75" >
+              <!-- <input type="text" class="item_box" placeholder="75" > -->
+              <%= f.text_field :print_area_height, class: "item_box", placeholder: "75" %>
             </div>
 
             <div class="content_item white_bg border-0 one"></div>

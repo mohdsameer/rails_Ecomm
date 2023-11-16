@@ -35,7 +35,6 @@ class OrdersController < ApplicationController
 
   def index
     per_page = params[:per_page] || 20
-
     @orders   = Order.search(params).paginate(page: params[:page], per_page: per_page)
     @products = Product.all
 
@@ -111,7 +110,7 @@ class OrdersController < ApplicationController
 
   def update
     if params[:request_type] == "Confirm"
-      @order.update(order_edit_status: 1)
+      @order.update(order_edit_status: 1,order_status: 3)
     elsif params[:request_type] == "Reject"
       @order.update(order_status: 1, reject_reason: params[:order][:reject_reason])
     elsif params[:request_type] == "Cancel"
@@ -353,7 +352,6 @@ class OrdersController < ApplicationController
         parcels:      parcel,
         async:        false
       )
-
       @order.create_address(address_params)
 
       @order.update(shippo_shipment_id: shipment["object_id"])

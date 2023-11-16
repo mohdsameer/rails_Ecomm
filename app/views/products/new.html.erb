@@ -112,10 +112,12 @@
 
           <div class="print_content">
             <div class="content_item white_bg border-0">
-              <input type="text" placeholder="75" class="item_box">
+              <!-- <input type="text" placeholder="75" class="item_box"> -->
+              <%= f.text_field :print_area_width, class: "item_text", placeholder: "75" %>
             </div>
             <div class="content_item white_bg border-0">
-              <input type="text" placeholder="75" class="item_box">
+              <!-- <input type="text" placeholder="75" class="item_box"> -->
+              <%= f.text_field :print_area_height, class: "item_text", placeholder: "75" %>
             </div>
             <div class="content_item white_bg border-0 one"></div>
             <div class="content_item white_bg border-0 two border-0"><%= image_tag "dark_edit", alt: "icon", class:"edit_icon" %></div>
