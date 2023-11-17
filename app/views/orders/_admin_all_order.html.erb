@@ -179,7 +179,7 @@
                               <div class="icon">$</div>
                               <div class="content_text">Update the job price for the assignee.</div>
                             </a>
-                            <a href="#" class="status_content">
+                            <a href= "<%= request_revision_order_path(order)%>" data-turbo-frame="request-revision-order-modal" class="status_content">
                               <%= image_tag "info_outline", alt:"icon", class:"icon" %>
                               <div class="content_text">Request Revision from Assignee</div>
                             </a>

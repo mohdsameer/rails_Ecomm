@@ -47,14 +47,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html
       format.js do
-        if current_user.type.eql?('Producer')
-          html_data = render_to_string(partial: "orders/producer_all_order", locals: { orders: @orders }, layout: false)
-        elsif current_user.type.eql?('Designer')
-          html_data = render_to_string(partial: "orders/designer_orders_table", locals: { orders: @orders }, layout: false)
-        else
-          html_data = render_to_string(partial: "orders/orders_table", locals: { orders: @orders }, layout: false)
-        end
-
+        html_data = render_to_string(partial: "orders/orders_table", locals: { orders: @orders }, layout: false)
         render json: { html_data: html_data }
       end
     end
@@ -150,8 +143,8 @@ class OrdersController < ApplicationController
             order_product = @order.order_products.find_by(variant_id: variant_id, user_id: producer_id)
             order_product.update(product_quantity: quantity.to_i)
 
-            front_side_image = params["front_side_image_#{order_product.variant_id}".to_sym]
-            back_side_image  = params["back_side_image_#{order_product.variant_id}".to_sym]
+            front_side_image = params["front_side_image_#{order_product.id}".to_sym]
+            back_side_image  = params["back_side_image_#{order_product.id}".to_sym]
 
             if front_side_image.present?
               order_product.front_side_image.attach(front_side_image)
@@ -475,7 +468,7 @@ class OrdersController < ApplicationController
           @error_message = transaction["messages"]&.pluck("text")&.join(", ")
         end
       end
-    elsif params[:commit].eql?('Purchase Shipping Label') && !params[:shippo_rate_id].present?
+    else
       @error_message = "Please select a shipping label"
     end
 
@@ -504,17 +497,14 @@ class OrdersController < ApplicationController
   end
 
   def download_shippo_label
-    # respond_to do |format|
-    #   format.pdf do
-    #     @order.shippo_labels.each do |shippo_label|
-    #       if shippo_label.shipo_transaction_label.attached?
-    #         send_data shippo_label.shipo_transaction_label.download, filename: shippo_label.shipo_transaction_label.filename.to_s, type: "application/pdf"
-    #       end
-    #     end
-
-    #     return
-    #   end
-    # end
+    respond_to do |format|
+      format.pdf do
+        if @order.shipping_label_attachement
+          send_data @order.shipping_label_attachement.download, filename: @order.shipping_label_attachement.filename.to_s, type: "application/pdf"
+          return
+        end
+      end
+    end
   end
 
   def confirm
@@ -603,7 +593,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html
       format.js do
-        html_data = render_to_string(partial: "orders/products_search_result", locals: { products: @products, order: @order }, layout: false)
+        html_data = render_to_string(partial: "orders/products_search_result", locals: { products: @products }, layout: false)
         render json: { html_data: html_data }
       end
     end
