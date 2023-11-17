@@ -16,9 +16,9 @@
             <% if @assigne.present? %>
               <span><%= @assigne %></span>
               <%= image_tag "check", alt:"icon", class:"right_img" %>
-            <%else%>
+            <% else %>
               <span> assigne not assign</span>
-            <%end%>
+            <% end %>
           </div>
         </div>
         <div class="create_date"><%= @order.order_date_with_time%></div>

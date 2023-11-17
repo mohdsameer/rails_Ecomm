@@ -115,7 +115,7 @@
                 <div class="order_td nine">
                   <div class="order_more_action">
                     <div class="more_icon_group">
-                      <%= link_to download_shippo_label_order_path(order, format: :pdf), class: 'icon blue', data: { 'turbo-frame': '_top' } do %>
+                      <%= link_to download_shippo_label_order_path(order), class: 'icon blue', data: { 'turbo-frame': 'download-labels-modal' } do %>
                         <%= image_tag("fluent_vehicle") %>
                       <% end %>
 
@@ -237,14 +237,14 @@
                   <div class="order_items_section">
                     <div class="items_wrapper">
                       <% i = 1 %>
-                      <% order_products =  order.order_products.where(user_id: current_user.id)%>
+                      <% order_products = order.order_products.where(user_id: current_user.id) %>
                       <% order_products.each do |order_product| %>
                         <div class="order_items_row">
-                          <div class="items_num"><%=i %></div>
+                          <div class="items_num"><%= i %></div>
                           <div class="items_table">
                             <table>
                               <thead>
-                                <th><%= order_product.product.name%></th>
+                                <th><%= order_product.product.name %></th>
                                 <th>Front Side</th>
                                 <th>Back Side</th>
                                 <th>Inventory</th>
@@ -254,7 +254,7 @@
                                   <td>
                                     <div class="content_item">
                                       <% if order_product.product.image.attached? %>
-                                        <%= image_tag order_product.product.image, class: "content_img " %>
+                                        <%= image_tag order_product.product.image, class: "content_img" %>
                                       <% else %>
                                         <%= image_tag asset_path('dummy-product.png') %>
                                       <% end %>
@@ -331,7 +331,7 @@
                             <input type="checkbox" name="">
                           </div>
                         </div>
-                        <%i+=1%>
+                        <% i += 1 %>
                       <% end %>
                       <div class="packing_hint">
                         <div class="fold_box">
@@ -347,7 +347,6 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             <% end %>

@@ -1,0 +1,41 @@
+<turbo-frame id="download-labels-modal">
+  <div class="status_popup">
+    <div class="status_popup_outer">
+      <div id="download-labels" class="status_pop_wrapper" data-controller="modals" data-modals-modal-id-value="download-labels">
+        <%= link_to 'javascript:;', class: 'close_popup', id: 'close_status_popup' do %>
+          <%= image_tag "close.png", alt:"icon" %>
+        <% end %>
+
+        <div class="choose_shiping_wrapper">
+          <div class="shiping_info_wrap">
+            <div class="shiping_details_wrap">
+              <div class="method_wrap">
+                <div class="method_section">
+                  <div class="action_wrapper">
+                    <% @order.shippo_labels.each do |shippo_label| %>
+                      <% if shippo_label.shipo_transaction_label.attached? %>
+                        <% shipo_transaction_label = shippo_label.shipo_transaction_label %>
+                        <div class="pdf_box">
+                          <div class="pdf_name"><%= shipo_transaction_label.filename %></div>
+                          <div class="pdf_actions">
+                            <%= link_to rails_blob_url(shipo_transaction_label, only_path: true), class: 'pdf_link', target: '_blank' do %>
+                              <%= image_tag 'light_eye.png', alt: 'icon', class: 'eye' %>
+                            <% end %>
+
+                            <%= link_to rails_blob_url(shipo_transaction_label, only_path: true, disposition: "attachment"), class: 'pdf_link', data: { 'turbo-frame': '_top' } do %>
+                              <%= image_tag 'download.png', alt: 'icon' %>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</turbo-frame>

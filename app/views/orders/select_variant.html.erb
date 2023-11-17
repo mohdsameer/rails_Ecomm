@@ -4,13 +4,13 @@
       <div class="select_pop_wrap">
         <div class="select_head">
           Product Variants
-          <%= image_tag "red_close", alt:"icon", class:"close_icon" %>
+          <%= image_tag "red_close", alt: "icon", class: "close_icon" %>
         </div>
 
         <div class="select_content"
              data-controller="search"
              data-search-url-value="<%= select_variant_orders_path %>"
-             data-search-params-value="<%= { product_id: @product.id }.to_json %>">
+             data-search-params-value="<%= { product_id: @product.id, order_id: @order.id }.to_json %>">
 
           <div class="select_search_box">
             <%= image_tag "search", alt:"icon", class:"search_icon" %>
@@ -24,14 +24,7 @@
           </div>
 
           <div class="scroll_section" data-search-target="results">
-            <%= form_tag all_producer_orders_path, method: :get, data: { 'turbo-frame': 'all-producer-order-modal' } do %>
-              <%= hidden_field_tag :product_id, @product.id %>
-              <%= hidden_field_tag :order_id, @order.id %>
-              <% if @variants.present? %>
-                <%= render 'variants_list', variants: @variants, product: @product, order: @order %>
-                <%= submit_tag 'Continue' %>
-              <% end %>
-            <% end %>
+            <%= render 'variants_list', variants: @variants, product: @product, order: @order %>
           </div>
 
           <div class="back_to_btn_section">
