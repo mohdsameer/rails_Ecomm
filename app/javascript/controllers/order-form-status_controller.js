@@ -6,7 +6,6 @@ export default class extends Controller {
   connect() {
     console.log('Order form status controller connected');
 
-
     const formTarget         = $(this.formTarget);
     const submitTypeTarget   = $(this.submitTypeTarget);
     const markCompleteTarget = $(this.markCompleteTarget);

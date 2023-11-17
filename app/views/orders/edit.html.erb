@@ -49,75 +49,47 @@
     $(this).closest('.product_list_section').find('.collapse_data').slideToggle();
   });
 
-  $('.variantId').each(function() {
-    var varientId = $(this).attr('id');
+  // $('.variantId').each(function() {
+  //   var varientId = $(this).attr('id');
 
-    function readFrontURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          $('#imageFrontPreview_'+varientId).css('background-image', 'url('+e.target.result +')');
-          $('#imageFrontPreview_'+varientId).hide();
-          $('#imageFrontPreview_'+varientId).fadeIn(650);
-        }
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-    $("#front_side_image_"+varientId).change(function() {
-      readFrontURL(this);
-      $(this).closest('.avatar-upload').find('.avatar-edit').css('display', 'none');
-      $(this).closest('.avatar-upload').find('.avatar-preview').show();
-      $(this).closest('.content_img').find('.delete_img').css('display', 'flex');
-    });
+  //   function readFrontURL(input) {
+  //     if (input.files && input.files[0]) {
+  //       var reader = new FileReader();
+  //       reader.onload = function(e) {
+  //         $('#imageFrontPreview_'+varientId).css('background-image', 'url('+e.target.result +')');
+  //         $('#imageFrontPreview_'+varientId).hide();
+  //         $('#imageFrontPreview_'+varientId).fadeIn(650);
+  //       }
+  //       reader.readAsDataURL(input.files[0]);
+  //     }
+  //   }
 
-    function readBackURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          $('#imageBackPreview_'+varientId).css('background-image', 'url('+e.target.result +')');
-          $('#imageBackPreview_'+varientId).hide();
-          $('#imageBackPreview_'+varientId).fadeIn(650);
-        }
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-    $("#back_side_image_"+varientId).change(function() {
-      readBackURL(this);
-      $(this).closest('.avatar-upload').find('.avatar-edit').css('display', 'none');
-      $(this).closest('.avatar-upload').find('.avatar-preview').show();
-      $(this).closest('.content_img').find('.delete_img').css('display', 'flex');
-    });
+  //   $("#front_side_image_"+varientId).change(function() {
+  //     readFrontURL(this);
+  //     $(this).closest('.avatar-upload').find('.avatar-edit').css('display', 'none');
+  //     $(this).closest('.avatar-upload').find('.avatar-preview').show();
+  //     $(this).closest('.content_img').find('.delete_img').css('display', 'flex');
+  //   });
 
-    // increment decrement product js
-    var incrementPlus;
-    var incrementMinus;
+  //   function readBackURL(input) {
+  //     if (input.files && input.files[0]) {
+  //       var reader = new FileReader();
+  //       reader.onload = function(e) {
+  //         $('#imageBackPreview_'+varientId).css('background-image', 'url('+e.target.result +')');
+  //         $('#imageBackPreview_'+varientId).hide();
+  //         $('#imageBackPreview_'+varientId).fadeIn(650);
+  //       }
+  //       reader.readAsDataURL(input.files[0]);
+  //     }
+  //   }
 
-    var buttonPlus  = $(".cart-qty-plus");
-    var buttonMinus = $(".cart-qty-minus");
-
-    var incrementPlus = buttonPlus.click(function() {
-      var $n = $(this)
-        .parent(".button-container")
-        .parent(".plus_minus_wrap")
-        .find("#variants_"+varientId);
-      $n.val(Number($n.val())+1 );
-      var proVal = $("#variants_"+varientId).val()
-      $('#qty_num_'+varientId).text(proVal);
-    });
-
-    var incrementMinus = buttonMinus.click(function() {
-        var $n = $(this)
-        .parent(".button-container")
-        .parent(".plus_minus_wrap")
-        .find("#variants_"+varientId);
-      var amount = Number($n.val());
-      if (amount > 0) {
-        $n.val(amount-1);
-        var proVal = $("#variants_"+varientId).val()
-        $('#qty_num_'+varientId).text(proVal);
-      }
-    });
-  });
+  //   $("#back_side_image_"+varientId).change(function() {
+  //     readBackURL(this);
+  //     $(this).closest('.avatar-upload').find('.avatar-edit').css('display', 'none');
+  //     $(this).closest('.avatar-upload').find('.avatar-preview').show();
+  //     $(this).closest('.content_img').find('.delete_img').css('display', 'flex');
+  //   });
+  // });
 
   $('.delete_img').click(function() {
     $(this).closest('.content_img').find('.avatar-edit').css('display', 'flex').find('.upload_field').val('');

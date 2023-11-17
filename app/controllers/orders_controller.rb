@@ -132,27 +132,18 @@ class OrdersController < ApplicationController
       @order.design_file_1_image.attach(params[:design_file_1_image]) if params[:design_file_1_image].present?
       @order.design_file_2_image.attach(params[:design_file_2_image]) if params[:design_file_2_image].present?
       @order.additional_file_image.attach(params[:additional_file_image]) if params[:additional_file_image].present?
-      # @order.front_side_image.attach(params[:front_side_image])
-      # @order.back_side_image.attach(params[:back_side_image])
 
       if params[:producers_variants].present?
-        params[:producers_variants].each do |producer_id, variants|
-          variants.each do |variant_id, quantity|
-            product = Variant.find_by(id: variant_id).product
+        params[:producers_variants].each do |order_product_id, quantity|
+          order_product = @order.order_products.find_by(id: order_product_id)
+          order_product.update(product_quantity: quantity.to_i)
 
-            order_product = @order.order_products.find_by(variant_id: variant_id, user_id: producer_id)
-            order_product.update(product_quantity: quantity.to_i)
+          if params[:front_side_image].present? && params[:front_side_image][order_product_id].present?
+            order_product.front_side_image.attach(io: params[:front_side_image][order_product_id], filename: "design-file-#{order_product.id}")
+          end
 
-            front_side_image = params["front_side_image_#{order_product.id}".to_sym]
-            back_side_image  = params["back_side_image_#{order_product.id}".to_sym]
-
-            if front_side_image.present?
-              order_product.front_side_image.attach(front_side_image)
-            end
-
-            if back_side_image.present?
-              order_product.back_side_image.attach(back_side_image)
-            end
+          if params[:back_side_image].present? && params[:back_side_image][order_product_id].present?
+            order_product.back_side_image.attach(io: params[:back_side_image][order_product_id], filename: "design-file-#{order_product.id}")
           end
         end
       end
