@@ -603,7 +603,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html
       format.js do
-        html_data = render_to_string(partial: "orders/products_search_result", locals: { products: @products }, layout: false)
+        html_data = render_to_string(partial: "orders/products_search_result", locals: { products: @products, order: @order }, layout: false)
         render json: { html_data: html_data }
       end
     end

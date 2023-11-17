@@ -237,15 +237,15 @@
                   <div class="order_items_section">
                     <div class="items_wrapper">
                       <% i = 1 %>
-                      <% order_products =  order.order_products.where(user_id: current_user.id)%>
+                      <% order_products = order.order_products.where(user_id: current_user.id) %>
                       <% order_products.each do |order_product| %>
                         <% variant = Variant.find(order_product.variant_id) %>
                         <div class="order_items_row">
-                          <div class="items_num"><%=i %></div>
+                          <div class="items_num"><%= i %></div>
                           <div class="items_table">
                             <table>
                               <thead>
-                                <th><%= order_product.product.name%></th>
+                                <th><%= order_product.product.name %></th>
                                 <th>Front Side</th>
                                 <th>Back Side</th>
                                 <th>Inventory</th>
@@ -255,7 +255,7 @@
                                   <td>
                                     <div class="content_item">
                                       <% if order_product.product.image.attached? %>
-                                        <%= image_tag order_product.product.image, class: "content_img " %>
+                                        <%= image_tag order_product.product.image, class: "content_img" %>
                                       <% else %>
                                         <%= image_tag asset_path('dummy-product.png') %>
                                       <% end %>
@@ -332,7 +332,7 @@
                             <input type="checkbox" name="">
                           </div>
                         </div>
-                        <%i+=1%>
+                        <% i += 1 %>
                       <% end %>
                       <div class="packing_hint">
                         <div class="fold_box">
@@ -348,7 +348,6 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             <% end %>

@@ -1,25 +1,26 @@
-<% variants.each do |variant| %>
-  <div class="scroll_content check_content">
-    <div class="image_text_wrap">
-      <%= check_box_tag 'variant_ids[]', variant.id, class: "check_box" %>1
-      <% if variant.image.attached? %>
-        <div class="img_box">
-          <%= image_tag variant.image %>
+<%= form_tag all_producer_orders_path, method: :get, data: { 'turbo-frame': 'all-producer-order-modal' } do %>
+  <%= hidden_field_tag :product_id, @product.id %>
+  <%= hidden_field_tag :order_id, @order.id %>
+
+  <% variants.each do |variant| %>
+    <div class="scroll_content check_content">
+      <div class="image_text_wrap">
+        <%= check_box_tag 'variant_ids[]', variant.id, class: "check_box" %>1
+        <% if variant.image.attached? %>
+          <div class="img_box">
+            <%= image_tag variant.image %>
+          </div>
+        <% else %>
+          <div class="img_box">
+            <%= image_tag asset_path('dummy-product.png') %>
+          </div>
+        <% end %>
+        <div class="img_text_box">
+          <div class="product_name"><%= variant.color %></div>
         </div>
-      <% else %>
-        <div class="img_box">
-          <%= image_tag asset_path('dummy-product.png') %>
-        </div>
-      <% end %>
-      <div class="img_text_box">
-        <div class="product_name"><%= variant.color %></div>
       </div>
     </div>
-    <!-- <a href="<%#= all_producer_orders_path(variant: variant, product: @product, order: params[:order_id]) %>"
-       data-turbo-frame="all-producer-order-modal"
-       class="choose_pro_link"> -->
+  <% end %>
 
-      <%#= image_tag "right_arrow", alt: "icon", class: "rigth_arrow" %>
-    <!-- </a> -->
-  </div>
+  <%= submit_tag 'Continue' %>
 <% end %>
