@@ -121,34 +121,38 @@ class OrdersController < ApplicationController
       else
         params[:order_edit_status] = 0
       end
+
       @countries = ISO3166::Country.all
 
       @order.update(order_edit_status: params[:order_edit_status], additional_comment: params[:additional_comment])
-      @order.shipping_label_image.attach(params[:shipping_label_image])
-      @order.packing_slip_image.attach(params[:packing_slip_image])
-      @order.gift_message_slip_image.attach(params[:gift_message_slip_image])
-      @order.design_file_1_image.attach(params[:design_file_1_image])
-      @order.design_file_2_image.attach(params[:design_file_2_image])
-      @order.additional_file_image.attach(params[:additional_file_image])
+
+      @order.shipping_label_image.attach(params[:shipping_label_image]) if params[:shipping_label_image].present?
+      @order.packing_slip_image.attach(params[:packing_slip_image]) if params[:packing_slip_image].present?
+      @order.gift_message_slip_image.attach(params[:gift_message_slip_image]) if params[:gift_message_slip_image].present?
+      @order.design_file_1_image.attach(params[:design_file_1_image]) if params[:design_file_1_image].present?
+      @order.design_file_2_image.attach(params[:design_file_2_image]) if params[:design_file_2_image].present?
+      @order.additional_file_image.attach(params[:additional_file_image]) if params[:additional_file_image].present?
       # @order.front_side_image.attach(params[:front_side_image])
       # @order.back_side_image.attach(params[:back_side_image])
 
-      params[:producers_variants].each do |producer_id, variants|
-        variants.each do |variant_id, quantity|
-          product = Variant.find_by(id: variant_id).product
+      if params[:producers_variants].present?
+        params[:producers_variants].each do |producer_id, variants|
+          variants.each do |variant_id, quantity|
+            product = Variant.find_by(id: variant_id).product
 
-          order_product = @order.order_products.find_by(variant_id: variant_id, user_id: producer_id)
-          order_product.update(product_quantity: quantity.to_i)
+            order_product = @order.order_products.find_by(variant_id: variant_id, user_id: producer_id)
+            order_product.update(product_quantity: quantity.to_i)
 
-          front_side_image = params["front_side_image_#{order_product.variant_id}".to_sym]
-          back_side_image = params["back_side_image_#{order_product.variant_id}".to_sym]
+            front_side_image = params["front_side_image_#{order_product.variant_id}".to_sym]
+            back_side_image  = params["back_side_image_#{order_product.variant_id}".to_sym]
 
-          if front_side_image.present?
-            order_product.front_side_image.attach(front_side_image)
-          end
+            if front_side_image.present?
+              order_product.front_side_image.attach(front_side_image)
+            end
 
-          if back_side_image.present?
-            order_product.back_side_image.attach(back_side_image)
+            if back_side_image.present?
+              order_product.back_side_image.attach(back_side_image)
+            end
           end
         end
       end
@@ -158,6 +162,8 @@ class OrdersController < ApplicationController
       format.turbo_stream do
         if params[:submit_type].eql?('shipping')
           render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order, countries: @countries })
+        elsif params[:submit_type].eql?('design_added')
+          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/edit_step_one', locals: { order: @order })
         else
           redirect_to orders_path
         end

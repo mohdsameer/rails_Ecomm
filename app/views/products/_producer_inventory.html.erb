@@ -88,9 +88,9 @@
                     </div>
                   </div>
                   <div class="td nine">
-                    <% if pv.inventory > 100 %>
+                    <% if pv.inventory.to_i > 100 %>
                       <div class="badgee in_stock">In Stock</div>
-                    <% elsif pv.inventory <= 100 && pv.inventory > 0 %>
+                    <% elsif pv.inventory.to_i <= 100 && pv.inventory.to_i > 0 %>
                       <div class="badgee low_stock">Low Stock</div>
                     <%else%>
                       <div class="badgee out_of_stock">Out of Stock</div>
@@ -98,7 +98,7 @@
                   </div>
                   <div class="td ten">
                     <div class="aisle_box">
-                      <div class="asle_no"><%= pv.inventory%></div>
+                      <div class="asle_no"><%= pv.inventory.to_i %></div>
                       <a href="<%= edit_inventory_variant_path(variant) %>"  data-turbo-frame="edit-inventory-modal" class="aisle_icon invntry_qty " ><%= image_tag 'ic_edit.png', alt: 'icon', class: 'ic_edit' %> </a>
                     </div>
                   </div>

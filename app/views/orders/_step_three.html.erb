@@ -38,7 +38,7 @@
                   </div>
 
                   <div class="upload_box">
-                    <input type="file" name="manual_upload_file" class="upload_file" id="upload_file" />
+                    <input type="file" name="manual_upload_file" class="upload_file" id="upload_file" data-order-form-target="uploadFile" />
                     <label for="upload_file" class="upload_label">
                       <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_icon' %>
                       <div class="upload_text">Upload file</div>
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="action_wrapper">
-                  <%= submit_tag 'Purchase Shipping Label', class: 'pur_link' %>
+                  <%= submit_tag 'Purchase Shipping Label', class: 'pur_link', data: { 'order-form-target': 'purchaseLabel' } %>
                   <%#= link_to 'Shipping Label Purchased Successfully', 'javascript:;', class: 'ship_link' %>
 
                   <% @order.shippo_labels.each do |shippo_label| %>
@@ -98,9 +98,9 @@
                       </div>
 
                       <div class="img_section">
-                        <%= display_image(order_product.front_side_image, "trans_frame") %>
-                        <%= display_image(order_product.back_side_image, "trans_frame") %>
-                        <%= display_image(order_product.variant.image, "trans_frame") %>
+                        <%= display_image(order_product.front_side_image, nil) %>
+                        <%= display_image(order_product.back_side_image, nil) %>
+                        <%= display_image(order_product.variant.image, nil) %>
                       </div>
                     </div>
 

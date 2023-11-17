@@ -311,12 +311,12 @@
                                       <% ProducersVariant.where(variant_id: order_product.variant_id, user_id: order_product.producer.id).each do |pv| %>
                                         <div class="table_data">
                                           <div class="value_row"><span><b>Aisle:</b></span> G21 </div>
-                                          <div class="value_row"><span><b>Qty:</b></span><%= pv.inventory %></div>
+                                          <div class="value_row"><span><b>Qty:</b></span><%= pv.inventory.to_i %></div>
                                         </div>
 
-                                        <% if  pv.inventory > 100 %>
+                                        <% if  pv.inventory.to_i > 100 %>
                                           <div class="item_status">In Stock</div>
-                                        <% elsif pv.inventory < 100 && pv.inventory > 0 %>
+                                        <% elsif pv.inventory.to_i < 100 && pv.inventory.to_i > 0 %>
                                           <div class="item_status low_stock">Low Stock</div>
                                         <%else%>
                                           <div class="item_status out_of_stock">Out of stock</div>

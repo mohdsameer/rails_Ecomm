@@ -36,8 +36,7 @@ class Order < ApplicationRecord
 
   # Class Methods
   def self.search(params)
-    # results = all.joins(:products, :address).group(:id)
-    results = all.joins(:products).group(:id)
+    results = all.left_joins(:products, :address).group(:id)
 
     if params[:query].present?
       results = results

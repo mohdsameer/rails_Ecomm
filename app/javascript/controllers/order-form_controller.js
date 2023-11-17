@@ -1,20 +1,23 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = [ "shippingCostInput", "shippingCostText", "producerPrice", "totalPriceText", "form", "submitType", "saveLater", "markComplete", "submit"]
+  static targets = ["shippingCostInput", "shippingCostText", "producerPrice", "totalPriceText", "form", "submitType",
+                    "saveLater", "markComplete", "submit", "uploadFile", "purchaseLabel"]
 
   connect() {
     console.log('Order form controller connected');
 
-    const shippingCostInput = $(this.shippingCostInputTargets);
-    const producerPriceText = $(this.producerPriceTarget);
-    const shippingCostText  = $(this.shippingCostTextTarget);
-    const totalPriceText    = $(this.totalPriceTextTarget);
-    const formTarget        = $(this.formTarget);
-    const submitTypeTarget  = $(this.submitTypeTarget);
-    const saveLaterTarget   = $(this.saveLaterTarget);
-    const markCompleteTarget = $(this.markCompleteTarget);
-    const submitTarget       = $(this.submitTarget);
+    const shippingCostInput   = $(this.shippingCostInputTargets);
+    const producerPriceText   = $(this.producerPriceTarget);
+    const shippingCostText    = $(this.shippingCostTextTarget);
+    const totalPriceText      = $(this.totalPriceTextTarget);
+    const formTarget          = $(this.formTarget);
+    const submitTypeTarget    = $(this.submitTypeTarget);
+    const saveLaterTarget     = $(this.saveLaterTarget);
+    const markCompleteTarget  = $(this.markCompleteTarget);
+    const submitTarget        = $(this.submitTarget);
+    const uploadFileTarget    = $(this.uploadFileTarget);
+    const purchaseLabelTarget = $(this.purchaseLabelTarget);
 
     shippingCostInput.change(function() {
       shippingCostText.text($(this).data().price);
@@ -37,6 +40,11 @@ export default class extends Controller {
       formTarget.attr('data-turbo-frame', 'order-success-popup-modal');
       submitTypeTarget.val('mark_complete');
       submitTarget.click();
+    });
+
+    uploadFileTarget.change(function(e) {
+      e.preventDefault();
+      purchaseLabelTarget.click();
     });
   }
 }
