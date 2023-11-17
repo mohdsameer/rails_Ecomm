@@ -1,7 +1,7 @@
 <turbo-frame id="edit-inventory-modal">
 	<div id="edit_invntry_qty_popup" class="edit_invntry_qty_popup" data-controller="modals" data-modals-modal-id-value="edit_invntry_qty_popup">
 	  <div class="popup_wrapper">
-	  	<%= form_tag update_inventory_variant_path(@variant, producerId: @pv.producer.id), method: :patch do %>
+	  	<%= form_tag update_inventory_variant_path(@variant, producerId: @pv.producer.id), method: :patch,data: { 'turbo-frame': '_top' } do %>
 		    <div class="edit_pop_wrap">
 		    	<%= image_tag 'close.png', alt:'icon', class: 'cross_icon cancel_qty' %>
 		      <div class="edit_head">Edit Inventory QTY: <%= @variant.product.id %></div>

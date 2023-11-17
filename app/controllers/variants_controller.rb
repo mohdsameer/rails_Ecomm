@@ -27,13 +27,7 @@ class VariantsController < ApplicationController
 
   def update_inventory
     @variant = Variant.find(params[:id])
-
-    if params[:producerId].present?
-      @pv = @variant.producers_variants.find_by(user_id: params[:producerId])
-    else
-      @pv = @variant.producers_variants.find_by(user_id: current_user.id)
-    end
-
+    @pv = @variant.producers_variants.find_by(user_id: params[:producerId].presence || current_user.id)
     existing = @pv.inventory
 
     if params[:increased_inventory].present?
@@ -54,7 +48,9 @@ class VariantsController < ApplicationController
     if @variant.update(inventory_reason: update_reason)
       @pv.update(inventory: update_inventory)
 
-      redirect_to products_path, notice: 'inventory was successfully updated.'
+      redirect_path = params[:producerId].present? ? producer_inventory_variant_path(params[:producerId]) : products_path
+      redirect_to redirect_path, notice: 'Inventory was successfully updated.'
+
     else
       render :edit_inventory
     end
