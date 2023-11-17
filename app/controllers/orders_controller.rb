@@ -47,7 +47,14 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html
       format.js do
-        html_data = render_to_string(partial: "orders/orders_table", locals: { orders: @orders }, layout: false)
+        if current_user.type.eql?('Producer')
+          html_data = render_to_string(partial: "orders/producer_all_order", locals: { orders: @orders }, layout: false)
+        elsif current_user.type.eql?('Designer')
+          html_data = render_to_string(partial: "orders/designer_orders_table", locals: { orders: @orders }, layout: false)
+        else
+          html_data = render_to_string(partial: "orders/orders_table", locals: { orders: @orders }, layout: false)
+        end
+
         render json: { html_data: html_data }
       end
     end
@@ -468,7 +475,7 @@ class OrdersController < ApplicationController
           @error_message = transaction["messages"]&.pluck("text")&.join(", ")
         end
       end
-    else
+    elsif params[:commit].eql?('Purchase Shipping Label') && !params[:shippo_rate_id].present?
       @error_message = "Please select a shipping label"
     end
 
@@ -497,14 +504,17 @@ class OrdersController < ApplicationController
   end
 
   def download_shippo_label
-    respond_to do |format|
-      format.pdf do
-        if @order.shipping_label_attachement
-          send_data @order.shipping_label_attachement.download, filename: @order.shipping_label_attachement.filename.to_s, type: "application/pdf"
-          return
-        end
-      end
-    end
+    # respond_to do |format|
+    #   format.pdf do
+    #     @order.shippo_labels.each do |shippo_label|
+    #       if shippo_label.shipo_transaction_label.attached?
+    #         send_data shippo_label.shipo_transaction_label.download, filename: shippo_label.shipo_transaction_label.filename.to_s, type: "application/pdf"
+    #       end
+    #     end
+
+    #     return
+    #   end
+    # end
   end
 
   def confirm

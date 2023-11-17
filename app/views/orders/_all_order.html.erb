@@ -115,7 +115,7 @@
                 <div class="order_td nine">
                   <div class="order_more_action">
                     <div class="more_icon_group">
-                      <%= link_to download_shippo_label_order_path(order, format: :pdf), class: 'icon blue', data: { 'turbo-frame': '_top' } do %>
+                      <%= link_to download_shippo_label_order_path(order), class: 'icon blue', data: { 'turbo-frame': 'download-labels-modal' } do %>
                         <%= image_tag("fluent_vehicle") %>
                       <% end %>
 

@@ -1,0 +1,62 @@
+<ul class="order_tabs_wrap" id="tabs-nav">
+  <li class="tabs_items"><a href="#tab1"><span class="tabs_notify"><%= orders.length %></span>All Orders</a></li>
+  <li class="tabs_items"><a href="#tab2"><span class="tabs_notify"><%= orders.new_orders.length %></span>New Order</a></li>
+  <li class="tabs_items"><a href="#tab3"><span class="tabs_notify"><%= orders.fullfilled_order.length %></span>Fulfilled Orders</a></li>
+</ul>
+
+<div id="tabs-content">
+  <div id="tab1" class="tab-content">
+    <%= render "all_order", orders: orders %>
+  </div>
+  <div id="tab2" class="tab-content">
+    <%= render "all_order", orders: orders.new_orders %>
+  </div>
+  <div id="tab3" class="tab-content">
+    <%= render "all_order", orders: orders.fullfilled_order %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function changeRowsPerPage(value) {
+    window.location.href = window.location.pathname + "?per_page=" + value;
+  }
+
+  $('#tabs-nav li:first-child').addClass('active');
+  $('.tab-content').hide();
+  $('.tab-content:first').show();
+
+  $('#tabs-nav li').click(function(){
+    $('#tabs-nav li').removeClass('active');
+    $(this).addClass('active');
+    $('.tab-content').hide();
+    
+    var activeTab = $(this).find('a').attr('href');
+    $(activeTab).fadeIn();
+    return false;
+  });
+
+  $('.collapse_show').click(function () {
+    $(this).closest('.tbody_row').find('.collapse_data').slideToggle(800);
+  });
+  $('.collapse_hide').click(function () {
+    $(this).closest('.tbody_row').find('.collapse_data').slideUp(800);
+  });
+
+  $('.drop_icon_box').on('click', function() {
+    var dropdownContent = $(this).closest('.tbody_row').find('.menu_drop')
+    $('.menu_drop').not(dropdownContent).hide();
+    dropdownContent.toggle();
+  });
+
+  $(document).on('click', function(e) {
+    if (!$(e.target).closest('.drop_icon_box, .menu_drop').length) {
+        $(".menu_drop").hide();
+    }
+  });
+
+  var $checkboxes = $('.custom_info_table .order_td input[type="checkbox"]');
+  $checkboxes.change(function(){
+    var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
+    $('#count-checked-checkboxes').text(countCheckedCheckboxes);
+  });
+</script>
