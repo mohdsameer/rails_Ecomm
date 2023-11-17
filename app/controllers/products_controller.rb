@@ -44,14 +44,15 @@ class ProductsController < ApplicationController
 
   def edit
     @product   = Product.find(params[:id])
-    @variants  = @product.variants
+    @variants  = @product.variants.where(archive: false)
     @producers = Producer.all
   end
 
   def remove_variant
     @variant = Variant.find(params[:id])
     @product = @variant.product
-    @variant.destroy
+    @variant.update(archive: true)
+    # @variant.destroy
     redirect_to edit_product_path(@product), notice: 'Variant removed.'
   end
 

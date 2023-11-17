@@ -602,7 +602,7 @@ class OrdersController < ApplicationController
   def select_variant
     @order = Order.find(params[:order_id])
     @product = Product.find_by(id: params[:product_id])
-    @variants = @product.variants
+    @variants = @product.variants.where(archive: false)
 
     if params[:query].present?
       @variants = @variants.where('LOWER(variants.color) LIKE :query OR LOWER(variants.real_variant_sku) LIKE :query', query: "%#{params[:query].downcase}%")

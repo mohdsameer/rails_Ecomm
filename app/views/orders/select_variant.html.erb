@@ -27,8 +27,10 @@
             <%= form_tag all_producer_orders_path, method: :get, data: { 'turbo-frame': 'all-producer-order-modal' } do %>
               <%= hidden_field_tag :product_id, @product.id %>
               <%= hidden_field_tag :order_id, @order.id %>
-              <%= render 'variants_list', variants: @variants, product: @product, order: @order %>
-              <%= submit_tag 'Continue' %>
+              <% if @variants.present? %>
+                <%= render 'variants_list', variants: @variants, product: @product, order: @order %>
+                <%= submit_tag 'Continue' %>
+              <% end %>
             <% end %>
           </div>
 
