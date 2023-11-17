@@ -664,6 +664,7 @@ class OrdersController < ApplicationController
     end
     @order_products = @order.order_products
     @customer_detail = @order.address
+    @shipping_price  = ShippingMethod.find_by(id: @order.shipping_method_id)
   end
 
   def cancel_order
