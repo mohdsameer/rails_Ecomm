@@ -10,7 +10,7 @@
         <%= form_for @assigne, url: assignee_create_order_path(@order) do |a| %>
           <div class="check_list">
             <%= a.collection_radio_buttons(:designer, @designers, :id, :name) do |b| %>
-              <%= b.label { b.radio_button + b.text } %>
+              <%= b.label { b.radio_button(checked: b.value == @designers.first.id) + b.text } %>
             <% end %>
           </div>
 
@@ -36,7 +36,6 @@
               <div class="input_section">
                 <div class="input_box">
                   <div class="input_text w-100">
-                  <!-- <input placeholder="Date" type="text" name="checkIn" id="datepicker" value="" class="calendar mb-0"><i class="fas fa-calendar-check icon"></i> -->
                    <%= a.date_field :due_date %>
                   <%= image_tag "calendar", alt:"icon", class:"cal_icon d-none" %>
                 </div>  
