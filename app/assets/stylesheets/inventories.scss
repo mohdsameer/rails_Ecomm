@@ -1337,6 +1337,18 @@
         background: black;
         flex-direction: row-reverse;
       }
+
+      &.blue_outline {
+        border-radius: 8px;
+        border: 1px solid #006C9C;
+        color: #006C9C;
+        background: white;
+      }
+
+      &.blue_bg {
+        background: #003768;
+        color: white;
+      }
     }
   }
 

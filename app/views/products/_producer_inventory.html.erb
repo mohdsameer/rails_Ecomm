@@ -82,7 +82,7 @@
                   <div class="td eight">
                     <div class="aisle_box">
                       <div class="asle_no">A11</div>
-                      <%= link_to 'javascript:;', class: "aisle_icon" do %>
+                      <%= link_to edit_aisle_no_variant_path(variant), data: {turbo_frame: "edit-aisle-modal"}, class: "aisle_icon" do %>
                         <%= image_tag 'ic_edit.png', alt: 'icon', class: 'ic_edit' %>
                       <% end %>
                     </div>
@@ -113,3 +113,4 @@
 </div>
 
 <turbo-frame id="edit-inventory-modal"></turbo-frame>
+<turbo-frame id="edit-aisle-modal"></turbo-frame>

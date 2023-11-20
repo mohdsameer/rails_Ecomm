@@ -56,6 +56,10 @@ class VariantsController < ApplicationController
     end
   end
 
+  def edit_aisle_no
+    @variant = Variant.find(params[:id])
+  end
+
   def inventory_history
     per_page = params[:per_page] || 20
     if params[:producer_id].present?

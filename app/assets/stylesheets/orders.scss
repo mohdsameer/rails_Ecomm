@@ -524,10 +524,46 @@
           flex-wrap: wrap;
           width: 100%;
 
+          &.selected_row {
+            .order_td {
+              background: #f4f6f8;
+            }
+          }
+
           .order_td {
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #ffffff;
+
+            .custom_checkbox_wrapper {
+              position: relative;
+
+              .check_field {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+
+                &:checked {
+                  & + label {
+                    background: #637381;
+                  }
+                }
+              }
+
+              label {
+                width: 1.389vw;
+                height: 1.389vw;
+                border: 1px solid #637381;
+                border-radius: 0.463vw;
+                cursor: pointer;
+
+                &:before {
+                  content: '\2713';
+                  color: #ffffff;
+                }
+              }
+            }
 
             &.first {
               width: 2.778vw;
@@ -543,9 +579,15 @@
             }
             &.five {
               width: 3.762vw;
+              background: #f4f6f8;
+              border-radius: 0.463vw;
             }
             &.six {
               width: 5.787vw;
+
+              .not_price {
+                color: #B76E00;
+              }
             }
             &.seven {
               width: 5.787vw;

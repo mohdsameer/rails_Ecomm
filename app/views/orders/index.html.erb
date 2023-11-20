@@ -11,6 +11,14 @@
 </div>
 
 <script type="text/javascript">
+  $('.check_field').change(function() {
+    if ($(this).is(":checked") == true) {
+      $(this).closest('.tbody_row').addClass('selected_row')
+    } else {
+      $(this).closest('.tbody_row').removeClass('selected_row')
+    }
+  });
+
   function changeRowsPerPage(value) {
     window.location.href = window.location.pathname + "?per_page=" + value;
   }

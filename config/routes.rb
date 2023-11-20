@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   resources :variants do
     get 'inventory_history', on: :collection
     get 'edit_inventory', on: :member
+    get 'edit_aisle_no', on: :member
     patch 'update_inventory', on: :member
     get :inventory, on: :collection
     get :producer_inventory, on: :member

@@ -167,6 +167,13 @@ export default class extends Controller {
       $(".assign_order_pop_model").hide();
     });
 
+    // hide asile pop here
+
+    $('.close_icon').click(function() {
+      $('.edit_aisle_pop_model').hide();
+    });
+
+
     // all_producer pop model
 
     $('.close_icon').click(function() {

@@ -276,7 +276,32 @@
     <div class="btn_wrapper mb-5">
       <%= hidden_field_tag :user_id, params[:producer_id] %>
       <%= hidden_field_tag :submit_type, '', data: { 'order-form-status-target': 'submitType' } %>
-      <%= link_to 'Marked as Completed', 'javascript:;', class: 'btn_wrap dark_green', data: { 'order-form-status-target': 'markComplete' } %>
+      <% if current_user.type.eql?('Designer') %>
+        <%= link_to 'Marked as Completed', 'javascript:;', class: 'btn_wrap dark_green', data: { 'order-form-status-target': 'markComplete' } %>
+      <% else %>
+        <% if @order.assign_details.present? && @order.order_edit_status.eql?('completed') %>
+          <%= link_to 'Marked as Completed by designer', 'javascript:;', disabled: true, class: 'btn_wrap d-none', data: { 'order-form-status-target': 'markComplete' } %>
+          <div class="btn_wrap">
+            <%= image_tag "ic_done_all", alt:"icon" %>
+            Marked as Completed by <%= @order.assignee_name %>
+          </div>
+        <% else %>
+          <%= link_to 'Designer is not assign', 'javascript:;', class: 'btn_wrap dark_green d-none', data: { 'order-form-status-target': 'markComplete' } %>
+        <% end %>
+      <% end %>
+      <% if current_user.type.eql?('Admin')%>
+        <% if order.request_revision.present?%>
+            <div class='btn_wrap blue_bg fw-bolder'>
+            Revision requested
+            <%= image_tag "ic_checkmark", alt:"icon", class:"icon" %>
+          </div>
+        <% else %>
+          <%= link_to request_revision_order_path(order), data: { turbo_frame: "request-revision-order-modal" }, class: 'btn_wrap blue_outline fw-bolder' do %>
+            Request Revision
+            <%= image_tag "blue_user_group", alt:"icon", class:"icon" %>
+          <% end %>
+        <% end %>
+      <% end %>
       <%= link_to 'Save Order for Later', 'javascript:;', class: 'btn_wrap light_green', data: { 'order-form-status-target': 'saveLater' } %>
 
       <%= link_to('javascript:;', class: 'btn_wrap black_bg', data: { 'order-form-status-target': 'goShipping' }) do %>

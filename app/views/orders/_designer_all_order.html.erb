@@ -25,7 +25,11 @@
           <% orders.each do |order| %>
             <div class="tbody_row">
               <div class="order_td td_icon first">
-                <input type="checkbox" name="">
+                <div class="custom_checkbox_wrapper">
+                  <input type="checkbox" name="" id="<%= order.id %>" class="check_field">
+                  <label for="<%= order.id %>"></label>
+                </div>
+
               </div>
               <div class="order_td second">
                 <div class="order_id_icon">
@@ -70,7 +74,7 @@
                     <% end %> 
                   </div>
                 <% else %>
-                  <span class="price">Not Priced</span>
+                  <span class="price not_price">Not Priced</span>
                 <% end %>
               </div>
 
