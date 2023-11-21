@@ -173,6 +173,12 @@ export default class extends Controller {
       $('.edit_aisle_pop_model').hide();
     });
 
+    // hide payment amount pop here
+
+    $('.close_icon').click(function() {
+      $('.enter_payment_model').hide();
+    });
+
 
     // all_producer pop model
 

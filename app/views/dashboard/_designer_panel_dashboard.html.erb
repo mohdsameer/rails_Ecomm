@@ -44,7 +44,9 @@
             <div class="text_data bold_text">$300.00</div>
           </div>
         </div>
-        <button class="request_btn">Request Payment Now</button>
+        <div class="request_btn">
+          <%= link_to 'Request Payment Now', dashboard_payment_amount_popup_path, class: 'request_btn', data: {turbo_frame: "payment-amount-popup-modal"} %>
+        </div>
       </div>
     </div>
 
@@ -93,7 +95,7 @@
     </div>
   </div>
 </div>
-
+<turbo-frame id="payment-amount-popup-modal"></turbo-frame>
 
 <script type="text/javascript">
   document.querySelectorAll(".__range-step").forEach(function(ctrl) {

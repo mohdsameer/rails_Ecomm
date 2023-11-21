@@ -63,7 +63,9 @@
               </datalist>
             </div>
           </fieldset>
-          <button class="next_content_btn">Request Payment Now</button>
+          <div class="next_content_btn">
+            <%= link_to 'Request Payment Now', dashboard_payment_amount_popup_path, class: 'request_btn', data: {turbo_frame: "payment-amount-popup-modal"} %>
+          </div>
       </div>
     </div>
 
@@ -122,7 +124,7 @@
     </div>
   </div>
 </div>
-
+<turbo-frame id="payment-amount-popup-modal"></turbo-frame>
 <script type="text/javascript">
   document.querySelectorAll(".__range-step").forEach(function(ctrl) {
     var el = ctrl.querySelector('input');        

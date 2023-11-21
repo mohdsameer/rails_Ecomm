@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   get 'dashboard/producer_panel_dasboard'
-  get 'dashboard/manual_order'
   get 'dashboard/choose_shiping'
+  get 'dashboard/payment_amount_popup'
   get '/states', to: 'addresses#get_states'
 
   resources :dashboard, only: [:show]
