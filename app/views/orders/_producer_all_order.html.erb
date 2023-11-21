@@ -35,12 +35,6 @@
     return false;
   });
 
-  $('.drop_icon_box').on('click', function() {
-    var dropdownContent = $(this).closest('.tbody_row').find('.menu_drop')
-    $('.menu_drop').not(dropdownContent).hide();
-    dropdownContent.toggle();
-  });
-
   $(document).on('click', function(e) {
     if (!$(e.target).closest('.drop_icon_box, .menu_drop').length) {
         $(".menu_drop").hide();

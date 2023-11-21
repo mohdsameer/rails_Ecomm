@@ -67,17 +67,14 @@
               <div class="order_td six">
                 <% if order.assign_details.present? %>
                   <div class="icon_with_name">
-                    <% if order.assign_details.last.price_for_total.present? %>
-                      <span class="price">$<%= order.assign_details.last.price_for_total %></span>
-                    <% else %>
-                      <span class="price">$<%= order.assign_details&.last&.price_per_design.to_f * order.order_products.pluck(:product_quantity).compact.sum.to_i %></span>
-                    <% end %> 
+                    <span class="price">
+                      $<%= order.assign_details.last.price_for_total.presence || order.assign_details.last.price_per_design.to_f * order.order_products.pluck(:product_quantity).compact.sum.to_i %>
+                    </span>
                   </div>
                 <% else %>
                   <span class="price not_price">Not Priced</span>
                 <% end %>
               </div>
-
               <div class="order_td seven">
                 <div class="order_status_icon">
                   <% if order.order_status == "inproduction" %>

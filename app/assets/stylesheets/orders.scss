@@ -147,6 +147,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
 
         & div {
           border-radius: 0.347vw;
@@ -198,6 +199,10 @@
             width: 0.926vw;
             height: 0.926vw;
           }
+        }
+
+        .no_price {
+          color: #B76E00;
         }
 
         .edit_status {

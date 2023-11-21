@@ -21,7 +21,10 @@
           <% orders.each do |order| %>
             <div class="tbody_row">
               <div class="order_td td_icon first">
-                <input type="checkbox" name="">
+                <div class="custom_checkbox_wrapper">
+                  <input type="checkbox" name="" id="<%= order.id %>" class="check_field">
+                  <label for="<%= order.id %>"></label>
+                </div>
               </div>
               <div class="order_td second">
                 <div class="order_id_icon">
@@ -91,20 +94,21 @@
                 <div class="order_priority_icon">
                   <% if order.assign_details.present? %>
                     <div class="icon_with_name">
-
                       <span class="assign_name"><%= order.assignee_name %></span>
-                      <% if order.assign_details.last.price_for_total.present? %>
-                        <span class="price">$<%= order.assign_details.last.price_for_total %></span>
-                      <% else %>
-                        <span class="price">$<%= order.assign_details&.last&.price_per_design.to_f * order.order_products.pluck(:product_quantity).compact.sum.to_i %></span>
+                      <% if order.assign_details.last.price_for_total.present? || order.assign_details.last.price_per_design.present? %>
+                        <span class="price">
+                          $<%= order.assign_details.last.price_for_total.presence || order.assign_details.last.price_per_design.to_f * order.order_products.pluck(:product_quantity).compact.sum.to_i %>
+                        </span>
                       <% end %>
-
-                      <%= image_tag "complete", alt: "icon", class: "complete_icon" %>  
+                      <%= image_tag "complete", alt: "icon", class: "complete_icon" %>
                     </div>
+                    <% unless order.assign_details.last.price_for_total.present? || order.assign_details.last.price_per_design.present? %>
+                      <span class="no_price">Not Priced</span>
+                    <% end %>
                   <% else %>
                     <div class="icon_with_name not_assign">
-                      <%= link_to 'Assignee',assignee_order_path(order), data: {turbo_frame: "assigne-order-modal"} %>
-                      <%= image_tag "ic_user_group", alt:"icon", class:"complete_icon" %>
+                      <%= link_to 'Assignee', assignee_order_path(order), data: { turbo_frame: "assigne-order-modal" } %>
+                      <%= image_tag "ic_user_group", alt: "icon", class: "complete_icon" %>
                     </div>
                   <% end %>
                 </div>
