@@ -100,7 +100,11 @@
                           $<%= order.assign_details.last.price_for_total.presence || order.assign_details.last.price_per_design.to_f * order.order_products.pluck(:product_quantity).compact.sum.to_i %>
                         </span>
                       <% end %>
-                      <%= image_tag "complete", alt: "icon", class: "complete_icon" %>
+                      <% if order.order_edit_status.eql?("completed") %>
+                        <%= image_tag "complete", alt: "icon", class: "complete_icon" %>
+                      <% else %>
+                        <%= image_tag 'incomplete.png', alt: 'icon'%>
+                      <% end %>
                     </div>
                     <% unless order.assign_details.last.price_for_total.present? || order.assign_details.last.price_per_design.present? %>
                       <span class="no_price">Not Priced</span>

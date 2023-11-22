@@ -283,7 +283,9 @@ class OrdersController < ApplicationController
   end
 
   def assigne_remove
-    AssignDetail.find_by(id: params[:id]).destroy
+    assign_detail = AssignDetail.find_by(id: params[:id])
+    assign_detail.order.update(request_revision: false)
+    assign_detail.destroy
     redirect_to orders_path, notice: 'Assigne Removed.'
   end
 
@@ -692,7 +694,7 @@ class OrdersController < ApplicationController
   def request_revision; end
 
   def request_revision_update
-    @order.update(request_revision: true, revision_info: params[:order][:revision_info])
+    @order.update(request_revision: true, revision_info: params[:order][:revision_info], order_edit_status: 0)
   end
 
   private

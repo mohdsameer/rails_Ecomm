@@ -291,14 +291,16 @@
       <% end %>
       <% if current_user.type.eql?('Admin')%>
         <% if order.request_revision.present?%>
-            <div class='btn_wrap blue_bg fw-bolder'>
-            Revision requested
-            <%= image_tag "ic_checkmark", alt:"icon", class:"icon" %>
+          <div class='btn_wrap blue_bg fw-bolder'>
+              Revision requested
+              <%= image_tag "ic_checkmark", alt:"icon", class:"icon" %>
           </div>
         <% else %>
-          <%= link_to request_revision_order_path(order), data: { turbo_frame: "request-revision-order-modal" }, class: 'btn_wrap blue_outline fw-bolder' do %>
-            Request Revision
-            <%= image_tag "blue_user_group", alt:"icon", class:"icon" %>
+          <% if order.assign_details.present? && order.order_edit_status.eql?('completed') %>
+            <%= link_to request_revision_order_path(order), data: { turbo_frame: "request-revision-order-modal" }, class: 'btn_wrap blue_outline fw-bolder' do %>
+              Request Revision
+              <%= image_tag "blue_user_group", alt:"icon", class:"icon" %>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
