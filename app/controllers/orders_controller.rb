@@ -22,6 +22,7 @@ class OrdersController < ApplicationController
                                     :create_address,
                                     :order_update_shipping,
                                     :remove_product,
+                                    :remove_product_image,
                                     :set_dimensions,
                                     :update_dimensions,
                                     :update_job_price,
@@ -39,7 +40,7 @@ class OrdersController < ApplicationController
     @products = Product.all
 
     if current_user.type.eql?('Producer')
-      @orders = @orders.where(order_products: { user_id: current_user.id }).where.not(order_status: "cancel").order(priority: :desc, created_at: :desc)
+      @orders = @orders.where(order_products: { user_id: current_user.id }).where.not(order_status: "cancel", order_status: "onhold").order(priority: :desc, created_at: :desc)
     else
       @orders = @orders.order(created_at: :desc)
     end
@@ -271,6 +272,25 @@ class OrdersController < ApplicationController
     end
   end
 
+  def remove_product_image
+    order_product = OrderProduct.find_by(id: params[:order_product_id])
+    if params[:front_side_image].present?
+      order_product.front_side_image.purge
+    end
+    if params[:back_side_image].present?
+      order_product.back_side_image.purge
+    end
+
+    @order.reload
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('order-form-content', partial: 'orders/edit_step_one', locals: { order: @order })
+      end
+    end
+  end
+
   def update_job_price
     @assigne = @order.assign_details.last
   end
@@ -489,16 +509,7 @@ class OrdersController < ApplicationController
     redirect_to edit_order_path(@order, step: :shipping_method)
   end
 
-  def download_shippo_label
-    respond_to do |format|
-      format.pdf do
-        if @order.shipping_label_attachement
-          send_data @order.shipping_label_attachement.download, filename: @order.shipping_label_attachement.filename.to_s, type: "application/pdf"
-          return
-        end
-      end
-    end
-  end
+  def download_shippo_label; end
 
   def confirm
     @order = Order.find_by(id: params[:id])

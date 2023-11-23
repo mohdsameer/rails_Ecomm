@@ -1,7 +1,7 @@
 <ul class="order_tabs_wrap" id="tabs-nav">
   <li class="tabs_items"><a href="#tab1"><span class="tabs_notify"><%= orders.length %></span>All Orders</a></li>
-  <li class="tabs_items"><a href="#tab2"><span class="tabs_notify"><%= orders.new_orders.length %></span>New Order</a></li>
-  <li class="tabs_items"><a href="#tab3"><span class="tabs_notify"><%= orders.fullfilled_order.length %></span>Fulfilled Orders</a></li>
+  <li class="tabs_items"><a href="#tab2"><span class="tabs_notify"><%= orders.inproduction_order.length %></span>New Order</a></li>
+  <li class="tabs_items"><a href="#tab3"><span class="tabs_notify fulfilled"><%= orders.fullfilled_order.length %></span>Fulfilled Orders</a></li>
 </ul>
 
 <div id="tabs-content">
@@ -9,7 +9,7 @@
     <%= render "all_order", orders: orders %>
   </div>
   <div id="tab2" class="tab-content">
-    <%= render "all_order", orders: orders.new_orders %>
+    <%= render "all_order", orders: orders.inproduction_order %>
   </div>
   <div id="tab3" class="tab-content">
     <%= render "all_order", orders: orders.fullfilled_order %>

@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       post :create_address
       post :order_update_shipping
       delete :remove_product
+      delete :remove_product_image
       get :set_dimensions
       post :update_dimensions
       get :update_job_price

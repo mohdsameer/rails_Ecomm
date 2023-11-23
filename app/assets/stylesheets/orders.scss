@@ -805,6 +805,11 @@
                   background: rgba(51, 102, 255, 0.48);
                   color: #212B36;
                 }
+
+                &.fulfilled {
+                  background: rgba(54, 179, 126, 0.16);
+                  color: #212B36;
+                }
               }
             }
           }

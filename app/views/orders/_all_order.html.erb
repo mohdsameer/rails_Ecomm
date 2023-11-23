@@ -55,13 +55,14 @@
                     <span class="order_num"><%= order.id %></span>
                   </div>
                 </div>
-                <div class="order_td three"><%= order.order_products.pluck(:product_quantity).sum %></div>
+                <!-- <div class="order_td three"><%#= order.order_products.pluck(:product_quantity).sum %></div> -->
                 <!-- <div class="order_td three"><%#= order_product.product_quantity %></div> -->
 
                 <% sum_result = 0 %>
+                <% quantity = 0 %>
                 <% order_products.each do |order_product|%>
                   <% record = order_product.product.product_producer_pricings.find_by(user_id: order_product.producer.id) %>
-
+                  <% quantity = order_product.product_quantity %>
                   <%  if order_product.front_side_image.attached? && order_product.back_side_image.attached? %>
                     <% cost   = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * order_product.product_quantity.to_i %>
                   <% elsif order_product.front_side_image.attached? %>
@@ -74,6 +75,7 @@
 
                   <% sum_result += cost %>
                 <% end %>
+                <div class="order_td three"><%= quantity %></div>
 
                 <div class="order_td four">$<%= sum_result %></div>
                 <% if order.address.present?%>
@@ -84,17 +86,17 @@
                 <div class="order_td six">
                 <div class="order_status_icon">
                   <% if order.order_status == "inproduction" %>
-                    <div class="in_production custom_badge">
-                      In Production
-                    </div>
-                  <% elsif order.order_status == "onhold"%>
                     <div class="custom_badge">
                       NEW
                     </div>
-                  <% elsif order.order_status == "rejected" %>
-                    <div class="rejectd custom_badge">
+                  <%# elsif order.order_status == "onhold"%>
+<!--                     <div class="custom_badge">
+                      On Hold
+                    </div> -->
+                  <%# elsif order.order_status == "rejected" %>
+<!--                     <div class="rejectd custom_badge">
                       Rejected
-                    </div>
+                    </div> -->
                   <% elsif order.order_status == "fullfilled" %>
                     <div class="fulfiled custom_badge">
                       Fullfilled

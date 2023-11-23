@@ -66,39 +66,41 @@
                         <div class="content_img shadow_box">
                           <div class="image_box">
                             <div class="avatar-upload">
-                              <div class="avatar-edit">
-
-                                <%#= file_field_tag "front_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.variant.id}" %>
-
-                                <%= file_field_tag "front_side_image[#{order_product.id}]", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.id}", data: { 'order-form-status-target': 'frontImage' } %>
-
-                                <label for="front_side_image_<%= order_product.id %>" class="upload_wrapper">
-                                  <% if order_product.front_side_image.attached? %>
-                                    <%= image_tag order_product.front_side_image, class: 'upload_icon' %>
-                                  <% else %>
-                                    <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
-                                    <div class="image_type">PNG</div>
-                                    <div class="upload_text">Upload Here</div>
+                              <% if order_product.front_side_image.attached? %>
+                                <div class="avatar-preview">
+                                  <%#= image_tag order_product.front_side_image, alt: 'img', class: 'preview_img' %>
+                                  <!-- <div id="imageFrontPreview_<%= order_product.id %>"
+                                       style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                  </div> -->
+                                  <%#= link_to 'javascript:;', class: 'zoom_img' do %>
+                                    <%#= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
+                                  <%# end %>
+                                  <%= image_tag order_product.front_side_image, alt: 'img', class: 'preview_img' %>
+                                    <%= link_to order_product.front_side_image, class: 'zoom_img lightbox_trigger' do %>
+                                      <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
                                   <% end %>
-
-                                  <div class="click_here">Click here to upload</div>
-                                </label>
-                              </div>
-
-                              <div class="avatar-preview">
-                                <div id="imageFrontPreview_<%= order_product.id %>"
-                                     style="background-image: url(http://i.pravatar.cc/500?img=7);">
-
                                 </div>
-                              </div>
+                              <% else %>
+                                <div class="avatar-edit">
+                                  <%#= file_field_tag "front_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.variant.id}" %>
+                                  <%= file_field_tag "front_side_image[#{order_product.id}]", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.id}", data: { 'order-form-status-target': 'frontImage' } %>
+                                  <label for="front_side_image_<%= order_product.id %>" class="upload_wrapper">
+                                      <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
+                                      <div class="image_type">PNG</div>
+                                      <div class="upload_text">Upload Here</div>
+                                    <div class="click_here">Click here to upload</div>
+                                  </label>
+                                </div>
+                              <% end %>
                             </div>
-
                           </div>
-                          <div class="btn_wrap">
-                            <%= link_to 'javascript:;', class: 'delete_img' do %>
-                              <%= image_tag 'ic_trash.png', alt: 'icon' %>
-                            <% end %>
-                          </div>
+                          <% if order_product.front_side_image.attached? %>
+                            <div class="btn_wrap">
+                               <%= link_to remove_product_image_order_path(order, order_product_id: order_product.id, front_side_image: order_product.front_side_image), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
+                                <%= image_tag 'ic_trash.png', alt: 'icon' %>
+                              <% end %>
+                            </div>
+                          <% end %>
                         </div>
                       </div>
                     </div>
@@ -108,36 +110,75 @@
                         <div class="content_img shadow_box">
                           <div class="image_box">
                             <div class="avatar-upload">
+                              <% if order_product.back_side_image.attached? %>
+                                <div class="avatar-preview">
+                                  <%#= image_tag order_product.back_side_image, alt: 'img', class: 'preview_img' %>
+                                  <!-- <div id="imageFrontPreview_<%= order_product.id %>"
+                                       style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                  </div> -->
+                                  <%#= link_to 'javascript:;', class: 'zoom_img' do %>
+                                    <%#= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
+                                  <%# end %>
+
+                                  <%= image_tag order_product.back_side_image, alt: 'img', class: 'preview_img' %>
+                                    <%= link_to order_product.back_side_image, class: 'zoom_img lightbox_trigger' do %>
+                                      <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
+                                  <% end %>
+                                </div>
+                              <% else %>
+                                <div class="avatar-edit">
+                                  <%#= file_field_tag "front_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.variant.id}" %>
+                                  <%= file_field_tag "back_side_image[#{order_product.id}]", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{order_product.id}", data: { 'order-form-status-target': 'backImage' } %>
+                                  <label for="imageUpload_<%= order_product.id %>" class="upload_wrapper">
+                                      <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
+                                      <div class="image_type">PNG</div>
+                                      <div class="upload_text">Upload Here</div>
+                                    <div class="click_here">Click here to upload</div>
+                                  </label>
+                                </div>
+                              <% end %>
+                            </div>
+                          </div>
+                          <% if order_product.back_side_image.attached? %>
+                            <div class="btn_wrap">
+                               <%= link_to remove_product_image_order_path(order, order_product_id: order_product.id, back_side_image: order_product.back_side_image), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
+                                <%= image_tag 'ic_trash.png', alt: 'icon' %>
+                              <% end %>
+                            </div>
+                          <% end %>
+                        </div>
+                        <!-- OLD PREVIEW CODE -->
+                        <!-- <div class="content_img shadow_box">
+                          <div class="image_box">
+                            <div class="avatar-upload">
                               <div class="avatar-edit">
-
                                 <%#= file_field_tag "back_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{order_product.variant.id}" %>
-
-                                <%= file_field_tag "back_side_image[#{order_product.id}]", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{order_product.id}", data: { 'order-form-status-target': 'backImage' } %>
-
-                                <label for="imageUpload_<%= order_product.id %>" class="upload_wrapper">
-                                  <% if order_product.back_side_image.attached? %>
-                                    <%= image_tag order_product.back_side_image, class: 'upload_icon' %>
-                                  <%else%>
-                                    <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
+                                <%#= file_field_tag "back_side_image[#{order_product.id}]", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{order_product.id}", data: { 'order-form-status-target': 'backImage' } %>
+                                <label for="imageUpload_<%#= order_product.id %>" class="upload_wrapper">
+                                  <%# if order_product.back_side_image.attached? %>
+                                    <%#= image_tag order_product.back_side_image, class: 'upload_icon' %>
+                                  <%#else%>
+                                    <%#= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
                                     <div class="image_type">PNG</div>
                                     <div class="upload_text">Upload Here</div>
-                                  <%end%>
+                                  <%#end%>
                                   <div class="click_here">Click here to upload</div>
                                 </label>
                               </div>
 
                               <div class="avatar-preview">
-                                <div id="imageBackPreview_<%= order_product.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                <div id="imageBackPreview_<%#= order_product.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
                                 </div>
                               </div>
                             </div>
                           </div>
                           <div class="btn_wrap">
-                            <%= link_to 'javascript:;', class: 'delete_img' do %>
-                              <%= image_tag 'ic_trash.png', alt: 'icon' %>
-                            <% end %>
+                            <%#= link_to 'javascript:;', class: 'delete_img' do %>
+                              <%#= image_tag 'ic_trash.png', alt: 'icon' %>
+                            <%# end %>
                           </div>
-                        </div>
+                        </div> -->
+                        <!-- OLD PREVIEW CODE -->
                       </div>
                     </div>
                   </div>
