@@ -40,7 +40,10 @@ class OrdersController < ApplicationController
     @products = Product.all
 
     if current_user.type.eql?('Producer')
-      @orders = @orders.where(order_products: { user_id: current_user.id }).where.not(order_status: "cancel", order_status: "onhold").order(priority: :desc, created_at: :desc)
+      @orders = @orders
+                      .where(order_products: { user_id: current_user.id })
+                      .where.not(order_status: ["cancel", "onhold", "rejected"])
+                      .order(priority: :desc, created_at: :desc)
     else
       @orders = @orders.order(created_at: :desc)
     end

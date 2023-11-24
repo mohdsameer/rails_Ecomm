@@ -89,21 +89,9 @@
                     <div class="custom_badge">
                       NEW
                     </div>
-                  <%# elsif order.order_status == "onhold"%>
-<!--                     <div class="custom_badge">
-                      On Hold
-                    </div> -->
-                  <%# elsif order.order_status == "rejected" %>
-<!--                     <div class="rejectd custom_badge">
-                      Rejected
-                    </div> -->
-                  <% elsif order.order_status == "fullfilled" %>
+                  <% else %>
                     <div class="fulfiled custom_badge">
                       Fullfilled
-                    </div>
-                  <% else %>
-                    <div class="rejectd custom_badge">
-                      Cancel
                     </div>
                   <% end %>
                 </div>
