@@ -318,8 +318,19 @@
       <%= hidden_field_tag :user_id, params[:producer_id] %>
       <%= hidden_field_tag :submit_type, '', data: { 'order-form-status-target': 'submitType' } %>
       <% if current_user.type.eql?('Designer') %>
-        <%= link_to 'Marked as Completed', 'javascript:;', class: 'btn_wrap dark_green', data: { 'order-form-status-target': 'markComplete' } %>
+
+        <% if @order.order_edit_status.eql?("completed")%>
+          <%= link_to 'Marked as Completed by designer', 'javascript:;', disabled: true, class: 'btn_wrap d-none', data: { 'order-form-status-target': 'markComplete' } %>
+            <div class="btn_wrap">
+              <%= image_tag "ic_done_all", alt:"icon" %>
+              Marked as Completed
+              </div>
+        <% else %>
+          <%= link_to 'Marked as Completed', 'javascript:;', class: 'btn_wrap dark_green', data: { 'order-form-status-target': 'markComplete' } %>
+        <% end %>
+
       <% else %>
+
         <% if @order.assign_details.present? && @order.order_edit_status.eql?('completed') %>
           <%= link_to 'Marked as Completed by designer', 'javascript:;', disabled: true, class: 'btn_wrap d-none', data: { 'order-form-status-target': 'markComplete' } %>
           <div class="btn_wrap">
@@ -329,8 +340,11 @@
         <% else %>
           <%= link_to 'Designer is not assign', 'javascript:;', class: 'btn_wrap dark_green d-none', data: { 'order-form-status-target': 'markComplete' } %>
         <% end %>
+
       <% end %>
+
       <% if current_user.type.eql?('Admin')%>
+
         <% if order.request_revision.present?%>
           <div class='btn_wrap blue_bg fw-bolder'>
               Revision requested
@@ -346,10 +360,16 @@
         <% end %>
       <% end %>
       <%= link_to 'Save Order for Later', 'javascript:;', class: 'btn_wrap light_green', data: { 'order-form-status-target': 'saveLater' } %>
-
-      <%= link_to('javascript:;', class: 'btn_wrap black_bg', data: { 'order-form-status-target': 'goShipping' }) do %>
-        <%= image_tag("white_end", class: "end_icon") %>
-        Shipping
+      <% if current_user.type.eql?('Admin')%>
+        <%= link_to('javascript:;', class: 'btn_wrap black_bg', data: { 'order-form-status-target': 'goShipping' }) do %>
+          <%= image_tag("white_end", class: "end_icon") %>
+          Shipping
+        <% end %>
+      <% else %>
+        <%= link_to('javascript:;', class: 'btn_wrap black_bg d-none', data: { 'order-form-status-target': 'goShipping' }) do %>
+          <%= image_tag("white_end", class: "end_icon") %>
+          Shipping
+        <% end %>
       <% end %>
 
       <%= submit_tag 'submit', class: '', data: { 'order-form-status-target': 'submit' }, style: 'display:none;' %>

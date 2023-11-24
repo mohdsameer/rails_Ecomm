@@ -1744,6 +1744,9 @@
 
 //** LightBox Gallery **//
 #lightbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position:fixed; /* keeps the lightbox window in the current viewport */
   top:0;
   left:0;
@@ -1753,6 +1756,9 @@
   text-align:center;
 }
 #lightbox p {
+  position: absolute;
+  right: 0;
+  top: 12px;
   text-align:right;
   color:#fff;
   margin-right:20px;
@@ -1760,7 +1766,8 @@
 }
 #lightbox img {
   box-shadow:0 0 25px #111;
-  max-width:940px;
+  max-height:95vh;
+  object-fit: contain;
   background: #ffffff;
 }
 //** LightBox Gallery **//
