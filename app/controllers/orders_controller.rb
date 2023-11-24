@@ -57,6 +57,8 @@ class OrdersController < ApplicationController
     end
   end
 
+  def save_changes_confirmation; end
+
   def new
     @order = Order.create(order_status: :onhold, order_edit_status: :incomplete)
     redirect_to edit_order_path(@order)

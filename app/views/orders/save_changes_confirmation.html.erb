@@ -1,0 +1,18 @@
+<turbo-frame id="save-changes-order-model">
+	<div class="save_changes_pop_model">
+		<div class="save_changes_pop_wrapper">
+			<div id="save_changes_pop" class="save_changes_pop" data-controller="modals" data-modals-modal-id-value="save_changes_pop">
+			  <div class="save_head">Save Changes?</div>
+			  <div class="save_text">If not saved, any progress made on this order will be lost and cannot be recovered.</div>
+			  <div class="btn_group">
+			    <!-- <button id="dont_save" class="outline_btn save_btn">Don’t Save</button>
+			    <a><%#= link_to 'Save',orders_path,  data: { 'turbo-frame': '_top' }, class: "outline_btn save_btn green_bg" %></a> -->
+
+			    <a><%= link_to 'Don’t Save',orders_path,  data: { 'turbo-frame': '_top' }, class: "outline_btn save_btn" %></a>
+			    <button id="save" class="outline_btn save_btn green_bg">save</button>
+
+			  </div>
+			</div>
+		</div>
+	</div>
+</turbo-frame>

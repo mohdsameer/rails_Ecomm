@@ -56,6 +56,7 @@ Rails.application.routes.draw do
     end
 
     collection do
+      get :save_changes_confirmation
       get :add_new_product
       get :select_variant
       get :all_producer

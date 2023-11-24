@@ -179,6 +179,11 @@ export default class extends Controller {
       $('.enter_payment_model').hide();
     });
 
+    // hide save changes model
+
+    $("#save").click(function(){
+      $(".save_changes_pop_model").hide();
+    })
 
     // all_producer pop model
 

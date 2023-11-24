@@ -14,9 +14,11 @@
             <div class="icon_wrap">
               <% if @order.assign_details.present? %>
                 <div class="wrap_text"><%= @order.assign_details.first.designer.name %></div>
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M1.8335 7.99992C1.8335 4.31802 4.81826 1.33325 8.50016 1.33325C10.2683 1.33325 11.964 2.03563 13.2142 3.28587C14.4645 4.53612 15.1668 6.23181 15.1668 7.99992C15.1668 11.6818 12.1821 14.6666 8.50016 14.6666C4.81826 14.6666 1.8335 11.6818 1.8335 7.99992ZM8.50016 8.66659H11.1668C11.535 8.66659 11.8335 8.36811 11.8335 7.99992C11.8335 7.63173 11.535 7.33325 11.1668 7.33325H9.16683V5.33325C9.16683 4.96506 8.86835 4.66659 8.50016 4.66659C8.13197 4.66659 7.8335 4.96506 7.8335 5.33325V7.99992C7.8335 8.36811 8.13197 8.66659 8.50016 8.66659Z" fill="#FFD666"/>
-                </svg>
+                <% if @order.order_edit_status.eql?("completed")%>
+                  <span><%= image_tag 'complete.png', alt: 'icon'%></span>
+                <% else %>
+                  <span><%= image_tag 'incomplete.png', alt: 'icon'%></span>
+                <% end %>
               <% else %>
                 <%= "Designer is not assign" %>
               <% end %>
