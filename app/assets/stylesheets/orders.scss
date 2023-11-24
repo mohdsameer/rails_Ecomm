@@ -1100,6 +1100,16 @@
                                 background: #FFF;
                                 box-shadow: 0px 0.694vw 1.389vw -0.231vw rgba(145, 158, 171, 0.12), 0px 0px 0.116vw 0px rgba(145, 158, 171, 0.20);
 
+                                .content_item_box {
+                                  position: relative;
+
+                                  .lightbox_trigger {
+                                    position: absolute;
+                                    top: 0px;
+                                    right: 0px;
+                                  }
+                                }
+
                                 .content_img {
                                   width: 11.574vw;
                                   height: 10.185vw;

@@ -55,7 +55,7 @@
               </div>
               <div class="tbody">
                 <% @pv.each do |producer_variant| %>
-                  <div class="tbody_row">
+                  <div class="tbody_row" data-controller="expand-image">
                     <div class="td one"><%= producer_variant.variant.product.id%></div>
                     <div class="td two">
                       <div class="product_img">
@@ -65,7 +65,7 @@
                           <%= image_tag asset_path('dummy-product.png') %>
                         <% end %>
 
-                        <%= link_to 'javascript:;', class: 'zoom_img' do %>
+                        <%= link_to producer_variant.variant.product.image, class: 'zoom_img lightbox_trigger' do %>
                           <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
                         <% end %>
                       </div>
@@ -78,7 +78,7 @@
                     <div class="td eight">
                       <div class="aisle_box">
                         <div class="asle_no">A11</div>
-                        <%= link_to 'javascript:;', class: "aisle_icon" do %>
+                        <%= link_to edit_aisle_no_variant_path(producer_variant.variant), data: {turbo_frame: "edit-aisle-modal"}, class: "aisle_icon" do %>
                           <%= image_tag 'ic_edit.png', alt: 'icon', class: 'ic_edit' %>
                         <% end %>
                       </div>
@@ -111,3 +111,4 @@
 </div>
 
 <turbo-frame id="edit-inventory-modal"></turbo-frame>
+<turbo-frame id="edit-aisle-modal"></turbo-frame>

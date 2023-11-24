@@ -229,7 +229,7 @@
                       <% i = 1 %>
                       <% order_products = order.order_products.where(user_id: current_user.id) %>
                       <% order_products.each do |order_product| %>
-                        <div class="order_items_row">
+                        <div class="order_items_row" data-controller="expand-image">
                           <div class="items_num"><%= i %></div>
                           <div class="items_table">
                             <table>
@@ -257,7 +257,12 @@
                                   <td>
                                     <div class="content_item">
                                      <% if order_product.front_side_image.attached? %>
-                                        <%= image_tag order_product.front_side_image, class: "content_img " %>
+                                        <div class="content_item_box">
+                                          <%= image_tag order_product.front_side_image, class: "content_img " %>
+                                          <%= link_to order_product.front_side_image, class: 'zoom_img lightbox_trigger' do %>
+                                              <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
+                                          <% end %>
+                                        </div>
                                       <% else %>
                                         <%= image_tag asset_path('dummy-product.png') %>
                                       <% end %>
@@ -277,7 +282,12 @@
                                   <td>
                                     <div class="content_item">
                                       <% if order_product.back_side_image.attached? %>
-                                        <%= image_tag order_product.back_side_image,class: "content_img " %>
+                                        <div class="content_item_box">
+                                          <%= image_tag order_product.back_side_image, class: "content_img " %>
+                                          <%= link_to order_product.back_side_image, class: 'zoom_img lightbox_trigger' do %>
+                                              <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
+                                          <% end %>
+                                        </div>
                                       <% else %>
                                         <%= image_tag asset_path('dummy-product.png') %>
                                       <% end %>

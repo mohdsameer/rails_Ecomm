@@ -59,7 +59,7 @@
               <% product.variants.each do |variant|%>
                <% pv = variant.producers_variants.find_by(user_id: current_user.id)%>
 
-                <div class="tbody_row">
+                <div class="tbody_row" data-controller="expand-image">
                   <div class="td one"><%= product.id%></div>
                   <div class="td two">
                     <div class="product_img">
@@ -69,7 +69,7 @@
                         <%= image_tag asset_path('dummy-product.png') %>
                       <% end %>
 
-                      <%= link_to 'javascript:;', class: 'zoom_img' do %>
+                      <%= link_to product.image, class: 'zoom_img lightbox_trigger' do %>
                         <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
                       <% end %>
                     </div>
