@@ -44,6 +44,12 @@ class OrdersController < ApplicationController
                       .where(order_products: { user_id: current_user.id })
                       .where.not(order_status: ["cancel", "onhold", "rejected"])
                       .order(priority: :desc, created_at: :desc)
+
+    elsif current_user.type.eql?('Designer')
+      @orders =  @orders
+                        .joins(:assign_details)
+                        .where.not(assign_details: nil)
+                        .order(created_at: :desc)
     else
       @orders = @orders.order(created_at: :desc)
     end
@@ -51,7 +57,14 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html
       format.js do
-        html_data = render_to_string(partial: "orders/orders_table", locals: { orders: @orders }, layout: false)
+        if current_user.type.eql?('Admin')
+          html_data = render_to_string(partial: "orders/orders_table", locals: { orders: @orders }, layout: false)
+        elsif current_user.type.eql?('Designer')
+          html_data = render_to_string(partial: "orders/designer_orders_table", locals: { orders: @orders }, layout: false)
+        elsif current_user.type.eql?('Producer')
+          html_data = render_to_string(partial: "orders/producer_all_order", locals: { orders: @orders }, layout: false)
+        end
+
         render json: { html_data: html_data }
       end
     end
