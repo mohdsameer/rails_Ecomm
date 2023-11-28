@@ -105,9 +105,9 @@
                 </div>
                 <div class="right_text">
                   <div>USD <%= sum_result %></div>
-                  <% if @shipping_price.present?%>
-                    <div>USD <%= @shipping_price.price%></div>
-                    <div class="fw-bold">USD <%= sum_result + @shipping_price.price %></div>
+                  <% if @order.shipping_cost.present? %>
+                    <div>USD <%= @order.shipping_cost %></div>
+                    <div class="fw-bold">USD <%= sum_result + @order.shipping_cost %></div>
                   <%else%>
                     <div>-</div>
                   <%end%>

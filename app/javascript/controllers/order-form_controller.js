@@ -21,6 +21,11 @@ export default class extends Controller {
 
     shippingCostInput.change(function() {
       shippingCostText.text($(this).data().price);
+
+      const hiddenField = document.getElementById('shipping_cost');
+      if (hiddenField) {
+        hiddenField.value = shippingCostText.text();;
+      }
     });
 
     shippingCostInput.change(function() {

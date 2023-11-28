@@ -17,14 +17,23 @@
 
           <div class="input_group">
             <select class="input_field" name="country" id="country" data-address-target="countryInput">
-              <option value="<%= address&.country %>" selected>Country</option>
+              <% if address&.country.present?%>
+                <option value="<%= address&.country %>"><%= address&.country %></option>
+              <% else %>
+               <option value="<%= address&.country %>" selected>Country</option>
+              <% end %>
+
               <% ISO3166::Country.all.each do |country| %>
                 <option value="<%= country.alpha2 %>"><%= country.iso_short_name %></option>
               <% end %>
             </select>
 
             <select class="input_field" name="state" id="state" data-address-target="stateInput">
-              <option value="<%= address&.state %>">State</option>
+              <% if address&.state.present?%>
+                <option value="<%= address&.state %>"><%= address&.state %></option>
+              <% else %>
+                <option value="<%= address&.state %>">State</option>
+              <% end %>
             </select>
           </div>
 

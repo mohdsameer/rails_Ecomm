@@ -33,6 +33,7 @@ class OrdersController < ApplicationController
                                     :remove_shipo_lable,
                                     :download_shippo_label]
   before_action :initialize_shippo
+  before_action :set_common_data, only: [:on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup]
 
   def index
     per_page = params[:per_page] || 20
@@ -503,7 +504,7 @@ class OrdersController < ApplicationController
       @error_message = "Please select a shipping label"
     end
 
-    if params[:commit].eql?('Purchase Shipping Label') || @error_message.present?
+    if @error_message.present? && (params[:commit].eql?('Purchase Shipping Label') || params[:submit_type].eql?('mark_complete'))
       redirect_to edit_order_path(@order, step: :shipping_method, error_message: @error_message)
     else
       order_edit_status = params[:submit_type] == "save_later" ? 0 : 1
@@ -513,7 +514,8 @@ class OrdersController < ApplicationController
       @order.update(shippo_rate_id:     params[:shippo_rate_id],
                     order_edit_status:  order_edit_status,
                     priority:           priority,
-                    order_status:       order_status)
+                    order_status:       order_status,
+                    shipping_cost:      params[:shipping_cost])
 
       if params[:submit_type].eql?('save_later')
         redirect_to orders_path
@@ -555,6 +557,8 @@ class OrdersController < ApplicationController
   def message_create
     @message = @order.messages.new(message_params)
     @message.save
+    redirect_to orders_path
+
   end
 
   def new_order_product
@@ -664,36 +668,13 @@ class OrdersController < ApplicationController
   end
 
   def on_hold_popup
-    @variants        = @order.variants
-    @customer_detail = @order.address
+    @variants = @order.variants
   end
+  def in_production_popup; end
 
-  def in_production_popup
-    if @order.assign_details.present?
-      @assigne = @order.assign_details.first.designer.name
-    end
+  def rejected_popup; end
 
-    @order_products  = @order.order_products
-    @customer_detail = @order.address
-    @shipping_price  = ShippingMethod.find_by(id: @order.shipping_method_id)
-  end
-
-  def rejected_popup
-    if @order.assign_details.present?
-      @assigne = @order.assign_details.first.designer.name
-    end
-    @order_products = @order.order_products
-    @customer_detail = @order.address
-  end
-
-  def fullfilled_popup
-    if @order.assign_details.present?
-      @assigne = @order.assign_details.first.designer.name
-    end
-    @order_products = @order.order_products
-    @customer_detail = @order.address
-    @shipping_price  = ShippingMethod.find_by(id: @order.shipping_method_id)
-  end
+  def fullfilled_popup; end
 
   def cancel_order
     @order = Order.find_by(id: params[:id])
@@ -769,6 +750,15 @@ class OrdersController < ApplicationController
   def find_order
     @order = Order.find_by(id: params[:id])
   end
+
+    def set_common_data
+      if @order.assign_details.present?
+        @assigne = @order.assign_details.first.designer.name
+      end
+
+      @order_products = @order.order_products
+      @customer_detail = @order.address
+    end
 
   def dimensions_params
     params.permit(:custom_length, :custom_height, :custom_width, :custom_weight_lb, :custom_weight_oz)

@@ -21,13 +21,23 @@
         <% if @order.messages.present? %>
           <div class="msg_section">
             <%= image_tag "ic_chat", alt:"icon", class:"msg_icon" %>
-            <div class="content_box">
-              <div class="msg_from">
-                <div class="left_text">Message from Admin:</div>
-                <div class="date_text"><%= @order.created_on%></div>
+            <% if @order.messages.last.from == current_user.id %>
+              <div class="content_box">
+                <div class="msg_from">
+                  <div class="left_text">Message to Producer:</div>
+                  <div class="date_text"><%= @order.created_on%></div>
+                </div>
+                <div class="content_text"><%= @order.messages.last.review_message%></div>
               </div>
-              <div class="content_text"><%= @order.messages.last.review_message%>.</div>
-            </div>
+            <% else %>
+              <div class="content_box">
+                <div class="msg_from">
+                  <div class="left_text">Message from Producer:</div>
+                  <div class="date_text"><%= @order.created_on%></div>
+                </div>
+                <div class="content_text"><%= @order.messages.last.review_message%></div>
+              </div>
+            <% end %>
           </div>
         <%end%>
         <div class="msg_section order_note">
@@ -112,9 +122,9 @@
                 </div>
                 <div class="right_text">
                   <div>USD <%= sum_result %></div>
-                  <% if @shipping_price.present?%>
-                    <div>USD <%= @shipping_price.price%></div>
-                    <div class="fw-bold">USD <%= sum_result + @shipping_price.price %></div>
+                  <% if @order.shipping_cost.present? %>
+                    <div>USD <%= @order.shipping_cost %></div>
+                    <div class="fw-bold">USD <%= sum_result + @order.shipping_cost %></div>
                   <%else%>
                     <div>-</div>
                     <div class="fw-bold">USD <%= sum_result %></div>

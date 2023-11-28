@@ -164,7 +164,9 @@
                         <span><%= address.address1 %></span>
                         <span><%= address.address2 %>,</span>
                         <span><%= address.city %>,</span>
-                        <span><%= address.zipcode %></span>
+                        <span><%= address.zipcode %>,</span>
+                        <span><%= address.state %>,</span>
+                        <span><%= address.country %></span>
                       </div>
                       <%= link_to edit_order_path(order, step: :customer), class: 'edit_link', data: { 'turbo-frame': '_top' } do %>
                         Edit
@@ -185,7 +187,7 @@
                     <div class="right_text">
                       <div>USD <span data-order-form-target="producerPrice" data-price="<%= sum_result %>"><%= sum_result %></span></div>
                       <div>USD <span data-order-form-target="shippingCostText">0.0</span></div>
-                      <%= hidden_field_tag :shipping_cost %>
+                      <%= hidden_field_tag :shipping_cost, '', id: 'shipping_cost' %>
                       <div class="fw-bold">USD <span data-order-form-target="totalPriceText"><%= sum_result %></span></div>
                     </div>
                   </div>
