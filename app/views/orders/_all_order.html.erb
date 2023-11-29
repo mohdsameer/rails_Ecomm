@@ -249,7 +249,7 @@
                                   <td>
                                     <div class="content_item">
                                       <% if order_product.product.image.attached? %>
-                                        <%= image_tag order_product.product.image, class: "content_img" %>
+                                        <%= image_tag order_product.variant.image, class: "content_img" %>
                                       <% else %>
                                         <%= image_tag asset_path('dummy-product.png') %>
                                       <% end %>

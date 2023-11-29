@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <div class="inventory_box">
+      <div class="inventory_box" data-controller="search" data-search-url-value="<%= producer_inventory_variant_path(@producer) %>">
         <div class="inventory_head"><span>Inventories</span> <span><%= @producer.name%></span> </div>
         <div class="inventory_content_box">
           <%= link_to 'Click here to Track Inventory History',inventory_history_variants_path(producer_id: @producer), class: 'history_btn'%>
@@ -29,7 +29,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M17.31 15.9L20.71 19.29C20.8993 19.4778 21.0058 19.7334 21.0058 20C21.0058 20.2666 20.8993 20.5222 20.71 20.71C20.5222 20.8993 20.2666 21.0058 20 21.0058C19.7334 21.0058 19.4778 20.8993 19.29 20.71L15.9 17.31C14.5025 18.407 12.7767 19.0022 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11C19.0022 12.7767 18.407 14.5025 17.31 15.9ZM11 5C7.68629 5 5 7.68629 5 11C5 14.3137 7.68629 17 11 17C14.3137 17 17 14.3137 17 11C17 7.68629 14.3137 5 11 5Z" fill="#919EAB"/>
             </svg>
-            <input class="search_input" type="text" placeholder="Search Product by Name, SKU, Product ID, Color" >
+            <input class="search_input" type="text" placeholder="Search Product by Color" data-search-target="query" />
           </div>
 
           <div class="inventory_table_wrap">
@@ -53,53 +53,8 @@
                   </div>
                 </div>
               </div>
-              <div class="tbody">
-                <% @pv.each do |producer_variant| %>
-                  <div class="tbody_row" data-controller="expand-image">
-                    <div class="td one"><%= producer_variant.variant.product.id%></div>
-                    <div class="td two">
-                      <div class="product_img">
-                        <% if producer_variant.variant.product.image.attached? %>
-                          <%= image_tag producer_variant.variant.product.image %>
-                        <% else %>
-                          <%= image_tag asset_path('dummy-product.png') %>
-                        <% end %>
-
-                        <%= link_to producer_variant.variant.product.image, class: 'zoom_img lightbox_trigger' do %>
-                          <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
-                        <% end %>
-                      </div>
-                    </div>
-                    <div class="td three"><%= producer_variant.variant.product.name%></div>
-                    <div class="td four"><%= producer_variant.variant.product.brand_name%></div>
-                    <div class="td five"><%= producer_variant.variant.real_variant_sku%></div>
-                    <div class="td six"><%= producer_variant.variant.color%></div>
-                    <div class="td seven"><%= producer_variant.variant.size%> oz</div>
-                    <div class="td eight">
-                      <div class="aisle_box">
-                        <div class="asle_no">A11</div>
-                        <%= link_to edit_aisle_no_variant_path(producer_variant.variant), data: {turbo_frame: "edit-aisle-modal"}, class: "aisle_icon" do %>
-                          <%= image_tag 'ic_edit.png', alt: 'icon', class: 'ic_edit' %>
-                        <% end %>
-                      </div>
-                    </div>
-                    <div class="td nine">
-                      <% if producer_variant.inventory.to_i > 100 %>
-                        <div class="badgee in_stock">In Stock</div>
-                      <% elsif producer_variant.inventory.to_i <= 100 && producer_variant.inventory.to_i > 0 %>
-                        <div class="badgee low_stock">Low Stock</div>
-                      <%else%>
-                        <div class="badgee out_of_stock">Out of Stock</div>
-                      <%end%>
-                    </div>
-                    <div class="td ten">
-                      <div class="aisle_box">
-                        <div class="asle_no"><%= producer_variant.inventory.to_i %></div>
-                        <a href="<%= edit_inventory_variant_path(id:  producer_variant.variant.id, producerId: producer_variant.producer.id ) %>"  data-turbo-frame="edit-inventory-modal" class="aisle_icon invntry_qty " ><%= image_tag 'ic_edit.png', alt: 'icon', class: 'ic_edit' %> </a>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
+              <div class="tbody" data-search-target="results">
+                <%= render 'producer_inventory_table', pv: @pv %>
               </div>
             </div>
           </div>

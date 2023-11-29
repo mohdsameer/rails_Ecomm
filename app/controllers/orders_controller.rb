@@ -130,6 +130,12 @@ class OrdersController < ApplicationController
 
   def update
     if params[:request_type] == "Confirm"
+      @order.order_products.each do |order_product|
+
+        product_quantity = order_product.product_quantity
+        producers_variant = ProducersVariant.find_by(variant: order_product.variant, user_id: order_product.producer)
+        producers_variant.update(inventory: producers_variant.inventory - product_quantity)
+      end
       @order.update(order_edit_status: 1,order_status: 3)
     elsif params[:request_type] == "Reject"
       @order.update(order_status: 1, reject_reason: params[:order][:reject_reason])

@@ -11,6 +11,18 @@ class ProductsController < ApplicationController
         render json: { html_data: html_data }
       end
     end
+
+    if current_user.type.eql?("Producer")
+      @producer = Producer.find_by(id: current_user.id)
+      @pv = @producer.producers_variants.search(params)
+      respond_to do |format|
+        format.html
+        format.js do
+        html_data = render_to_string(partial: "producer_inventory", locals: { pv: @pv }, layout: false)
+        render json: { html_data: html_data }
+        end
+      end
+    end
   end
 
   def show
