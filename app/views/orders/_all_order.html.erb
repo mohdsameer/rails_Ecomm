@@ -272,7 +272,7 @@
                                         <%= image_tag asset_path('dummy-product.png') %>
                                       <% end %>
                                       <div class="group_btn">
-                                        <%= link_to download_order_path(order_product), class: "download_btn" do %>
+                                        <%= link_to download_order_path(order_product,  type: "front"), class: "download_btn" do %>
                                           <svg  xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
                                             <path d="M5.16675 22.6667C5.16675 22.0223 5.68908 21.5 6.33341 21.5H22.6667C23.3111 21.5 23.8334 22.0223 23.8334 22.6667C23.8334 23.311 23.3111 23.8333 22.6667 23.8333H6.33341C5.68908 23.8333 5.16675 23.311 5.16675 22.6667Z" fill="#637381"/>
                                             <path d="M6.33341 23.8333C5.68908 23.8333 5.16675 23.311 5.16675 22.6667V20.3333C5.16675 19.689 5.68908 19.1667 6.33341 19.1667C6.97775 19.1667 7.50008 19.689 7.50008 20.3333V22.6667C7.50008 23.311 6.97775 23.8333 6.33341 23.8333Z" fill="#637381"/>
@@ -297,7 +297,7 @@
                                         <%= image_tag asset_path('dummy-product.png') %>
                                       <% end %>
                                       <div class="group_btn">
-                                        <%= link_to download_order_path(order_product.id), class: 'download_btn' do %>
+                                        <%= link_to download_order_path(order_product.id,  type: "back"), class: 'download_btn' do %>
                                           <svg  xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
                                             <path d="M5.16675 22.6667C5.16675 22.0223 5.68908 21.5 6.33341 21.5H22.6667C23.3111 21.5 23.8334 22.0223 23.8334 22.6667C23.8334 23.311 23.3111 23.8333 22.6667 23.8333H6.33341C5.68908 23.8333 5.16675 23.311 5.16675 22.6667Z" fill="#637381"/>
                                             <path d="M6.33341 23.8333C5.68908 23.8333 5.16675 23.311 5.16675 22.6667V20.3333C5.16675 19.689 5.68908 19.1667 6.33341 19.1667C6.97775 19.1667 7.50008 19.689 7.50008 20.3333V22.6667C7.50008 23.311 6.97775 23.8333 6.33341 23.8333Z" fill="#637381"/>

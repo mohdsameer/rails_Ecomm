@@ -586,13 +586,18 @@ class OrdersController < ApplicationController
 
   def download
     order_product = OrderProduct.find_by(id: params[:id])
+    full_name = order_product.order.address.fullname
+    sku_value = order_product.variant.real_variant_sku
 
     if params[:type] == "gift"
       order = Order.find_by(id: params[:id])
       send_data order.gift_message_slip_image.download, filename: 'image.png', type: 'image/png'
 
-    elsif order_product.front_side_image.attached?
-      send_data order_product.front_side_image.download, filename: 'image.png', type: 'image/png'
+    elsif order_product.front_side_image.attached? && params[:type].eql?("front")
+      send_data order_product.front_side_image.download, filename: "#{sku_value}-#{full_name}.png", type: 'image/png'
+
+    elsif order_product.back_side_image.attached? && params[:type].eql?("back")
+      send_data order_product.back_side_image.download, filename: "#{sku_value}-#{full_name}.png", type: 'image/png'
 
     else
       flash[:error] = 'Image not found.'
