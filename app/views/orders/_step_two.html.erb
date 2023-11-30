@@ -18,9 +18,10 @@
           <div class="input_group">
             <select class="input_field" name="country" id="country" data-address-target="countryInput">
               <% if address&.country.present?%>
-                <option value="<%= address&.country %>"><%= address&.country %></option>
+              <% country = ISO3166::Country.find_country_by_alpha2("#{address&.country}") %>
+                <option value="<%= country.alpha2 %>" selected > <%= country %></option>
               <% else %>
-               <option value="<%= address&.country %>" selected>Country</option>
+                <option value="" selected disabled>Select Country</option>
               <% end %>
 
               <% ISO3166::Country.all.each do |country| %>
@@ -30,9 +31,11 @@
 
             <select class="input_field" name="state" id="state" data-address-target="stateInput">
               <% if address&.state.present?%>
-                <option value="<%= address&.state %>"><%= address&.state %></option>
+                <% country.states.each do |state_code, state_info| %>
+                  <option value="<%= state_info['name'] %>"<%= 'selected' if address&.state == state_info[:name] %>><%= state_info['name'] %></option>
+                <% end %>
               <% else %>
-                <option value="<%= address&.state %>">State</option>
+                <option value="" selected disabled> Select State</option>
               <% end %>
             </select>
           </div>
