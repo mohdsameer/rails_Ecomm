@@ -4,10 +4,13 @@ class ProducersVariant < ApplicationRecord
   belongs_to :variant
 
 	def self.search(params)
-		results = all.joins(:variant)
+		results = all.joins(variant: :product)
 
 		if params[:query].present?
-		  results = results.where('LOWER(variants.color) LIKE ?', "%#{params[:query].downcase}%")
+		  results = results.where('LOWER(variants.real_variant_sku) LIKE :query
+													OR LOWER(variants.color) LIKE :query
+													OR CAST(variants.product_id AS TEXT) LIKE :query
+													OR LOWER(products.name) LIKE :query', query: "%#{params[:query].downcase}%")
 		end
 		results
 	end
