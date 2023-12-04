@@ -1,7 +1,10 @@
 <% cancel_orders.each do |order| %>
   <div class="tbody_row">
     <div class="order_td td_icon first">
-      <input type="checkbox" name="" />
+      <div class="custom_checkbox_wrapper">
+        <input type="checkbox" name="" id="<%= order.id %>" class="check_field">
+        <label for="<%= order.id %>"></label>
+      </div>
     </div>
 
     <div class="order_td second">
@@ -17,7 +20,7 @@
 
     <div class="order_td seven">
       <div class="order_status_icon">
-        <div>
+        <div class="rejectd custom_badge">
           <%= order.order_status %>
         </div>
       </div>

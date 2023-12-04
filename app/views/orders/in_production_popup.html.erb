@@ -40,16 +40,18 @@
             <% end %>
           </div>
         <%end%>
-        <div class="msg_section order_note">
-          <%= image_tag "chat", alt:"icon", class:"msg_icon" %>
-          <div class="content_box">
-            <div class="msg_from">
-              <div class="left_text">Order Note:</div>
-              <div class="date_text"><%= @order.order_date %></div>
+        <% if @order.additional_comment.present? %>
+          <div class="msg_section order_note">
+            <%= image_tag "chat", alt:"icon", class:"msg_icon" %>
+            <div class="content_box">
+              <div class="msg_from">
+                <div class="left_text">Order Note:</div>
+                <div class="date_text"><%= @order.order_date %></div>
+              </div>
+              <div class="content_text"><%= @order.additional_comment%></div>
             </div>
-            <div class="content_text"><%= @order.additional_comment%></div>
           </div>
-        </div>
+        <% end %>
         <% sum_result = 0 %>
         <div class="order_info_section">
           <div class="left_section">
@@ -105,10 +107,16 @@
                 </div>
                 <div class="buyer_mail">
                   <div class="buyer_head">Shipping Address</div>
-                  <div class="buyer_text"><%= @customer_detail.address1%></div>
-                  <% if @customer_detail.address2.present? %>
-                    <div class="buyer_text"><%= @customer_detail.address2%></div>
-                  <%end%>
+                  <div class="buyer_text">
+                    <span><%= @customer_detail.address1%></span>
+                    <% if @customer_detail.address2.present? %>
+                      <span><%= @customer_detail.address2%></span>
+                    <% end %>
+                    <span><%= @customer_detail.city %>,</span>
+                    <span><%= @customer_detail.state %>,</span>
+                    <span><%= @customer_detail.zipcode %>,</span>
+                    <span><%= @customer_detail.country %></span>
+                  </div>
                 </div>
               </div>
             <%end%>
