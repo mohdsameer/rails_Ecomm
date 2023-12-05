@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_14_054347) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_17_101654) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -119,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_054347) do
     t.decimal "custom_weight_oz"
     t.string "shippo_rate_id"
     t.string "shippo_shipment_id"
+    t.decimal "shipping_cost"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -234,6 +235,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_054347) do
     t.string "font"
     t.string "text"
     t.string "real_variant_sku"
+    t.boolean "archive", default: false
   end
 
   create_table "versions", force: :cascade do |t|

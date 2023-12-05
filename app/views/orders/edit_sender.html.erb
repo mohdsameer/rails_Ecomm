@@ -1,11 +1,25 @@
 <turbo-frame id="edit-sender">
-  <div id="edit-sender-modal" class="edit-sender-modal on-hold-order-modal" data-controller="modals address" data-modals-modal-id-value="edit-sender-modal" >
+  <% countries = ISO3166::Country.all.map { |country| { value: country.alpha2, text: country.iso_short_name } } %>
+  <div id="edit-sender-modal"
+       class="edit-sender-modal on-hold-order-modal"
+       data-controller="modals address"
+       data-address-countries-value="<%= countries.to_json %>"
+       data-address-saved-country-value="<%= @order&.address&.country %>"
+       data-address-saved-state-value="<%= @order&.address&.state %>"
+       data-modals-modal-id-value="edit-sender-modal">
+
     <div class="on-hold-order-outer">
       <div class="on_hold_pop_wrapper">
         <% sender_address = @order.sender.address %>
         <%= image_tag 'close.png', alt: 'icon', class: 'close_hold' %>
 
-        <%= form_tag update_sender_order_path(@order), method: :post, id: 'regForm', class: 'product_form text-center', data: { 'turbo-frame': '_top' } do %>
+        <%= form_tag(
+          update_sender_order_path(@order),
+          method: :post,
+          id: 'regForm',
+          class: 'product_form text-center',
+          data: { 'turbo-frame': '_top' }
+        ) do %>
           <div class="tab" id="step2">
             <div class="shipping_pop_wrap">
               <div class="shiping_form">
@@ -22,10 +36,7 @@
 
                 <div class="input_group">
                   <select class="input_field" name="country" id="sender-country" data-address-target="countryInput">
-                    <option value="">Country</option>
-                    <% ISO3166::Country.all.each do |country| %>
-                      <option value="<%= country.alpha2 %>"><%= country.iso_short_name %></option>
-                    <% end %>
+                    <option value="" selected>Country</option>
                   </select>
 
                   <select class="input_field" name="state" id="sender-state" data-address-target="stateInput">

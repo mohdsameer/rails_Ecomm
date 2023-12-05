@@ -23,6 +23,7 @@ class OrdersController < ApplicationController
                                     :order_update_shipping,
                                     :remove_product,
                                     :remove_product_image,
+                                    :remove_design_files,
                                     :set_dimensions,
                                     :update_dimensions,
                                     :update_job_price,
@@ -302,8 +303,34 @@ class OrdersController < ApplicationController
     if params[:front_side_image].present?
       order_product.front_side_image.purge
     end
+
     if params[:back_side_image].present?
       order_product.back_side_image.purge
+    end
+
+    @order.reload
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('order-form-content', partial: 'orders/edit_step_one', locals: { order: @order })
+      end
+    end
+  end
+
+  def remove_design_files
+    if params[:shipping_label_image].present?
+      @order.shipping_label_image.purge
+    elsif params[:packing_slip_image].present?
+      @order.packing_slip_image.purge
+    elsif params[:gift_message_slip_image].present?
+      @order.gift_message_slip_image.purge
+    elsif params[:design_file_1_image].present?
+      @order.design_file_1_image.purge
+    elsif params[:design_file_2_image].present?
+      @order.design_file_2_image.purge
+    elsif params[:additional_file_image].present?
+      @order.additional_file_image.purge
     end
 
     @order.reload
@@ -414,7 +441,11 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @sender })
+        if params[:redirect_orders].present?
+          redirect_to orders_path
+        else
+          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @sender })
+        end
       end
     end
   end
@@ -487,13 +518,13 @@ class OrdersController < ApplicationController
   end
 
   def order_update_shipping
-    if params[:shippo_rate_id].present?
+    if params[:shippo_rate_id].present? || params[:manual_upload_file].present?
+      params[:shippo_rate_id] = 'manual_upload' if params[:manual_upload_file].present? && !params[:shippo_rate_id].present?
+
       shippo_label = @order.shippo_labels.create(shippo_rate_id: params[:shippo_rate_id])
 
-      if params[:shippo_rate_id].eql?('manual_upload')
-        if params[:manual_upload_file].present?
-          shippo_label.shipo_transaction_label.attach(io: params[:manual_upload_file], filename: "order-label-#{@order.id}-#{shippo_label.id}")
-        end
+      if params[:manual_upload_file].present?
+        shippo_label.shipo_transaction_label.attach(io: params[:manual_upload_file], filename: "order-label-#{@order.id}-#{shippo_label.id}")
       else
         transaction = Shippo::Transaction.create(rate: params[:shippo_rate_id], label_file_type: "PDF", async: false)
 
@@ -510,12 +541,12 @@ class OrdersController < ApplicationController
       @error_message = "Please select a shipping label"
     end
 
-    if @error_message.present? && (params[:commit].eql?('Purchase Shipping Label') || params[:submit_type].eql?('mark_complete'))
+    if @error_message.present? && params[:commit].eql?('Purchase Shipping Label')
       redirect_to edit_order_path(@order, step: :shipping_method, error_message: @error_message)
     else
-      order_edit_status = params[:submit_type] == "save_later" ? 0 : 1
-      priority          = params[:priority].present? ? 1 : 0
-      order_status      = order_edit_status == 1 ? 2 : 0
+      order_edit_status = params[:submit_type] == "save_later" ? :incomplete : :completed
+      priority          = params[:priority].present? ? :URGENT : :GENERAL
+      order_status      = order_edit_status == :completed ? :inproduction : :onhold
 
       @order.update(shippo_rate_id:     params[:shippo_rate_id],
                     order_edit_status:  order_edit_status,
@@ -523,8 +554,10 @@ class OrdersController < ApplicationController
                     order_status:       order_status,
                     shipping_cost:      params[:shipping_cost])
 
-      if params[:submit_type].eql?('save_later')
+      if params[:submit_type].eql?('save_later') && !params[:commit].eql?('Purchase Shipping Label')
         redirect_to orders_path
+      elsif params[:commit].eql?('Purchase Shipping Label')
+        redirect_to edit_order_path(@order, step: :shipping_method)
       end
     end
   end

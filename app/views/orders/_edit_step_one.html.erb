@@ -1,5 +1,5 @@
 <turbo-frame id="order-form-content">
-  <%= form_tag order_path, method: :patch,  multipart: true, id: 'regForm', class: 'product_form', data: { controller: 'order-form-status', 'order-form-status-target': 'form' } do %>
+  <%= form_tag order_path, method: :patch,  multipart: true, id: 'order-form', class: 'product_form', data: { controller: 'order-form-status', 'order-form-status-target': 'form', 'turbo-frame': '_top' } do %>
     <div class="tab" id="step1">
       <div class="product_list_section">
         <% order.order_products.order(created_at: :asc).group_by(&:user_id).each do |producer_id, order_products| %>
@@ -112,26 +112,17 @@
                             <div class="avatar-upload">
                               <% if order_product.back_side_image.attached? %>
                                 <div class="avatar-preview">
-                                  <%#= image_tag order_product.back_side_image, alt: 'img', class: 'preview_img' %>
-                                  <!-- <div id="imageFrontPreview_<%= order_product.id %>"
-                                       style="background-image: url(http://i.pravatar.cc/500?img=7);">
-                                  </div> -->
-                                  <%#= link_to 'javascript:;', class: 'zoom_img' do %>
-                                    <%#= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
-                                  <%# end %>
-
                                   <%= image_tag order_product.back_side_image, alt: 'img', class: 'preview_img' %>
-                                    <%= link_to order_product.back_side_image, class: 'zoom_img lightbox_trigger' do %>
-                                      <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
+                                  <%= link_to order_product.back_side_image, class: 'zoom_img lightbox_trigger' do %>
+                                    <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
                                   <% end %>
                                 </div>
                               <% else %>
                                 <div class="avatar-edit">
-                                  <%#= file_field_tag "front_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.variant.id}" %>
                                   <%= file_field_tag "back_side_image[#{order_product.id}]", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{order_product.id}", data: { 'order-form-status-target': 'backImage' } %>
                                   <label for="imageUpload_<%= order_product.id %>" class="upload_wrapper">
-                                      <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
-                                      <div class="image_type">PNG</div>
+                                    <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
+                                    <div class="image_type">PNG</div>
                                       <div class="upload_text">Upload Here</div>
                                     <div class="click_here">Click here to upload</div>
                                   </label>
@@ -141,44 +132,12 @@
                           </div>
                           <% if order_product.back_side_image.attached? %>
                             <div class="btn_wrap">
-                               <%= link_to remove_product_image_order_path(order, order_product_id: order_product.id, back_side_image: order_product.back_side_image), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
+                              <%= link_to remove_product_image_order_path(order, order_product_id: order_product.id, back_side_image: order_product.back_side_image), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
                                 <%= image_tag 'ic_trash.png', alt: 'icon' %>
                               <% end %>
                             </div>
                           <% end %>
                         </div>
-                        <!-- OLD PREVIEW CODE -->
-                        <!-- <div class="content_img shadow_box">
-                          <div class="image_box">
-                            <div class="avatar-upload">
-                              <div class="avatar-edit">
-                                <%#= file_field_tag "back_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{order_product.variant.id}" %>
-                                <%#= file_field_tag "back_side_image[#{order_product.id}]", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "back_side_image_#{order_product.id}", data: { 'order-form-status-target': 'backImage' } %>
-                                <label for="imageUpload_<%#= order_product.id %>" class="upload_wrapper">
-                                  <%# if order_product.back_side_image.attached? %>
-                                    <%#= image_tag order_product.back_side_image, class: 'upload_icon' %>
-                                  <%#else%>
-                                    <%#= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>
-                                    <div class="image_type">PNG</div>
-                                    <div class="upload_text">Upload Here</div>
-                                  <%#end%>
-                                  <div class="click_here">Click here to upload</div>
-                                </label>
-                              </div>
-
-                              <div class="avatar-preview">
-                                <div id="imageBackPreview_<%#= order_product.id %>" style="background-image: url(http://i.pravatar.cc/500?img=7);">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="btn_wrap">
-                            <%#= link_to 'javascript:;', class: 'delete_img' do %>
-                              <%#= image_tag 'ic_trash.png', alt: 'icon' %>
-                            <%# end %>
-                          </div>
-                        </div> -->
-                        <!-- OLD PREVIEW CODE -->
                       </div>
                     </div>
                   </div>
@@ -186,9 +145,6 @@
                     <%= link_to remove_product_order_path(order, order_product_id: order_product.id), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
                       <%= image_tag 'ic_trash.png', alt: 'icon', class: 'trash' %>
                     <% end %>
-                    <%#= link_to 'javascript:;', class: 'link_box' do %>
-                      <%#= image_tag 'copy.png', alt: 'icon', class: 'copy' %>
-                    <%# end %>
                   </div>
                 </div>
               <% end %>
@@ -209,90 +165,189 @@
           <div class="upload_section">
             <div class="upload_box">
               <div class="upload_header">Shipping Label</div>
-              <% if @order.shipping_label_image.present?%>
-                 <%= image_tag @order.shipping_label_image, class: "content_img" %>
-              <%else%>
+              <% if @order.shipping_label_image.attached? %>
+                <% if @order.shipping_label_image.representable? %>
+                  <%= image_tag @order.shipping_label_image, class: "content_img" %>
+
+                  <%= link_to @order.shipping_label_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
+                    View
+                  <% end %>
+                <% else %>
+                  <%= link_to rails_blob_url(@order.shipping_label_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                    <%= @order.shipping_label_image.filename.to_s %>
+                  <% end %>
+                <% end %>
+
+                <div class="btn_wrap mx-auto">
+                  <%= link_to remove_design_files_order_path(order, shipping_label_image: true), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
+                    <%= image_tag 'ic_trash.png', alt: 'icon' %>
+                  <% end %>
+                </div>
+              <% else %>
                 <div class="upload_item">
-                  <%= file_field_tag "shipping_label_image", class: 'file_upload' %>
+                  <%= file_field_tag "shipping_label_image", class: 'file_upload', data: { 'order-form-status-target': 'designFile' } %>
                   <label class="upload_label" for="shipping_label_image">
                     <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
                     <div class="upload_text">Upload file</div>
                   </label>
                 </div>
-              <%end%>
+              <% end %>
             </div>
 
             <div class="upload_box">
               <div class="upload_header">Packing Slip</div>
-              <% if @order.packing_slip_image.present?%>
-                 <%= image_tag @order.packing_slip_image, class: "content_img" %>
-              <%else%>
+              <% if @order.packing_slip_image.attached? %>
+                <% if @order.packing_slip_image.representable? %>
+                  <%= image_tag @order.packing_slip_image, class: "content_img" %>
+
+                  <%= link_to @order.packing_slip_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
+                    View
+                  <% end %>
+                <% else %>
+                  <%= link_to rails_blob_url(@order.packing_slip_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                    <%= @order.packing_slip_image.filename.to_s %>
+                  <% end %>
+                <% end %>
+
+                <div class="btn_wrap mx-auto">
+                  <%= link_to remove_design_files_order_path(order, packing_slip_image: true), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
+                    <%= image_tag 'ic_trash.png', alt: 'icon' %>
+                  <% end %>
+                </div>
+              <% else %>
                 <div class="upload_item">
-                  <%= file_field_tag "packing_slip_image", class: 'file_upload' %>
+                  <%= file_field_tag "packing_slip_image", class: 'file_upload', data: { 'order-form-status-target': 'designFile' } %>
                   <label class="upload_label" for="packing_slip_image">
                     <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
                     <div class="upload_text">Upload file</div>
                   </label>
                 </div>
-              <%end%>
+              <% end %>
             </div>
 
             <div class="upload_box">
               <div class="upload_header">Gift Message Slip</div>
-              <% if @order.gift_message_slip_image.present?%>
-                 <%= image_tag @order.gift_message_slip_image, class: "content_img" %>
-              <%else%>
+              <% if @order.gift_message_slip_image.present? %>
+                <% if @order.gift_message_slip_image.representable? %>
+                  <%= image_tag @order.gift_message_slip_image, class: "content_img" %>
+
+                  <%= link_to @order.gift_message_slip_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
+                    View
+                  <% end %>
+                <% else %>
+                  <%= link_to rails_blob_url(@order.gift_message_slip_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                    <%= @order.gift_message_slip_image.filename.to_s %>
+                  <% end %>
+                <% end %>
+
+                <div class="btn_wrap mx-auto">
+                  <%= link_to remove_design_files_order_path(order, gift_message_slip_image: true), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
+                    <%= image_tag 'ic_trash.png', alt: 'icon' %>
+                  <% end %>
+                </div>
+              <% else %>
                 <div class="upload_item">
-                  <%= file_field_tag "gift_message_slip_image", class: 'file_upload' %>
+                  <%= file_field_tag "gift_message_slip_image", class: 'file_upload', data: { 'order-form-status-target': 'designFile' } %>
                   <label class="upload_label" for="gift_message_slip_image">
                     <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
                     <div class="upload_text">Upload file</div>
                   </label>
                 </div>
-              <%end%>
+              <% end %>
             </div>
+
             <div class="upload_box">
               <div class="upload_header">Design File 1</div>
-              <% if @order.design_file_1_image.present?%>
-                 <%= image_tag @order.design_file_1_image, class: "content_img" %>
-              <%else%>
+              <% if @order.design_file_1_image.present? %>
+                <% if @order.design_file_1_image.representable? %>
+                  <%= image_tag @order.design_file_1_image, class: "content_img" %>
+
+                  <%= link_to @order.design_file_1_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
+                    View
+                  <% end %>
+                <% else %>
+                  <%= link_to rails_blob_url(@order.design_file_1_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                    <%= @order.design_file_1_image.filename.to_s %>
+                  <% end %>
+                <% end %>
+
+                <div class="btn_wrap mx-auto">
+                  <%= link_to remove_design_files_order_path(order, design_file_1_image: true), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
+                    <%= image_tag 'ic_trash.png', alt: 'icon' %>
+                  <% end %>
+                </div>
+              <% else %>
                 <div class="upload_item">
-                  <%= file_field_tag "design_file_1_image", class: 'file_upload' %>
+                  <%= file_field_tag "design_file_1_image", class: 'file_upload', data: { 'order-form-status-target': 'designFile' } %>
                   <label class="upload_label" for="design_file_1_image">
                     <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
                     <div class="upload_text">Upload file</div>
                   </label>
                 </div>
-              <%end%>
+              <% end %>
             </div>
+
             <div class="upload_box">
               <div class="upload_header">Design File 2</div>
-              <% if @order.design_file_2_image.present?%>
-                 <%= image_tag @order.design_file_2_image, class: "content_img" %>
-              <%else%>
+              <% if @order.design_file_2_image.present? %>
+                <% if @order.design_file_2_image.representable? %>
+                  <%= image_tag @order.design_file_2_image, class: "content_img" %>
+
+                  <%= link_to @order.design_file_2_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
+                    View
+                  <% end %>
+                <% else %>
+                  <%= link_to rails_blob_url(@order.design_file_2_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                    <%= @order.design_file_2_image.filename.to_s %>
+                  <% end %>
+                <% end %>
+
+                <div class="btn_wrap mx-auto">
+                  <%= link_to remove_design_files_order_path(order, design_file_2_image: true), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
+                    <%= image_tag 'ic_trash.png', alt: 'icon' %>
+                  <% end %>
+                </div>
+              <% else %>
                 <div class="upload_item">
-                  <%= file_field_tag "design_file_2_image", class: 'file_upload' %>
+                  <%= file_field_tag "design_file_2_image", class: 'file_upload', data: { 'order-form-status-target': 'designFile' } %>
                   <label class="upload_label" for="design_file_2_image">
                     <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
                     <div class="upload_text">Upload file</div>
                   </label>
                 </div>
-              <%end%>
+              <% end %>
             </div>
+
             <div class="upload_box">
               <div class="upload_header">Additional File</div>
-              <% if @order.additional_file_image.present?%>
-                 <%= image_tag @order.additional_file_image, class: "content_img" %>
-              <%else%>
+              <% if @order.additional_file_image.present? %>
+                <% if @order.additional_file_image.representable? %>
+                  <%= image_tag @order.additional_file_image, class: "content_img" %>
+
+                  <%= link_to @order.additional_file_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
+                    View
+                  <% end %>
+                <% else %>
+                  <%= link_to rails_blob_url(@order.additional_file_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                    <%= @order.additional_file_image.filename.to_s %>
+                  <% end %>
+                <% end %>
+
+                <div class="btn_wrap mx-auto">
+                  <%= link_to remove_design_files_order_path(order, additional_file_image: true), data: { 'turbo-method': 'delete' }, class: 'link_box' do %>
+                    <%= image_tag 'ic_trash.png', alt: 'icon' %>
+                  <% end %>
+                </div>
+              <% else %>
                 <div class="upload_item">
-                  <%= file_field_tag "additional_file_image", class: 'file_upload' %>
+                  <%= file_field_tag "additional_file_image", class: 'file_upload', data: { 'order-form-status-target': 'designFile' } %>
                   <label class="upload_label" for="additional_file_image">
                     <%= image_tag 'ic_cloud_upload.png', alt: 'icon', class: 'upload_cloud' %>
                     <div class="upload_text">Upload file</div>
                   </label>
                 </div>
-              <%end%>
-            </div>           
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
@@ -316,7 +371,7 @@
 
     <div class="btn_wrapper mb-5">
       <%= hidden_field_tag :user_id, params[:producer_id] %>
-      <%= hidden_field_tag :submit_type, '', data: { 'order-form-status-target': 'submitType' } %>
+      <%= hidden_field_tag :submit_type, 'save_later', data: { 'order-form-status-target': 'submitType' } %>
       <% if current_user.type.eql?('Designer') %>
 
         <% if @order.order_edit_status.eql?("completed")%>
@@ -359,6 +414,7 @@
           <% end %>
         <% end %>
       <% end %>
+
       <%= link_to 'Save Order for Later', 'javascript:;', class: 'btn_wrap light_green', data: { 'order-form-status-target': 'saveLater' } %>
       <% if current_user.type.eql?('Admin')%>
         <%= link_to('javascript:;', class: 'btn_wrap black_bg', data: { 'order-form-status-target': 'goShipping' }) do %>
@@ -372,7 +428,7 @@
         <% end %>
       <% end %>
 
-      <%= submit_tag 'submit', class: '', data: { 'order-form-status-target': 'submit' }, style: 'display:none;' %>
+      <%= submit_tag 'submit', class: '', id: 'submit-order-form', data: { 'order-form-status-target': 'submit' }, style: 'display:none;' %>
     </div>
   <% end %>
 </turbo-frame>

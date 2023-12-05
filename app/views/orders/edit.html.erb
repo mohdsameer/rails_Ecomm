@@ -1,8 +1,7 @@
 <div class="hero_wrapper">
   <div class="manual_order_wrapper">
     <div class="manual_order_header">
-      <%= link_to save_changes_confirmation_orders_path,  class: "back_btn_wrap", data: {turbo_frame: "save-changes-order-model"} do %>
-      <%#= link_to orders_path,  class: "back_btn_wrap" do %>
+      <%= link_to save_changes_confirmation_orders_path, class: "back_btn_wrap", data: { turbo_frame: "save-changes-order-model" } do %>
         <%= image_tag 'start_icon.png', alt: 'icon', class: 'back_icon' %>
         <span>Back to My Orders</span>
       <% end %>
@@ -22,6 +21,7 @@
           <span class="new_text">Add New Products</span>
         <% end %>
       </div>
+
       <turbo-frame id="save-changes-order-model"></turbo-frame>
       <turbo-frame id="all-producer-order-modal"></turbo-frame>
       <turbo-frame id="add-new-product-order-modal"></turbo-frame>
@@ -50,48 +50,6 @@
     $(this).toggleClass('rotate_icon');
     $(this).closest('.product_list_section').find('.collapse_data').slideToggle();
   });
-
-  // $('.variantId').each(function() {
-  //   var varientId = $(this).attr('id');
-
-  //   function readFrontURL(input) {
-  //     if (input.files && input.files[0]) {
-  //       var reader = new FileReader();
-  //       reader.onload = function(e) {
-  //         $('#imageFrontPreview_'+varientId).css('background-image', 'url('+e.target.result +')');
-  //         $('#imageFrontPreview_'+varientId).hide();
-  //         $('#imageFrontPreview_'+varientId).fadeIn(650);
-  //       }
-  //       reader.readAsDataURL(input.files[0]);
-  //     }
-  //   }
-
-  //   $("#front_side_image_"+varientId).change(function() {
-  //     readFrontURL(this);
-  //     $(this).closest('.avatar-upload').find('.avatar-edit').css('display', 'none');
-  //     $(this).closest('.avatar-upload').find('.avatar-preview').show();
-  //     $(this).closest('.content_img').find('.delete_img').css('display', 'flex');
-  //   });
-
-  //   function readBackURL(input) {
-  //     if (input.files && input.files[0]) {
-  //       var reader = new FileReader();
-  //       reader.onload = function(e) {
-  //         $('#imageBackPreview_'+varientId).css('background-image', 'url('+e.target.result +')');
-  //         $('#imageBackPreview_'+varientId).hide();
-  //         $('#imageBackPreview_'+varientId).fadeIn(650);
-  //       }
-  //       reader.readAsDataURL(input.files[0]);
-  //     }
-  //   }
-
-  //   $("#back_side_image_"+varientId).change(function() {
-  //     readBackURL(this);
-  //     $(this).closest('.avatar-upload').find('.avatar-edit').css('display', 'none');
-  //     $(this).closest('.avatar-upload').find('.avatar-preview').show();
-  //     $(this).closest('.content_img').find('.delete_img').css('display', 'flex');
-  //   });
-  // });
 
   $('.delete_img').click(function() {
     $(this).closest('.content_img').find('.avatar-edit').css('display', 'flex').find('.upload_field').val('');

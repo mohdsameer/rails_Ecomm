@@ -80,7 +80,8 @@
     .img_section {
       display: flex;
       align-items: flex-end;
-      justify-content: flex-end;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
 
       .section_img {
         width: 5.208vw;

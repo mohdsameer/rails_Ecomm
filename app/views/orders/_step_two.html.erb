@@ -1,66 +1,46 @@
 <turbo-frame id="order-form-content">
-  <%= form_tag create_address_order_path(order), method: :post,  multipart: true, id: 'regForm', class: 'product_form text-center', data: { controller: 'address' } do %>
+  <% countries = ISO3166::Country.all.map { |country| { value: country.alpha2, text: country.iso_short_name } } %>
+
+  <%= form_tag(
+    create_address_order_path(order),
+    method: :post,
+    multipart: true,
+    id: 'order-form',
+    class: 'product_form text-center',
+    data: { 
+      'turbo-frame': '_top',
+      controller: 'address',
+      'address-countries-value': countries,
+      'address-saved-country-value': order&.address&.country,
+      'address-saved-state-value': order&.address&.state
+    }
+  ) do %>
+
     <div class="tab" id="step2">
       <div class="shipping_pop_wrap">
         <div class="shiping_form">
           <div class="ship_head">Recipient</div>
 
           <% address = order.address %>
+
           <div class="input_group">
             <%= text_field_tag :fullname, address&.fullname, class: "input_field", placeholder: "Full Name", required: true %>
             <%= text_field_tag :num, address&.num, class: "input_field", placeholder: "Mobile No.", required: true %>
           </div>
 
-          <div class="input_group" >
+          <div class="input_group">
             <%= text_field_tag :email, address&.email, class: "input_field big_size", placeholder: "Email", required: true %>
           </div>
 
           <div class="input_group">
             <select class="input_field" name="country" id="country" data-address-target="countryInput">
-              <% if address&.country.present?%>
-              <% country = ISO3166::Country.find_country_by_alpha2("#{address&.country}") %>
-                <option value="<%= country.alpha2 %>" selected > <%= country %></option>
-              <% else %>
-                <option value="" selected disabled>Select Country</option>
-              <% end %>
-
-              <% ISO3166::Country.all.each do |country| %>
-                <option value="<%= country.alpha2 %>"><%= country.iso_short_name %></option>
-              <% end %>
+              <option value="" selected>Country</option>
             </select>
 
             <select class="input_field" name="state" id="state" data-address-target="stateInput">
-              <% if address&.state.present?%>
-                <% country.states.each do |state_code, state_info| %>
-                  <option value="<%= state_info['name'] %>"<%= 'selected' if address&.state == state_info[:name] %>><%= state_info['name'] %></option>
-                <% end %>
-              <% else %>
-                <option value="" selected disabled> Select State</option>
-              <% end %>
+              <option value="">State</option>
             </select>
           </div>
-
-<!--      <div class="input_group">
-            <select class="input_field" name="country" id="country" data-address-target="countryInput">
-              <%# if address&.country.present?%>
-                <option value="<%#= address&.country %>"><%#= address&.country %></option>
-              <%# else %>
-               <option value="<%#= address&.country %>" selected>Country</option>
-              <%# end %>
-
-              <%# ISO3166::Country.all.each do |country| %>
-                <option value="<%#= country.alpha2 %>"><%#= country.iso_short_name %></option>
-              <%# end %>
-            </select>
-
-            <select class="input_field" name="state" id="state" data-address-target="stateInput">
-              <%# if address&.state.present?%>
-                <option value="<%#= address&.state %>"><%#= address&.state %></option>
-              <%# else %>
-                <option value="<%#= address&.state %>">State</option>
-              <%# end %>
-            </select>
-          </div> -->
 
           <%= text_field_tag :address1, address&.address1, class: "input_field big_size", placeholder: "address1", required: true %>
           <%= text_field_tag :address2, address&.address2, class: "input_field big_size", placeholder: "address2" %>
@@ -71,7 +51,7 @@
           </div>
 
           <button class="calulate_btn">
-            <%= submit_tag 'Calculate Shipping', class: 'calulate_btn' %>
+            <%= submit_tag 'Calculate Shipping', class: 'calulate_btn', id: 'submit-order-form' %>
             <%= image_tag "endicon", alt:"icon", class:"icon" %>
           </button>
         </div>

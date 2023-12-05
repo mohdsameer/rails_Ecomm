@@ -1,5 +1,12 @@
-<turbo-frame id="order-form-content" data-controller="order-form">
-  <%= form_tag order_update_shipping_order_path(order), method: :post,  multipart: true, id: 'regForm', class: 'product_form',  data: { 'order-form-target': 'form', 'turbo-frame': '_top' } do %>
+<turbo-frame
+  id="order-form-content"
+  data-controller="order-form"
+  data-order-form-shipping-label-purchased-value="<%= order.shippo_labels.any? { |shippo_label| shippo_label.shipo_transaction_label.attached? } %>">
+  <%= form_tag(order_update_shipping_order_path(order),
+    method: :post, multipart: true, id: 'order-form', class: 'product_form',
+    data: { 'order-form-target': 'form',
+            'turbo-frame': '_top' }) do %>
+
     <div class="tab" id="step3">
       <div class="choose_shiping_wrapper">
         <div class="shiping_info_wrap">
@@ -48,9 +55,8 @@
 
                 <div class="action_wrapper">
                   <%= submit_tag 'Purchase Shipping Label', class: 'pur_link', data: { 'order-form-target': 'purchaseLabel' } %>
-                  <%#= link_to 'Shipping Label Purchased Successfully', 'javascript:;', class: 'ship_link' %>
 
-                  <% @order.shippo_labels.each do |shippo_label| %>
+                  <% order.shippo_labels.each do |shippo_label| %>
                     <% if shippo_label.shipo_transaction_label.attached? %>
                       <% shipo_transaction_label = shippo_label.shipo_transaction_label %>
                       <div class="pdf_box">
@@ -64,7 +70,7 @@
                             <%= image_tag 'download.png', alt: 'icon' %>
                           <% end %>
 
-                          <%= link_to remove_shipo_lable_order_path(@order, shippo_label_id: shippo_label.id), data: { 'turbo-method': :delete, 'turbo-frame': '_top' }, class: 'pdf_link' do %>
+                          <%= link_to remove_shipo_lable_order_path(order, shippo_label_id: shippo_label.id), data: { 'turbo-method': :delete, 'turbo-frame': '_top' }, class: 'pdf_link' do %>
                             <%= image_tag 'light_trash.png', alt: 'icon' %>
                           <% end %>
                         </div>
@@ -84,7 +90,7 @@
 
                 <% sum_result = 0 %>
 
-                <% @order.order_products.each do |order_product| %>
+                <% order.order_products.each do |order_product| %>
                   <div class="info_left_section">
                     <div class="left_sku"><%= order_product.product.brand_name %></div>
                     <div class="left_head"><%= order_product.product.name %></div>
@@ -101,6 +107,66 @@
                         <%= display_image(order_product.front_side_image, nil) %>
                         <%= display_image(order_product.back_side_image, nil) %>
                         <%= display_image(order_product.variant.image, nil) %>
+
+                        <% if order.shipping_label_image.attached? %>
+                          <% if order.shipping_label_image.representable? %>
+                            <%= display_image(order.shipping_label_image, nil) %>
+                          <% else %>
+                            <%= link_to rails_blob_url(order.shipping_label_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                              <%= order.shipping_label_image.filename.to_s %>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+
+                        <% if order.packing_slip_image.attached? %>
+                          <% if order.packing_slip_image.representable? %>
+                            <%= display_image(order.packing_slip_image, nil) %>
+                          <% else %>
+                            <%= link_to rails_blob_url(order.packing_slip_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                              <%= order.packing_slip_image.filename.to_s %>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+
+                        <% if order.gift_message_slip_image.attached? %>
+                          <% if order.gift_message_slip_image.representable? %>
+                            <%= display_image(order.gift_message_slip_image, nil) %>
+                          <% else %>
+                            <%= link_to rails_blob_url(order.gift_message_slip_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                              <%= order.gift_message_slip_image.filename.to_s %>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+
+                        <% if order.design_file_1_image.attached? %>
+                          <% if order.design_file_1_image.representable? %>
+                            <%= display_image(order.design_file_1_image, nil) %>
+                          <% else %>
+                            <%= link_to rails_blob_url(order.design_file_1_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                              <%= order.design_file_1_image.filename.to_s %>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+
+                        <% if order.design_file_2_image.attached? %>
+                          <% if order.design_file_2_image.representable? %>
+                            <%= display_image(order.design_file_2_image, nil) %>
+                          <% else %>
+                            <%= link_to rails_blob_url(order.design_file_2_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                              <%= order.design_file_2_image.filename.to_s %>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+
+                        <% if order.additional_file_image.attached? %>
+                          <% if order.additional_file_image.representable? %>
+                            <%= display_image(order.additional_file_image, nil) %>
+                          <% else %>
+                            <%= link_to rails_blob_url(order.additional_file_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
+                              <%= order.additional_file_image.filename.to_s %>
+                            <% end %>
+                          <% end %>
+                        <% end %>
                       </div>
                     </div>
 
@@ -195,11 +261,11 @@
               </div>
 
               <div class="urgent_section">
-                <%= check_box_tag "priority", true  %>
+                <%= check_box_tag "priority", true, order.URGENT? %>
                 <div class="urgent_text">MARK ORDER AS URGENT</div>
               </div>
 
-              <%= hidden_field_tag :submit_type, '', data: { 'order-form-target': 'submitType' } %>
+              <%= hidden_field_tag :submit_type, 'save_later', data: { 'order-form-target': 'submitType' } %>
 
               <div class="btn_wrap">
                 <button class="later_btn">
@@ -211,7 +277,7 @@
                   <%= image_tag "endicon", alt: "icon", class: "btn_icon" %>
                 </button>
 
-                <%= submit_tag 'submit', data: { 'order-form-target': 'submit' }, style: 'display:none;' %>
+                <%= submit_tag 'submit', id: 'submit-order-form', data: { 'order-form-target': 'submit' }, style: 'display:none;' %>
               </div>
             </div>
           </div>
