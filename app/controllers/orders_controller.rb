@@ -538,7 +538,7 @@ class OrdersController < ApplicationController
         end
       end
     else
-      @error_message = "Please select a shipping label"
+      @error_message =  "Please select a shipping label"
     end
 
     if @error_message.present? && params[:commit].eql?('Purchase Shipping Label')
