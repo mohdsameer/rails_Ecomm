@@ -1,62 +1,77 @@
 <turbo-frame id="fullfilled-order-modal">
   <div class="status_popup">
     <div class="status_popup_outer">
-      <div id = "status_pop_wrapper" class="status_pop_wrapper" data-controller="modals" data-modals-modal-id-value="status_pop_wrapper">
-        <%= link_to 'javascript:;', class: 'close_popup', id: 'close_status_popup' do %>
-          <%= image_tag "close.png", alt:"icon" %>
+      <div id="status_pop_wrapper"
+           class="status_pop_wrapper"
+           data-controller="modals"
+           data-modals-modal-id-value="fullfilled-order-modal">
+
+        <%= link_to close_modal_path(modal_id: 'fullfilled-order-modal'), data: { 'turbo-method': :post }, class: 'close_popup', id: 'close_status_popup' do %>
+          <%= image_tag "close.png", alt: "icon" %>
         <% end %>
+
         <div class="status_bar">
           <div class="left_section">
-            <div class="bar_head">Order ID: <%= @order.id%></div>
-            <% if @order.order_status == "fullfilled"%>
+            <div class="bar_head">Order ID: <%= @order.id %></div>
+
+            <% if @order.order_status == "fullfilled" %>
               <div class="status_badge succes_badge">Fullfilled</div>
-            <%end%>
+            <% end %>
           </div>
+
           <div class="right_section">
             <% if @assigne.present? %>
               <span><%= @assigne %></span>
               <%= image_tag "check", alt:"icon", class:"right_img" %>
-            <%else%>
+            <% else %>
               <span> assigne not assign</span>
-            <%end%>
+            <% end %>
           </div>
         </div>
-        <div class="create_date"><%= @order.order_date_with_time%></div>
+
+        <div class="create_date"><%= @order.order_date_with_time %></div>
+
         <% sum_result = 0 %>
+
         <div class="order_info_section">
           <div class="left_section">
-            <% @order_products.each do |order_product|%>  
+            <% @order_products.each do |order_product| %>
               <div class="left_section_box">
-                <div class="left_head"><%=order_product.product.name%></div>
-                <div class="left_sku">SKU: <%= order_product.variant.real_variant_sku%></div>
+                <div class="left_head"><%= order_product.product.name %></div>
+                <div class="left_sku">SKU: <%= order_product.variant.real_variant_sku %></div>
                 <div class="text_with_img_section">
                   <div class="text_section">
-                    <div class="text">Color: <span><%= order_product.variant.color%></span></div>
-                    <div class="text">Size: <span><%= order_product.variant.size %> OZ</span></div>
-                    <div class="text">Quantity: <span><%= order_product.product_quantity%></span></div>
-                    <div class="text">Fulfilled By <%= order_product.producer.name%></div>
+                    <div class="text">Color: <span><%= order_product.variant.color %></span></div>
+                    <div class="text">Size: <span><%= order_product.variant.size %></span></div>
+                    <div class="text">Quantity: <span><%= order_product.product_quantity %></span></div>
+                    <div class="text">Fulfilled By <%= order_product.producer.name %></div>
                   </div>
+
                   <div class="img_section">
                     <%= display_image(order_product.front_side_image, "trans_frame") %>
                     <%= display_image(order_product.back_side_image, "trans_frame") %>
                     <%= display_image(order_product.variant.image, "trans_frame") %>
                   </div>
                 </div>
+
                 <div class="cost_section">
                   <div>Production costs</div>
                     <% record = order_product.product.product_producer_pricings.find_by(user_id: order_product.producer.id) %>
-                     <%  if order_product.front_side_image.attached? && order_product.back_side_image.attached? %>
-                        <% cost   = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * order_product.product_quantity.to_i %>
-                      <% elsif order_product.front_side_image.attached? %>
-                        <% cost   = record.front_side_print_price.to_f  * order_product.product_quantity.to_i %>
-                      <% elsif order_product.back_side_image.attached? %>
-                         <% cost   = record.back_side_print_price.to_f  * order_product.product_quantity.to_i %>
-                      <% else %>
-                        <% cost   = record.blank_price.to_f  * order_product.product_quantity.to_i %>
-                      <% end %>
+
+                    <% if order_product.front_side_image.attached? && order_product.back_side_image.attached? %>
+                      <% cost = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * order_product.product_quantity.to_i %>
+                    <% elsif order_product.front_side_image.attached? %>
+                      <% cost = record.front_side_print_price.to_f  * order_product.product_quantity.to_i %>
+                    <% elsif order_product.back_side_image.attached? %>
+                      <% cost = record.back_side_print_price.to_f  * order_product.product_quantity.to_i %>
+                    <% else %>
+                      <% cost = record.blank_price.to_f  * order_product.product_quantity.to_i %>
+                    <% end %>
+
                     <% sum_result += cost %>
                   <div>USD <%= cost %></div>
                 </div>
+
                 <div class="cost_section small">
                   <div>Tracking details</div>
                   <div>--</div>
@@ -64,51 +79,61 @@
               </div>
             <% end %>
           </div>
+
           <div class="right_section">
             <div class="order_info_link">
               <div class="info_text">ETSY Order ID #: 34568275</div>
               <%= image_tag "external_link", alt:"icon", class:"info_img" %>
             </div>
+
             <% if @customer_detail.present? %>
               <div class="buyer_info_section">
                 <div class="buyer_mail">
                   <div class="buyer_head">Customer</div>
+
                   <div class="buyer_text">
                     <%= @customer_detail.fullname %>
-                    <%= @customer_detail.email%></div>
+                    <%= @customer_detail.email %>
+                  </div>
                 </div>
+
                 <div class="buyer_mail">
                   <div class="buyer_head">Shipping Address</div>
+
                   <div class="buyer_text">
-                    <%= @customer_detail.address1%>
+                    <%= @customer_detail.address1 %>
                     <% if @customer_detail.address2.present? %>
-                      <%= @customer_detail.address2%>
-                    <%end%>
-                    <%= @customer_detail.city%>,
-                    <%= @customer_detail.zipcode%>,
-                    <%= @customer_detail.state%>,
-                    <%= @customer_detail.country%>
+                      <%= @customer_detail.address2 %>
+                    <% end %>
+                    <%= @customer_detail.city %>,
+                    <%= @customer_detail.zipcode %>,
+                    <%= @customer_detail.state %>,
+                    <%= @customer_detail.country %>
                   </div>
                 </div>
               </div>
-            <%end%>
+            <% end %>
+
             <div class="billing_section">
               <div class="billing_head">Billing</div>
+
               <div class="billing_info">
                 <div class="left_text">
                   <div>Production Cost:</div>
                   <div>Shipping Cost:</div>
                   <div class="fw-bold">Total Cost:</div>
                 </div>
+
                 <div class="right_text">
                   <div>USD <%= sum_result %></div>
+
                   <% if @order.shipping_cost.present? %>
                     <div>USD <%= @order.shipping_cost %></div>
                     <div class="fw-bold">USD <%= sum_result + @order.shipping_cost %></div>
-                  <%else%>
+                  <% else %>
                     <div>-</div>
                     <div class="fw-bold">USD <%= sum_result %></div>
-                  <%end%>
+                  <% end %>
                 </div>
               </div>
             </div>

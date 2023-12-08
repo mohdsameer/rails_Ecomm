@@ -1,10 +1,11 @@
 <turbo-frame id="rejected-order-modal">
   <div class="status_popup">
     <div class="status_popup_outer">
-      <div id = "status_pop_wrapper" class="status_pop_wrapper" data-controller="modals" data-modals-modal-id-value="status_pop_wrapper">
-        <%= link_to 'javascript:;', class: 'close_popup', id: 'close_status_popup' do %>
-          <%= image_tag "close.png", alt:"icon" %>
+      <div id="status_pop_wrapper" class="status_pop_wrapper" data-controller="modals" data-modals-modal-id-value="rejected-order-modal">
+        <%= link_to close_modal_path(modal_id: 'rejected-order-modal'), data: { 'turbo-method': :post }, class: 'close_popup', id: 'close_status_popup' do %>
+          <%= image_tag "close.png", alt: "icon", class: 'close_hold' %>
         <% end %>
+
         <div class="status_bar">
           <div class="left_section">
             <div class="bar_head">Order ID: <%= @order.id%></div>

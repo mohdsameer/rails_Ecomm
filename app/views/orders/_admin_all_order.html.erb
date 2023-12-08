@@ -20,31 +20,44 @@
         <div class="tbody">
           <% orders.each do |order| %>
             <div class="tbody_row">
+              <!-- Checkbox -->
               <div class="order_td td_icon first">
                 <div class="custom_checkbox_wrapper">
                   <input type="checkbox" name="" id="<%= order.id %>" class="check_field">
                   <label for="<%= order.id %>"></label>
                 </div>
               </div>
+              <!-- Checkbox /-->
+
+              <!-- Order ID -->
               <div class="order_td second">
                 <div class="order_id_icon">
                   <span class="order_num"><%= order.id %></span>
                 </div>
               </div>
-              <div class="order_td three"><%= order.etsy_order_id %></div>
+              <!-- Order ID /-->
 
+              <!-- Etsy/Amazon Order ID -->
+              <div class="order_td three"><%= order.etsy_order_id %></div>
+              <!-- Etsy/Amazon Order ID /-->
+
+              <!-- Customer Name -->
               <% if order.address.present?%>
                 <div class="order_td four"><%= order.address.fullname %></div>
               <%else%>
                 <div class="order_td four">-</div>
               <%end%>
+              <!-- Customer Name /-->
 
+              <!-- Total Items -->
               <% if order.order_products.pluck(:product_quantity).present? %>
                 <div class="order_td five"><%= order.order_products.pluck(:product_quantity).compact.sum %></div>
               <% else%>
                 <div class="order_td five">-</div>
               <%end%>
+              <!-- Total Items /-->
 
+              <!-- Price -->
               <% ops = order.order_products %>
               <% sum_result = 0 %>
 
@@ -65,6 +78,9 @@
               <% end %>
 
               <div class="order_td six">$<%= sum_result %></div>
+              <!-- Price /-->
+
+              <!-- Order Status -->
               <div class="order_td seven">
                 <div class="order_status_icon">
                   <% if order.order_status == "inproduction" %>
@@ -90,6 +106,9 @@
                   <% end %>
                 </div>
               </div>
+              <!-- Order Status /-->
+
+              <!-- Assignee -->
               <div class="order_td eight">
                 <div class="order_priority_icon">
                   <% if order.assign_details.present? %>
@@ -117,26 +136,35 @@
                   <% end %>
                 </div>
               </div>
-              <div class="order_td nine"><%=order.order_date%></div>
+              <!-- Assignee / -->
+
+              <!-- Order Date -->
+              <div class="order_td nine"><%= order.order_date %></div>
+              <!-- Order Date / -->
+
+              <!-- Order by -->
               <div class="order_td ten">
                 Amazon
               </div>
+              <!-- Order by / -->
+
+              <!-- More Actions -->
               <div class="order_td last">
                 <div class="more_menu">
                   <% if order.order_status == "onhold" %>
-                    <a href="<%= on_hold_popup_order_path(order) %>"  data-turbo-frame="on-hold-order-modal" class= "more_link">
+                    <a href="<%= on_hold_popup_order_path(order) %>" data-turbo-frame="on-hold-order-modal" class= "more_link">
                       <%= image_tag 'View.png', alt: 'icon'%>
                     </a>
                   <% elsif order.order_status == "rejected" %>
-                    <a href="<%= rejected_popup_order_path(order) %>"  data-turbo-frame="rejected-order-modal" class= "more_link">
+                    <a href="<%= rejected_popup_order_path(order) %>" data-turbo-frame="rejected-order-modal" class= "more_link">
                       <%= image_tag 'View.png', alt: 'icon'%>
                     </a>
                   <% elsif order.order_status == "fullfilled" %>
-                    <a href="<%= fullfilled_popup_order_path(order) %>"  data-turbo-frame="fullfilled-order-modal" class= "more_link">
+                    <a href="<%= fullfilled_popup_order_path(order) %>" data-turbo-frame="fullfilled-order-modal" class= "more_link">
                       <%= image_tag 'View.png', alt: 'icon'%>
                     </a>
                   <% else %>
-                    <a href="<%= in_production_popup_order_path(order) %>"  data-turbo-frame="in-production-order-modal" class= "more_link">
+                    <a href="<%= in_production_popup_order_path(order) %>" data-turbo-frame="in-production-order-modal" class= "more_link">
                       <%= image_tag 'View.png', alt: 'icon'%>
                     </a>
                   <% end %>
@@ -161,10 +189,12 @@
                   <div class="more_link">
                     <span>&nbsp;</span>
                   </div>
+
                   <div class="drop_menu">
                     <div class="drop_icon_box">
                       <%= image_tag 'ic_more.png', alt: 'icon', class: 'more_icon' %>
                     </div>
+
                     <div class="menu_drop">
                       <div class="status_wrapper_pop">
                         <% if order.order_status == "onhold"%>
@@ -240,6 +270,7 @@
                   </div>
                 </div>
               </div>
+              <!-- More Actions / -->
             </div>
           <% end %>
         </div>

@@ -2,7 +2,11 @@
   <div id="on-hold-order-modal" class="on-hold-order-modal" data-controller="modals" data-modals-modal-id-value="on-hold-order-modal" >
     <div class="on-hold-order-outer">
       <div class="on_hold_pop_wrapper">
-        <%= image_tag 'close.png', alt: 'icon', class: 'close_hold' %>
+
+        <%= link_to close_modal_path(modal_id: 'on-hold-order-modal'), data: { 'turbo-method': :post }, class: 'close_popup', id: 'close_status_popup' do %>
+          <%= image_tag "close.png", alt: "icon", class: 'close_hold' %>
+        <% end %>
+
         <div class="on_hold_header">
           <div class="header_section">
             <div class="header_id">Order ID: <%= @order.id %></div>

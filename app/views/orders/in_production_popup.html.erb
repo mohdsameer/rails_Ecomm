@@ -1,22 +1,25 @@
 <turbo-frame id="in-production-order-modal">
   <div class="status_popup">
     <div class="status_popup_outer">
-      <div id = "status_pop_wrapper" class="status_pop_wrapper" data-controller="modals" data-modals-modal-id-value="status_pop_wrapper">
-        <%= link_to 'javascript:;', class: 'close_popup', id: 'close_status_popup' do %>
-          <%= image_tag "close.png", alt:"icon" %>
+      <div id="status_pop_wrapper" class="status_pop_wrapper" data-controller="modals" data-modals-modal-id-value="in-production-order-modal">
+        <%= link_to close_modal_path(modal_id: 'in-production-order-modal'), data: { 'turbo-method': :post }, class: 'close_popup', id: 'close_status_popup' do %>
+          <%= image_tag "close.png", alt: "icon" %>
         <% end %>
+
         <div class="status_bar">
           <div class="left_section">
-            <div class="bar_head">Order ID: <%= @order.id%></div>
-            <% if @order.order_status == "inproduction"%>
+            <div class="bar_head">Order ID: <%= @order.id %></div>
+            <% if @order.order_status == "inproduction" %>
               <div class="status_badge">In Production</div>
-            <%end%>
+            <% end %>
           </div>
+
           <div class="right_section">
             <span><%= @assigne %></span>
             <%= image_tag "check", alt:"icon", class:"right_img" %>
           </div>
         </div>
+
         <div class="create_date"><%= @order.order_date_with_time%></div>
         <% if @order.messages.present? %>
           <div class="msg_section">

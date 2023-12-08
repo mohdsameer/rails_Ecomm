@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'dashboard/choose_shiping'
   get 'dashboard/payment_amount_popup'
   get '/states', to: 'addresses#get_states'
+  post '/close_modal/:modal_id', to: 'modals#close', as: :close_modal
 
   resources :dashboard, only: [:show]
 
