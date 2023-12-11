@@ -619,8 +619,8 @@ class OrdersController < ApplicationController
 
   def download
     order_product = OrderProduct.find_by(id: params[:id])
-    full_name = order_product.order.address.fullname
-    sku_value = order_product.variant.real_variant_sku
+    full_name = order_product.order.address&.fullname || ""
+    sku_value = order_product.variant.real_variant_sku.presence || "SKU"
 
     if params[:type] == "gift"
       order = Order.find_by(id: params[:id])
