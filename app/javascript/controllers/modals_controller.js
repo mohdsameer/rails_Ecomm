@@ -58,10 +58,12 @@ export default class extends Controller {
         $('.send_msg_popup').show();
       });
     });
+
     $('.submit_msg').click(function() {
       $('.send_msg_wrapper').find('.send_msg_pop_box').hide();
       $('.send_msg_wrapper').find('.success_flash').addClass('show_flash');
     });
+
     $('.close_submit_popup').click(function() {
       $('.send_msg_popup').hide();
       $('.send_msg_wrapper').find('.success_flash').removeClass('show_flash');
@@ -110,22 +112,7 @@ export default class extends Controller {
       $('.decrease_box').slideToggle();
     });
 
-    $('#increased_inventory').keyup(function() {
-      var currentQty = $('#current_qty').text();
-      var currentVal = $(this).val();
-      var final_value = parseInt(currentQty) + parseInt(currentVal);
-      $('.quantity_no').text(final_value);
-    })
-
-    $('#decreased_inventory').keyup(function() {
-      var currentQty = $('#current_qty').text();
-      var currentVal = $(this).val();
-      var final_value = parseInt(currentQty) - parseInt(currentVal);
-      $('.quantity_no').text(final_value);
-    })
-
     // on-hold-order-modal
-
     $('.close_hold').click(function() {
       $('.on-hold-order-modal').hide();
     });

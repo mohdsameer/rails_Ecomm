@@ -3,9 +3,11 @@
   <%= hidden_field_tag :order_id, @order.id %>
 
   <% variants.each do |variant| %>
+    <% available_inventory = variant.total_inventory_for_user(current_user) %>
+
     <div class="scroll_content check_content">
       <div class="image_text_wrap">
-        <%= check_box_tag 'variant_ids[]', variant.id, class: "check_box" %>1
+        <%= check_box_tag 'variant_ids[]', variant.id, available_inventory > 0, class: "check_box", disabled: available_inventory <= 0 %>
         <% if variant.image.attached? %>
           <div class="img_box">
             <%= image_tag variant.image %>
@@ -17,10 +19,14 @@
         <% end %>
         <div class="img_text_box">
           <div class="product_name"><%= variant.color %></div>
+          <% if available_inventory <= 0 %>
+            <small class="text-danger">Out of stock</small>
+          <% end %>
         </div>
       </div>
     </div>
   <% end %>
+
   <% if variants.present? %>
     <%= submit_tag 'Continue' %>
   <% end %>

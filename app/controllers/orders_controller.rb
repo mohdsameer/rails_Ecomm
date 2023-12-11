@@ -1,6 +1,8 @@
 require 'open-uri'
 
 class OrdersController < ApplicationController
+  before_action :initialize_shippo
+  before_action :set_common_data, only: [:on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup]
   before_action :find_order, only: [:send_message,
                                     :update_cancel_status,
                                     :message_create,
@@ -33,8 +35,6 @@ class OrdersController < ApplicationController
                                     :update_sender,
                                     :remove_shipo_lable,
                                     :download_shippo_label]
-  before_action :initialize_shippo
-  before_action :set_common_data, only: [:on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup]
 
   def index
     per_page = params[:per_page] || 20
@@ -94,8 +94,6 @@ class OrdersController < ApplicationController
       @order.design_file_1_image.attach(params[:design_file_1_image])
       @order.design_file_2_image.attach(params[:design_file_2_image])
       @order.additional_file_image.attach(params[:additional_file_image])
-      # @order.front_side_image.attach(params[:front_side_image])
-      # @order.back_side_image.attach(params[:back_side_image])
     end
 
     params[:producers_variants].each do |producer_id, variants|
@@ -131,13 +129,13 @@ class OrdersController < ApplicationController
 
   def update
     if params[:request_type] == "Confirm"
-      @order.order_products.each do |order_product|
+      # @order.order_products.each do |order_product|
+      #   product_quantity = order_product.product_quantity
+      #   producers_variant = ProducersVariant.find_by(variant: order_product.variant, user_id: order_product.producer)
+      #   producers_variant.update(inventory: producers_variant.inventory - product_quantity)
+      # end
 
-        product_quantity = order_product.product_quantity
-        producers_variant = ProducersVariant.find_by(variant: order_product.variant, user_id: order_product.producer)
-        producers_variant.update(inventory: producers_variant.inventory - product_quantity)
-      end
-      @order.update(order_edit_status: 1,order_status: 3)
+      @order.update(order_edit_status: 1, order_status: 3)
     elsif params[:request_type] == "Reject"
       @order.update(order_status: 1, reject_reason: params[:order][:reject_reason])
     elsif params[:request_type] == "Cancel"
@@ -597,20 +595,29 @@ class OrdersController < ApplicationController
     @message = @order.messages.new(message_params)
     @message.save
     redirect_to orders_path
-
   end
 
   def new_order_product
     @order  = Order.find(params[:order_id])
 
-    params[:variant_ids].each do |variant_id|
-      @order.order_products.create(variant_id: variant_id,
-                                   product_id: params[:product_id],
-                                   user_id:    params[:producer_id],
-                                   product_quantity: 1)
+    error_message = ''
+    errors = []
+
+    errors << 'please choose producer' unless params[:producer_id].present?
+    errors << 'please choose products / variants' unless params[:variant_ids].present?
+
+    if errors.present?
+      error_message = errors.join(', ')
+    else
+      params[:variant_ids].each do |variant_id|
+        @order.order_products.create(variant_id: variant_id,
+                                     product_id: params[:product_id],
+                                     user_id:    params[:producer_id],
+                                     product_quantity: 1)
+      end
     end
 
-    redirect_to edit_order_path(@order)
+    redirect_to edit_order_path(@order, error_message: error_message)
   end
 
   def delete_confirmation
@@ -795,14 +802,14 @@ class OrdersController < ApplicationController
     @order = Order.find_by(id: params[:id])
   end
 
-    def set_common_data
-      if @order.assign_details.present?
-        @assigne = @order.assign_details.first.designer.name
-      end
-
-      @order_products = @order.order_products
-      @customer_detail = @order.address
+  def set_common_data
+    if @order.assign_details.present?
+      @assigne = @order.assign_details.first.designer.name
     end
+
+    @order_products = @order.order_products
+    @customer_detail = @order.address
+  end
 
   def dimensions_params
     params.permit(:custom_length, :custom_height, :custom_width, :custom_weight_lb, :custom_weight_oz)

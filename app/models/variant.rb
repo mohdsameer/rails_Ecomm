@@ -8,6 +8,7 @@ class Variant < ApplicationRecord
 	has_many :producers_variants, dependent: :destroy
 	has_many :producers, through: :producers_variants
 
+	# Nested Attributes
 	accepts_nested_attributes_for :producers_variants
 
 	def user_type
@@ -21,6 +22,18 @@ class Variant < ApplicationRecord
 
 	def total_inventory
 		producers_variants.sum(:inventory)
+	end
+
+	def total_inventory_for_user(user)
+		sum = 0
+
+		if user.admin?
+			producers_variants.each { |producers_variant| sum += producers_variant.inventory_for_admin }
+		else
+			producers_variants.each { |producers_variant| sum += producers_variant.inventory_for_producer }
+		end
+
+		sum
 	end
 
 	def product_name

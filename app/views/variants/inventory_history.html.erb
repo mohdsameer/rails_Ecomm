@@ -1,16 +1,19 @@
 <div class="hero_wrapper">
   <div class="inventory_page_wrapper">
     <%= render "shared/sidebar" %>
+
     <div class="inventory_panel_wrapper">
       <div class="panel_header">
         <div class="header_box">
           <div class="create_wrap">
             <div class="create_content">
-              <%= image_tag("ic_plus", class:"plus_icon") %>
-              <%= link_to 'Create Manual Order', new_order_path , class: 'create_text'%>
+              <%= image_tag "ic_plus", class: "plus_icon" %>
+              <%= link_to 'Create Manual Order', new_order_path , class: 'create_text' %>
             </div>
+
             <div class="create_bell_box">
-              <%= image_tag("ic_notifications", class:"create_bell_icon") %>
+              <%= image_tag "ic_notifications", class:"create_bell_icon" %>
+
               <div class="create_notification">
                 <p class="notification_text">1</p>
               </div>
@@ -21,13 +24,6 @@
 
       <div class="inventory_box inventory_history_box">
         <div class="inventory_content_box">
-<!--           <div class="search_box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M17.31 15.9L20.71 19.29C20.8993 19.4778 21.0058 19.7334 21.0058 20C21.0058 20.2666 20.8993 20.5222 20.71 20.71C20.5222 20.8993 20.2666 21.0058 20 21.0058C19.7334 21.0058 19.4778 20.8993 19.29 20.71L15.9 17.31C14.5025 18.407 12.7767 19.0022 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11C19.0022 12.7767 18.407 14.5025 17.31 15.9ZM11 5C7.68629 5 5 7.68629 5 11C5 14.3137 7.68629 17 11 17C14.3137 17 17 14.3137 17 11C17 7.68629 14.3137 5 11 5Z" fill="#919EAB"/>
-            </svg>
-            <input class="search_input" type="text" placeholder="Search Product by Name, SKU, Product ID, Color" >
-          </div> -->
-
           <div class="inventory_table_wrap">
             <div class="inventory_table">
               <div class="thead">
@@ -41,18 +37,21 @@
                 <div class="th eight">Updated By</div>
                 <div class="th nine">Date</div>
               </div>
+
               <div class="tbody">
                 <% @products.each do |product|%>
                   <% product.variants.each do |variant| %>
-                  <% if params[:producer_id].present? %>
-                     <% pv = variant.producers_variants.find_by(user_id: params[:producer_id])%>
-                  <% else %>
-                    <% pv = variant.producers_variants.find_by(user_id: current_user.id)%>
-                  <% end %>
+                    <% if params[:producer_id].present? %>
+                      <% pv = variant.producers_variants.find_by(user_id: params[:producer_id]) %>
+                    <% else %>
+                      <% pv = variant.producers_variants.find_by(user_id: current_user.id) %>
+                    <% end %>
 
                     <% next if pv.versions&.last&.reify&.inventory.nil? %>
+
                     <div class="tbody_row">
                       <div class="td one"><%= product.id %></div>
+
                       <div class="td two">
                         <div class="product_img">
                           <% if variant.image.attached? %>
@@ -62,6 +61,7 @@
                           <% end %> 
                         </div>
                       </div>
+
                       <div class="td three">
                         <div class="product_details_box">
                           <div class="name"><b><%= product.name %></b></div>
@@ -71,35 +71,37 @@
                           <div class="size"><b>size:</b> <%= variant.size %></div>
                         </div>
                       </div>
+
                       <div class="td four">
                         <div class="arrow_indicator">
-                          <%if pv.versions&.last&.reify&.inventory > pv.inventory%>
+                          <% if pv.versions&.last&.reify&.inventory > pv.inventory %>
                             <%= image_tag 'down.png', alt: 'icon' %>
-                            <div class="icon_text "><%= pv.versions&.last&.reify&.inventory %> to <%= pv.inventory%></div>
-
-                          <!-- this is in loop that's why we use both icon -->
+                            <div class="icon_text"><%= pv.versions&.last&.reify&.inventory %> to <%= pv.inventory %></div>
                           <% else %>
                             <%= image_tag 'up.png', alt: 'icon' %>
-                            <div class="icon_text green_text"><%= pv.versions&.last&.reify&.inventory %> to <%= pv.inventory%></div>
-                          <%end%>
+                            <div class="icon_text green_text"><%= pv.versions&.last&.reify&.inventory %> to <%= pv.inventory %></div>
+                          <% end %>
                         </div>
                       </div>
+
                       <div class="td five">
                         <div class="arrow_indicator">
-                          <% if pv.versions.present?  && pv.versions.last.event == "update"%>
+                          <% if pv.versions.present?  && pv.versions.last.event == "update" %>
                             <% qty = pv.versions&.last&.reify&.inventory - pv.inventory %>
-                            <% if qty.positive?%>
+
+                            <% if qty.positive? %>
                               <%= image_tag 'down.png', alt: 'icon' %>
-                              <div class="icon_text"><%= qty%></div>
-                            <%else%>
+                              <div class="icon_text"><%= qty %></div>
+                            <% else %>
                               <%= image_tag 'up.png', alt: 'icon' %>
-                              <div class="icon_text green_text"><%= qty.abs%></div>
-                            <%end%>
-                          <%else%>
+                              <div class="icon_text green_text"><%= qty.abs %></div>
+                            <% end %>
+                          <% else %>
                             0
-                          <%end%>
+                          <% end %>
                         </div>
                       </div>
+
                       <div class="td six">
                         <%if variant.inventory_reason.present? %>
                           <%= variant.inventory_reason %>
@@ -107,16 +109,19 @@
                           -
                         <% end %>
                       </div>
+
                       <div class="td seven">000000</div>
+
                       <div class="td eight">
-                        <% if pv.versions.present? && pv.versions.last.event == "update"%>
-                          <%= pv.user_type%>
-                        <%else%>
+                        <% if pv.versions.present? && pv.versions.last.event == "update" %>
+                          <%= pv.user_type %>
+                        <% else %>
                           -
-                        <%end%>
+                        <% end %>
                       </div>
+
                       <div class="td nine">
-                        <% if pv.versions.present? && pv.versions.last.event == "update"%>
+                        <% if pv.versions.present? && pv.versions.last.event == "update" %>
                           <%= pv.created_at %>
                         <% else %>
                           -
@@ -124,16 +129,16 @@
                       </div>
                     </div>
                   <% end %>
-                <%end%>
+                <% end %>
               </div>
             </div>
           </div>
+
           <div class="table_footer_wrap">
             <div class="content_btn">
             <div class="pages_content">
-              <div>
-                Rows per page:
-              </div>
+              <div>Rows per page:</div>
+
               <div class="d-flex align-items-center">
                 <div>
                   <select id="rowsPerPage" onchange="changeRowsPerPage(this.value)">
@@ -143,32 +148,17 @@
                     <option value="100">100</option>
                   </select>
                 </div>
+
                 <div>
                   <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                     <path d="M16.3805 9.28957L12.5005 13.1696L8.62047 9.28957C8.23047 8.89957 7.60047 8.89957 7.21047 9.28957C6.82047 9.67957 6.82047 10.3096 7.21047 10.6996L11.8005 15.2896C12.1905 15.6796 12.8205 15.6796 13.2105 15.2896L17.8005 10.6996C18.1905 10.3096 18.1905 9.67957 17.8005 9.28957C17.4105 8.90957 16.7705 8.89957 16.3805 9.28957Z" fill="#212B36"/>
                   </svg>
                 </div>
               </div>
-              <div><%= @variants.current_page%>-<%= @variants.limit_value%> of <%= @variants.count %></div>
-              <div>
 
-                <div class="d-flex"></div>
-                    <div class="pagination">
-                      <%= will_paginate @variants %>
-                      <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-                        <path d="M12.0247 15.8337C11.7726 15.8346 11.5336 15.7212 11.3747 15.5254L7.34973 10.5254C7.09697 10.2179 7.09697 9.77458 7.34973 9.46708L11.5164 4.46708C11.8109 4.1127 12.337 4.06419 12.6914 4.35874C13.0458 4.6533 13.0943 5.17936 12.7997 5.53375L9.07473 10.0004L12.6747 14.4671C12.8828 14.7168 12.9266 15.0648 12.787 15.3584C12.6474 15.652 12.3498 15.8375 12.0247 15.8337Z" fill="#919EAB" fill-opacity="0.8"/>
-                      </svg>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="pagination">
-                      <%= will_paginate @variants %>
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-                      <path d="M8.83334 15.8336C8.63863 15.834 8.44993 15.7662 8.3 15.6419C8.12958 15.5007 8.02238 15.2974 8.00206 15.0769C7.98173 14.8565 8.04996 14.637 8.19167 14.4669L11.925 10.0003L8.325 5.52528C8.1852 5.35312 8.11978 5.13233 8.14324 4.91179C8.1667 4.69126 8.2771 4.48917 8.45 4.35028C8.62431 4.19691 8.85469 4.12322 9.08565 4.14695C9.31661 4.17067 9.52719 4.28968 9.66667 4.47528L13.6917 9.47528C13.9444 9.78278 13.9444 10.2261 13.6917 10.5336L9.525 15.5336C9.35545 15.7382 9.09853 15.8496 8.83334 15.8336Z" fill="#212B36"/>
-                    </svg>
-                  </div>
-                </div>
-              </div>
+              <div><%= pagination_information(@variants) %></div>
+
+              <div class="pagination"><%= will_paginate @variants %></div>
             </div>
           </div>
         </div>
@@ -176,6 +166,7 @@
     </div>
   </div>
 </div>
+
 <script type="text/javascript">
   function changeRowsPerPage(value) {
     window.location.href = window.location.pathname + "?per_page=" + value;

@@ -1,6 +1,7 @@
 <% pv.each do |producer_variant| %>
   <div class="tbody_row" data-controller="expand-image">
-    <div class="td one"><%= producer_variant.variant.product.id%></div>
+    <div class="td one"><%= producer_variant.variant.product.id %></div>
+
     <div class="td two">
       <div class="product_img">
         <% if producer_variant.variant.product.image.attached? %>
@@ -14,11 +15,13 @@
         <% end %>
       </div>
     </div>
-    <div class="td three"><%= producer_variant.variant.product.name%></div>
-    <div class="td four"><%= producer_variant.variant.product.brand_name%></div>
-    <div class="td five"><%= producer_variant.variant.real_variant_sku%></div>
-    <div class="td six"><%= producer_variant.variant.color%></div>
-    <div class="td seven"><%= producer_variant.variant.size%> oz</div>
+
+    <div class="td three"><%= producer_variant.variant.product.name %></div>
+    <div class="td four"><%= producer_variant.variant.product.brand_name %></div>
+    <div class="td five"><%= producer_variant.variant.real_variant_sku %></div>
+    <div class="td six"><%= producer_variant.variant.color %></div>
+    <div class="td seven"><%= producer_variant.variant.size %> oz</div>
+
     <div class="td eight">
       <div class="aisle_box">
         <div class="asle_no">A11</div>
@@ -27,18 +30,26 @@
         <% end %>
       </div>
     </div>
+
     <div class="td nine">
-      <% if producer_variant.inventory.to_i > 100 %>
+      <% if current_user.admin? %>
+        <% inventory = producer_variant.inventory_for_admin %>
+      <% else %>
+        <% inventory = producer_variant.inventory_for_producer %>
+      <% end %>
+
+      <% if inventory.to_i > 100 %>
         <div class="badgee in_stock">In Stock</div>
-      <% elsif producer_variant.inventory.to_i <= 100 && producer_variant.inventory.to_i > 0 %>
+      <% elsif inventory.to_i <= 100 && inventory.to_i > 0 %>
         <div class="badgee low_stock">Low Stock</div>
-      <%else%>
+      <% else %>
         <div class="badgee out_of_stock">Out of Stock</div>
-      <%end%>
+      <% end %>
     </div>
+
     <div class="td ten">
       <div class="aisle_box">
-        <div class="asle_no"><%= producer_variant.inventory.to_i %></div>
+        <div class="asle_no"><%= inventory.to_i %></div>
         <a href="<%= edit_inventory_variant_path(id:  producer_variant.variant.id, producerId: producer_variant.producer.id ) %>"  data-turbo-frame="edit-inventory-modal" class="aisle_icon invntry_qty " ><%= image_tag 'ic_edit.png', alt: 'icon', class: 'ic_edit' %> </a>
       </div>
     </div>

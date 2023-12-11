@@ -1,8 +1,9 @@
 class ProductsController < ApplicationController
 
   def index
-    per_page = params[:per_page] || 20
+    per_page  = params[:per_page] || 20
     @products = Product.search(params).paginate(page: params[:page], per_page: per_page)
+
     respond_to do |format|
       format.html
       format.csv { send_data Product.to_csv, filename: "products-#{Date.today}.csv" }
@@ -15,6 +16,7 @@ class ProductsController < ApplicationController
     if current_user.type.eql?("Producer")
       @producer = Producer.find_by(id: current_user.id)
       @pv = @producer.producers_variants.search(params)
+
       respond_to do |format|
         format.html
         format.js do

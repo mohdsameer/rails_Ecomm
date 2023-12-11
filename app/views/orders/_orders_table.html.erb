@@ -1,9 +1,33 @@
 <ul class="order_tabs_wrap" id="tabs-nav">
-  <li class="tabs_items"><a href="#tab1"><span class="tabs_notify"><%= orders.length %></span>All Orders</a></li>
-  <li class="tabs_items"><a href="#tab2"><span class="tabs_notify"><%= orders.new_orders.length %></span> On Hold</a></li>
-  <li class="tabs_items"><a href="#tab3"><span class="tabs_notify rejected"><%= orders.rejected_order.length %></span> Rejected</a></li>
-  <li class="tabs_items"><a href="#tab4"><span class="tabs_notify production"><%= orders.inproduction.length %></span> In Production</a></li>
-  <li class="tabs_items"><a href="#tab5"><span class="tabs_notify fulfilled"><%= orders.fullfilled_order.length %></span>Fulfilled</a></li>
+  <li class="tabs_items">
+    <a href="#tab1">
+      <span class="tabs_notify"><%= orders.total_entries %></span>All Orders
+    </a>
+  </li>
+
+  <li class="tabs_items">
+    <a href="#tab2">
+      <span class="tabs_notify"><%= orders.new_orders.total_entries %></span> On Hold
+    </a>
+  </li>
+
+  <li class="tabs_items">
+    <a href="#tab3">
+      <span class="tabs_notify rejected"><%= orders.rejected_order.total_entries %></span> Rejected
+    </a>
+  </li>
+
+  <li class="tabs_items">
+    <a href="#tab4">
+      <span class="tabs_notify production"><%= orders.inproduction.total_entries %></span> In Production
+    </a>
+  </li>
+
+  <li class="tabs_items">
+    <a href="#tab5">
+      <span class="tabs_notify fulfilled"><%= orders.fullfilled_order.total_entries %></span>Fulfilled
+    </a>
+  </li>
 </ul>
 
 <div id="tabs-content">
@@ -43,13 +67,6 @@
     return false;
   });
 
-  // $('.collapse_show').click(function () {
-  //   $(this).closest('.tbody_row').find('.collapse_data').slideDown(800);
-  // });
-  // $('.collapse_hide').click(function () {
-  //   $(this).closest('.tbody_row').find('.collapse_data').slideUp(800);
-  // });
-
   $('.drop_icon_box').on('click', function() {
     var dropdownContent = $(this).closest('.tbody_row').find('.menu_drop')
     $('.menu_drop').not(dropdownContent).hide();
@@ -58,11 +75,12 @@
 
   $(document).on('click', function(e) {
     if (!$(e.target).closest('.drop_icon_box, .menu_drop').length) {
-        $(".menu_drop").hide();
+      $(".menu_drop").hide();
     }
   });
 
   var $checkboxes = $('.custom_info_table .order_td input[type="checkbox"]');
+
   $checkboxes.change(function(){
     var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
     $('#count-checked-checkboxes').text(countCheckedCheckboxes);
