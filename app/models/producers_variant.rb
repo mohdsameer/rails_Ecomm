@@ -40,6 +40,6 @@ class ProducersVariant < ApplicationRecord
   end
 
   def inventory_for_user(user)
-    user.admin? ? inventory_for_admin : inventory_for_producer
+    user.producer? ? inventory_for_producer : inventory_for_admin
   end
 end
