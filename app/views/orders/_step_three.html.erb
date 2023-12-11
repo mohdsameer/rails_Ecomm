@@ -202,7 +202,7 @@
                     <div class="buyer_edit">
                       <div class="buyer_text">
                         <span class="d-block"><%= sender_address.fullname %></span>
-                        <span><%= sender_address.to_str %></span>
+                        <span><%= sender_address&.to_str %></span>
                       </div>
                       <%= link_to edit_sender_order_path(order), class: 'edit_link', data: { 'turbo-frame': 'edit-sender' } do %>
                         Edit

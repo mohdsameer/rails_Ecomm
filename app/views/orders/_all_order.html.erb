@@ -54,11 +54,12 @@
               <div class="order_td three"><%= quantity %></div>
 
               <div class="order_td four">$<%= sum_result %></div>
-              <% if order.address.present?%>
+              <% if order.address.present? %>
                 <div class="order_td five"><%= order.address.fullname %></div>
-              <%else%>
+              <% else %>
                 <div class="order_td five">-</div>
-              <%end%>
+              <% end %>
+
               <div class="order_td six">
                 <div class="order_status_icon">
                   <% if order.order_status == "inproduction" %>
@@ -139,32 +140,30 @@
 
               <div class="collapse_data">
                 <div class="message_wrapper">
-                  <% messages = order.messages.where(from: current_user.id) %>
-                  <%if messages.present?%>
+                  <% messages = order.messages.order(created_at: :desc) %>
+                  <% if messages.present? %>
                     <div class="msg_to_section">
                       <svg class="msg_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M5.08824 2.5H19.5C21.2056 2.5 22.5882 3.88265 22.5882 5.58824V15.8824C22.5882 17.5879 21.2056 18.9706 19.5 18.9706H8.74265C8.54396 18.9629 8.34732 19.013 8.17647 19.1147L3.55441 21.9147C3.39552 22.009 3.21417 22.0588 3.02941 22.0588C2.85257 22.0583 2.67885 22.0122 2.525 21.925C2.20126 21.743 2.00064 21.4008 2 21.0294V5.58824C2 3.88265 3.38265 2.5 5.08824 2.5ZM7.14706 10.7353C7.14706 11.3038 7.60794 11.7647 8.17647 11.7647C8.745 11.7647 9.20588 11.3038 9.20588 10.7353C9.20588 10.1668 8.745 9.70588 8.17647 9.70588C7.60794 9.70588 7.14706 10.1668 7.14706 10.7353ZM12.2941 11.7647C11.7256 11.7647 11.2647 11.3038 11.2647 10.7353C11.2647 10.1668 11.7256 9.70588 12.2941 9.70588C12.8626 9.70588 13.3235 10.1668 13.3235 10.7353C13.3235 11.3038 12.8626 11.7647 12.2941 11.7647ZM15.3824 10.7353C15.3824 11.3038 15.8432 11.7647 16.4118 11.7647C16.9803 11.7647 17.4412 11.3038 17.4412 10.7353C17.4412 10.1668 16.9803 9.70588 16.4118 9.70588C15.8432 9.70588 15.3824 10.1668 15.3824 10.7353Z" fill="#212B36"/>
                       </svg>
-                      <div class="msg_content">
-                        <% if order.messages.last.from == current_user.id %>
-                          <div class="msg_text">
-                            <div class="msg_head">Message to Admin:</div>
-                            <div class="msg_date"><%= order.created_on%></div>
-                          </div>
-                          <div class="msg_bottom_head"><%= order.messages.last.review_message %></div>
-                        <% else %>
-                          <% message = order.messages.where(to: current_user.id)%>
-                          <% if message.present? %>
+
+                      <div class="messages">
+                        <% messages.order(created_at: :desc).each do |message| %>
+                          <% is_author = message.sender == current_user %>
+
+                          <div class="msg_content">
                             <div class="msg_text">
-                              <div class="msg_head">Message from Admin:</div>
-                              <div class="msg_date"><%= order.created_on%></div>
+                              <div class="msg_head">Message <%= is_author ? 'to' : 'from' %> <%= current_user.admin? ? 'Producer' : 'Admin' %>:</div>
+                              <div class="msg_date"><%= message.created_on %></div>
                             </div>
-                            <div class="msg_bottom_head"><%= message.last.review_message %></div>
-                          <% end %>
+
+                            <div class="msg_bottom_head"><%= message.review_message %></div>
+                          </div>
                         <% end %>
                       </div>
                     </div>
-                  <%end%>
+                  <% end %>
+
                   <% if order.cancel_request.present? && order.cancel_request.status == "pending"%>
                     <div class="msg_to_section cancel_section">
                       <%= image_tag("Img_Avatar.girl", class:"msg_icon rounded-5")%>
@@ -184,7 +183,8 @@
                         </a>
                       </div>
                     </div>
-                  <%end%>
+                  <% end %>
+
                   <% if order.additional_comment.present? %>
                     <div class="note_section">
                       <%= image_tag "Img_Avatar.girl", alt: 'icon', class: "msg_icon note_img rounded-5" %>
@@ -194,14 +194,15 @@
                       </div>
                     </div>
                   <% end %>
-                  <% if order.gift_message_slip_image.attached?%>
+
+                  <% if order.gift_message_slip_image.attached? %>
                     <div class="note_section attach_section">
                       <svg class="msg_icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7345 1.4106C11.8632 0.0238621 9.25409 0.242229 7.63902 1.92075L6.82929 2.74599C6.64212 2.88214 6.52141 3.0913 6.49711 3.32155C6.47282 3.55181 6.54721 3.78159 6.70183 3.95384C6.84261 4.09587 7.03424 4.17576 7.23416 4.17576C7.43407 4.17576 7.6257 4.09587 7.76648 3.95384L8.74116 2.97106C9.85089 1.81544 11.6539 1.68588 12.9173 2.67097C13.5768 3.21082 13.9757 4.00591 14.0143 4.85766C14.053 5.7094 13.7277 6.53738 13.1197 7.13478L12.0551 8.2076C11.9131 8.34846 11.8333 8.54022 11.8333 8.74025C11.8333 8.94029 11.9131 9.13204 12.0551 9.27291C12.1959 9.41494 12.3875 9.49482 12.5874 9.49482C12.7873 9.49482 12.979 9.41494 13.1197 9.27291L14.1844 8.2076C15.1007 7.28203 15.5761 6.00762 15.4901 4.70767C15.404 3.40772 14.7648 2.20717 13.7345 1.4106ZM8.20134 12.0487L7.24165 13.0015C6.12628 14.1515 4.32592 14.2807 3.05802 13.3016C2.40344 12.7619 2.00787 11.97 1.96929 11.1222C1.93071 10.2743 2.25273 9.4498 2.85559 8.85279L3.92024 7.77997C4.06218 7.6391 4.14202 7.44735 4.14202 7.24731C4.14202 7.04728 4.06218 6.85552 3.92024 6.71466C3.77946 6.57263 3.58783 6.49274 3.38791 6.49274C3.188 6.49274 2.99637 6.57263 2.85559 6.71466L1.9034 7.67494C0.24444 9.28243 0.0297447 11.87 1.40106 13.7292C2.19714 14.7626 3.39856 15.4039 4.69967 15.4901C6.00078 15.5762 7.27616 15.0988 8.20134 14.1794L9.26599 13.114C9.55999 12.8199 9.55999 12.3429 9.26599 12.0487C8.972 11.7545 8.49534 11.7545 8.20134 12.0487ZM5.9675 8.9675L8.9675 5.9675C9.26159 5.67341 9.73841 5.67341 10.0325 5.9675C10.3266 6.26159 10.3266 6.73841 10.0325 7.0325L7.0325 10.0325C6.89167 10.1745 6.69998 10.2543 6.5 10.2543C6.30002 10.2543 6.10833 10.1745 5.9675 10.0325C5.82552 9.89167 5.74565 9.69998 5.74565 9.5C5.74565 9.30002 5.82552 9.10833 5.9675 8.9675Z" fill="#212B36"/>
                       </svg>
                       <div class="note_content">
                         <h5 class="note_head m-0">Attachments:</h5>
-                        <p class="note_text m-0"> <%= link_to 'gift message.img',download_order_path(order, type: "gift") %></p>
+                        <p class="note_text m-0"> <%= link_to 'gift message.img', download_order_path(order, type: "gift") %></p>
                       </div>
                     </div>
                   <% end %>
@@ -316,110 +317,6 @@
                         </div>
                         <% i += 1 %>
                       <% end %>
-
-                      <div class="upload_section design-files">
-                        <div class="upload_box">
-                          <div class="upload_header">Shipping Label</div>
-                          <% if order.shipping_label_image.attached? %>
-                            <% if order.shipping_label_image.representable? %>
-                              <%= image_tag order.shipping_label_image, class: "content_img" %>
-
-                              <%= link_to order.shipping_label_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
-                                View
-                              <% end %>
-                            <% else %>
-                              <%= link_to rails_blob_url(order.shipping_label_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
-                                <%= order.shipping_label_image.filename.to_s %>
-                              <% end %>
-                            <% end %>
-                          <% end %>
-                        </div>
-
-                        <div class="upload_box">
-                          <div class="upload_header">Packing Slip</div>
-                          <% if order.packing_slip_image.attached? %>
-                            <% if order.packing_slip_image.representable? %>
-                              <%= image_tag order.packing_slip_image, class: "content_img" %>
-
-                              <%= link_to order.packing_slip_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
-                                View
-                              <% end %>
-                            <% else %>
-                              <%= link_to rails_blob_url(order.packing_slip_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
-                                <%= order.packing_slip_image.filename.to_s %>
-                              <% end %>
-                            <% end %>
-                          <% end %>
-                        </div>
-
-                        <div class="upload_box">
-                          <div class="upload_header">Gift Message Slip</div>
-                          <% if order.gift_message_slip_image.present? %>
-                            <% if order.gift_message_slip_image.representable? %>
-                              <%= image_tag order.gift_message_slip_image, class: "content_img" %>
-
-                              <%= link_to order.gift_message_slip_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
-                                View
-                              <% end %>
-                            <% else %>
-                              <%= link_to rails_blob_url(order.gift_message_slip_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
-                                <%= order.gift_message_slip_image.filename.to_s %>
-                              <% end %>
-                            <% end %>
-                          <% end %>
-                        </div>
-
-                        <div class="upload_box">
-                          <div class="upload_header">Design File 1</div>
-                          <% if order.design_file_1_image.present? %>
-                            <% if order.design_file_1_image.representable? %>
-                              <%= image_tag order.design_file_1_image, class: "content_img" %>
-
-                              <%= link_to order.design_file_1_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
-                                View
-                              <% end %>
-                            <% else %>
-                              <%= link_to rails_blob_url(order.design_file_1_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
-                                <%= order.design_file_1_image.filename.to_s %>
-                              <% end %>
-                            <% end %>
-                          <% end %>
-                        </div>
-
-                        <div class="upload_box">
-                          <div class="upload_header">Design File 2</div>
-                          <% if order.design_file_2_image.present? %>
-                            <% if order.design_file_2_image.representable? %>
-                              <%= image_tag order.design_file_2_image, class: "content_img" %>
-
-                              <%= link_to order.design_file_2_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
-                                View
-                              <% end %>
-                            <% else %>
-                              <%= link_to rails_blob_url(order.design_file_2_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
-                                <%= order.design_file_2_image.filename.to_s %>
-                              <% end %>
-                            <% end %>
-                          <% end %>
-                        </div>
-
-                        <div class="upload_box">
-                          <div class="upload_header">Additional File</div>
-                          <% if order.additional_file_image.present? %>
-                            <% if order.additional_file_image.representable? %>
-                              <%= image_tag order.additional_file_image, class: "content_img" %>
-
-                              <%= link_to order.additional_file_image, class: 'zoom_img lightbox_trigger mx-auto' do %>
-                                View
-                              <% end %>
-                            <% else %>
-                              <%= link_to rails_blob_url(order.additional_file_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank' do %>
-                                <%= order.additional_file_image.filename.to_s %>
-                              <% end %>
-                            <% end %>
-                          <% end %>
-                        </div>
-                      </div>
 
                       <div class="packing_hint">
                         <div class="fold_box">

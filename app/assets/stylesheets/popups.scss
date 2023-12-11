@@ -933,33 +933,37 @@
           height: 1.389vw;
         }
 
-        .content_box {
+        .messages {
           width: 100%;
-          padding: 0.116vw 0.752vw 0.116vw 0px;
 
-          .msg_from {
-            display: flex;
-            justify-content: space-between;
+          .content_box {
+            width: 100%;
+            padding: 0.116vw 0.752vw 0.116vw 0px;
 
-            .left_text {
-              color: var(--warning-contrast-text, #212B36);
-              font-size: 0.926vw;
-              font-weight: 600;
-              line-height: 1.389vw;
+            .msg_from {
+              display: flex;
+              justify-content: space-between;
+
+              .left_text {
+                color: var(--warning-contrast-text, #212B36);
+                font-size: 0.926vw;
+                font-weight: 600;
+                line-height: 1.389vw;
+              }
+              .date_text {
+                color: var(--warning-contrast-text, #212B36);
+                text-align: right;
+                font-size: 0.810vw;
+                font-weight: 400;
+                line-height: 1.273vw;
+              }
             }
-            .date_text {
-              color: var(--warning-contrast-text, #212B36);
-              text-align: right;
+            .content_text {
+              color: var(--common-black, #000);
               font-size: 0.810vw;
               font-weight: 400;
               line-height: 1.273vw;
             }
-          }
-          .content_text {
-            color: var(--common-black, #000);
-            font-size: 0.810vw;
-            font-weight: 400;
-            line-height: 1.273vw;
           }
         }
       }

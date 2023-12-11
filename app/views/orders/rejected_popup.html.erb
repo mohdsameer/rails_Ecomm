@@ -48,9 +48,9 @@
                     <div class="text">Fulfilled By <%= order_product.producer.name%></div>
                   </div>
                   <div class="img_section">
-                    <%= display_image(order_product.front_side_image, "trans_frame") %>
-                    <%= display_image(order_product.back_side_image, "trans_frame") %>
-                    <%= display_image(order_product.variant.image, "trans_frame") %>
+                    <%= display_image(order_product.front_side_image, nil) %>
+                    <%= display_image(order_product.back_side_image, nil) %>
+                    <%= display_image(order_product.variant.image, nil) %>
                   </div>
                 </div>
                 <div class="cost_section">
@@ -81,21 +81,21 @@
               <div class="info_text">ETSY Order ID #: 34568275</div>
               <%= image_tag "external_link", alt:"icon", class:"info_img" %>
             </div>
+
             <% if @customer_detail.present? %>
               <div class="buyer_info_section">
                 <div class="buyer_mail">
                   <div class="buyer_head">Customer</div>
                   <div class="buyer_text"><%= @customer_detail.fullname %> <%= @customer_detail.email%></div>
                 </div>
+
                 <div class="buyer_mail">
                   <div class="buyer_head">Shipping Address</div>
-                  <div class="buyer_text"><%= @customer_detail.address1%></div>
-                  <% if @customer_detail.address2.present? %>
-                    <div class="buyer_text"><%= @customer_detail.address2%></div>
-                  <%end%>
+                  <div class="buyer_text"><%= @order.address&.to_str %></div>
                 </div>
               </div>
-            <%end%>
+            <% end %>
+
             <div class="billing_section">
               <div class="billing_head">Billing</div>
               <div class="billing_info">
@@ -104,14 +104,15 @@
                   <div>Shipping Cost:</div>
                   <div class="fw-bold">Total Cost:</div>
                 </div>
+
                 <div class="right_text">
                   <div>USD <%= sum_result %></div>
                   <% if @order.shipping_cost.present? %>
                     <div>USD <%= @order.shipping_cost %></div>
                     <div class="fw-bold">USD <%= sum_result + @order.shipping_cost %></div>
-                  <%else%>
+                  <% else %>
                     <div>-</div>
-                  <%end%>
+                  <% end %>
                   <div class="fw-bold">USD <%= sum_result %></div>
                 </div>
               </div>

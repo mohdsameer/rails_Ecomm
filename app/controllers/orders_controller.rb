@@ -193,6 +193,9 @@ class OrdersController < ApplicationController
   def duplicate_order
     new_order = @order.dup
 
+    new_order.order_status = :onhold
+    new_order.order_edit_status = :incomplete
+
     if new_order.save
       @order.order_products.each do |order_product|
         new_order_product = order_product.dup
@@ -201,11 +204,20 @@ class OrdersController < ApplicationController
         if order_product.front_side_image.attached?
           new_order_product.front_side_image.attach(order_product.front_side_image.blob)
         end
+
         if order_product.back_side_image.attached?
           new_order_product.back_side_image.attach(order_product.back_side_image.blob)
         end
+
         new_order_product.save
       end
+
+      new_order.shipping_label_image.attach(@order.shipping_label_image.blob) if @order.shipping_label_image.attached?
+      new_order.packing_slip_image.attach(@order.packing_slip_image.blob) if @order.packing_slip_image.attached?
+      new_order.gift_message_slip_image.attach(@order.gift_message_slip_image.blob) if @order.gift_message_slip_image.attached?
+      new_order.design_file_1_image.attach(@order.design_file_1_image.blob) if @order.design_file_1_image.attached?
+      new_order.design_file_2_image.attach(@order.design_file_2_image.blob) if @order.design_file_2_image.attached?
+      new_order.additional_file_image.attach(@order.additional_file_image.blob) if @order.additional_file_image.attached?
 
       redirect_to orders_path, notice: 'Order duplicated successfully.'
     else

@@ -20,29 +20,27 @@
           </div>
         </div>
 
-        <div class="create_date"><%= @order.order_date_with_time%></div>
+        <div class="create_date"><%= @order.order_date_with_time %></div>
         <% if @order.messages.present? %>
           <div class="msg_section">
-            <%= image_tag "ic_chat", alt:"icon", class:"msg_icon" %>
-            <% if @order.messages.last.from == current_user.id %>
-              <div class="content_box">
-                <div class="msg_from">
-                  <div class="left_text">Message to Producer:</div>
-                  <div class="date_text"><%= @order.created_on%></div>
+            <%= image_tag "ic_chat", alt: "icon", class: "msg_icon" %>
+
+            <div class="messages">
+              <% @order.messages.order(created_at: :desc).each do |message| %>
+                <% is_author = message.sender == current_user %>
+                <div class="content_box">
+                  <div class="msg_from">
+                    <div class="left_text">Message <%= is_author ? 'to' : 'from' %> <%= current_user.admin? ? 'Producer' : 'Admin' %>:</div>
+                    <div class="date_text"><%= message.created_on %></div>
+                  </div>
+
+                  <div class="content_text"><%= message.review_message %></div>
                 </div>
-                <div class="content_text"><%= @order.messages.last.review_message%></div>
-              </div>
-            <% else %>
-              <div class="content_box">
-                <div class="msg_from">
-                  <div class="left_text">Message from Producer:</div>
-                  <div class="date_text"><%= @order.created_on%></div>
-                </div>
-                <div class="content_text"><%= @order.messages.last.review_message%></div>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
           </div>
-        <%end%>
+        <% end %>
+
         <% if @order.additional_comment.present? %>
           <div class="msg_section order_note">
             <%= image_tag "chat", alt:"icon", class:"msg_icon" %>
@@ -51,11 +49,13 @@
                 <div class="left_text">Order Note:</div>
                 <div class="date_text"><%= @order.order_date %></div>
               </div>
-              <div class="content_text"><%= @order.additional_comment%></div>
+              <div class="content_text"><%= @order.additional_comment %></div>
             </div>
           </div>
         <% end %>
+
         <% sum_result = 0 %>
+
         <div class="order_info_section">
           <div class="left_section">
             <% @order_products.each do |order_product|%>
@@ -70,9 +70,9 @@
                     <div class="text">Fulfilled By <%= order_product.producer.name%></div>
                   </div>
                   <div class="img_section">
-                    <%= display_image(order_product.front_side_image, "trans_frame") %>
-                    <%= display_image(order_product.back_side_image, "trans_frame") %>
-                    <%= display_image(order_product.variant.image, "trans_frame") %>
+                    <%= display_image(order_product.front_side_image, nil) %>
+                    <%= display_image(order_product.back_side_image, nil) %>
+                    <%= display_image(order_product.variant.image, nil) %>
                   </div>
                 </div>
                 <div class="cost_section">
@@ -111,18 +111,11 @@
                 <div class="buyer_mail">
                   <div class="buyer_head">Shipping Address</div>
                   <div class="buyer_text">
-                    <span><%= @customer_detail.address1%></span>
-                    <% if @customer_detail.address2.present? %>
-                      <span><%= @customer_detail.address2%></span>
-                    <% end %>
-                    <span><%= @customer_detail.city %>,</span>
-                    <span><%= @customer_detail.state %>,</span>
-                    <span><%= @customer_detail.zipcode %>,</span>
-                    <span><%= @customer_detail.country %></span>
+                    <span><%= @order.address&.to_str %></span>
                   </div>
                 </div>
               </div>
-            <%end%>
+            <% end %>
             <div class="billing_section">
               <div class="billing_head">Billing</div>
               <div class="billing_info">

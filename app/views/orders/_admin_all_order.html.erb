@@ -169,22 +169,21 @@
                     </a>
                   <% end %>
 
-                  <% if order.order_status == "rejected" || order.order_status == "onhold" || order.order_status == "cancel"%>
+                  <% if order.order_status == "rejected" || order.order_status == "onhold" || order.order_status == "cancel" %>
                     <%= link_to edit_order_path(order), class: 'more_link' do %>
                       <%= image_tag 'edit_row.png', alt: 'icon' %>
                     <% end %>
 
-                    <% case order.order_status %>
-                      <% when "rejected" %>
-                       <a href="<%= cancel_order_order_path(order) %>"  data-turbo-frame="cancel-order-modal" class= "more_link">
-                          <%= image_tag 'close.png', alt: 'icon' %>
-                        </a>
-                      <% else %>
-                        <a href="<%= delete_confirmation_order_path(order) %>"  data-turbo-frame="destroy-order-modal" class= "more_link">
-                          <%= image_tag 'delete.png', alt: 'icon' %>
-                        </a>
-                      <% end %>
+                    <% if order.order_status == "rejected" %>
+                      <a href="<%= cancel_order_order_path(order) %>"  data-turbo-frame="cancel-order-modal" class= "more_link">
+                        <%= image_tag 'close.png', alt: 'icon' %>
+                      </a>
+                    <% else %>
+                      <a href="<%= delete_confirmation_order_path(order) %>"  data-turbo-frame="destroy-order-modal" class= "more_link">
+                        <%= image_tag 'delete.png', alt: 'icon' %>
+                      </a>
                     <% end %>
+                  <% end %>
 
                   <div class="more_link">
                     <span>&nbsp;</span>
@@ -307,11 +306,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  $('.drop_icon_box').on('click', function() {
-    var dropdownContent = $(this).closest('.tbody_row').find('.menu_drop')
-    $('.menu_drop').not(dropdownContent).hide();
-    dropdownContent.toggle();
-  });
-</script>

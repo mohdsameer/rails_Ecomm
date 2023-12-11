@@ -35,6 +35,14 @@
     return false;
   });
 
+  $('.collapse_show').click(function () {
+    $(this).closest('.tbody_row').find('.collapse_data').slideToggle(800);
+  });
+
+  $('.collapse_hide').click(function () {
+    $(this).closest('.tbody_row').find('.collapse_data').slideUp(800);
+  });
+
   $(document).on('click', function(e) {
     if (!$(e.target).closest('.drop_icon_box, .menu_drop').length) {
         $(".menu_drop").hide();

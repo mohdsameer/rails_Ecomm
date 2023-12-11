@@ -22,7 +22,7 @@
           <div class="right_section">
             <% if @assigne.present? %>
               <span><%= @assigne %></span>
-              <%= image_tag "check", alt:"icon", class:"right_img" %>
+              <%= image_tag "check", alt: "icon", class: "right_img" %>
             <% else %>
               <span> assigne not assign</span>
             <% end %>
@@ -48,9 +48,9 @@
                   </div>
 
                   <div class="img_section">
-                    <%= display_image(order_product.front_side_image, "trans_frame") %>
-                    <%= display_image(order_product.back_side_image, "trans_frame") %>
-                    <%= display_image(order_product.variant.image, "trans_frame") %>
+                    <%= display_image(order_product.front_side_image, nil) %>
+                    <%= display_image(order_product.back_side_image, nil) %>
+                    <%= display_image(order_product.variant.image, nil) %>
                   </div>
                 </div>
 
@@ -101,14 +101,7 @@
                   <div class="buyer_head">Shipping Address</div>
 
                   <div class="buyer_text">
-                    <%= @customer_detail.address1 %>
-                    <% if @customer_detail.address2.present? %>
-                      <%= @customer_detail.address2 %>
-                    <% end %>
-                    <%= @customer_detail.city %>,
-                    <%= @customer_detail.zipcode %>,
-                    <%= @customer_detail.state %>,
-                    <%= @customer_detail.country %>
+                    <%= @order.address&.to_str %>
                   </div>
                 </div>
               </div>
