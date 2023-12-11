@@ -2,7 +2,6 @@ require 'open-uri'
 
 class OrdersController < ApplicationController
   before_action :initialize_shippo
-  before_action :set_common_data, only: [:on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup]
   before_action :find_order, only: [:send_message,
                                     :update_cancel_status,
                                     :message_create,
@@ -35,6 +34,8 @@ class OrdersController < ApplicationController
                                     :update_sender,
                                     :remove_shipo_lable,
                                     :download_shippo_label]
+
+  before_action :set_common_data, only: [:on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup]
 
   def index
     per_page = params[:per_page] || 20
