@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_17_101654) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_12_104108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,6 +91,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_17_101654) do
     t.datetime "updated_at", null: false
     t.integer "variant_id"
     t.integer "user_id"
+    t.boolean "temporary_added", default: false
+    t.boolean "temporary_removed", default: false
+    t.boolean "front_image_is_temporary", default: false
+    t.boolean "back_image_is_temporary", default: false
     t.index ["order_id"], name: "index_order_products_on_order_id"
     t.index ["product_id"], name: "index_order_products_on_product_id"
   end
@@ -120,6 +124,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_17_101654) do
     t.string "shippo_rate_id"
     t.string "shippo_shipment_id"
     t.decimal "shipping_cost"
+    t.boolean "shipping_label_image_is_temporary", default: false
+    t.boolean "packing_slip_image_is_temporary", default: false
+    t.boolean "gift_message_slip_image_is_temporary", default: false
+    t.boolean "design_file_1_image_is_temporary", default: false
+    t.boolean "design_file_2_image_is_temporary", default: false
+    t.boolean "additional_file_image_is_temporary", default: false
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

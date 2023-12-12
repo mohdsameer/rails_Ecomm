@@ -2,7 +2,7 @@
   <%= form_tag order_path, method: :patch,  multipart: true, id: 'order-form', class: 'product_form', data: { controller: 'order-form-status', 'order-form-status-target': 'form', 'turbo-frame': '_top' } do %>
     <div class="tab" id="step1">
       <div class="product_list_section">
-        <% order.order_products.order(created_at: :asc).group_by(&:user_id).each do |producer_id, order_products| %>
+        <% order.order_products.not_temporary_removed.order(created_at: :asc).group_by(&:user_id).each do |producer_id, order_products| %>
           <% if order_products.present? && producer_id.present? %>
             <% producer = Producer.find(producer_id) %>
 
@@ -68,13 +68,6 @@
                             <div class="avatar-upload">
                               <% if order_product.front_side_image.attached? %>
                                 <div class="avatar-preview">
-                                  <%#= image_tag order_product.front_side_image, alt: 'img', class: 'preview_img' %>
-                                  <!-- <div id="imageFrontPreview_<%= order_product.id %>"
-                                       style="background-image: url(http://i.pravatar.cc/500?img=7);">
-                                  </div> -->
-                                  <%#= link_to 'javascript:;', class: 'zoom_img' do %>
-                                    <%#= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
-                                  <%# end %>
                                   <%= image_tag order_product.front_side_image, alt: 'img', class: 'preview_img' %>
                                     <%= link_to order_product.front_side_image, class: 'zoom_img lightbox_trigger' do %>
                                       <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
@@ -82,7 +75,6 @@
                                 </div>
                               <% else %>
                                 <div class="avatar-edit">
-                                  <%#= file_field_tag "front_side_image", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.variant.id}" %>
                                   <%= file_field_tag "front_side_image[#{order_product.id}]", accept: ".png, .jpg, .jpeg", class: "upload_field", id: "front_side_image_#{order_product.id}", data: { 'order-form-status-target': 'frontImage' } %>
                                   <label for="front_side_image_<%= order_product.id %>" class="upload_wrapper">
                                       <%= image_tag 'upload.png', alt: 'icon', class: 'upload_icon' %>

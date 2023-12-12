@@ -15,12 +15,23 @@ class Order < ApplicationRecord
   has_one :sender, dependent: :destroy
 
   # Attachments
+
+  # Design files
   has_one_attached :shipping_label_image
   has_one_attached :packing_slip_image
   has_one_attached :gift_message_slip_image
   has_one_attached :design_file_1_image
   has_one_attached :design_file_2_image
   has_one_attached :additional_file_image
+
+  # Temp design files
+  has_one_attached :temp_shipping_label_image
+  has_one_attached :temp_packing_slip_image
+  has_one_attached :temp_gift_message_slip_image
+  has_one_attached :temp_design_file_1_image
+  has_one_attached :temp_design_file_2_image
+  has_one_attached :temp_additional_file_image
+
   has_one_attached :custom_label
 
   # Scopes

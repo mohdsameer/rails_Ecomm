@@ -5,7 +5,7 @@
 			  <div class="save_head">Save Changes?</div>
 			  <div class="save_text">If not saved, any progress made on this order will be lost and cannot be recovered.</div>
 			  <div class="btn_group">
-			    <%= link_to 'Don’t Save', orders_path, data: { 'turbo-frame': '_top' }, class: "outline_btn save_btn" %>
+			    <%= link_to 'Don’t Save', undo_order_path(@order), data: { 'turbo-frame': '_top', 'turbo-method': :post }, class: "outline_btn save_btn" %>
 			    <button id="save" class="outline_btn save_btn green_bg" data-save-order-target="saveButton">save</button>
 			  </div>
 			</div>

@@ -33,7 +33,9 @@ class OrdersController < ApplicationController
                                     :edit_sender,
                                     :update_sender,
                                     :remove_shipo_lable,
-                                    :download_shippo_label]
+                                    :download_shippo_label,
+                                    :save_changes_confirmation,
+                                    :undo]
 
   before_action :set_common_data, only: [:on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup]
 
@@ -130,12 +132,6 @@ class OrdersController < ApplicationController
 
   def update
     if params[:request_type] == "Confirm"
-      # @order.order_products.each do |order_product|
-      #   product_quantity = order_product.product_quantity
-      #   producers_variant = ProducersVariant.find_by(variant: order_product.variant, user_id: order_product.producer)
-      #   producers_variant.update(inventory: producers_variant.inventory - product_quantity)
-      # end
-
       @order.update(order_edit_status: 1, order_status: 3)
     elsif params[:request_type] == "Reject"
       @order.update(order_status: 1, reject_reason: params[:order][:reject_reason])
@@ -152,12 +148,53 @@ class OrdersController < ApplicationController
 
       @order.update(order_edit_status: params[:order_edit_status], additional_comment: params[:additional_comment])
 
-      @order.shipping_label_image.attach(params[:shipping_label_image]) if params[:shipping_label_image].present?
-      @order.packing_slip_image.attach(params[:packing_slip_image]) if params[:packing_slip_image].present?
-      @order.gift_message_slip_image.attach(params[:gift_message_slip_image]) if params[:gift_message_slip_image].present?
-      @order.design_file_1_image.attach(params[:design_file_1_image]) if params[:design_file_1_image].present?
-      @order.design_file_2_image.attach(params[:design_file_2_image]) if params[:design_file_2_image].present?
-      @order.additional_file_image.attach(params[:additional_file_image]) if params[:additional_file_image].present?
+      if params[:shipping_label_image].present?
+        @order.shipping_label_image.attach(params[:shipping_label_image])
+
+        if params[:submit_type].eql?('design_added') && !@order.temp_shipping_label_image.attached?
+          @order.update(shipping_label_image_is_temporary: true)
+        end
+      end
+
+      if params[:packing_slip_image].present?
+        @order.packing_slip_image.attach(params[:packing_slip_image])
+
+        if params[:submit_type].eql?('design_added') && !@order.temp_packing_slip_image.attached?
+          @order.update(packing_slip_image_is_temporary: true)
+        end
+      end
+
+      if params[:gift_message_slip_image].present?
+        @order.gift_message_slip_image.attach(params[:gift_message_slip_image])
+
+        if params[:submit_type].eql?('design_added') && !@order.temp_gift_message_slip_image.attached?
+          @order.update(gift_message_slip_image_is_temporary: true)
+        end
+      end
+
+      if params[:design_file_1_image].present?
+        @order.design_file_1_image.attach(params[:design_file_1_image])
+
+        if params[:submit_type].eql?('design_added') && !@order.temp_design_file_1_image.attached?
+          @order.update(design_file_1_image_is_temporary: true)
+        end
+      end
+
+      if params[:design_file_2_image].present?
+        @order.design_file_2_image.attach(params[:design_file_2_image])
+
+        if params[:submit_type].eql?('design_added') && !@order.temp_design_file_2_image.attached?
+          @order.update(design_file_2_image_is_temporary: true)
+        end
+      end
+
+      if params[:additional_file_image].present?
+        @order.additional_file_image.attach(params[:additional_file_image])
+
+        if params[:submit_type].eql?('design_added') && !@order.temp_additional_file_image.attached?
+          @order.update(additional_file_image_is_temporary: true)
+        end
+      end
 
       if params[:producers_variants].present?
         params[:producers_variants].each do |order_product_id, quantity|
@@ -166,11 +203,47 @@ class OrdersController < ApplicationController
 
           if params[:front_side_image].present? && params[:front_side_image][order_product_id].present?
             order_product.front_side_image.attach(io: params[:front_side_image][order_product_id], filename: "design-file-#{order_product.id}")
+            
+            if params[:submit_type].eql?('design_added') && !order_product.temp_front_side_image.present?
+              order_product.update(front_image_is_temporary: true)
+            end
           end
 
           if params[:back_side_image].present? && params[:back_side_image][order_product_id].present?
             order_product.back_side_image.attach(io: params[:back_side_image][order_product_id], filename: "design-file-#{order_product.id}")
+          
+            if params[:submit_type].eql?('design_added') && !order_product.temp_back_side_image.present?
+              order_product.update(back_image_is_temporary: true)
+            end
           end
+        end
+      end
+
+      unless params[:submit_type].eql?('design_added')
+        @order.order_products.temporary_removed.destroy_all
+        @order.order_products.temporary_added.update_all(temporary_added: false)
+
+        @order.temp_shipping_label_image.purge if @order.temp_shipping_label_image.attached?
+        @order.temp_packing_slip_image.purge if @order.temp_packing_slip_image.attached?
+        @order.temp_gift_message_slip_image.purge if @order.temp_gift_message_slip_image.attached?
+        @order.temp_design_file_1_image.purge if @order.temp_design_file_1_image.attached?
+        @order.temp_design_file_2_image.purge if @order.temp_design_file_2_image.attached?
+        @order.temp_additional_file_image.purge if @order.temp_additional_file_image.attached?
+
+        @order.update(
+          shipping_label_image_is_temporary: false,
+          packing_slip_image_is_temporary: false,
+          gift_message_slip_image_is_temporary: false,
+          design_file_1_image_is_temporary: false,
+          design_file_2_image_is_temporary: false,
+          additional_file_image_is_temporary: false
+        )
+
+        @order.order_products.each do |order_product|
+          order_product.temp_front_side_image.purge if order_product.temp_front_side_image.attached?
+          order_product.temp_back_side_image.purge if order_product.temp_back_side_image.attached?
+
+          order_product.update(front_image_is_temporary: false, back_image_is_temporary: false)
         end
       end
     end
@@ -188,6 +261,76 @@ class OrdersController < ApplicationController
 
       format.html { redirect_to orders_path }
     end
+  end
+
+  def undo
+    @order.order_products.temporary_added.destroy_all
+    @order.order_products.temporary_removed.update_all(temporary_removed: false)
+
+    @order.shipping_label_image.purge if @order.shipping_label_image_is_temporary && @order.shipping_label_image.attached?
+    @order.packing_slip_image.purge if @order.packing_slip_image_is_temporary && @order.packing_slip_image.attached?
+    @order.gift_message_slip_image.purge if @order.gift_message_slip_image_is_temporary && @order.gift_message_slip_image.attached?
+    @order.design_file_1_image.purge if @order.design_file_1_image_is_temporary && @order.design_file_1_image.attached?
+    @order.design_file_2_image.purge if @order.design_file_2_image_is_temporary && @order.design_file_2_image.attached?
+    @order.additional_file_image.purge if @order.additional_file_image_is_temporary && @order.additional_file_image.attached?
+
+    if @order.temp_shipping_label_image.attached?
+      @order.shipping_label_image.attach(@order.temp_shipping_label_image.blob)
+      @order.temp_shipping_label_image.purge
+    end
+
+    if @order.temp_packing_slip_image.attached?
+      @order.packing_slip_image.attach(@order.temp_packing_slip_image.blob)
+      @order.temp_packing_slip_image.purge
+    end
+
+    if @order.temp_gift_message_slip_image.attached?
+      @order.gift_message_slip_image.attach(@order.temp_gift_message_slip_image.blob)
+      @order.temp_gift_message_slip_image.purge
+    end
+
+    if @order.temp_design_file_1_image.attached?
+      @order.design_file_1_image.attach(@order.temp_design_file_1_image.blob)
+      @order.temp_design_file_1_image.purge
+    end
+
+    if @order.temp_design_file_2_image.attached?
+      @order.design_file_2_image.attach(@order.temp_design_file_2_image.blob)
+      @order.temp_design_file_2_image.purge
+    end
+
+    if @order.temp_additional_file_image.attached?
+      @order.additional_file_image.attach(@order.temp_additional_file_image.blob)
+      @order.temp_additional_file_image.purge
+    end
+
+    @order.update(
+      shipping_label_image_is_temporary: false,
+      packing_slip_image_is_temporary: false,
+      gift_message_slip_image_is_temporary: false,
+      design_file_1_image_is_temporary: false,
+      design_file_2_image_is_temporary: false,
+      additional_file_image_is_temporary: false
+    )
+
+    @order.order_products.each do |order_product|
+      order_product.front_side_image.purge if order_product.front_image_is_temporary && order_product.front_side_image.attached?
+      order_product.back_side_image.purge  if order_product.back_image_is_temporary && order_product.back_side_image.attached?
+
+      if order_product.temp_front_side_image.attached?
+        order_product.front_side_image.attach(order_product.temp_front_side_image.blob)
+        order_product.temp_front_side_image.purge
+      end
+
+      if order_product.temp_back_side_image.attached?
+        order_product.back_side_image.attach(order_product.temp_back_side_image.blob)
+        order_product.temp_back_side_image.purge
+      end
+
+      order_product.update(front_image_is_temporary: false, back_image_is_temporary: false)
+    end
+
+    redirect_to orders_path
   end
 
   def duplicate_order
@@ -297,7 +440,8 @@ class OrdersController < ApplicationController
 
   def remove_product
     order_product = OrderProduct.find_by(id: params[:order_product_id])
-    order_product.destroy if order_product.present?
+
+    order_product.update(temporary_removed: true) if order_product.present? && !order_product.temporary_added
 
     @order.reload
 
@@ -312,10 +456,12 @@ class OrdersController < ApplicationController
   def remove_product_image
     order_product = OrderProduct.find_by(id: params[:order_product_id])
     if params[:front_side_image].present?
+      order_product.temp_front_side_image.attach(order_product.front_side_image.blob) unless order_product.front_image_is_temporary
       order_product.front_side_image.purge
     end
 
     if params[:back_side_image].present?
+      order_product.temp_back_side_image.attach(order_product.back_side_image.blob) unless order_product.back_image_is_temporary
       order_product.back_side_image.purge
     end
 
@@ -331,16 +477,40 @@ class OrdersController < ApplicationController
 
   def remove_design_files
     if params[:shipping_label_image].present?
+      unless @order.shipping_label_image_is_temporary
+        @order.temp_shipping_label_image.attach(@order.shipping_label_image.blob)
+      end
+
       @order.shipping_label_image.purge
     elsif params[:packing_slip_image].present?
+      unless @order.packing_slip_image_is_temporary
+        @order.temp_packing_slip_image.attach(@order.packing_slip_image.blob)
+      end
+
       @order.packing_slip_image.purge
     elsif params[:gift_message_slip_image].present?
+      unless @order.gift_message_slip_image_is_temporary
+        @order.temp_gift_message_slip_image.attach(@order.gift_message_slip_image.blob)
+      end
+
       @order.gift_message_slip_image.purge
     elsif params[:design_file_1_image].present?
+      unless @order.design_file_1_image_is_temporary
+        @order.temp_design_file_1_image.attach(@order.design_file_1_image.blob)
+      end
+
       @order.design_file_1_image.purge
     elsif params[:design_file_2_image].present?
+      unless @order.design_file_2_image_is_temporary
+        @order.temp_design_file_2_image.attach(@order.design_file_2_image.blob)
+      end
+
       @order.design_file_2_image.purge
     elsif params[:additional_file_image].present?
+      unless @order.additional_file_image_is_temporary
+        @order.temp_additional_file_image.attach(@order.additional_file_image.blob)
+      end
+
       @order.additional_file_image.purge
     end
 
@@ -626,6 +796,7 @@ class OrdersController < ApplicationController
         @order.order_products.create(variant_id: variant_id,
                                      product_id: params[:product_id],
                                      user_id:    params[:producer_id],
+                                     temporary_added: true,
                                      product_quantity: 1)
       end
     end

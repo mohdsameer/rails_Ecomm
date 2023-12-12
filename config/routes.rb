@@ -55,10 +55,11 @@ Rails.application.routes.draw do
       post :update_sender
       delete :remove_shipo_lable
       get :download_shippo_label
+      post :undo
+      get :save_changes_confirmation
     end
 
     collection do
-      get :save_changes_confirmation
       get :add_new_product
       get :select_variant
       get :all_producer

@@ -1,16 +1,25 @@
 class OrderProduct < ApplicationRecord
+  # Associations
   belongs_to :order
   belongs_to :product
   belongs_to :variant
   belongs_to :producer, foreign_key: :user_id, class_name: 'Producer'
 
+  # Attachements
   has_one_attached :front_side_image
   has_one_attached :back_side_image
 
+  has_one_attached :temp_front_side_image
+  has_one_attached :temp_back_side_image
+
+  # Scopes
+  scope :temporary_added,       -> { where(temporary_added: true) }
+  scope :temporary_removed,     -> { where(temporary_removed: true) }
+  scope :not_temporary_added,   -> { where(temporary_added: false) }
+  scope :not_temporary_removed, -> { where(temporary_removed: false) }
+
   def max_inventory
     producer_variant = ProducersVariant.find_by(user_id: producer.id, variant_id: variant.id)
-
-    # producer_variant&.inventory_for_admin.to_i
 
     return 0 unless producer_variant.present?
 
