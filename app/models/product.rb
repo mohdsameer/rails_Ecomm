@@ -31,7 +31,7 @@ class Product < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << attributes
 
-      Variant.all.each do |variant|
+      Variant.joins(:product).each do |variant|
         csv << attributes.map { |attr| variant.send(attr) }
       end
     end

@@ -41,6 +41,6 @@ class Variant < ApplicationRecord
   end
 
   def brand_name
-    product.brand_name
+    product&.brand_name
   end
 end
