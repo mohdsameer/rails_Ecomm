@@ -95,14 +95,14 @@
                 </div>
 
                 <div class="right_text">
-                  <div>USD <%= order.price %></div>
+                  <div>USD <%= @order.price %></div>
                   <% if @order.shipping_cost.present? %>
                     <div>USD <%= @order.shipping_cost %></div>
-                    <div class="fw-bold">USD <%= order.total_cost %></div>
+                    <div class="fw-bold">USD <%= @order.total_cost %></div>
                   <% else %>
                     <div>-</div>
                   <% end %>
-                  <div class="fw-bold">USD <%= order.price %></div>
+                  <div class="fw-bold">USD <%= @order.price %></div>
                 </div>
               </div>
             </div>
