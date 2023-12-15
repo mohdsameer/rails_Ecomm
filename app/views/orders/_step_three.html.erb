@@ -88,8 +88,6 @@
                   <!-- <a class="edit_link" href="#">Edit</a> -->
                 </div>
 
-                <% sum_result = 0 %>
-
                 <% order.order_products.each do |order_product| %>
                   <div class="info_left_section">
                     <div class="left_sku"><%= order_product.product.brand_name %></div>
@@ -173,20 +171,7 @@
                     <div class="cost_section">
                       <div>Production costs</div>
 
-                      <% record = order_product.product.product_producer_pricings.find_by(user_id: order_product.producer.id) %>
-
-                      <%  if order_product.front_side_image.attached? && order_product.back_side_image.attached? %>
-                        <% cost = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * order_product.product_quantity.to_i %>
-                      <% elsif order_product.front_side_image.attached? %>
-                        <% cost = record.front_side_print_price.to_f  * order_product.product_quantity.to_i %>
-                      <% elsif order_product.back_side_image.attached? %>
-                        <% cost = record.back_side_print_price.to_f  * order_product.product_quantity.to_i %>
-                      <% else %>
-                        <% cost = record.blank_price.to_f  * order_product.product_quantity.to_i %>
-                      <% end %>
-
-                      <% sum_result += cost %>
-                      <div>USD <%= cost %></div>
+                      <div>USD <%= order_product.total_cost %></div>
                     </div>
                   </div>
                 <% end %>
@@ -251,10 +236,10 @@
                       <div class="fw-bold">Total Cost:</div>
                     </div>
                     <div class="right_text">
-                      <div>USD <span data-order-form-target="producerPrice" data-price="<%= sum_result %>"><%= sum_result %></span></div>
+                      <div>USD <span data-order-form-target="producerPrice" data-price="<%= order.price %>"><%= order.price %></span></div>
                       <div>USD <span data-order-form-target="shippingCostText">0.0</span></div>
                       <%= hidden_field_tag :shipping_cost, '', id: 'shipping_cost' %>
-                      <div class="fw-bold">USD <span data-order-form-target="totalPriceText"><%= sum_result %></span></div>
+                      <div class="fw-bold">USD <span data-order-form-target="totalPriceText"><%= order.price %></span></div>
                     </div>
                   </div>
                 </div>

@@ -56,20 +56,7 @@
 
                 <div class="cost_section">
                   <div>Production costs</div>
-                    <% record = order_product.product.product_producer_pricings.find_by(user_id: order_product.producer.id) %>
-
-                    <% if order_product.front_side_image.attached? && order_product.back_side_image.attached? %>
-                      <% cost = (record.front_side_print_price.to_f + record.back_side_print_price.to_f) * order_product.product_quantity.to_i %>
-                    <% elsif order_product.front_side_image.attached? %>
-                      <% cost = record.front_side_print_price.to_f  * order_product.product_quantity.to_i %>
-                    <% elsif order_product.back_side_image.attached? %>
-                      <% cost = record.back_side_print_price.to_f  * order_product.product_quantity.to_i %>
-                    <% else %>
-                      <% cost = record.blank_price.to_f  * order_product.product_quantity.to_i %>
-                    <% end %>
-
-                    <% sum_result += cost %>
-                  <div>USD <%= cost %></div>
+                  <div>USD <%= order_product.total_cost %></div>
                 </div>
 
                 <div class="cost_section small">
@@ -118,14 +105,14 @@
                 </div>
 
                 <div class="right_text">
-                  <div>USD <%= sum_result %></div>
+                  <div>USD <%= @order.price %></div>
 
                   <% if @order.shipping_cost.present? %>
                     <div>USD <%= @order.shipping_cost %></div>
-                    <div class="fw-bold">USD <%= sum_result + @order.shipping_cost %></div>
+                    <div class="fw-bold">USD <%= @order.total_cost %></div>
                   <% else %>
                     <div>-</div>
-                    <div class="fw-bold">USD <%= sum_result %></div>
+                    <div class="fw-bold">USD <%= @order.price %></div>
                   <% end %>
                 </div>
               </div>

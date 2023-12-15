@@ -140,4 +140,32 @@ class Order < ApplicationRecord
 
     shippo_label&.shipo_transaction_label
   end
+
+  def update_pricing
+    sum_result = 0.0
+
+    order_products.each do |order_product|
+      # ppp stands for product_producer_pricing
+      ppp = order_product.product.product_producer_pricings.find_by(user_id: order_product.producer.id)
+
+      if order_product.front_side_image.attached? && order_product.back_side_image.attached?
+        cost = (ppp.front_side_print_price.to_f + ppp.back_side_print_price.to_f) * order_product.product_quantity.to_i
+      elsif order_product.front_side_image.attached?
+        cost = ppp.front_side_print_price.to_f  * order_product.product_quantity.to_i
+      elsif order_product.back_side_image.attached?
+        cost = ppp.back_side_print_price.to_f  * order_product.product_quantity.to_i
+      else
+        cost = ppp.blank_price.to_f  * order_product.product_quantity.to_i
+      end
+
+      order_product.update(total_cost: cost)
+      sum_result += cost
+    end
+
+    update(price: sum_result, total_cost: sum_result.to_f + shipping_cost.to_f)
+  end
+
+  def total_quantity
+    order_products.pluck(:product_quantity).sum
+  end
 end

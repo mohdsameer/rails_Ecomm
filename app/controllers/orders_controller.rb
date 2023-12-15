@@ -248,6 +248,8 @@ class OrdersController < ApplicationController
       end
     end
 
+    @order.update_pricing
+
     respond_to do |format|
       format.turbo_stream do
         if params[:submit_type].eql?('shipping')
@@ -329,6 +331,8 @@ class OrdersController < ApplicationController
 
       order_product.update(front_image_is_temporary: false, back_image_is_temporary: false)
     end
+
+    @order.update_pricing
 
     redirect_to orders_path
   end

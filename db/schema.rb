@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_12_104108) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_15_044402) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,13 +95,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_12_104108) do
     t.boolean "temporary_removed", default: false
     t.boolean "front_image_is_temporary", default: false
     t.boolean "back_image_is_temporary", default: false
+    t.decimal "total_cost", default: "0.0"
     t.index ["order_id"], name: "index_order_products_on_order_id"
     t.index ["product_id"], name: "index_order_products_on_product_id"
   end
 
   create_table "orders", force: :cascade do |t|
     t.string "customer_name"
-    t.float "price", default: 2.5
+    t.float "price", default: 0.0
     t.integer "order_status", default: 0
     t.integer "order_edit_status", default: 0
     t.date "due_date"
@@ -130,6 +131,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_12_104108) do
     t.boolean "design_file_1_image_is_temporary", default: false
     t.boolean "design_file_2_image_is_temporary", default: false
     t.boolean "additional_file_image_is_temporary", default: false
+    t.decimal "total_cost", default: "0.0"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
