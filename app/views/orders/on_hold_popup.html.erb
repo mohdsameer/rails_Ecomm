@@ -66,9 +66,9 @@
               <div class="head_text w-100">Product & Personalization Info</div>
             </div>
 
-            <% @order.order_products.each do |order_product| %>
+            <% @order.order_products.each_with_index do |order_product, index| %>
               <div class="details_body">
-                <div class="left"><%= order_product.variant.id %></div>
+                <div class="left"><%= index + 1 %></div>
                 <div class="right">
                   <div class="right_big"><%= order_product.product.name %></div>
                   <div class="right_small">(<%= order_product.product.name %>)</div>
