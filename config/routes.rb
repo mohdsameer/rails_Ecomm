@@ -69,12 +69,19 @@ Rails.application.routes.draw do
   end
 
   resources :variants do
-    get 'inventory_history', on: :collection
-    get 'edit_inventory', on: :member
-    get 'edit_aisle_no', on: :member
-    patch 'update_inventory', on: :member
     get :inventory, on: :collection
     get :producer_inventory, on: :member
+  end
+
+  resources :producers_variants, only: [:edit, :update] do
+    member do
+      get :edit_inventory
+      patch :update_inventory
+    end
+  end
+
+  resources :producers, only: [] do
+    resources :producer_variant_histories, only: [:index]
   end
 
   # Sessions routes

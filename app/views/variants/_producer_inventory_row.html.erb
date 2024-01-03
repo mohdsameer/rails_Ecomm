@@ -1,0 +1,62 @@
+<div class="tbody_row" data-controller="expand-image" id="producer-inventory-row-<%= producer_variant.id %>">
+  <div class="td one"><%= producer_variant.variant.id %></div>
+
+  <div class="td two">
+    <div class="product_img">
+      <% product_image = if producer_variant.variant.image.attached? %>
+        <% producer_variant.variant.image %>
+      <% elsif producer_variant.variant.product.image.attached? %>
+        <% producer_variant.variant.product.image %>
+      <% else %>
+        <% asset_path('dummy-product.png') %>
+      <% end %>
+
+      <%= image_tag product_image %>
+
+      <%= link_to product_image, class: 'zoom_img lightbox_trigger' do %>
+        <%= image_tag 'ic_expand.png', alt: 'icon', class: 'expand_icon' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="td three"><%= producer_variant.variant.product.name %></div>
+  <div class="td four"><%= producer_variant.variant.product.brand_name %></div>
+  <div class="td five"><%= producer_variant.variant.real_variant_sku %></div>
+  <div class="td six"><%= producer_variant.variant.color %></div>
+  <div class="td seven"><%= producer_variant.variant.size %></div>
+
+  <div class="td eight">
+    <div class="aisle_box">
+      <div class="asle_no"><%= producer_variant.aisle_no %></div>
+      <%= link_to edit_producers_variant_path(producer_variant, modal: 'aisle'), data: { turbo_frame: "edit-aisle-modal" }, class: "aisle_icon" do %>
+        <%= image_tag 'ic_edit.png', alt: 'icon', class: 'ic_edit' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="td nine">
+    <% if current_user.admin? %>
+      <% inventory = producer_variant.inventory_for_admin %>
+    <% else %>
+      <% inventory = producer_variant.inventory_for_producer %>
+    <% end %>
+
+    <% if inventory.to_i > 100 %>
+      <div class="badgee in_stock">In Stock</div>
+    <% elsif inventory.to_i <= 100 && inventory.to_i > 0 %>
+      <div class="badgee low_stock">Low Stock</div>
+    <% else %>
+      <div class="badgee out_of_stock">Out of Stock</div>
+    <% end %>
+  </div>
+
+  <div class="td ten">
+    <div class="aisle_box">
+      <div class="asle_no"><%= inventory.to_i %></div>
+
+      <%= link_to edit_inventory_producers_variant_path(producer_variant), class: 'aisle_icon invntry_qty', data: { 'turbo-frame': 'edit-inventory-modal' } do %>
+        <%= image_tag 'ic_edit.png', alt: 'icon', class: 'ic_edit' %>
+      <% end %>
+    </div>
+  </div>
+</div>

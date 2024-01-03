@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_15_044402) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_02_090523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,8 +114,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_044402) do
     t.bigint "user_id"
     t.string "revision_info"
     t.boolean "request_revision", default: false
-    t.string "etsy_order_id"
     t.bigint "shipping_method_id"
+    t.string "etsy_order_id"
     t.boolean "dimensions_is_manual", default: false
     t.decimal "custom_length"
     t.decimal "custom_height"
@@ -135,12 +135,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_044402) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "producer_variant_histories", force: :cascade do |t|
+    t.bigint "producers_variant_id"
+    t.bigint "user_id"
+    t.integer "prev_inventory"
+    t.integer "new_inventory"
+    t.string "reason"
+    t.string "tracking_no"
+    t.string "invoice_no"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["producers_variant_id"], name: "index_producer_variant_histories_on_producers_variant_id"
+    t.index ["user_id"], name: "index_producer_variant_histories_on_user_id"
+  end
+
   create_table "producers_variants", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "variant_id"
     t.integer "inventory"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "aisle_no"
     t.index ["user_id"], name: "index_producers_variants_on_user_id"
     t.index ["variant_id"], name: "index_producers_variants_on_variant_id"
   end
@@ -223,6 +238,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_044402) do
     t.string "password_digest"
     t.string "company_name"
     t.string "location"
+    t.float "black_price"
+    t.float "front_side_print_price"
+    t.float "back_side_print_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "etsy_access_token"
@@ -233,7 +251,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_044402) do
     t.integer "product_id"
     t.jsonb "specification", default: "{}", null: false
     t.string "color"
-    t.integer "size"
+    t.string "size"
     t.integer "inventory"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

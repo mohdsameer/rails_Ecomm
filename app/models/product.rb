@@ -21,7 +21,7 @@ class Product < ApplicationRecord
       results = results.where('LOWER(products.name) LIKE ?', "%#{params[:query].downcase}%")
     end
 
-    results
+    results.order(created_at: :desc)
   end
 
   def self.to_csv

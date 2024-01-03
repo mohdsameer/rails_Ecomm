@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["shippingCostInput", "shippingCostText", "producerPrice", "totalPriceText", "form", "submitType",
+  static targets = ["shippingCostInput", "shippingCostText", "shippingCostHiddenField", "producerPrice", "totalPriceText", "form", "submitType",
                     "saveLater", "markComplete", "submit", "uploadFile", "purchaseLabel"]
 
   static values = {
@@ -23,6 +23,7 @@ export default class extends Controller {
     const submitTarget        = $(this.submitTarget);
     const uploadFileTarget    = $(this.uploadFileTarget);
     const purchaseLabelTarget = $(this.purchaseLabelTarget);
+    const shippingCostHiddenField = $(this.shippingCostHiddenFieldTarget);
 
     // Values
     const shippingLabelPurchased = this.shippingLabelPurchasedValue;
@@ -34,15 +35,12 @@ export default class extends Controller {
     shippingCostInput.change(function() {
       shippingCostText.text($(this).data().price);
 
-      const hiddenField = document.getElementById('shipping_cost');
-      if (hiddenField) {
-        hiddenField.value = shippingCostText.text();;
-      }
-    });
-
-    shippingCostInput.change(function() {
       const total = parseFloat(producerPriceText.data().price) + parseFloat($(this).data().price)
       totalPriceText.text(total);
+
+      if (shippingCostHiddenField) {
+        shippingCostHiddenField.val(parseFloat($(this).data().price));
+      }
     });
 
     saveLaterTarget.click(function(e) {

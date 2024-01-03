@@ -1,7 +1,11 @@
 class ProducersVariant < ApplicationRecord
   has_paper_trail
+
+  # Associations
   belongs_to :producer, foreign_key: :user_id, class_name: "Producer"
   belongs_to :variant
+
+  has_many :producer_variant_histories, dependent: :destroy
 
   def self.search(params)
     results = all.joins(variant: :product)
@@ -13,16 +17,7 @@ class ProducersVariant < ApplicationRecord
                                OR LOWER(products.name) LIKE :query', query: "%#{params[:query].downcase}%")
     end
 
-    results
-  end
-
-  def user_type
-    id = versions&.last&.whodunnit
-    User.find(id).type
-  end
-
-  def created_at
-    versions.last.created_at.strftime('%d/%m/%Y')
+    results.order(created_at: :desc)
   end
 
   def inventory_for_admin

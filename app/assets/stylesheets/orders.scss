@@ -167,11 +167,19 @@
           align-items: center;
           gap: 0.347vw;
           border-radius: 0.347vw;
-          border: 0.058vw solid rgba(54, 179, 126, 0.28) ;
-          background: rgba(54, 179, 126, 0.16);
           color: var(--common-black, #000);
           font-size: 0.694vw;
           font-weight: 400;
+
+          &.completed {
+            border: 0.058vw solid rgba(54, 179, 126, 0.28);
+            background: rgba(54, 179, 126, 0.16);
+          }
+
+          &.pending {
+            border: 0.058vw solid rgba(8, 8, 8, 0.28);
+            background: rgba(54, 179, 126, 0);
+          }
 
           &.not_assign {
             background: var(--grey-400, #C4CDD5);

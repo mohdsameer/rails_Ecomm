@@ -1,0 +1,70 @@
+<turbo-frame id="edit-inventory-modal">
+  <div id="edit_invntry_qty_popup"
+       class="edit_invntry_qty_popup show_popup"
+       data-controller="modals edit-inventory"
+       data-modals-modal-id-value="edit-inventory-modal"
+       data-edit-inventory-current-quantity-value="<%= @producer_variant.inventory_for_user(current_user) %>">
+
+    <div class="popup_wrapper">
+      <%= form_tag update_inventory_producers_variant_path(@producer_variant), method: :patch do %>
+        <div class="edit_pop_wrap">
+          <%= image_tag 'close.png', alt: 'icon', class: 'cross_icon cancel_qty' %>
+
+          <div class="edit_head">Edit Inventory QTY: <%= @variant.real_variant_sku %></div>
+          <div class="current_qty">Current Quantity: <span id="current_qty"><%= @producer_variant.inventory_for_user(current_user) %></span></div>
+          <button type="button" class="current_qty green_box d-block w-100" id="increase_qty" data-edit-inventory-target="increaseButton">INCREASE QTY</button>
+
+          <div class="increase_box" data-edit-inventory-target="increaseBox">
+            <div class="input_group">
+              <%= label_tag :increased_inventory, 'Add Quantity' %>
+              <%= number_field_tag :increased_inventory, 0, class: "item_text", data: { 'edit-inventory-target': 'quantityPlus' }, min: 0 %>
+            </div>
+
+            <div class="input_group">
+              <%= label_tag :reason_for_increase, 'Reason for Increase' %>
+              <%= text_field_tag :reason_for_increase, '', data: { 'edit-inventory-target': 'increaseReason' } %>
+            </div>
+
+            <div class="input_group">
+              <%= label_tag :tracking_no, 'Tracking No' %>
+              <%= text_field_tag :tracking_no, '', data: { 'edit-inventory-target': 'trackingNo' } %>
+            </div>
+
+            <div class="input_group">
+              <%= label_tag :invoice_no, 'Invoice No' %>
+              <%= text_field_tag :invoice_no, '', data: { 'edit-inventory-target': 'invoiceNo' } %>
+            </div>
+          </div>
+
+          <button type="button" class="current_qty orange_box d-block w-100" id="decrease_qty" data-edit-inventory-target="decreaseButton">DECREASE QTY</button>
+
+          <div class="decrease_box" data-edit-inventory-target="decreaseBox">
+            <div class="input_group">
+              <%= label_tag :Decrease_Quantity %>
+              <%= number_field_tag :decreased_inventory, 0, class: "item_text", data: { 'edit-inventory-target': 'quantityMinus' }, min: 0 %>
+            </div>
+
+            <div class="input_group">
+              <%= label_tag :Reason_for_Decrease %>
+              <%= text_field_tag :reason_for_decrease, '', data: { 'edit-inventory-target': 'decreaseReason' } %>
+            </div>
+          </div>
+
+          <div class="current_qty">New Quantity: <span class="quantity_no" data-edit-inventory-target="newQuantity"><%= @producer_variant.inventory_for_user(current_user) %></span></div>
+          <div class="inventory_edit_btn">Submit</div>
+        </div>
+
+        <div class="new_qty_wrap">
+          <div class="head current_qty" >
+            New Quantity: <span class="quantity_no" data-edit-inventory-target="newQuantity"><%= @producer_variant.inventory_for_user(current_user) %></span>
+          </div>
+
+          <div class="btn_group">
+            <%= submit_tag 'Confirm', class: 'btn bg-success text-white' %>
+            <div class="btn outline_btn cancel_qty">Cancel</div>
+          </div>
+        </div>
+       <% end %>
+    </div>
+  </div>
+</turbo-frame>

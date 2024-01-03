@@ -11,11 +11,6 @@ class Variant < ApplicationRecord
   # Nested Attributes
   accepts_nested_attributes_for :producers_variants
 
-  def user_type
-    id = versions&.last&.whodunnit
-    User.find(id).type
-  end
-
   def created_at
     versions.last.created_at.strftime('%d/%m/%Y')
   end

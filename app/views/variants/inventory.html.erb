@@ -17,15 +17,15 @@
         <div class="export_item light_text">Ship from Location </div>
       </div>
 
-      <% @producers.each do |producer|%>
+      <% @producers.each do |producer| %>
         <div class="export_head white_bg">
           <div class="export_item"><%= producer.name %> </div>
-          <div class="export_item light_text"><%= producer.location %></div>
+          <div class="export_item light_text"><%= producer.address.to_str %></div>
           <%= link_to producer_inventory_variant_path(producer) do %>
             <%= image_tag "grey_view", alt:"icon", class: "eye_icon" %>
           <% end %>
         </div>
-      <%end%>
+      <% end %>
     </div>
   </div>
 </div>

@@ -104,14 +104,6 @@ export default class extends Controller {
       $('.edit_pop_wrap').show();
     });
 
-    $('#increase_qty').click(function() {
-      $('.increase_box').slideToggle();
-    });
-
-    $('#decrease_qty').click(function() {
-      $('.decrease_box').slideToggle();
-    });
-
     // on-hold-order-modal
     $('.close_hold').click(function() {
       $('.on-hold-order-modal').hide();

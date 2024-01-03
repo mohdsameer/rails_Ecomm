@@ -125,7 +125,12 @@ class OrdersController < ApplicationController
     @error_message = params[:error_message]
 
     if @order.shippo_shipment_id.present?
-      shipment = Shippo::Shipment.get(@order.shippo_shipment_id)
+      begin
+        shipment = Shippo::Shipment.get(@order.shippo_shipment_id)
+      rescue
+        shipment = {}
+      end
+
       @rates = shipment['rates']
     end
   end
@@ -432,9 +437,11 @@ class OrdersController < ApplicationController
 
   def assignee_create
     @designer = User.find_by(id: params[:assign_detail][:designer])
-    @assigne = AssignDetail.new(order_id: @order.id, user_id: @designer.id).save
+    @assigne  = AssignDetail.new(order_id: @order.id, user_id: @designer.id).save
+
     Order.find(@order.id).update(due_date: assigne_params[:due_date])
     AssignDetail.last.update(assigne_params)
+
     redirect_to orders_path, notice: 'Assigne Process Done.'
   end
 
@@ -445,7 +452,11 @@ class OrdersController < ApplicationController
   def remove_product
     order_product = OrderProduct.find_by(id: params[:order_product_id])
 
-    order_product.update(temporary_removed: true) if order_product.present? && !order_product.temporary_added
+    if order_product.present? && order_product.temporary_added
+      order_product.destroy
+    elsif order_product.present?
+      order_product.update(temporary_removed: true)
+    end
 
     @order.reload
 
@@ -710,7 +721,7 @@ class OrdersController < ApplicationController
 
       if params[:manual_upload_file].present?
         shippo_label.shipo_transaction_label.attach(io: params[:manual_upload_file], filename: "order-label-#{@order.id}-#{shippo_label.id}")
-      else
+      elsif params[:shippo_rate_id] != 'manual_upload'
         transaction = Shippo::Transaction.create(rate: params[:shippo_rate_id], label_file_type: "PDF", async: false)
 
         if transaction["status"] == "SUCCESS"

@@ -24,7 +24,7 @@
       <div class="inventory_box" data-controller="search" data-search-url-value="<%= producer_inventory_variant_path(@producer) %>">
         <div class="inventory_head"><span>Inventories</span> <span><%= @producer.name %></span> </div>
         <div class="inventory_content_box">
-          <%= link_to 'Click here to Track Inventory History', inventory_history_variants_path(producer_id: @producer), class: 'history_btn' %>
+          <%= link_to 'Click here to Track Inventory History', producer_producer_variant_histories_path(producer_id: @producer.id), class: 'history_btn' %>
 
           <div class="search_box">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -62,7 +62,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
 

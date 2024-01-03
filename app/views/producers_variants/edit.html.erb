@@ -1,0 +1,23 @@
+<turbo-frame id="edit-aisle-modal">
+  <div class="edit_aisle_pop_model">
+    <div class="edit_aisle_pop_wrapper">
+      <div id="edit_aisle_pop"
+           class="edit_pop_wrap small_pop update_assign_pop edit_aisle_pop"
+           data-controller="modals aisle"
+           data-modals-modal-id-value="edit-aisle-modal">
+
+        <%= form_for @producer_variant, url: producers_variant_path(@producer_variant) do |f| %>
+          <%= image_tag "close", alt: "close", class: "close_icon" %>
+
+          <div class="edit_head mb-0">Edit Aisle: <%= @variant.real_variant_sku %></div>
+          <div class="current_qty">Current Aisle: <%= @producer_variant.aisle_no %></div>
+
+          <%= f.text_field :aisle_no, class: 'edit_aisle_input', placeholder: 'Enter New Aisle No', data: { 'aisle-target': 'aisleInput' } %>
+
+          <div class="current_qty">New Aisle: <span id="new-aisle-text" data-aisle-target="newAisleText"></span></div>
+          <%= f.submit 'Submit', class: 'inventory_edit_btn' %>
+        <% end %>
+      </div>
+    </div>  
+  </div>
+</turbo-frame>

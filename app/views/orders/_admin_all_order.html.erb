@@ -68,7 +68,7 @@
                     <div class="in_production custom_badge">
                       In Production
                     </div>
-                  <% elsif order.order_status == "onhold"%>
+                  <% elsif order.order_status == "onhold" %>
                     <div class="custom_badge">
                       On Hold
                     </div>
@@ -93,7 +93,7 @@
               <div class="order_td eight">
                 <div class="order_priority_icon">
                   <% if order.assign_details.present? %>
-                    <div class="icon_with_name">
+                    <div class="icon_with_name <%= order.order_edit_status.eql?("completed") ? 'completed' : 'pending' %>">
                       <span class="assign_name"><%= order.assignee_name %></span>
                       <% if order.assign_details.last.price_for_total.present? || order.assign_details.last.price_per_design.present? %>
                         <span class="price">

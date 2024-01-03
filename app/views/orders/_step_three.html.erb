@@ -39,7 +39,7 @@
                 <% end %>
 
                 <div class="method_list upload_list">
-                  <input type="radio" name="shippo_rate_id" value="manual_upload" class="upload_checkbox" />
+                  <input type="radio" name="shippo_rate_id" value="manual_upload" class="upload_checkbox" data-order-form-target="shippingCostInput" data-price="0" />
                   <div class="upload_wrapper">
                     <div class="upload_label">UPLOAD SHIPPING LABEL</div>
                   </div>
@@ -97,7 +97,7 @@
                       <div class="text_section">
                         <div class="text">Quantity: <span><%= order_product.product_quantity %></span></div>
                         <div class="text">Color: <span><%= order_product.variant.color %></span></div>
-                        <div class="text">Size: <span><%= order_product.variant.size %> OZ</span></div>
+                        <div class="text">Size: <span><%= order_product.variant.size %></span></div>
                         <div class="text">Ships From: <span><%= order_product.producer.name %></span></div>
                       </div>
 
@@ -238,7 +238,7 @@
                     <div class="right_text">
                       <div>USD <span data-order-form-target="producerPrice" data-price="<%= order.price %>"><%= order.price %></span></div>
                       <div>USD <span data-order-form-target="shippingCostText">0.0</span></div>
-                      <%= hidden_field_tag :shipping_cost, '', id: 'shipping_cost' %>
+                      <%= hidden_field_tag :shipping_cost, '', id: 'shipping_cost', data: { 'order-form-target': 'shippingCostHiddenField' } %>
                       <div class="fw-bold">USD <span data-order-form-target="totalPriceText"><%= order.price %></span></div>
                     </div>
                   </div>
