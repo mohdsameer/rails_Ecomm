@@ -58,7 +58,9 @@
               </div>
               <div class="order_td seven">
                 <div class="order_priority_icon">
-                  <div><%= order.priority %></div>
+                  <% if order.URGENT? %>
+                    <div><%= order.priority %></div>
+                  <% end %>
                 </div>
               </div>
               <div class="order_td eight"><%= order.order_received %> ago</div>
@@ -155,7 +157,9 @@
                           <div class="msg_head">Cancellation Requested for this order.</div>
                           <div class="msg_date"><%= order.cancel_request.created_at.strftime('%B %e, %Y')%></div>
                         </div>
-                        <div class="msg_bottom_head">Important: <%= order.cancel_request.cancel_reason %></div>
+                        <% if order.cancel_request.cancel_reason.present? %>
+                          <div class="msg_bottom_head">Important: <%= order.cancel_request.cancel_reason %></div>
+                        <% end %>
                       </div>
                       <div class="cancel_btn_group">
                         <a href="<%= send_message_order_path(order) %>"  data-turbo-frame="send-message-order-modal" class="contact_btn contact_admin " >Contact Admin

@@ -1,33 +1,59 @@
-<%= form_tag all_producer_orders_path, method: :get, data: { 'turbo-frame': 'all-producer-order-modal' } do %>
-  <%= hidden_field_tag :product_id, @product.id %>
-  <%= hidden_field_tag :order_id, @order.id %>
+<div data-controller="select-variants" data-select-variants-selected-count-value="<%= variant_ids.size %>">
+  <div class="selected_row" data-select-variants-target="selectedCountBox">
+    <div class="selected_text"><span data-select-variants-target="selectedCounterText"><%= variant_ids.size %></span> Item Selected</div>
 
-  <% variants.each do |variant| %>
-    <% available_inventory = variant.total_inventory_for_user(current_user) %>
+    <%= link_to 'javascript:;', class: 'continue_cart', data: { 'select-variants-target': 'continueButton' } do %>
+      <span class="btn_text">Continue with Selected Items</span>
+      <%= image_tag "cart.png", alt: "icon", class: "cart_icon" %>
+    <% end %>
+  </div>
 
-    <div class="scroll_content check_content">
-      <div class="image_text_wrap">
-        <%= check_box_tag 'variant_ids[]', variant.id, available_inventory > 0, class: "check_box", disabled: available_inventory <= 0 %>
-        <% if variant.image.attached? %>
-          <div class="img_box">
-            <%= image_tag variant.image %>
-          </div>
-        <% else %>
-          <div class="img_box">
-            <%= image_tag asset_path('dummy-product.png') %>
-          </div>
+  <div class="scroll_section">
+    <%= form_tag all_producer_orders_path, method: :get, data: { 'turbo-frame': 'all-producer-order-modal' } do %>
+      <%= hidden_field_tag :product_id, product.id %>
+      <%= hidden_field_tag :order_id, order.id %>
+
+      <% if variant_ids.present? %>
+        <% variant_ids.each do |variant_id| %>
+          <% next if variants.pluck(:id).include?(variant_id.to_i) %>
+          <%= check_box_tag 'variant_ids[]', variant_id.to_i, true, class: 'd-none' %>
         <% end %>
-        <div class="img_text_box">
-          <div class="product_name"><%= variant.color %></div>
-          <% if available_inventory <= 0 %>
-            <small class="text-danger">Out of stock</small>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  <% end %>
+      <% end %>
 
-  <% if variants.present? %>
-    <%= submit_tag 'Continue' %>
-  <% end %>
-<% end %>
+      <% variants.each do |variant| %>
+        <% available_inventory = variant.total_inventory_for_user(current_user) %>
+
+        <div class="scroll_content check_content <%= variant_ids.include?(variant.id.to_s) ? 'check_active' : '' %>">
+          <div class="image_text_wrap">
+            <div class="custom_checkbox_wrapper">
+              <%= check_box_tag 'variant_ids[]', variant.id, variant_ids.include?(variant.id.to_s), class: "check_box check_field",
+                                disabled: available_inventory <= 0, data: { 'select-variants-target': 'variantCheckbox' } %>
+
+              <label for="<%= variant.id %>"></label>
+            </div>
+
+            <% if variant.image.attached? %>
+              <div class="img_box">
+                <%= image_tag variant.image %>
+              </div>
+            <% else %>
+              <div class="img_box">
+                <%= image_tag asset_path('dummy-product.png') %>
+              </div>
+            <% end %>
+
+            <div class="img_text_box">
+              <div class="product_name"><%= variant.color %></div>
+
+              <% if available_inventory <= 0 %>
+                <small class="text-danger">Out of stock</small>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <%= submit_tag 'Continue', class: 'd-none', data: { 'select-variants-target': 'submitButton' } %>
+    <% end %>
+  </div>
+</div>

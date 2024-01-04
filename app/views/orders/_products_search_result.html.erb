@@ -10,12 +10,14 @@
           <%= image_tag asset_path('dummy-product.png') %>
         </div>
       <% end %>
+
       <div class="img_text_box">
         <div class="product_name"><%= product.name %></div>
       </div>
     </div>
+
     <a href="<%= select_variant_orders_path(product_id: product.id, order_id: order.id) %>" data-turbo-frame="add-new-product-order-modal" class= "choose_pro_link">
-      <%= image_tag "right_arrow", alt:"icon", class:"rigth_arrow" %>
+      <%= image_tag "right_arrow", alt: "icon", class: "rigth_arrow" %>
     </a>
   </div>
 <% end %>

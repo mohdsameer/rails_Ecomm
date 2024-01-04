@@ -17,7 +17,7 @@
                     <div class="light_text"><%= producer.address.to_str %></div>
                   </div>
 
-                  <label class="image_label">LASER ENGRAVING</label>
+                  <!-- <label class="image_label">LASER ENGRAVING</label> -->
                 </div>
 
                 <div class="choose_btn">
@@ -31,7 +31,14 @@
                   %>
                 </div>
               </div>
-            <%end%>
+            <% end %>
+          </div>
+
+          <div class="back_to_btn_section">
+            <%= link_to select_variant_orders_path(product_id: @product_id, order_id: @order_id, variant_ids: @variant_ids), class: "back_to_btn", data: { turbo_frame: "add-new-product-order-modal" } do %>
+              <%= image_tag "dark_start_icon", alt: "icon", class: "icon" %>
+              <div class="btn_text">Back to Product Variant</div>
+            <% end %>
           </div>
         </div>
       </div>

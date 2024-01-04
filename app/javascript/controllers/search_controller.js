@@ -3,20 +3,26 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["query", "results"]
   static values  = {
-    url: String,
-    params: Object
+    url: String
   }
 
   connect() {
     console.log('Search controller connected');
 
+    const thisElement   = this.element;
     const queryTarget   = this.queryTarget;
     const resultsTarget = this.resultsTarget;
     const urlValue      = this.urlValue;
-    const paramsValue   = this.paramsValue;
 
     $(queryTarget).keyup(function(e) {
       e.preventDefault();
+
+      let paramsValue
+      if ($(thisElement).attr('data-search-params')) {
+        paramsValue = JSON.parse($(thisElement).attr('data-search-params'));
+      } else {
+        paramsValue = {};
+      }
 
       $.ajax({
         type: 'GET',

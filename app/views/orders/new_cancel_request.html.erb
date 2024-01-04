@@ -1,14 +1,18 @@
 <turbo-frame id="cancel-request-order-modal">
   <%= form_for @cancel_request, url: create_cancel_request_order_path(@order) do |a| %>
-  <div class="request_cancel_model">
-    <div class="request_cancel_wrapper">
-      <div id="request_cancel_pop" class="request_cancel_pop " data-controller="modals" data-modals-modal-id-value="request_cancel_pop">
-        <div class="request_head">Request Cancellation for this order</div>
-        <%= a.text_field :cancel_reason, class: "input_field", placeholder: "Please enter more information" %>
-        <%= a.submit 'Submit', class: 'request_btn' %>
+    <div class="request_cancel_model">
+      <div class="request_cancel_wrapper">
+        <div id="request_cancel_pop" class="request_cancel_pop" data-controller="modals" data-modals-modal-id-value="cancel-request-order-modal">
+          <%= link_to close_modal_path(modal_id: 'cancel-request-order-modal'), data: { 'turbo-method': :post }, class: 'close_popup d-flex justify-content-end', id: 'close_status_popup' do %>
+            <%= image_tag "close.png", alt: "icon", class: 'close_hold' %>
+          <% end %>
+
+          <div class="request_head">Request Cancellation for this order</div>
+          <%= a.text_field :cancel_reason, class: "input_field", placeholder: "Please enter more information" %>
+          <%= a.submit 'Submit', class: 'request_btn' %>
+        </div>
       </div>
     </div>
-  </div>
   <% end %>
 
   <div class="request_sent_flash_model">
@@ -19,5 +23,4 @@
       </div>
     </div>
   </div>
-
 </turbo-frame>

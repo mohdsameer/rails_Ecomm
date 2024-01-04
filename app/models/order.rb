@@ -50,8 +50,13 @@ class Order < ApplicationRecord
     results = all.left_joins(:products, :address).group(:id)
 
     if params[:query].present?
+      qry_str =  "LOWER(products.name) LIKE :query "
+      qry_str += "OR LOWER(addresses.fullname) LIKE :query "
+      qry_str += "OR CAST(orders.id as text) LIKE :query "
+      qry_str += "OR LOWER(orders.etsy_order_id) LIKE :query"
+
       results = results
-                  .where('LOWER(products.name) LIKE :query OR LOWER(addresses.fullname) LIKE :query OR LOWER(orders.etsy_order_id) LIKE :query', query: "%#{params[:query].downcase}%")
+                  .where(qry_str, query: "%#{params[:query].downcase}%")
     end
 
     results
@@ -59,7 +64,7 @@ class Order < ApplicationRecord
 
   # Instance Methods
   def order_received
-    distance_of_time_in_words(created_at, Time.current)
+    submitted_at.present? ? distance_of_time_in_words(submitted_at, Time.current) : distance_of_time_in_words(created_at, Time.current)
   end
 
   def created_on

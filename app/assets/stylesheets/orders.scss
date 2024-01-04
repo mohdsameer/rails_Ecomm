@@ -148,6 +148,7 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        width: 100%;
 
         & div {
           border-radius: 0.347vw;
@@ -190,7 +191,8 @@
           }
 
           .assign_name {
-            width: 1.736vw;
+            /*width: 1.736vw;*/
+            width: auto;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -508,10 +510,10 @@
               width: 5.787vw;
             }
             &.eight {
-              width: 8.681vw;
+              width: 13.681vw;
             }
             &.nine {
-              width: 11.574vw;
+              width: 6.574vw;
             }
             &.ten {
               width: 5.787vw;
@@ -606,10 +608,10 @@
               width: 5.787vw;
             }
             &.eight {
-              width: 8.681vw;
+              width: 13.681vw;
             }
             &.nine {
-              width: 11.574vw;
+              width: 6.574vw;
             }
             &.ten {
               width: 5.787vw;
@@ -2478,4 +2480,15 @@
       }
     }
   }
+}
+
+.important-note {
+  padding: 0.81vw 0.926vw 0.81vw 0.463vw;
+  border-radius: 0.463vw;
+  background: var(--warning-lighter, #FFF5CC);
+  color: var(--warning-darker, #7A4100);
+
+  font-size: 0.810vw;
+  font-weight: 400;
+  line-height: 1.273vw;
 }

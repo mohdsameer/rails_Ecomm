@@ -1580,8 +1580,8 @@
             align-items: center;
             gap: 0.463vw;
             border-radius: 0.463vw;
-            background: var(--error-contrast-text, #FFF);
-            color: var(--grey-800, #212B36);
+            background: #FFF;
+            color: #212B36;
             font-size: 0.752vw;
             font-weight: 700;
             line-height: 1.273vw;
@@ -1594,8 +1594,42 @@
           }
         }
 
+        .selected_row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background: #D8FBDE;
+          padding: 0.694vw 1.042vw 0.694vw 1.157vw;
+
+          .selected_text {
+            color: #212B36;
+            font-size: 0.926vw;
+            font-weight: 600;
+            line-height: 1.389vw;
+          }
+
+          .continue_cart {
+            display: flex;
+            padding: 0.231vw 0.579vw;
+            justify-content: center;
+            align-items: center;
+            gap: 0.463vw;
+            border-radius: 0.463vw;
+            background: #FFF;
+            color: #212B36;
+            font-size: 0.752vw;
+            font-weight: 700;
+            line-height: 1.273vw;
+
+            .cart_icon {
+              height: 1.389vw;
+              width: 1.389vw;
+            }
+          }
+        }
+
         .content_text {
-          color: var(--common-black, #000);
+          color: #000;
           font-size: 1.389vw;
           font-weight: 700;
           line-height: 1.620vw;
@@ -1605,9 +1639,14 @@
           width: 57.234vw;
           height: 14.468vw;
           overflow-y: auto;
+          transform: scaleX(-1);
+          padding: 0 1vw 0 0;
 
           &::-webkit-scrollbar {
-            display: none;
+            //display: none;
+          }
+          &::-webkit-scrollbar-thumb {
+            background-color: #637381;
           }
 
           .scroll_content {
@@ -1615,15 +1654,16 @@
             padding: 0.694vw 0px;
             align-items: center;
             gap: 17.477vw;
-            border-bottom: 0.058vw solid var(--grey-400, #C4CDD5);
+            border-bottom: 0.058vw solid #C4CDD5;
+            transform: scaleX(-1);
 
             &.check_content {
               gap: 0px;
             }
 
             &.check_active {
-              border-bottom: 0.058vw solid var(--grey-400, #C4CDD5);
-              background: var(--action-light-hover, rgba(145, 158, 171, 0.08));
+              border-bottom: 0.058vw solid #C4CDD5;
+              background: rgba(145, 158, 171, 0.08);
             }
 
             .image_text_wrap {
@@ -1637,6 +1677,51 @@
               width: 36.863vw;
               position: relative;
 
+              .custom_checkbox_wrapper {
+                position: relative;
+                display: flex;
+
+                .check_field {
+                  position: absolute;
+                  opacity: 0;
+                  cursor: pointer;
+                  z-index: 1;
+                  margin: 0;
+
+                  &:checked {
+                    & + label {
+                      background: #ffffff;
+
+                      &:before {
+                        background-image: asset_url('checkbox.png');
+                      }
+                    }
+                  }
+                }
+
+                label {
+                  width: 1.389vw;
+                  height: 1.389vw;
+                  border: 1px solid #637381;
+                  border-radius: 0.463vw;
+                  cursor: pointer;
+                  position: relative;
+
+                  &:before {
+                    content: '';
+                    color: #ffffff;
+                    position: absolute;
+                    height: 1.389vw;
+                    width: 1.389vw;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    border-radius: 0.463vw;
+                    top: -1px;
+                    left: -1px;
+                  }
+                }
+              }
+
               .img_box {
                 width: 5.787vw;
                 height: 5.787vw;
@@ -1647,7 +1732,7 @@
                 align-items: center;
 
                 img {
-                  height: auto;
+                  height: 100%;
                   width: 100%;
                   object-fit: contain;
                 }

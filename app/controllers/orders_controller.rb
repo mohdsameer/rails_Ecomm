@@ -82,43 +82,6 @@ class OrdersController < ApplicationController
     redirect_to edit_order_path(@order)
   end
 
-  def create
-    if params[:submit_type].eql?('mark_complete')
-      params[:order_edit_status] = 1
-    else
-      params[:order_edit_status] = 0
-    end
-
-    if params[:variants].present?
-      @order = Order.create(order_params)
-      @order.shipping_label_image.attach(params[:shipping_label_image])
-      @order.packing_slip_image.attach(params[:packing_slip_image])
-      @order.gift_message_slip_image.attach(params[:gift_message_slip_image])
-      @order.design_file_1_image.attach(params[:design_file_1_image])
-      @order.design_file_2_image.attach(params[:design_file_2_image])
-      @order.additional_file_image.attach(params[:additional_file_image])
-    end
-
-    params[:producers_variants].each do |producer_id, variants|
-      variants.each do |variant_id, quantity|
-        product = Variant.find_by(id: variant_id).product
-        @order.order_products.find_by(variant_id: variant_id, user_id: producer_id)&.update(product_quantity: quantity.to_i)
-      end
-    end
-
-    respond_to do |format|
-      format.turbo_stream do
-        if params[:submit_type].eql?('shipping')
-          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
-        else
-          redirect_to orders_path
-        end
-      end
-
-      format.html { redirect_to orders_path }
-    end
-  end
-
   def edit
     @order     = Order.find_by(id: params[:id])
     @producers = Producer.all
@@ -143,15 +106,9 @@ class OrdersController < ApplicationController
     elsif params[:request_type] == "Cancel"
       @order.update(order_status: 4)
     else
-      if params[:submit_type].eql?('mark_complete')
-        params[:order_edit_status] = 1
-      else
-        params[:order_edit_status] = 0
-      end
+      @order.update(additional_comment: params[:additional_comment])
 
-      @countries = ISO3166::Country.all
-
-      @order.update(order_edit_status: params[:order_edit_status], additional_comment: params[:additional_comment])
+      @order.update(order_edit_status: :completed, request_revision: false) if @order.incomplete? && params[:submit_type].eql?('mark_complete')
 
       if params[:shipping_label_image].present?
         @order.shipping_label_image.attach(params[:shipping_label_image])
@@ -258,7 +215,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         if params[:submit_type].eql?('shipping')
-          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order, countries: @countries })
+          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_two', locals: { order: @order })
         elsif params[:submit_type].eql?('design_added')
           render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/edit_step_one', locals: { order: @order })
         else
@@ -437,10 +394,10 @@ class OrdersController < ApplicationController
 
   def assignee_create
     @designer = User.find_by(id: params[:assign_detail][:designer])
-    @assigne  = AssignDetail.new(order_id: @order.id, user_id: @designer.id).save
+    @assigne  = AssignDetail.create(order_id: @order.id, user_id: @designer.id)
 
-    Order.find(@order.id).update(due_date: assigne_params[:due_date])
-    AssignDetail.last.update(assigne_params)
+    @order.update(due_date: assigne_params[:due_date], order_edit_status: :incomplete, request_revision: false, revision_info: nil)
+    @assigne.update(assigne_params)
 
     redirect_to orders_path, notice: 'Assigne Process Done.'
   end
@@ -740,20 +697,18 @@ class OrdersController < ApplicationController
     if @error_message.present? && params[:commit].eql?('Purchase Shipping Label')
       redirect_to edit_order_path(@order, step: :shipping_method, error_message: @error_message)
     else
-      order_edit_status = params[:submit_type] == "save_later" ? :incomplete : :completed
-      priority          = params[:priority].present? ? :URGENT : :GENERAL
-      order_status      = order_edit_status == :completed ? :inproduction : :onhold
+      priority = params[:priority].present? ? :URGENT : :GENERAL
 
-      @order.update(shippo_rate_id:     params[:shippo_rate_id],
-                    order_edit_status:  order_edit_status,
-                    priority:           priority,
-                    order_status:       order_status,
-                    shipping_cost:      params[:shipping_cost])
+      @order.update(shippo_rate_id: params[:shippo_rate_id],
+                    priority:       priority,
+                    shipping_cost:  params[:shipping_cost])
 
       if params[:submit_type].eql?('save_later') && !params[:commit].eql?('Purchase Shipping Label')
         redirect_to orders_path
       elsif params[:commit].eql?('Purchase Shipping Label')
         redirect_to edit_order_path(@order, step: :shipping_method)
+      else
+        @order.update(submitted_at: DateTime.current, order_status: :inproduction)
       end
     end
   end
@@ -869,7 +824,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html
       format.js do
-        html_data = render_to_string(partial: "orders/products_search_result", locals: { products: @products }, layout: false)
+        html_data = render_to_string(partial: "orders/products_search_result", locals: { products: @products, order: @order }, layout: false)
         render json: { html_data: html_data }
       end
     end
@@ -879,6 +834,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:order_id])
     @product = Product.find_by(id: params[:product_id])
     @variants = @product.variants.where(archive: false)
+    @variant_ids = params[:variant_ids] || []
 
     if params[:query].present?
       @variants = @variants.where('LOWER(variants.color) LIKE :query OR LOWER(variants.real_variant_sku) LIKE :query', query: "%#{params[:query].downcase}%")
@@ -887,7 +843,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html
       format.js do
-        html_data = render_to_string(partial: "orders/variants_list", locals: { variants: @variants }, layout: false)
+        html_data = render_to_string(partial: "orders/variants_list", locals: { variants: @variants, product: @product, order: @order, variant_ids: @variant_ids }, layout: false)
         render json: { html_data: html_data }
       end
     end
@@ -955,6 +911,8 @@ class OrdersController < ApplicationController
 
   def request_revision_update
     @order.update(request_revision: true, revision_info: params[:order][:revision_info], order_edit_status: 0)
+
+    redirect_to edit_order_path(@order)
   end
 
   private
@@ -966,7 +924,6 @@ class OrdersController < ApplicationController
                   :order_edit_status,
                   :price,
                   :order_status,
-                  :order_edit_status,
                   :due_date,
                   :shipping_label_image,
                   :packing_slip_image,
