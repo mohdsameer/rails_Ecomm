@@ -665,7 +665,10 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @sender })
+        render turbo_stream: [
+          turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @sender }),
+          turbo_stream.replace("edit-sender", partial: 'shared/close_modal', locals: { modal_id: 'edit-sender' })
+        ]
       end
     end
   end
