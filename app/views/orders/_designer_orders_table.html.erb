@@ -25,10 +25,6 @@
 </div>
 
 <script type="text/javascript">
-  function changeRowsPerPage(value) {
-    window.location.href = window.location.pathname + "?per_page=" + value;
-  }
-
   $('#tabs-nav li:first-child').addClass('active');
   $('.tab-content').hide();
   $('.tab-content:first').show();
@@ -42,13 +38,6 @@
     $(activeTab).fadeIn();
     return false;
   });
-
-  // $('.collapse_show').click(function () {
-  //   $(this).closest('.tbody_row').find('.collapse_data').slideDown(800);
-  // });
-  // $('.collapse_hide').click(function () {
-  //   $(this).closest('.tbody_row').find('.collapse_data').slideUp(800);
-  // });
 
   $('.drop_icon_box').on('click', function() {
     var dropdownContent = $(this).closest('.tbody_row').find('.menu_drop')

@@ -335,12 +335,12 @@
       </div>
       <div class="content_text">Dense</div>
     </div>
-    <div class="pages_content">
+    <div class="pages_content" data-controller="pagination">
       <div>
         Rows per page:
       </div>
       <div>
-        <select id="rowsPerPage" onchange="changeRowsPerPage(this.value)">
+        <select class="border-0" id="rowsPerPage" data-pagination-target="changePerPage">
           <option value="">None</option>
           <option value="20">20</option>
           <option value="50">50</option>
@@ -350,7 +350,7 @@
       <div><%= pagination_information(orders) %></div>
       <div class="d-flex">
         <div class="pagination">
-          <%= will_paginate orders %>
+          <%= will_paginate(orders, previous_label: '<', next_label: '>', page_links: false) %>
         </div>
       </div>
     </div>
