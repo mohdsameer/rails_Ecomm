@@ -80,7 +80,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :producers, only: [] do
+  resources :producers, only: [:edit, :update] do
     resources :producer_variant_histories, only: [:index]
   end
 

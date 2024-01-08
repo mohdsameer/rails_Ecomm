@@ -120,12 +120,16 @@
               </div>
               <div class="order_td last">
                 <div class="more_menu">
-                  <a href="<%= on_hold_popup_order_path(order) %>"  data-turbo-frame="on-hold-order-modal" class= "more_link">
+                  <a href="<%= on_hold_popup_order_path(order) %>" data-turbo-frame="on-hold-order-modal" class= "more_link">
                     <%= image_tag 'View.png', alt: 'icon'%>
                   </a>
-                  <%= link_to edit_order_path(order), class: 'more_link' do %>
-                    <%= image_tag 'edit_row.png', alt: 'icon'%>
+
+                  <% if !order.inproduction? && !order.fullfilled? %>
+                    <%= link_to edit_order_path(order), class: 'more_link' do %>
+                      <%= image_tag 'edit_row.png', alt: 'icon'%>
+                    <% end %>
                   <% end %>
+
                   <div class="more_link">
                     <span>&nbsp;</span>
                   </div>

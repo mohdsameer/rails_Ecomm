@@ -173,4 +173,8 @@ class Order < ApplicationRecord
   def total_quantity
     order_products.pluck(:product_quantity).sum
   end
+
+  def position_of_shippo_label(shippo_label)
+    shippo_labels.to_a.index(shippo_label).to_i + 1
+  end
 end

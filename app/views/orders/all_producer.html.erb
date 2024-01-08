@@ -13,11 +13,9 @@
               <div class="scroll_content">
                 <div class="image_text_wrap">
                   <div class="text_wrap">
-                    <%= producer.name %>
-                    <div class="light_text"><%= producer.address.to_str %></div>
+                    <%= producer.company_name %>
+                    <div class="light_text"><%= "#{producer.address.city}, #{producer.address.state}" %></div>
                   </div>
-
-                  <!-- <label class="image_label">LASER ENGRAVING</label> -->
                 </div>
 
                 <div class="choose_btn">

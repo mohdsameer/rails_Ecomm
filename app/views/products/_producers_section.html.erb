@@ -1,0 +1,66 @@
+<div id="producers-section" class="producers_section mb-2">
+  <h5 class="producers_head">Producers</h5>
+
+  <table class="producers_table">
+    <tr>
+      <th class="table_head">Producer Company Name</th>
+      <th class="table_head">Producer Sender Address</th>
+      <th class="table_head">Blank Price</th>
+      <th class="table_head">Front Side Print Price</th>
+      <th class="table_head">Back Side Print Price</th>
+
+      <% unless f.object.new_record? %>
+        <th class="table_head">Edit Pricing</th>
+      <% end %>
+    </tr>
+
+    <%= f.fields_for :product_producer_pricings do |ppp| %>
+      <%= ppp.hidden_field :user_id %>
+      <tr>
+        <td class="table_td"><%= ppp.object&.producer&.company_name %></td>
+        <td class="table_td">
+          <%= render 'producer_address', producer: ppp.object&.producer %>
+
+          <a href="<%= edit_producer_path(ppp.object.producer) %>" data-turbo-frame="producer-address">
+            <%= image_tag 'pencil.svg' %>
+          </a>
+        </td>
+
+        <% if ppp.object.new_record? %>
+          <td class="table_td">
+            <%= ppp.number_field :blank_price, step: 0.01, class: 'form-control w-50 mx-auto' %>
+          </td>
+
+          <td class="table_td">
+            <%= ppp.number_field :front_side_print_price, step: 0.01, class: 'form-control w-50 mx-auto' %>
+          </td>
+
+          <td class="table_td">
+            <%= ppp.number_field :back_side_print_price, step: 0.01, class: 'form-control w-50 mx-auto' %>
+          </td>
+        <% else %>
+          <td class="table_td">
+            <%= ppp.object.blank_price %>
+          </td>
+
+          <td class="table_td">
+            <%= ppp.object.front_side_print_price %>
+          </td>
+
+          <td class="table_td">
+            <%= ppp.object.back_side_print_price %>
+          </td>
+
+          <td class="table_td edit_icon">
+            <a href="<%= edit_producer_product_path(user_id: ppp.object.producer, product_id: product.id) %>" data-turbo-frame="edit_producer">
+              <%= image_tag 'pencil.svg' %>
+            </a>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <turbo-frame id="edit_producer" class="producer_card"></turbo-frame>
+  <turbo-frame id="producer-address" class="producer_card"></turbo-frame>
+</div>

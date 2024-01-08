@@ -518,12 +518,14 @@ class OrdersController < ApplicationController
     producer   = @order.producers.last
     dimensions = @order.package_dimensions
 
-    @sender    = @order.create_sender
+    @sender = @order.sender
 
-    @sender.create_address(producer.address.attributes.except('id', 'addressable_id', 'addressable_type',
-                                                              'shippo_address_id', 'created_at', 'updated_at'))
+    @sender = @order.create_sender unless @sender.present?
 
-    @sender.address.update(fullname: producer.name, email: producer.email)
+    unless @sender.address.present?
+      @sender.create_address(producer.address.attributes.except('id', 'addressable_id', 'addressable_type',
+                                                                'shippo_address_id', 'created_at', 'updated_at'))
+    end
 
     dimensions_hash = {
       length:        dimensions[:length],
@@ -576,6 +578,7 @@ class OrdersController < ApplicationController
         parcels:      parcel,
         async:        false
       )
+
       @order.create_address(address_params)
 
       @order.update(shippo_shipment_id: shipment["object_id"])
@@ -592,12 +595,14 @@ class OrdersController < ApplicationController
 
     create_shipment
 
+    @order.reload
+
     respond_to do |format|
       format.turbo_stream do
         if params[:redirect_orders].present?
           redirect_to orders_path
         else
-          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @sender })
+          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @order.sender })
         end
       end
     end
@@ -680,7 +685,7 @@ class OrdersController < ApplicationController
       shippo_label = @order.shippo_labels.create(shippo_rate_id: params[:shippo_rate_id])
 
       if params[:manual_upload_file].present?
-        shippo_label.shipo_transaction_label.attach(io: params[:manual_upload_file], filename: "order-label-#{@order.id}-#{shippo_label.id}")
+        shippo_label.shipo_transaction_label.attach(io: params[:manual_upload_file], filename: "Order #{@order.id} - label #{@order.position_of_shippo_label(shippo_label)}")
       elsif params[:shippo_rate_id] != 'manual_upload'
         transaction = Shippo::Transaction.create(rate: params[:shippo_rate_id], label_file_type: "PDF", async: false)
 
@@ -688,7 +693,7 @@ class OrdersController < ApplicationController
           pdf_file = URI.open(transaction["label_url"])
 
           shippo_label.update(shippo_transaction_id: transaction["object_id"])
-          shippo_label.shipo_transaction_label.attach(io: pdf_file, filename: "order-label-#{@order.id}-#{shippo_label.id}")
+          shippo_label.shipo_transaction_label.attach(io: pdf_file, filename: "Order #{@order.id} - label #{@order.position_of_shippo_label(shippo_label)}")
         else
           @error_message = transaction["messages"]&.pluck("text")&.join(", ")
         end

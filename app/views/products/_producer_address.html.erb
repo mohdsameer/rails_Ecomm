@@ -1,0 +1,4 @@
+<span id="product-producer-address-<%= producer.id %>">
+  <%= producer.name || producer.address.fullname %>: 
+  <%= producer&.address&.to_str %>    
+</span>

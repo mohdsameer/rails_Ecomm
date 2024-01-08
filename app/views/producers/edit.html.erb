@@ -1,0 +1,34 @@
+<turbo-frame id="producer-address"
+             class="producer_card">
+
+  <% country       = ISO3166::Country.find_country_by_alpha2('US') %>
+  <% states        = country.subdivisions %>
+  <% state_options = states.map { |key, value| [value.name, value.name] } %>
+
+  <div data-controller="modals"
+       data-modals-modal-id-value="producer-address">
+    
+    <%= form_for @producer do |f| %>
+      <div class="producer_card">
+        <h5 class="producer_head">Ship from Address</h5>
+        <div class="p-4">
+          <%= f.fields_for :address do |address| %>
+            <%= address.text_field :fullname, class: "form-control", placeholder: "Name" %>
+            <%= address.text_field :address1, class: "form-control mt-2", placeholder: "address1" %>
+            <%= address.text_field :address2, class: "form-control mt-2", placeholder: "address2" %>
+
+            <div class="input-group mt-2">
+              <%= address.text_field :city, class: "form-control", placeholder: "City" %>
+              <%= address.select :state, options_for_select(state_options, address.object.state), {}, class: "form-control" %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="bottom_btn_group">
+          <%= link_to 'Cancel', close_modal_path(modal_id: 'producer-address'), data: { 'turbo-method': :post }, class: 'btn btn-secondary' %>
+          <%= f.submit 'Save', class: "btn btn-success" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</turbo-frame>

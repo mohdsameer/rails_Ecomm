@@ -4,9 +4,9 @@
        class="edit-sender-modal on-hold-order-modal"
        data-controller="modals address"
        data-address-countries-value="<%= countries.to_json %>"
-       data-address-saved-country-value="<%= @order&.address&.country %>"
-       data-address-saved-state-value="<%= @order&.address&.state %>"
-       data-modals-modal-id-value="edit-sender-modal">
+       data-address-saved-country-value="<%= @order&.sender&.address&.country %>"
+       data-address-saved-state-value="<%= @order&.sender&.address&.state %>"
+       data-modals-modal-id-value="edit-sender">
 
     <div class="on-hold-order-outer">
       <div class="on_hold_pop_wrapper">
