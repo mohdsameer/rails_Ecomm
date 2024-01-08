@@ -24,10 +24,6 @@ class ProducersController < ApplicationController
   end
 
   def producer_params
-    if params[:producer][:address_attributes][:fullname].present?
-      params[:producer][:name] = params[:producer][:address_attributes][:fullname]
-    end
-
     params.require(:producer).permit(
       :name,
       :company_name,
