@@ -179,11 +179,9 @@ class Order < ApplicationRecord
   end
 
   def update_producer_payments
-    if order_status.eql?(:fullfilled)
-      producers.each do |producer|
-        producer_amount = order_products.where(user_id: producer.id).sum(:total_cost)
-        producer.update(pending_payment: producer.pending_payment.to_f + producer_amount.to_f)
-      end
+    producers.each do |producer|
+      producer_amount = order_products.where(user_id: producer.id).sum(:total_cost)
+      producer.update(pending_payment: producer.pending_payment.to_f + producer_amount.to_f)
     end
   end
 
