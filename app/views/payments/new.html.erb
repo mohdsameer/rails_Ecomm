@@ -1,13 +1,23 @@
-<%= form_tag payments_path do %>
-  <label class="amount">
-    <span>Amount: $5.00</span>
-  </label>
+<turbo-frame id="new-payment-popup">
+  <div id="enter_payment_model"
+       class="enter_payment_model"
+       data-controller="modals"
+       data-modals-modal-id-value="new-payment-popup">
 
-  <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
-    data-description="A month's subscription"
-    data-amount="500"
-    data-locale="auto">
-  </script>
-<% end %>
+    <div class="enter_payment_wrapper">
+      <%= form_for @payment, html: { class: 'enter_payment_pop' }, data: { 'turbo-frame': '_top' } do |f| %>
+        <%= f.hidden_field :receiver_id %>
+
+        <%= image_tag "close", alt: "icon", class: "close_icon" %>
+        <div class="enter_pop_head">Enter Payment Amount</div>
+
+        <div class="input_group">
+          <div class="input_icon">$</div>
+          <%= f.number_field :amount, step: 0.001, class: 'input_here', placeholder: '0000', min: 0 %>
+        </div>
+
+        <%= f.submit 'Submit', class: 'submit_btn' %>
+      <% end %>
+    </div>
+  </div>
+</turbo-frame>

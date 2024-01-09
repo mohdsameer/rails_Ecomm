@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   root "dashboard#index"
 
-  get 'dashboard/producer_panel_dasboard'
-  get 'dashboard/choose_shiping'
+  get '/dashboard/producer/:producer_id', to: 'dashboard#show', as: :producer_dashboard
+  get '/dashboard/designer/:designer_id', to: 'dashboard#show', as: :designer_dashboard
+
   get 'dashboard/payment_amount_popup'
+
   get '/states', to: 'addresses#get_states'
   post '/close_modal/:modal_id', to: 'modals#close', as: :close_modal
-
-  resources :dashboard, only: [:show]
 
   resources :products, only: [:index, :show, :new, :create,:edit, :update] do
     delete 'remove_variant', on: :member
@@ -81,7 +81,12 @@ Rails.application.routes.draw do
   end
 
   resources :producers, only: [:edit, :update] do
+    post :request_payment, on: :member
     resources :producer_variant_histories, only: [:index]
+  end
+
+  resources :designers, only: [] do
+    post :request_payment, on: :member
   end
 
   # Sessions routes
@@ -92,5 +97,7 @@ Rails.application.routes.draw do
   get '/etsy/authorize', to: 'etsy#authorize'
   get '/etsy/callback', to: 'etsy#callback'
 
-  resources :payments
+  resources :payments, only: [:new, :create] do
+    get :export, on: :collection
+  end
 end

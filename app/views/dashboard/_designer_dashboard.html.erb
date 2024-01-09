@@ -1,0 +1,103 @@
+<div class="hero_wrapper">
+  <%= render "shared/sidebar" %>
+  <div class="designer_dasboard_wrapper">
+    <div class="order_head">
+
+      <div class="head_content">
+        <%= link_to new_order_path , class: 'manual_btn' do %>
+          <%= image_tag 'ic_plus', alt: 'icon', class: 'plus_icon' %>
+          <span>Create Manual Order</span>
+        <% end %>
+          <%= render 'shared/profile_head' %>
+      </div>
+    </div>
+
+    <div class="designer_name"><%= designer.name %></div>
+
+    <div class="total_wrap">
+      <div class="total_box">
+        <div class="total_head">Total Orders Completed</div>
+        <div class="total_count"><%= designer.no_of_orders_completed %></div>
+      </div>
+    </div>
+
+    <div class="designer_name finance">Finance</div>
+    <div class="total_wrap">
+      <div class="total_box finance_box">
+        <div class="total_head">Current Balance</div>
+        <div class="total_count">$<%= format_number(designer.pending_payment.to_f.round(2)) %></div>
+        <div class="group_text">
+          <div class="group_content">
+            <div class="text_head">Received Amount</div>
+            <div class="text_data">$<%= format_number(designer.received_payment.to_f.round(2)) %></div>
+          </div>
+          <div class="group_content">
+            <div class="text_head">Requested Amount</div>
+            <div class="text_data">$<%= format_number(designer.requested_payment.to_f.round(2)) %></div>
+          </div>
+          <div class="group_content">
+            <div class="text_head">Total Earned</div>
+            <div class="text_data bold_text">$<%= format_number(designer.total_earned) %></div>
+          </div>
+        </div>
+
+        <% if current_user.admin? && designer.has_requested_payment? %>
+          <%= link_to new_payment_path(user_id: designer.id),
+              class: 'request_btn',
+              data: { turbo_frame: "new-payment-popup" } do %>
+
+            MARK AS PAID
+          <% end %>
+        <% elsif current_user.designer? && designer.has_pending_payment? %>
+          <%= link_to 'Request Payment Now', request_payment_designer_path(designer), class: 'request_btn', data: { 'turbo-method': :post } %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="designer_name finance">Payment History</div>
+
+    <%= render 'payment_history', payments: payments, user: designer %>
+  </div>
+</div>
+
+<turbo-frame id="new-payment-popup"></turbo-frame>
+
+<!-- <script type="text/javascript">
+  // document.querySelectorAll(".__range-step").forEach(function(ctrl) {
+  //   var el = ctrl.querySelector('input');        
+  //   var output = ctrl.querySelector('output'); 
+  //   var newPoint, newPlace, offset;
+  //   el.oninput =function(){ 
+  //     // colorize step options
+  //     ctrl.querySelectorAll("option").forEach(function(opt) {
+  //       if(opt.value<=el.valueAsNumber)                
+  //         opt.style.backgroundColor = '#00AB55';
+  //       else
+  //         opt.style.backgroundColor = '#00AB55';
+  //     });           
+  //     // colorize before and after
+  //     var valPercent = (el.valueAsNumber  - parseInt(el.min)) / (parseInt(el.max) - parseInt(el.min));            
+  //     var style = 'background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, ' +
+  //     'color-stop(' + valPercent + ', #00AB55), ' +
+  //     'color-stop(' + valPercent + ', rgba(0, 171, 85, 0.48)));';
+  //     el.style = style;
+
+  //     // Popup
+  //     if((' ' + ctrl.className + ' ').indexOf(' ' + '__range-step-popup' + ' ') > -1)
+  //     {
+  //       var selectedOpt=ctrl.querySelector('option[value="'+el.value+'"]');
+  //       output.innerText= selectedOpt.text;
+  //       output.style.left = "50%"; 
+  //       output.style.left = ((selectedOpt.offsetLeft + selectedOpt.offsetWidth/2) - output.offsetWidth/2) + 'px'; 
+  //     }           
+  //   };
+  //   el.oninput();
+  // });
+
+  // window.onresize = function(){
+  //   document.querySelectorAll(".__range").forEach(function(ctrl) {
+  //     var el = ctrl.querySelector('input');    
+  //     el.oninput();    
+  //   });
+  // };
+</script> -->

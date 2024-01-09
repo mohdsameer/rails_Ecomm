@@ -1,0 +1,134 @@
+<div class="hero_wrapper">
+  <%= render "shared/sidebar" %>
+
+  <div class="producer_panel_wrapper">
+    <div class="order_head">
+      <div class="head_content">
+        <%= render 'shared/profile_head' %>
+      </div>
+    </div>
+
+    <div class="designer_name"><%= producer.name %></div>
+
+    <div class="total_wrapper">
+      <div class="total_content">
+        <div class="total_head">Total Earned</div>
+        <div class="total_text">$<%= format_number(producer.total_earned) %></div>
+      </div>
+
+      <div class="total_content">
+        <div class="total_head">Total Number of Orders Completed</div>
+        <div class="total_text"><%= format_number(producer.no_of_completed_orders) %></div>
+      </div>
+
+      <div class="total_content">
+        <div class="total_head">Total Number of Items Produced</div>
+        <div class="total_text"><%= format_number(producer.no_of_item_produced) %></div>
+      </div>
+    </div>
+
+    <div class="producer_payments">
+      <div class="payment_head">Payments</div>
+
+      <div class="payment_body">
+        <div class="payment_items">
+          <div class="items_head">Pending Payment</div>
+          <div class="items_text">$<%= format_number(producer.pending_payment.to_f.round(2)) %></div>
+        </div>
+
+        <div class="payment_items">
+          <div class="items_head">Received Payment</div>
+          <div class="items_text green_text">$<%= format_number(producer.received_payment.to_f.round(2)) %></div>
+        </div>
+
+        <div class="payment_items">
+          <div class="items_head">Total Amount</div>
+          <div class="items_text blue_text">$<%= format_number((producer.pending_payment.to_f + producer.received_payment.to_f).round(2)) %></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="next_payment_wrap">
+      <div class="next_head">Requested Payment</div>
+      <div class="next_content">
+        <div class="content_head"><sup>$</sup><%= format_number(producer.requested_payment.to_f.round(2)) %></div>
+
+        <!-- CURRENTLY NOT USABLE -->
+        <!-- <fieldset class="formSlider">
+          <div class="__range __range-step">
+            <input value="3" type="range" max="5" min="1" step="0.01" list="ticks1">
+            <datalist id="ticks1">
+              <option value="1"></option>
+              <option value="2"></option>
+              <option value="3"></option>
+              <option value="4"></option>
+              <option value="5"></option>
+            </datalist>
+          </div>
+        </fieldset> -->
+
+        <% if current_user.admin? && producer.has_requested_payment? %>
+          <div class="next_content_btn">
+            <%= link_to new_payment_path(user_id: producer.id),
+                class: 'request_btn',
+                data: { turbo_frame: "new-payment-popup" } do %>
+
+              MARK AS PAID
+            <% end %>
+          </div>
+        <% elsif current_user.producer? && producer.has_pending_payment? %>
+          <div class="next_content_btn">
+            <%= link_to request_payment_producer_path(producer), data: { 'turbo-method': :post }, class: 'request_btn' do %>
+              Request Payment Now
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%= render 'payment_history', payments: payments, user: producer %>
+  </div>
+</div>
+
+<turbo-frame id="new-payment-popup"></turbo-frame>
+
+<!-- CURRENTLY NOT USABLE -->
+<!-- <script type="text/javascript">
+  // document.querySelectorAll(".__range-step").forEach(function(ctrl) {
+  //   var el = ctrl.querySelector('input');        
+  //   var output = ctrl.querySelector('output'); 
+  //   var newPoint, newPlace, offset;
+  //   el.oninput =function(){ 
+  //     // colorize step options
+  //     ctrl.querySelectorAll("option").forEach(function(opt) {
+  //       if(opt.value<=el.valueAsNumber)                
+  //         opt.style.backgroundColor = '#00AB55';
+  //       else
+  //         opt.style.backgroundColor = '#00AB55';
+  //     });           
+  //     // colorize before and after
+  //     var valPercent = (el.valueAsNumber  - parseInt(el.min)) / (parseInt(el.max) - parseInt(el.min));            
+  //     var style = 'background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, ' +
+  //     'color-stop(' + valPercent + ', #00AB55), ' +
+  //     'color-stop(' + valPercent + ', rgba(0, 171, 85, 0.48)));';
+  //     el.style = style;
+
+  //     // Popup
+  //     if((' ' + ctrl.className + ' ').indexOf(' ' + '__range-step-popup' + ' ') > -1)
+  //       {
+  //         var selectedOpt=ctrl.querySelector('option[value="'+el.value+'"]');
+  //         output.innerText= selectedOpt.text;
+  //         output.style.left = "50%"; 
+  //         output.style.left = ((selectedOpt.offsetLeft + selectedOpt.offsetWidth/2) - output.offsetWidth/2) + 'px'; 
+  //       }           
+  //   };
+  //   el.oninput();
+  // });
+
+  // window.onresize = function(){
+  //   document.querySelectorAll(".__range").forEach(function(ctrl) {
+  //     var el = ctrl.querySelector('input');    
+  //     el.oninput();    
+  //   });
+  // };
+</script> -->

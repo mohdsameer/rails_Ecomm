@@ -177,4 +177,29 @@ class Order < ApplicationRecord
   def position_of_shippo_label(shippo_label)
     shippo_labels.to_a.index(shippo_label).to_i + 1
   end
+
+  def update_producer_payments
+    if order_status.eql?(:fullfilled)
+      producers.each do |producer|
+        producer_amount = order_products.where(user_id: producer.id).sum(:total_cost)
+        producer.update(pending_payment: producer.pending_payment.to_f + producer_amount.to_f)
+      end
+    end
+  end
+
+  def update_designer_payments
+    assign_detail   = assign_details.last
+    designer        = assign_detail.designer
+    designer_price  = assign_detail.price_for_total.presence || assign_detail.price_per_design.to_f * order_products.pluck(:product_quantity).compact.sum.to_i
+
+    designer.update(pending_payment: designer.pending_payment.to_f + designer_price.to_f)
+  end
+
+  def decrease_designer_payments
+    assign_detail   = assign_details.last
+    designer        = assign_detail.designer
+    designer_price  = assign_detail.price_for_total.presence || assign_detail.price_per_design.to_f * order_products.pluck(:product_quantity).compact.sum.to_i
+
+    designer.update(pending_payment: designer.pending_payment.to_f - designer_price.to_f)
+  end
 end

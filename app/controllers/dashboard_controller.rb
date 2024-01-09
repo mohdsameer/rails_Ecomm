@@ -1,19 +1,21 @@
 class DashboardController < ApplicationController
   def index
-    @orders = Order.where(order_edit_status: "completed")
-    @users = User.where.not(type: "Admin")
+    if current_user.admin?
+      @producers = Producer.all
+      @designers = Designer.all
+    end
+
+    @user     = current_user
+    @payments = @user.payments.paginate(page: params[:page], per_page: 9) unless @user.admin?
   end
 
   def show
-    @user = User.find_by(id: params[:id])
-    if @user.type == "Designer"
-      @orders = Order.where(order_edit_status: "completed")
-      render :_designer_panel_dashboard
-    else
-      render :_producer_panel_dashboard
+    if params[:designer_id].present?
+      @designer = Designer.find(params[:designer_id])
+      @payments = @designer.payments.paginate(page: params[:page], per_page: 9)
+    elsif params[:producer_id].present?
+      @producer = Producer.find(params[:producer_id])
+      @payments = @producer.payments.paginate(page: params[:page], per_page: 9)
     end
   end
-
-  def payment_amount_popup; end
-
 end

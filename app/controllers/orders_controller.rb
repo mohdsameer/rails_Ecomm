@@ -46,15 +46,15 @@ class OrdersController < ApplicationController
 
     if current_user.type.eql?('Producer')
       @orders = @orders
-                      .where(order_products: { user_id: current_user.id })
-                      .where.not(order_status: ["cancel", "onhold", "rejected"])
-                      .order(priority: :desc, created_at: :desc)
+                     .where(order_products: { user_id: current_user.id })
+                     .where.not(order_status: ["cancel", "onhold", "rejected"])
+                     .order(priority: :desc, created_at: :desc)
 
     elsif current_user.type.eql?('Designer')
       @orders =  @orders
-                        .joins(:assign_details)
-                        .where.not(assign_details: nil)
-                        .order(created_at: :desc)
+                      .joins(:assign_details)
+                      .where.not(assign_details: nil)
+                      .order(created_at: :desc)
     else
       @orders = @orders.order(created_at: :desc)
     end
@@ -101,6 +101,7 @@ class OrdersController < ApplicationController
   def update
     if params[:request_type] == "Confirm"
       @order.update(order_edit_status: 1, order_status: 3)
+      @order.update_producer_payments
     elsif params[:request_type] == "Reject"
       @order.update(order_status: 1, reject_reason: params[:order][:reject_reason])
     elsif params[:request_type] == "Cancel"
@@ -108,7 +109,10 @@ class OrdersController < ApplicationController
     else
       @order.update(additional_comment: params[:additional_comment])
 
-      @order.update(order_edit_status: :completed, request_revision: false) if @order.incomplete? && params[:submit_type].eql?('mark_complete')
+      if @order.incomplete? && params[:submit_type].eql?('mark_complete')
+        @order.update(order_edit_status: :completed, request_revision: false)
+        @order.update_designer_payments
+      end
 
       if params[:shipping_label_image].present?
         @order.shipping_label_image.attach(params[:shipping_label_image])
@@ -919,6 +923,7 @@ class OrdersController < ApplicationController
 
   def request_revision_update
     @order.update(request_revision: true, revision_info: params[:order][:revision_info], order_edit_status: 0)
+    @order.decrease_designer_payments
 
     redirect_to edit_order_path(@order)
   end

@@ -1,5 +1,5 @@
 class ProducersController < ApplicationController
-  before_action :find_producer
+  before_action :find_producer, only: [:edit, :update, :request_payment]
 
   def edit
   end
@@ -15,6 +15,12 @@ class ProducersController < ApplicationController
         ]
       end
     end
+  end
+
+  def request_payment
+    @producer.request_payment if @producer.has_pending_payment?
+
+    redirect_to root_path
   end
 
   private

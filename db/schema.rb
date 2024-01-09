@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_04_114705) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_08_100712) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -136,6 +136,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_04_114705) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.bigint "receiver_id"
+    t.decimal "amount"
+    t.datetime "paid_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "producer_variant_histories", force: :cascade do |t|
     t.bigint "producers_variant_id"
     t.bigint "user_id"
@@ -246,6 +254,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_04_114705) do
     t.datetime "updated_at", null: false
     t.string "etsy_access_token"
     t.string "etsy_refresh_token"
+    t.decimal "pending_payment", default: "0.0"
+    t.decimal "requested_payment", default: "0.0"
+    t.decimal "received_payment", default: "0.0"
   end
 
   create_table "variants", force: :cascade do |t|

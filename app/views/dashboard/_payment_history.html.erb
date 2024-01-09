@@ -1,0 +1,59 @@
+<div class="history_wrap">
+  <div class="history_head">Payment History</div>
+  <table class="history_table">
+    <tr class="w-100">
+      <th class="th">Date</th>
+      <th class="th">Amount</th>
+    </tr>
+
+    <% payments.each do |payment| %>
+      <tr>
+        <td class="td"><%= payment.paid_at.strftime('%m/%d/%Y') %></td>
+        <td class="td">$<%= format_number(payment.amount.to_f.round(2)) %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="pages_content" data-controller="pagination">
+    <div> Rows per page: </div>
+
+    <!-- <div class="d-flex align-items-center">
+      <div>20</div>
+
+      <div>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+          <path d="M16.3805 9.28957L12.5005 13.1696L8.62047 9.28957C8.23047 8.89957 7.60047 8.89957 7.21047 9.28957C6.82047 9.67957 6.82047 10.3096 7.21047 10.6996L11.8005 15.2896C12.1905 15.6796 12.8205 15.6796 13.2105 15.2896L17.8005 10.6996C18.1905 10.3096 18.1905 9.67957 17.8005 9.28957C17.4105 8.90957 16.7705 8.89957 16.3805 9.28957Z" fill="#212B36"/>
+        </svg>
+      </div>
+    </div> -->
+    <div>
+      <select class="border-0" id="rowsPerPage" data-pagination-target="changePerPage">
+        <option value="">None</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+
+    <div><%= pagination_information(payments) %></div>
+
+    <div class="d-flex">
+      <div class="pagination">
+        <%= will_paginate(payments, previous_label: '<', next_label: '>', page_links: false) %>
+      </div>
+    </div>
+  </div>
+
+  <% if payments.present? %>
+    <%= link_to export_payments_path(user_id: user.id, format: :csv), class: 'export_btn' do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+        <path d="M3.8335 15.8333C3.8335 15.3731 4.20659 15 4.66683 15H16.3335C16.7937 15 17.1668 15.3731 17.1668 15.8333C17.1668 16.2936 16.7937 16.6667 16.3335 16.6667H4.66683C4.20659 16.6667 3.8335 16.2936 3.8335 15.8333Z" fill="white"/>
+        <path d="M4.66683 16.6667C4.20659 16.6667 3.8335 16.2936 3.8335 15.8333V14.1667C3.8335 13.7064 4.20659 13.3333 4.66683 13.3333C5.12707 13.3333 5.50016 13.7064 5.50016 14.1667V15.8333C5.50016 16.2936 5.12707 16.6667 4.66683 16.6667Z" fill="white"/>
+        <path d="M16.3335 16.6667C15.8733 16.6667 15.5002 16.2936 15.5002 15.8333V14.1667C15.5002 13.7064 15.8733 13.3333 16.3335 13.3333C16.7937 13.3333 17.1668 13.7064 17.1668 14.1667V15.8333C17.1668 16.2936 16.7937 16.6667 16.3335 16.6667Z" fill="white"/>
+        <path d="M10.5002 12.5C10.3274 12.5013 10.1585 12.4489 10.0168 12.35L6.6835 10C6.30948 9.73468 6.22011 9.21704 6.4835 8.84167C6.61106 8.65963 6.80606 8.53609 7.02515 8.49854C7.24424 8.46098 7.46925 8.51251 7.65016 8.64167L10.5002 10.6333L13.3335 8.5C13.7017 8.22386 14.224 8.29848 14.5002 8.66667C14.7763 9.03486 14.7017 9.55719 14.3335 9.83333L11.0002 12.3333C10.8559 12.4415 10.6805 12.5 10.5002 12.5Z" fill="white"/>
+        <path d="M10.5002 10.8333C10.0399 10.8333 9.66683 10.4602 9.66683 10V3.33333C9.66683 2.8731 10.0399 2.5 10.5002 2.5C10.9604 2.5 11.3335 2.8731 11.3335 3.33333V10C11.3335 10.4602 10.9604 10.8333 10.5002 10.8333Z" fill="white"/>
+      </svg>
+      Export
+    <% end %>
+  <% end %>
+</div>

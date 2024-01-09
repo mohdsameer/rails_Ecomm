@@ -1,0 +1,5 @@
+<% if @designer.present? %>
+	<%= render "designer_dashboard", designer: @designer, payments: @payments %>
+<% elsif @producer.present? %>
+	<%= render "producer_dashboard", producer: @producer, payments: @payments %>
+<% end %>

@@ -1,7 +1,34 @@
-<% if current_user.type == "Admin" %>
-	<%= render "admin_panel_dashboard" %>
-<%elsif current_user.type == "Designer" %>
-	<%= render "designer_panel_dashboard" %>
+<% if current_user.producer? %>
+  <%= render "producer_dashboard", producer: @user, payments: @payments %>
+<% elsif current_user.designer? %>
+  <%= render "designer_dashboard", designer: @user, payments: @payments %>
 <% else %>
-	<%= render "producer_panel_dashboard" %>
+  <div class="hero_wrapper">
+    <%= render "shared/sidebar" %>
+    <div class="producer_panel_wrapper">
+
+      <div class="order_head">
+        <div class="head_content">
+          <%= render 'shared/profile_head' %>
+        </div>
+      </div>
+
+      <div class="producer_payments">
+        <div class="payment_head">Payments</div>
+        <div class="payment_body">
+          <% @producers.each do |producer| %>
+            <div class="payment_items">
+              <div class="td"> <%= link_to producer.name, producer_dashboard_path(producer_id: producer.id) %></div>
+            </div>
+          <% end %>
+
+          <% @designers.each do |designer| %>
+            <div class="payment_items">
+              <div class="td"> <%= link_to designer.name, designer_dashboard_path(designer_id: designer.id) %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
