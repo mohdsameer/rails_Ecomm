@@ -133,6 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_11_085540) do
     t.boolean "additional_file_image_is_temporary", default: false
     t.decimal "total_cost", default: "0.0"
     t.datetime "submitted_at"
+    t.boolean "mark_completed_by_producer", default: false
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

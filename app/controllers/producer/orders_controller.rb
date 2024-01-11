@@ -1,1 +1,3 @@
-orders_controller.rb
+class Producer::OrdersController < ApplicationController
+
+end

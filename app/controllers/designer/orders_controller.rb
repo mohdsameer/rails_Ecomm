@@ -1,1 +1,3 @@
-orders_controller.rb
+class Designer::OrdersController < ApplicationController
+
+end
