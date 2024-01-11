@@ -1,0 +1,21 @@
+<div class="pages_content" data-controller="pagination">
+  <div>Rows per page:</div>
+
+  <div class="d-flex align-items-center">
+    <div>
+      <% per_page_options = [[20, 20], [50, 50], [100, 100]] %>
+      <%= select_tag :per_page,
+                     options_for_select(per_page_options, per_page),
+                     class: 'border-0',
+                     data: { 'pagination-target': 'changePerPage' } %>
+    </div>
+  </div>
+
+  <div><%= pagination_information(records) %></div>
+
+  <div class="d-flex">
+    <div class="pagination">
+      <%= will_paginate(records, previous_label: '<', next_label: '>', page_links: false) %>
+    </div>
+  </div>
+</div>

@@ -117,33 +117,7 @@
           </div>
 
           <div class="table_footer_wrap">
-            <div class="content_btn">
-            <div class="pages_content" data-controller="pagination">
-              <div>Rows per page:</div>
-
-              <div class="d-flex align-items-center">
-                <div>
-                  <select class="border-0" id="rowsPerPage" data-pagination-target="changePerPage">
-                    <option value="">None</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </select>
-                </div>
-
-                <div>
-                  <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-                    <path d="M16.3805 9.28957L12.5005 13.1696L8.62047 9.28957C8.23047 8.89957 7.60047 8.89957 7.21047 9.28957C6.82047 9.67957 6.82047 10.3096 7.21047 10.6996L11.8005 15.2896C12.1905 15.6796 12.8205 15.6796 13.2105 15.2896L17.8005 10.6996C18.1905 10.3096 18.1905 9.67957 17.8005 9.28957C17.4105 8.90957 16.7705 8.89957 16.3805 9.28957Z" fill="#212B36"/>
-                  </svg>
-                </div>
-              </div>
-
-              <div><%= pagination_information(@producer_variant_histories) %></div>
-
-              <div class="pagination">
-                <%= will_paginate(@producer_variant_histories, previous_label: '<', next_label: '>', page_links: false) %>
-              </div>
-            </div>
+            <%= render 'shared/pagination', records: @producer_variant_histories, per_page: params[:per_page] %>
           </div>
         </div>
       </div>

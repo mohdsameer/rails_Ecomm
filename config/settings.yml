@@ -1,0 +1,11 @@
+default: &default
+  default_per_page: 20
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

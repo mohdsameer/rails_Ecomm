@@ -32,19 +32,19 @@
 
 <div id="tabs-content">
   <div id="tab1" class="tab-content">
-    <%= render "admin_all_order", orders: orders %>
+    <%= render "orders/admin_all_order", orders: orders %>
   </div>
   <div id="tab2" class="tab-content">
-    <%= render "admin_all_order", orders: orders.new_orders %>
+    <%= render "orders/admin_all_order", orders: orders.new_orders %>
   </div>
   <div id="tab3" class="tab-content">
-    <%= render "admin_all_order", orders: orders.rejected_order %>
+    <%= render "orders/admin_all_order", orders: orders.rejected_order %>
   </div>
   <div id="tab4" class="tab-content">
-    <%= render "admin_all_order", orders: orders.inproduction %>
+    <%= render "orders/admin_all_order", orders: orders.inproduction %>
   </div>
   <div id="tab5" class="tab-content">
-    <%= render "admin_all_order", orders: orders.fullfilled_order %>
+    <%= render "orders/admin_all_order", orders: orders.fullfilled_order %>
   </div>
 </div> <!-- END tabs-content -->
 

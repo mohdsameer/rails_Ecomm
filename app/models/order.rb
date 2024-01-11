@@ -92,8 +92,8 @@ class Order < ApplicationRecord
       length:    1.0,
       height:    1.0,
       width:     1.0,
-      weight_lb: 1.0,
-      weight_oz: 1.0
+      weight_lb: 0.0,
+      weight_oz: 0.0
     }
 
     if dimensions_is_manual
@@ -101,8 +101,8 @@ class Order < ApplicationRecord
         length:    custom_length.to_f    > 0.0 ? custom_length.to_f    : 1.0,
         height:    custom_height.to_f    > 0.0 ? custom_height.to_f    : 1.0,
         width:     custom_width.to_f     > 0.0 ? custom_width.to_f     : 1.0,
-        weight_lb: custom_weight_lb.to_f > 0.0 ? custom_weight_lb.to_f : 1.0,
-        weight_oz: custom_weight_oz.to_f > 0.0 ? custom_weight_oz.to_f : 1.0
+        weight_lb: custom_weight_lb.to_f > 0.0 ? custom_weight_lb.to_f : 0.0,
+        weight_oz: custom_weight_oz.to_f > 0.0 ? custom_weight_oz.to_f : 0.0
       }
     else
       total_items = order_products.pluck(:product_quantity).sum
@@ -206,5 +206,9 @@ class Order < ApplicationRecord
     designer_price  = assign_detail.price_for_total.presence || assign_detail.price_per_design.to_f * order_products.pluck(:product_quantity).compact.sum.to_i
 
     designer.update(pending_payment: designer.pending_payment.to_f - designer_price.to_f)
+  end
+
+  def tracking_numbers
+    shippo_labels.where.not(tracking_number: nil).pluck(:tracking_number).join(', ')
   end
 end

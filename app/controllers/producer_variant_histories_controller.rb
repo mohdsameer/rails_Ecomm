@@ -1,6 +1,6 @@
 class ProducerVariantHistoriesController < ApplicationController
   def index
-    per_page  = params[:per_page] || 20
+    per_page  = params[:per_page] || Rails.configuration.settings.default_per_page
     @producer = Producer.find(params[:producer_id])
 
     @producer_variant_histories = @producer

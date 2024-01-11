@@ -100,4 +100,15 @@ Rails.application.routes.draw do
   resources :payments, only: [:new, :create] do
     get :export, on: :collection
   end
+
+  namespace :admin do
+    resources :orders, only: [:index] do
+      collection do
+        get :on_hold
+        get :rejected
+        get :in_production
+        get :fulfilled
+      end
+    end
+  end
 end

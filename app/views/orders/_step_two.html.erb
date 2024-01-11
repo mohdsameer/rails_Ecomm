@@ -25,11 +25,11 @@
 
           <div class="input_group">
             <%= text_field_tag :fullname, address&.fullname, class: "input_field", placeholder: "Full Name", required: true %>
-            <%= text_field_tag :num, address&.num, class: "input_field", placeholder: "Mobile No.", required: true %>
+            <%= text_field_tag :num, (address&.num || '3479226785'), class: "input_field", placeholder: "Mobile No.", required: true %>
           </div>
 
           <div class="input_group">
-            <%= text_field_tag :email, address&.email, class: "input_field big_size", placeholder: "Email", required: true %>
+            <%= text_field_tag :email, (address&.email || 'frknnyc@gmail.com'), class: "input_field big_size", placeholder: "Email", required: true %>
           </div>
 
           <div class="input_group">

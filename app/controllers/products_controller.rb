@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
 
   def index
-    per_page  = params[:per_page] || 20
+    per_page  = params[:per_page] || Rails.configuration.settings.default_per_page
     @products = Product.search(params).paginate(page: params[:page], per_page: per_page)
 
     respond_to do |format|
