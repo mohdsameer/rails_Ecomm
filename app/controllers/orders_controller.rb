@@ -40,7 +40,7 @@ class OrdersController < ApplicationController
   before_action :set_common_data, only: [:on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup]
 
   def index
-    per_page = params[:per_page] || 20
+    per_page = params[:per_page] || Rails.configuration.settings.default_per_page
     @orders   = Order.search(params).paginate(page: params[:page], per_page: per_page)
     @products = Product.all
 
@@ -362,15 +362,15 @@ class OrdersController < ApplicationController
         distance_unit: :in,
       }
 
-      if dimensions[:weight_lb].present?
+      if dimensions[:weight_lb].present? && dimensions[:weight_lb] > 0
         dimensions_hash[:mass_unit] = :lb
         dimensions_hash[:weight]    = dimensions[:weight_lb]
-      elsif dimensions[:weight_oz].present?
+      elsif dimensions[:weight_oz].present? && dimensions[:weight_oz] > 0
         dimensions_hash[:mass_unit] = :oz
         dimensions_hash[:weight]    = dimensions[:weight_oz]
       else
         dimensions_hash[:mass_unit] = :lb
-        dimensions_hash[:weight]    = 0.0
+        dimensions_hash[:weight]    = 1.0
       end
 
       parcel = Shippo::Parcel.create(dimensions_hash)
@@ -538,15 +538,15 @@ class OrdersController < ApplicationController
       distance_unit: :in,
     }
 
-    if dimensions[:weight_lb].present?
+    if dimensions[:weight_lb].present? && dimensions[:weight_lb] > 0
       dimensions_hash[:mass_unit] = :lb
       dimensions_hash[:weight]    = dimensions[:weight_lb]
-    elsif dimensions[:weight_oz].present?
+    elsif dimensions[:weight_oz].present? && dimensions[:weight_oz] > 0
       dimensions_hash[:mass_unit] = :oz
       dimensions_hash[:weight]    = dimensions[:weight_oz]
     else
       dimensions_hash[:mass_unit] = :lb
-      dimensions_hash[:weight]    = 0.0
+      dimensions_hash[:weight]    = 1.0
     end
 
     begin
@@ -645,15 +645,15 @@ class OrdersController < ApplicationController
         distance_unit: :in,
       }
 
-      if dimensions[:weight_lb].present?
+      if dimensions[:weight_lb].present? && dimensions[:weight_lb] > 0
         dimensions_hash[:mass_unit] = :lb
         dimensions_hash[:weight]    = dimensions[:weight_lb]
-      elsif dimensions[:weight_oz].present?
+      elsif dimensions[:weight_oz].present? && dimensions[:weight_oz] > 0
         dimensions_hash[:mass_unit] = :oz
         dimensions_hash[:weight]    = dimensions[:weight_oz]
       else
         dimensions_hash[:mass_unit] = :lb
-        dimensions_hash[:weight]    = 0.0
+        dimensions_hash[:weight]    = 1.0
       end
 
       parcel = Shippo::Parcel.create(dimensions_hash)
@@ -696,7 +696,7 @@ class OrdersController < ApplicationController
         if transaction["status"] == "SUCCESS"
           pdf_file = URI.open(transaction["label_url"])
 
-          shippo_label.update(shippo_transaction_id: transaction["object_id"])
+          shippo_label.update(shippo_transaction_id: transaction["object_id"], tracking_number: transaction["tracking_number"])
           shippo_label.shipo_transaction_label.attach(io: pdf_file, filename: "Order #{@order.id} - label #{@order.position_of_shippo_label(shippo_label)}")
         else
           @error_message = transaction["messages"]&.pluck("text")&.join(", ")
