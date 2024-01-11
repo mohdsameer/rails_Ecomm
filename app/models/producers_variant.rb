@@ -21,14 +21,20 @@ class ProducersVariant < ApplicationRecord
   end
 
   def inventory_for_admin
-    used_quantity = OrderProduct.joins(:order).where(order: { order_status: [:onhold, :inproduction, :fullfilled] }, variant_id: variant_id, user_id: user_id).sum(:product_quantity)
+    used_quantity = OrderProduct
+                      .joins(:order)
+                      .where(orders: { order_status: [:onhold, :inproduction, :fullfilled] })
+                      .or(OrderProduct.joins(:order).where(orders: { mark_completed_by_producer: true }))
+                      .where(variant_id: variant_id, user_id: user_id)
+                      .sum(:product_quantity)
+
     available_quantity = inventory.to_i - used_quantity.to_i
     available_quantity = 0 if available_quantity < 0
     available_quantity
   end
 
   def inventory_for_producer
-    used_quantity = OrderProduct.joins(:order).where(order: { order_edit_status: :completed, order_status: :fullfilled }, variant_id: variant_id, user_id: user_id).sum(:product_quantity)
+    used_quantity = OrderProduct.joins(:order).where(order: { mark_completed_by_producer: :true }, variant_id: variant_id, user_id: user_id).sum(:product_quantity)
     available_quantity = inventory.to_i - used_quantity.to_i
     available_quantity = 0 if available_quantity < 0
     available_quantity

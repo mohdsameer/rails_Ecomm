@@ -100,10 +100,11 @@ class OrdersController < ApplicationController
 
   def update
     if params[:request_type] == "Confirm"
-      @order.update(order_edit_status: 1, order_status: 3)
+      @order.update(order_edit_status: 1, order_status: 3, mark_completed_by_producer: true)
       @order.update_producer_payments
     elsif params[:request_type] == "Reject"
       @order.update(order_status: 1, reject_reason: params[:order][:reject_reason])
+      @order.decrease_producer_payments
     elsif params[:request_type] == "Cancel"
       @order.update(order_status: 4)
     else

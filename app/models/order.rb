@@ -185,6 +185,13 @@ class Order < ApplicationRecord
     end
   end
 
+  def decrease_producer_payments
+    producers.each do |producer|
+      producer_amount = order_products.where(user_id: producer.id).sum(:total_cost)
+      producer.update(pending_payment: producer.pending_payment.to_f - producer_amount.to_f)
+    end
+  end
+
   def update_designer_payments
     assign_detail   = assign_details.last
     designer        = assign_detail.designer

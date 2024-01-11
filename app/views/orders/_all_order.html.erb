@@ -63,7 +63,7 @@
                   <% end %>
                 </div>
               </div>
-              <div class="order_td eight"><%= order.order_received %> ago</div>
+              <div class="order_td eight"><%= order.created_at.strftime('%m/%d/%Y') %></div>
               <div class="order_td nine">
                 <div class="order_more_action">
                   <div class="more_icon_group">
@@ -78,13 +78,15 @@
                         </svg>
                       </a>
                     </div>
-                    <div class="icon order_confirm" id="order_confirm_<%= order.id %>" data-id="<%= order.id %>">
-                      <a href="<%= confirm_order_path(order) %>" data-turbo-frame="confirm-order-modal">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                          <path d="M9.86009 18.4999C9.58292 18.499 9.31856 18.3832 9.13009 18.1799L4.27009 13.0099C3.89177 12.6068 3.91192 11.9733 4.31509 11.5949C4.71826 11.2166 5.35177 11.2368 5.73009 11.6399L9.85009 16.0299L18.2601 6.82994C18.4926 6.54035 18.8665 6.40351 19.2311 6.47455C19.5956 6.54559 19.8908 6.81281 19.9976 7.16853C20.1044 7.52424 20.0052 7.90985 19.7401 8.16994L10.6001 18.1699C10.4134 18.3769 10.1488 18.4965 9.87009 18.4999H9.86009Z" fill="#212B36"/>
-                        </svg>
-                      </a>
-                    </div>
+                    <% unless order.fullfilled? %>
+                      <div class="icon order_confirm" id="order_confirm_<%= order.id %>" data-id="<%= order.id %>">
+                        <a href="<%= confirm_order_path(order) %>" data-turbo-frame="confirm-order-modal">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                            <path d="M9.86009 18.4999C9.58292 18.499 9.31856 18.3832 9.13009 18.1799L4.27009 13.0099C3.89177 12.6068 3.91192 11.9733 4.31509 11.5949C4.71826 11.2166 5.35177 11.2368 5.73009 11.6399L9.85009 16.0299L18.2601 6.82994C18.4926 6.54035 18.8665 6.40351 19.2311 6.47455C19.5956 6.54559 19.8908 6.81281 19.9976 7.16853C20.1044 7.52424 20.0052 7.90985 19.7401 8.16994L10.6001 18.1699C10.4134 18.3769 10.1488 18.4965 9.87009 18.4999H9.86009Z" fill="#212B36"/>
+                          </svg>
+                        </a>
+                      </div>
+                    <% end %>
                   </div>
                 </div>
               </div>
