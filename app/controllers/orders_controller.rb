@@ -48,7 +48,6 @@ class OrdersController < ApplicationController
       @orders = @orders
                      .where(order_products: { user_id: current_user.id })
                      .where.not(order_status: ["cancel", "onhold", "rejected"])
-                     .order(priority: :desc, created_at: :desc)
 
     elsif current_user.type.eql?('Designer')
       @orders =  @orders
