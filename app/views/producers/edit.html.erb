@@ -4,22 +4,32 @@
   <% country       = ISO3166::Country.find_country_by_alpha2('US') %>
   <% states        = country.subdivisions %>
   <% state_options = states.map { |key, value| [value.name, value.name] } %>
+  <% countries     = ISO3166::Country.all.map { |country| { value: country.alpha2, text: country.iso_short_name } } %>
 
-  <div data-controller="modals"
-       data-modals-modal-id-value="producer-address">
-    
+  <div data-controller="modals address"
+       data-modals-modal-id-value="producer-address"
+       data-address-countries-value="<%= countries.to_json %>"
+       data-address-saved-country-value="<%= @producer&.address&.country %>"
+       data-address-saved-state-value="<%= @producer&.address&.state %>">
+
     <%= form_for @producer do |f| %>
       <div class="producer_card">
         <h5 class="producer_head">Ship from Address</h5>
         <div class="p-4">
           <%= f.fields_for :address do |address| %>
-            <%= address.text_field :fullname, class: "form-control", placeholder: "Name" %>
-            <%= address.text_field :address1, class: "form-control mt-2", placeholder: "address1" %>
+            <%= address.text_field :fullname, class: "form-control", placeholder: "Name", required: true %>
+            <%= address.text_field :email, class: "form-control mt-2", placeholder: "Email", required: true %>
+            <%= address.text_field :address1, class: "form-control mt-2", placeholder: "address1", required: true %>
             <%= address.text_field :address2, class: "form-control mt-2", placeholder: "address2" %>
 
-            <div class="input-group mt-2">
+            <div class="d-flex gap-2 mt-2">
+              <%= address.select :country, options_for_select([['', 'Country']]), {}, class: "form-select", data: { 'address-target': 'countryInput' }, required: true %>
+              <%= address.select :state, options_for_select([['', 'State']]), {}, class: "form-select", data: { 'address-target': 'stateInput' }, required: true %>
+            </div>
+
+            <div class="d-flex gap-2 mt-2">
               <%= address.text_field :city, class: "form-control", placeholder: "City" %>
-              <%= address.select :state, options_for_select(state_options, address.object.state), {}, class: "form-control" %>
+              <%= address.text_field :zipcode, class: "form-control", placeholder: "Zipcode", required: true %>
             </div>
           <% end %>
         </div>

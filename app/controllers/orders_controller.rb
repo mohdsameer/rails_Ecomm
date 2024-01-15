@@ -40,7 +40,7 @@ class OrdersController < ApplicationController
   before_action :set_common_data, only: [:on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup]
 
   def index
-    per_page = params[:per_page] || Rails.configuration.settings.default_per_page
+    per_page  = params[:per_page] || Rails.configuration.settings.default_per_page
     @orders   = Order.search(params).paginate(page: params[:page], per_page: per_page)
     @products = Product.all
 
@@ -505,8 +505,19 @@ class OrdersController < ApplicationController
   end
 
   def assigne_update_price
+    @order   = Order.find(params[:id])
     @assigne = AssignDetail.find_by(id: params[:assigne_id])
+
+    old_price = @order.job_price
+
     if @assigne.update(assigne_params)
+      new_price = @order.reload.job_price
+
+      price_difference = new_price.to_f - old_price.to_f
+      designer         = @assigne.designer
+
+      designer.update(pending_payment: designer.pending_payment.to_f + price_difference.to_f)
+
       redirect_to orders_path, notice: 'Assigne Removed.'
     end
   end
@@ -514,11 +525,13 @@ class OrdersController < ApplicationController
   def assigne_remove
     assign_detail = AssignDetail.find_by(id: params[:id])
     assign_detail.order.update(request_revision: false)
+    assign_detail.order.decrease_designer_payments
     assign_detail.destroy
     redirect_to orders_path, notice: 'Assigne Removed.'
   end
 
   def create_shipment
+    @shipment_error = nil
     producer   = @order.producers.last
     dimensions = @order.package_dimensions
 
@@ -589,8 +602,9 @@ class OrdersController < ApplicationController
       @order.address.update(shippo_address_id: address_to["object_id"])
       @order.sender.address.update(shippo_address_id: address_from["object_id"])
       @rates = shipment["rates"]
-    rescue
+    rescue => e
       @rates = []
+      @shipment_error = e.message
     end
   end
 
@@ -603,10 +617,14 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        if params[:redirect_orders].present?
-          redirect_to orders_path
+        if @shipment_error.present?
+          render turbo_stream: turbo_stream.replace("order-error-message", partial: 'orders/error_message', locals: { error_message: @shipment_error })
         else
-          render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @order.sender })
+          if params[:redirect_orders].present?
+            redirect_to orders_path
+          else
+            render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @order.sender })
+          end
         end
       end
     end

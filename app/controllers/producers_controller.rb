@@ -35,11 +35,13 @@ class ProducersController < ApplicationController
       :company_name,
       address_attributes: [
         :fullname,
+        :email,
         :address1,
         :address2,
         :city,
         :state,
-        :country
+        :country,
+        :zipcode
       ]
     )
   end

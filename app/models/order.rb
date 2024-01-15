@@ -131,8 +131,17 @@ class Order < ApplicationRecord
   def package_dimensions_str
     dimensions_str = ""
 
+    weight_lb = 1.0
+    weight_oz = 0.0
+
+    if package_dimensions[:weight_lb].present? && package_dimensions[:weight_lb] > 0
+      weight_lb = package_dimensions[:weight_lb]
+    elsif package_dimensions[:weight_oz].present? && package_dimensions[:weight_oz] > 0
+      weight_oz = package_dimensions[:weight_oz]
+    end
+
     if package_dimensions.present?
-      dimensions_str = "#{package_dimensions[:length]}x#{package_dimensions[:height]}x#{package_dimensions[:width]}, #{package_dimensions[:weight_lb]}lb#{package_dimensions[:weight_oz]}oz"
+      dimensions_str = "#{package_dimensions[:length]}x#{package_dimensions[:height]}x#{package_dimensions[:width]}, #{weight_lb}lb#{weight_oz}oz"
     end
 
     dimensions_str
@@ -195,20 +204,23 @@ class Order < ApplicationRecord
   def update_designer_payments
     assign_detail   = assign_details.last
     designer        = assign_detail.designer
-    designer_price  = assign_detail.price_for_total.presence || assign_detail.price_per_design.to_f * order_products.pluck(:product_quantity).compact.sum.to_i
 
-    designer.update(pending_payment: designer.pending_payment.to_f + designer_price.to_f)
+    designer.update(pending_payment: designer.pending_payment.to_f + job_price.to_f)
   end
 
   def decrease_designer_payments
     assign_detail   = assign_details.last
     designer        = assign_detail.designer
-    designer_price  = assign_detail.price_for_total.presence || assign_detail.price_per_design.to_f * order_products.pluck(:product_quantity).compact.sum.to_i
 
-    designer.update(pending_payment: designer.pending_payment.to_f - designer_price.to_f)
+    designer.update(pending_payment: designer.pending_payment.to_f - job_price.to_f)
   end
 
   def tracking_numbers
     shippo_labels.where.not(tracking_number: nil).pluck(:tracking_number).join(', ')
+  end
+
+  def job_price
+    assign_detail = assign_details.last
+    assign_detail.price_for_total.presence.to_f || assign_detail.price_per_design.to_f * order_products.pluck(:product_quantity).compact.sum.to_i
   end
 end
