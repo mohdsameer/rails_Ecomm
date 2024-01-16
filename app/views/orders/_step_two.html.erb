@@ -9,10 +9,11 @@
     class: 'product_form text-center',
     data: { 
       'turbo-frame': '_top',
-      controller: 'address',
+      controller: 'address order-steps',
       'address-countries-value': countries,
       'address-saved-country-value': order&.address&.country,
-      'address-saved-state-value': order&.address&.state
+      'address-saved-state-value': order&.address&.state,
+      'order-steps-step-value': 'reciepent_address'
     }
   ) do %>
 

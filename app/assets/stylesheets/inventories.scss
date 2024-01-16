@@ -717,8 +717,8 @@
       .step {
         height: 2.894vw;
         width: 2.894vw;
-        background: #fff;
         margin: 0;
+        background: #fff;
         border: 1px solid #637381;
         position: relative;
         display: flex;
@@ -731,8 +731,15 @@
         opacity: 1;
         border-radius: 100%;
 
-        &.active {
+        &.completed-step {
+          background: #36B37E;
+          border: 1px solid #36B37E;
+          color: #ffffff;
+        }
+
+        &.current-step {
           background: #637381;
+          border: 1px solid #637381;
           color: #ffffff;
         }
       }

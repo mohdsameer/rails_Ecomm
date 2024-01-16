@@ -1,6 +1,7 @@
 <turbo-frame
   id="order-form-content"
-  data-controller="order-form"
+  data-controller="order-form order-steps"
+  data-order-steps-step-value="shipping_label"
   data-order-form-shipping-label-purchased-value="<%= order.shippo_labels.any? { |shippo_label| shippo_label.shipo_transaction_label.attached? } %>">
   <%= form_tag(order_update_shipping_order_path(order),
     method: :post, multipart: true, id: 'order-form', class: 'product_form',
@@ -54,7 +55,7 @@
                 </div>
 
                 <div class="action_wrapper">
-                  <%= submit_tag 'Purchase Shipping Label', class: 'pur_link', data: { 'order-form-target': 'purchaseLabel' } %>
+                  <%= submit_tag 'Purchase Shipping Label', class: "pur_link #{rates.present? ? '' : 'hidden'}", data: { 'order-form-target': 'purchaseLabel' } %>
 
                   <% order.shippo_labels.each do |shippo_label| %>
                     <% if shippo_label.shipo_transaction_label.attached? %>

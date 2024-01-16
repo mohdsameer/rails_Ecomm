@@ -347,46 +347,13 @@ class OrdersController < ApplicationController
 
   def update_dimensions
     @order.update(dimensions_params)
-    @order.update(dimensions_is_manual: true)
+    @order.update(dimensions_is_manual: true, shippo_parcel_id: nil)
 
-    begin
-      address_from = Shippo::Address.get(@order.sender.address.shippo_address_id)
-      address_to   = Shippo::Address.get(@order.address.shippo_address_id)
+    shippo_service = ShippoService.new(order: @order)
 
-      dimensions   = @order.package_dimensions
+    shippo_service.create_shipment
 
-      dimensions_hash = {
-        length:        dimensions[:length],
-        width:         dimensions[:width],
-        height:        dimensions[:height],
-        distance_unit: :in,
-      }
-
-      if dimensions[:weight_lb].present? && dimensions[:weight_lb] > 0
-        dimensions_hash[:mass_unit] = :lb
-        dimensions_hash[:weight]    = dimensions[:weight_lb]
-      elsif dimensions[:weight_oz].present? && dimensions[:weight_oz] > 0
-        dimensions_hash[:mass_unit] = :oz
-        dimensions_hash[:weight]    = dimensions[:weight_oz]
-      else
-        dimensions_hash[:mass_unit] = :lb
-        dimensions_hash[:weight]    = 1.0
-      end
-
-      parcel = Shippo::Parcel.create(dimensions_hash)
-
-      shipment = Shippo::Shipment.create(
-        address_from: address_from,
-        address_to:   address_to,
-        parcels:      parcel,
-        async:        false
-      )
-
-      @order.update(shippo_shipment_id: shipment["object_id"])
-      @rates = shipment["rates"]
-    rescue
-      @rates = []
-    end
+    @rates = shippo_service.rates
 
     redirect_to edit_order_path(@order, step: :shipping_method)
   end
@@ -530,101 +497,36 @@ class OrdersController < ApplicationController
     redirect_to orders_path, notice: 'Assigne Removed.'
   end
 
-  def create_shipment
-    @shipment_error = nil
-    producer   = @order.producers.last
-    dimensions = @order.package_dimensions
-
-    @sender = @order.sender
-
-    @sender = @order.create_sender unless @sender.present?
-
-    unless @sender.address.present?
-      @sender.create_address(producer.address.attributes.except('id', 'addressable_id', 'addressable_type',
-                                                                'shippo_address_id', 'created_at', 'updated_at'))
-    end
-
-    dimensions_hash = {
-      length:        dimensions[:length],
-      width:         dimensions[:width],
-      height:        dimensions[:height],
-      distance_unit: :in,
-    }
-
-    if dimensions[:weight_lb].present? && dimensions[:weight_lb] > 0
-      dimensions_hash[:mass_unit] = :lb
-      dimensions_hash[:weight]    = dimensions[:weight_lb]
-    elsif dimensions[:weight_oz].present? && dimensions[:weight_oz] > 0
-      dimensions_hash[:mass_unit] = :oz
-      dimensions_hash[:weight]    = dimensions[:weight_oz]
-    else
-      dimensions_hash[:mass_unit] = :lb
-      dimensions_hash[:weight]    = 1.0
-    end
-
-    begin
-      parcel = Shippo::Parcel.create(dimensions_hash)
-
-      address_from = Shippo::Address.create(
-        name:    @sender.address.fullname,
-        street1: @sender.address.address1,
-        street2: @sender.address.address2,
-        city:    @sender.address.city,
-        state:   @sender.address.state,
-        zip:     @sender.address.zipcode,
-        country: @sender.address.country,
-        phone:   @sender.address.num,
-        email:   @sender.address.email
-      )
-
-      address_to = Shippo::Address.create(
-        name:    params[:fullname],
-        street1: params[:address1],
-        street2: params[:address2],
-        city:    params[:city],
-        state:   params[:state],
-        zip:     params[:zipcode],
-        country: params[:country],
-        phone:   params[:num],
-        email:   params[:email]
-      )
-
-      shipment = Shippo::Shipment.create(
-        address_from: address_from,
-        address_to:   address_to,
-        parcels:      parcel,
-        async:        false
-      )
-
-      @order.create_address(address_params)
-
-      @order.update(shippo_shipment_id: shipment["object_id"])
-      @order.address.update(shippo_address_id: address_to["object_id"])
-      @order.sender.address.update(shippo_address_id: address_from["object_id"])
-      @rates = shipment["rates"]
-    rescue => e
-      @rates = []
-      @shipment_error = e.message
-    end
-  end
-
   def create_address
     @order = Order.find_by(id: params[:id])
+    @order.create_address(address_params)
+    @order.update(shippo_parcel_id: nil)
+    @order.address.update(shippo_address_id: nil)
 
-    create_shipment
+    @order.reload
+
+    shippo_service = ShippoService.new(order: @order)
+
+    shippo_service.create_shipment
 
     @order.reload
 
     respond_to do |format|
       format.turbo_stream do
-        if @shipment_error.present?
-          render turbo_stream: turbo_stream.replace("order-error-message", partial: 'orders/error_message', locals: { error_message: @shipment_error })
-        else
-          if params[:redirect_orders].present?
-            redirect_to orders_path
+        if params[:redirect_orders].present?
+          if shippo_service.shipment_has_error
+            render turbo_stream: turbo_stream.replace("order-error-message", partial: 'orders/error_message', locals: { error_message: shippo_service.error_message })
           else
-            render turbo_stream: turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @order.sender })
+            redirect_to orders_path
           end
+        else
+          step_three_locals = { order: @order, rates: shippo_service.rates, address: shippo_service.recipient_address, sender: shippo_service.sender }
+          turbo_streams = [
+            turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: step_three_locals),
+            turbo_stream.replace("order-error-message", partial: 'orders/error_message', locals: { error_message: shippo_service.error_message })
+          ]
+
+          render turbo_stream: turbo_streams
         end
       end
     end
@@ -636,66 +538,26 @@ class OrdersController < ApplicationController
   def update_sender
     @sender = @order.sender
     @sender.address.update(address_params)
+    @sender.address.update(shippo_address_id: nil)
 
-    begin
-      address_from = Shippo::Address.create(
-        name:    @sender.address.fullname,
-        street1: @sender.address.address1,
-        street2: @sender.address.address2,
-        city:    @sender.address.city,
-        state:   @sender.address.state,
-        zip:     @sender.address.zipcode,
-        country: @sender.address.country,
-        phone:   @sender.address.num,
-        email:   @sender.address.email
-      )
+    @order.reload
+    @sender.reload
 
-      @sender.address.update(shippo_address_id: address_from["object_id"])
+    shippo_service = ShippoService.new(order: @order)
+    shippo_service.create_shipment
 
-      address_to = Shippo::Address.get(@order.address.shippo_address_id)
-
-      dimensions = @order.package_dimensions
-
-      dimensions_hash = {
-        length:        dimensions[:length],
-        width:         dimensions[:height],
-        height:        dimensions[:width],
-        distance_unit: :in,
-      }
-
-      if dimensions[:weight_lb].present? && dimensions[:weight_lb] > 0
-        dimensions_hash[:mass_unit] = :lb
-        dimensions_hash[:weight]    = dimensions[:weight_lb]
-      elsif dimensions[:weight_oz].present? && dimensions[:weight_oz] > 0
-        dimensions_hash[:mass_unit] = :oz
-        dimensions_hash[:weight]    = dimensions[:weight_oz]
-      else
-        dimensions_hash[:mass_unit] = :lb
-        dimensions_hash[:weight]    = 1.0
-      end
-
-      parcel = Shippo::Parcel.create(dimensions_hash)
-
-      shipment = Shippo::Shipment.create(
-        address_from: address_from,
-        address_to:   address_to,
-        parcels:      parcel,
-        async:        false
-      )
-
-      @order.update(shippo_shipment_id: shipment["object_id"])
-
-      @rates = shipment["rates"]
-    rescue => e
-      @rates = []
-    end
+    @order.reload
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: { order: @order, rates: @rates, address: @order.address, sender: @sender }),
-          turbo_stream.replace("edit-sender", partial: 'shared/close_modal', locals: { modal_id: 'edit-sender' })
+        step_three_locals = { order: @order, rates: shippo_service.rates, address: shippo_service.recipient_address, sender: shippo_service.sender }
+        turbo_streams = [
+          turbo_stream.replace("order-form-content", partial: 'orders/step_three', locals: step_three_locals),
+          turbo_stream.replace("edit-sender", partial: 'shared/close_modal', locals: { modal_id: 'edit-sender' }),
+          turbo_stream.replace("order-error-message", partial: 'orders/error_message', locals: { error_message: shippo_service.error_message })
         ]
+
+        render turbo_stream: turbo_streams
       end
     end
   end
@@ -704,12 +566,13 @@ class OrdersController < ApplicationController
     if params[:shippo_rate_id].present? || params[:manual_upload_file].present?
       params[:shippo_rate_id] = 'manual_upload' if params[:manual_upload_file].present? && !params[:shippo_rate_id].present?
 
-      shippo_label = @order.shippo_labels.create(shippo_rate_id: params[:shippo_rate_id])
 
       if params[:manual_upload_file].present?
+        shippo_label = @order.shippo_labels.create(shippo_rate_id: params[:shippo_rate_id])
         shippo_label.shipo_transaction_label.attach(io: params[:manual_upload_file], filename: "Order #{@order.id} - label #{@order.position_of_shippo_label(shippo_label)}")
-      elsif params[:shippo_rate_id] != 'manual_upload'
-        transaction = Shippo::Transaction.create(rate: params[:shippo_rate_id], label_file_type: "PDF", async: false)
+      elsif params[:shippo_rate_id] != 'manual_upload' && params[:commit].eql?('Purchase Shipping Label')
+        shippo_label = @order.shippo_labels.create(shippo_rate_id: params[:shippo_rate_id])
+        transaction = Shippo::Transaction.create(rate: params[:shippo_rate_id], label_file_type: "PDF_4x6", async: false)
 
         if transaction["status"] == "SUCCESS"
           pdf_file = URI.open(transaction["label_url"])
@@ -906,6 +769,7 @@ class OrdersController < ApplicationController
   def on_hold_popup
     @variants = @order.variants
   end
+
   def in_production_popup; end
 
   def rejected_popup; end

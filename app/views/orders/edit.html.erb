@@ -11,12 +11,12 @@
     <div class="manual_content_wrap">
       <div class="new_product_section">
         <div class="form_step">
-          <span class="step choose_products">1</span>
-          <span class="step shipping">2</span>
-          <span class="step submit_offers">3</span>
+          <span id="order-form-step-one" class="step choose_products">1</span>
+          <span id="order-form-step-two" class="step shipping">2</span>
+          <span id="order-form-step-three" class="step submit_offers">3</span>
         </div>
 
-        <%= link_to add_new_product_orders_path(order_id: @order.id), class: "new_product_btn", data: { turbo_frame: "add-new-product-order-modal" } do %>
+        <%= link_to add_new_product_orders_path(order_id: @order.id), class: "new_product_btn", id: 'add-new-product-link', data: { turbo_frame: "add-new-product-order-modal" } do %>
           <%= image_tag 'shopping_cart.png', alt: 'icon', class: 'cart_icon' %>
           <span class="new_text">Add New Products</span>
         <% end %>

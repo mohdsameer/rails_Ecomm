@@ -54,7 +54,9 @@ export default class extends Controller {
     $(countryInput).change(function () {
       var selectedCountry = $(this).val();
 
-      populateStates(selectedCountry);
+      if (selectedCountry && selectedCountry !== '') {
+        populateStates(selectedCountry);
+      }
     });
   }
 }

@@ -134,13 +134,15 @@ class Order < ApplicationRecord
     weight_lb = 1.0
     weight_oz = 0.0
 
-    if package_dimensions[:weight_lb].present? && package_dimensions[:weight_lb] > 0
-      weight_lb = package_dimensions[:weight_lb]
-    elsif package_dimensions[:weight_oz].present? && package_dimensions[:weight_oz] > 0
-      weight_oz = package_dimensions[:weight_oz]
-    end
-
     if package_dimensions.present?
+      if package_dimensions[:weight_lb].present? && package_dimensions[:weight_lb] > 0
+        weight_lb = package_dimensions[:weight_lb]
+      end
+
+      if package_dimensions[:weight_oz].present? && package_dimensions[:weight_oz] > 0
+        weight_oz = package_dimensions[:weight_oz]
+      end
+
       dimensions_str = "#{package_dimensions[:length]}x#{package_dimensions[:height]}x#{package_dimensions[:width]}, #{weight_lb}lb#{weight_oz}oz"
     end
 
@@ -184,7 +186,7 @@ class Order < ApplicationRecord
   end
 
   def position_of_shippo_label(shippo_label)
-    shippo_labels.to_a.index(shippo_label).to_i + 1
+    shippo_labels.order(created_at: :asc).to_a.index(shippo_label).to_i + 1
   end
 
   def update_producer_payments

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_11_085540) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_16_113535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -134,6 +134,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_11_085540) do
     t.decimal "total_cost", default: "0.0"
     t.datetime "submitted_at"
     t.boolean "mark_completed_by_producer", default: false
+    t.string "shippo_parcel_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

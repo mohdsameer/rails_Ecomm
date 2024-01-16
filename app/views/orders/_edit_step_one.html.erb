@@ -1,5 +1,5 @@
 <turbo-frame id="order-form-content">
-  <%= form_tag order_path, method: :patch,  multipart: true, id: 'order-form', class: 'product_form', data: { controller: 'order-form-status', 'order-form-status-target': 'form', 'turbo-frame': '_top' } do %>
+  <%= form_tag order_path, method: :patch,  multipart: true, id: 'order-form', class: 'product_form', data: { controller: 'order-form-status order-steps', 'order-form-status-target': 'form', 'order-steps-step-value': 'choose_products', 'turbo-frame': '_top' } do %>
     <div class="tab" id="step1">
       <div class="product_list_section">
         <% order.order_products.not_temporary_removed.order(created_at: :asc).group_by(&:user_id).each do |producer_id, order_products| %>
