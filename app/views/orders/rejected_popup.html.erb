@@ -103,7 +103,7 @@
                     </p>
                   </object>
                 <% elsif shippo_label.shipo_transaction_label&.representable? %>
-                  <%= image_tag shippo_label.shipo_transaction_label %>
+                  <%= image_tag shippo_label.shipo_transaction_label, class: 'attached-shippo-label' %>
                 <% end %>
               <% end %>
             <% end %>
