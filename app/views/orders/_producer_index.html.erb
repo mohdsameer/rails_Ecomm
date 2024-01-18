@@ -5,10 +5,12 @@
         <%= image_tag "ic_notifications", alt: 'icon', class: "create_bell_icon" %>
         <div class="create_notification">1</div>
       </div>
+
       <div class="account_icon"></div>
-        <% if current_user %>
-          <%= link_to 'Log Out', logout_path, method: :delete, class: "btn btn-danger" %>
-        <% end %>
+
+      <% if current_user %>
+        <%= link_to 'Log Out', logout_path, method: :delete, class: "btn btn-danger" %>
+      <% end %>
     </div>
   </div>
 

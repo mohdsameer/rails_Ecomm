@@ -20,7 +20,7 @@ class Producer < User
   end
 
   def no_of_completed_orders
-    orders.fullfilled.count
+    orders.fullfilled.uniq.count
   end
 
   def no_of_item_produced

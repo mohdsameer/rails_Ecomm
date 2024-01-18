@@ -5,7 +5,7 @@ class Designer < User
 
   # INSTANCE METHODS
   def no_of_orders_completed
-    orders.completed.count
+    orders.completed.uniq.count
   end
 
   def total_earned
