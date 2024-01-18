@@ -3,6 +3,6 @@ development:
   encoding: unicode
   database: rails_ecomm_dev
   host: localhost
-  username: postgres
-  password: postgres
+  username: <%= ENV['POSTGRES_USERNAME'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
   pool: 5

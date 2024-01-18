@@ -109,11 +109,15 @@
                 <%end%>
               </div>
               <div class="order_td ten">
-                <% if order.due_date.present? && order.assign_details.present?%>
-                  <%= order.order_due_date %> left
+                <% if order.due_date.present? && order.assign_details.present? %>
+                  <% if order.due_date > Time.current %>
+                    <%=  order.order_due_date %> left
+                  <% else %>
+                    Due <%= order.order_due_date %>
+                  <% end %>
                 <% else %>
                   nil
-                <%end%>
+                <% end %>
               </div>
               <div class="order_td eleven">
                 ETSY
