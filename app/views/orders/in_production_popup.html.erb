@@ -15,8 +15,12 @@
           </div>
 
           <div class="right_section">
-            <span><%= @assigne %></span>
-            <%= image_tag "check", alt:"icon", class:"right_img" %>
+            <% if @assigne.present? %>
+              <span><%= @assigne %></span>
+              <%= image_tag "check", alt: "icon", class: "right_img" %>
+            <% else %>
+              <span> assigne not assign</span>
+            <% end %>
           </div>
         </div>
 

@@ -1036,10 +1036,40 @@
 
                 &.attach_section {
                   margin: 0.231vw 0px;
+                  flex-direction: column;
+                  align-items: flex-start;
 
-                  .msg_icon {
-                    margin: 0 1.736vw 0 0.347vw;
-                    height: 0.868vw;
+                  .attach_section_head {
+                    display: flex;
+                    align-items: center;
+
+                    .msg_icon {
+                      margin: 0 1.736vw 0 0.347vw;
+                      height: 0.868vw;
+                    }
+
+                    .note_content {
+                      .note_text {
+                        font-style: italic;
+                        text-decoration: underline;
+                      }
+                    }
+                  }
+
+                  .attach_items {
+                    display: flex;
+                    flex-direction: column;
+                    padding-left: 50px;
+                    .attech_text {
+                      color: #000;
+                      font-family: Public Sans;
+                      font-size: 0.810vw;
+                      font-style: normal;
+                      font-weight: 400;
+                      line-height: 1.273vw;
+                      font-style: italic;
+                      text-decoration: underline;
+                    }
                   }
                 }
               }
@@ -1153,6 +1183,9 @@
 
                                     &.black_box {
                                       background: #000;
+                                    }
+                                    &.red_box {
+                                      background: #ff5630;
                                     }
                                   }
 

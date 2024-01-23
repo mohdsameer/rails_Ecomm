@@ -707,7 +707,7 @@ class OrdersController < ApplicationController
 
   def update_cancel_status
     @order.cancel_request.update(status: 1)
-    @order.update(order_status: 4)
+    @order.update(order_status: :rejected)
   end
 
   def add_new_product

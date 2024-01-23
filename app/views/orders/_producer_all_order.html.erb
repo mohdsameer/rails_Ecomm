@@ -9,7 +9,7 @@
     <%= render "all_order", orders: orders.order(created_at: :desc) %>
   </div>
   <div id="tab2" class="tab-content">
-    <%= render "all_order", orders: orders.inproduction_order.order(priority: :desc).order(created_at: :desc) %>
+    <%= render "all_order", orders: orders.inproduction_order.order(priority: :desc).order(created_at: :asc) %>
   </div>
   <div id="tab3" class="tab-content">
     <%= render "all_order", orders: orders.fullfilled_order.order(created_at: :desc) %>
