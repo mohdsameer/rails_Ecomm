@@ -13,22 +13,15 @@ export default class extends Controller {
     $('.select_pop_wrap_model').hide();
     $(`#${this.modalIdValue}`).show();
 
-    $( ".order_confirm" ).each(function(index) {
-      $(this).on("click", function(){
-        var dataId = $(this).attr('data-id');
-        $('.OrderID').text(dataId);
-        $('.confirm_order_popup').show();
-      });
-    });
 
     $('.completed_order').click(function() {
       $('.confirm_order_wrapper').find('.cancel_request_box').hide();
       $('.confirm_order_wrapper').find('.cancel_flash').addClass('show_cancel_flash');
     });
     $('.close_confirm_popup').click(function() {
-      $('.confirm_order_popup').hide();
       $('.confirm_order_wrapper').find('.cancel_flash').removeClass('show_cancel_flash');
       $('.confirm_order_wrapper').find('.cancel_request_box').show();
+      $('.confirm_order_popup').hide();
     });
 
     // Reject order by producer js
