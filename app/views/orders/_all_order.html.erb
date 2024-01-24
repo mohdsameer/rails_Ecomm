@@ -184,7 +184,7 @@
                     </div>
                   <% end %>
 
-                  <% if order.gift_message_slip_image.attached? %>
+                  <% if order.has_any_design? %>
                     <div class="note_section attach_section">
                       <div class="attach_section_head">
                         <svg class="msg_icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -192,17 +192,16 @@
                         </svg>
                         <div class="note_content">
                           <h5 class="note_head m-0">Attachments:</h5>
-                          <%= link_to 'gift message.img', download_order_path(order, type: "gift"), class: 'note_text m-0' %>
                         </div>
                       </div>
                       <div class="attach_items">
-                        <% if order.shipping_label_image.attached? %>                       
+                        <% if order.shipping_label_image.attached? %>
                           <%= link_to rails_blob_url(order.shipping_label_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank', class: 'attech_text' do %>
                             <%= order.shipping_label_image.filename.to_s %>
                           <% end %>
                         <% end %>
 
-                        <% if order.packing_slip_image.attached? %>                          
+                        <% if order.packing_slip_image.attached? %>
                           <%= link_to rails_blob_url(order.packing_slip_image, only_path: true), class: 'pdf_link mx-auto', target: '_blank', class: 'attech_text' do %>
                             <%= order.packing_slip_image.filename.to_s %>
                           <% end %>

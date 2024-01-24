@@ -4,7 +4,7 @@
       <div class="cancel_request_box">
         <h5 class="cancel_head">Accept Cancellation Request?</h5>
         <div class="cancel_btn_group">
-        <a><%= link_to 'Accept',update_cancel_status_order_path(@order), method: :post,  data: { 'turbo-frame': '_top' }, class: "btn text-light bg-dark accept_btn accept_cancel_order" %></a>
+          <%= link_to 'Accept',update_cancel_status_order_path(@order), method: :post,  data: { 'turbo-frame': '_top' }, class: "btn text-light bg-dark accept_btn accept_cancel_order" %>
           <button class="btn text-dark btn-outline-dark bg-light cancel_btn close_cancel_order">Cancel</button>
         </div>
       </div>

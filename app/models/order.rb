@@ -225,4 +225,9 @@ class Order < ApplicationRecord
     assign_detail = assign_details.last
     assign_detail.price_for_total.presence.to_f || assign_detail.price_per_design.to_f * order_products.pluck(:product_quantity).compact.sum.to_i
   end
+
+  def has_any_design?
+    gift_message_slip_image.attached? || shipping_label_image.attached? || packing_slip_image.attached? ||
+    design_file_1_image.attached? || design_file_2_image.attached? || additional_file_image.attached?
+  end
 end
