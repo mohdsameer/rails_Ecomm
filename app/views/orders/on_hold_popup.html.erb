@@ -56,7 +56,7 @@
             </svg>
           </div>
 
-          <% if !@order.note_to_seller.present? %>
+          <% if @order.note_to_seller.present? %>
             <div class="note_seller">
               Note to Seller: <%= @order.note_to_seller %>
             </div>
