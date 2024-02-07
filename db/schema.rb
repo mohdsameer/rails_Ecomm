@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_16_113535) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_07_064732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -135,6 +135,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_113535) do
     t.datetime "submitted_at"
     t.boolean "mark_completed_by_producer", default: false
     t.string "shippo_parcel_id"
+    t.text "note_to_buyer"
+    t.text "note_to_seller"
+    t.boolean "is_etsy_imported", default: false
+    t.jsonb "grandtotal_json", default: {}
+    t.jsonb "subtotal_json", default: {}
+    t.jsonb "total_price_json", default: {}
+    t.jsonb "total_shipping_cost_json", default: {}
+    t.jsonb "total_tax_cost_json", default: {}
+    t.jsonb "total_vat_cost_json", default: {}
+    t.jsonb "discount_amt_json", default: {}
+    t.jsonb "gift_wrap_price_json", default: {}
+    t.jsonb "shipments_json", default: []
+    t.jsonb "transactions_json", default: []
+    t.jsonb "refunds_json", default: []
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

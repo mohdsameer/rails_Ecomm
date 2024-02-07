@@ -56,8 +56,84 @@
             </svg>
           </div>
 
-          <div class="note_seller">
-            Note to Seller: Can you please send me proof before production? Thank you.
+          <% if !@order.note_to_seller.present? %>
+            <div class="note_seller">
+              Note to Seller: <%= @order.note_to_seller %>
+            </div>
+          <% end %>
+
+          <div class="details_table_wrapper">
+            <div class="details_box">
+              <div class="detils_header">Customer</div>
+              <div class="details_panel">
+                <div class=""><%= @order.address&.fullname %></div>
+              </div>
+            </div>
+            <div class="details_box">
+              <div class="detils_header">Shipping</div>
+              <div class="details_panel">
+                <div class="address_box">
+                  <div class="address">
+                    <span><%= @order.address&.fullname %></span> 
+                    <span><%= @order.address&.to_str %></span>
+                  </div>
+
+                  <div class="shipping"><b>Requested Shipping Method:</b> <%= @order.etsy_requested_shipping_method %></div>
+                </div>
+              </div>
+            </div>
+            <div class="details_box">
+              <div class="detils_header">Billing Info</div>
+
+              <% if @order.is_etsy_imported? %>
+                <div class="details_panel">
+                  <table>
+                    <tr>
+                      <td>Item(s) Total:</td>
+                      <td>$<%= @order.etsy_items_total %></td>
+                    </tr>
+                    <tr>
+                      <td>Shop Discount:</td>
+                      <td class="red_text">-$<%= @order.etsy_shop_discount %></td>
+                    </tr>
+                    <tr>
+                      <td>Subtotal:</td>
+                      <td>$<%= @order.etsy_subtotal %></td>
+                    </tr>
+                    <tr>
+                      <td>Sales Tax:</td>
+                      <td>$<%= @order.etsy_sales_tax %></td>
+                    </tr>
+                    <tr>
+                      <td>Shipping price:</td>
+                      <td>$<%= @order.etsy_shipping_price %></td>
+                    </tr>
+                    <tr>
+                      <td>Order Total:</td>
+                      <td>$<%= @order.etsy_order_total %></td>
+                    </tr>
+                  </table>
+                </div>
+              <% else %>
+                <div class="billing_info">
+                  <div class="left_text">
+                    <div>Production Cost:</div>
+                    <div>Shipping Cost:</div>
+                    <div class="fw-bold">Total Cost:</div>
+                  </div>
+                  <div class="right_text">
+                    <div>USD <%= @order.price %></div>
+                    <% if @order.shipping_cost.present? %>
+                      <div>USD <%= @order.shipping_cost %></div>
+                      <div class="fw-bold">USD <%= @order.total_cost %></div>
+                    <% else %>
+                      <div>-</div>
+                      <div class="fw-bold">USD <%= @order.price %></div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
           </div>
 
           <div class="details_section">
@@ -66,19 +142,45 @@
               <div class="head_text w-100">Product & Personalization Info</div>
             </div>
 
-            <% @order.order_products.each_with_index do |order_product, index| %>
-              <div class="details_body">
-                <div class="left"><%= index + 1 %></div>
-                <div class="right">
-                  <div class="right_big"><%= order_product.product.name %></div>
-                  <div class="right_small">(<%= order_product.product.name %>)</div>
-                  <div class="right_normal text_black">ETSY SKU: <%= order_product.variant.real_variant_sku %></div>
-                  <div class="right_normal text_black">Quantity: <%= order_product.product_quantity %></div>
-                  <div class="right_normal">Design Style:<span>Design 1 - YT114-10</span> </div>
-                  <div class="right_normal">Brand / Color:<span><%= order_product.product.brand_name %> - <%= order_product.variant.color %></span> </div>
-                  <div class="right_normal">Personalization: <br><span>Font: Azonix <br> Text: Jack’s Daily Cup</span> </div>
+            <% if @order.is_etsy_imported? %>
+              <% @order.transactions_json.each_with_index do |etsy_transaction, index| %>
+                <div class="details_body">
+                  <div class="left"><%= index + 1 %></div>
+                  <div class="right">
+                    <div class="right_big"><%= etsy_transaction["title"] %></div>
+                    <div class="right_normal text_black">SKU: <%= etsy_transaction["sku"] %></div>
+                    <div class="right_normal text_black">Quantity: <%= etsy_transaction["quantity"] %></div>
+                    <% if etsy_transaction["variations"].present? %>
+                      <% etsy_transaction["variations"].each do |etsy_variation| %>
+                        <div class="right_normal"><%= etsy_variation["formatted_name"] %>:<span><%= etsy_variation["formatted_value"] %></span> </div>
+                      <% end %>
+                    <% end %>
+                    
+                    <% if etsy_transaction["product_data"].present? %>
+                      <% etsy_transaction["product_data"].each do |etsy_product_data| %>
+                        <div class="right_normal"><%= etsy_product_data["property_name"] %>: <br>
+                          <%= etsy_product_data["values"]&.join(", ") %>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
                 </div>
-              </div>
+              <% end %>
+            <% else %>
+              <% @order.order_products.each_with_index do |order_product, index| %>
+                <div class="details_body">
+                  <div class="left"><%= index + 1 %></div>
+                  <div class="right">
+                    <div class="right_big"><%= order_product.product.name %></div>
+                    <div class="right_small">(<%= order_product.product.name %>)</div>
+                    <div class="right_normal text_black">ETSY SKU: <%= order_product.variant.real_variant_sku %></div>
+                    <div class="right_normal text_black">Quantity: <%= order_product.product_quantity %></div>
+                    <div class="right_normal">Design Style:<span>Design 1 - YT114-10</span> </div>
+                    <div class="right_normal">Brand / Color:<span><%= order_product.product.brand_name %> - <%= order_product.variant.color %></span> </div>
+                    <div class="right_normal">Personalization: <br><span>Font: Azonix <br> Text: Jack’s Daily Cup</span> </div>
+                  </div>
+                </div>
+              <% end %>
             <% end %>
           </div>
           <div class="bottom_line">...</div>

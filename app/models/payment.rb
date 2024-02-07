@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: payments
+#
+#  id          :bigint           not null, primary key
+#  receiver_id :bigint
+#  amount      :decimal(, )
+#  paid_at     :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 class Payment < ApplicationRecord
   # ASSOCIATIONS
   belongs_to :receiver, foreign_key: :receiver_id, class_name: 'User'

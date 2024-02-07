@@ -3,9 +3,12 @@ default: &default
 
 development:
   <<: *default
+  base_url: 'http://localhost:3000'
 
 test:
   <<: *default
+  base_url: 'http://localhost:3000'
 
 production:
   <<: *default
+  base_url: 'https://custom-print-0930a813dc37.herokuapp.com'

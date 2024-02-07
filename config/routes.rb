@@ -65,6 +65,7 @@ Rails.application.routes.draw do
       get :all_producer
       get :cancel_order_index
       get :new_order_product
+      post :etsy_import
     end
   end
 

@@ -8,11 +8,11 @@ class EtsyController < ApplicationController
       site: 'https://www.etsy.com',
       authorize_url: '/oauth/connect',
       token_url: '/v3/public/oauth/token',
-      redirect_uri: 'https://1c42-122-161-50-131.ngrok-free.app/etsy/callback'
+      redirect_uri: "#{Rails.configuration.settings.base_url}/etsy/callback"
     )
 
     authorize_url = etsy_client.auth_code.authorize_url(
-      scope: 'listings_r',
+      scope: 'listings_r transactions_r',
       state: 'superstate',
       code_challenge: ENV['ETSY_CODE_CHALLENGE'],
       code_challenge_method: 'S256'
@@ -25,7 +25,7 @@ class EtsyController < ApplicationController
     query_params = {
       grant_type: "authorization_code",
       client_id: ENV['ETSY_API_KEY'],
-      redirect_uri: 'https://1c42-122-161-50-131.ngrok-free.app/etsy/callback',
+      redirect_uri: "#{Rails.configuration.settings.base_url}/etsy/callback",
       code: params[:code],
       code_verifier: ENV['ETSY_CODE_VERIFIER']
     }

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: products
+#
+#  id                :bigint           not null, primary key
+#  brand_name        :string
+#  name              :string
+#  print_area_width  :bigint
+#  print_area_height :bigint
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
 class Product < ApplicationRecord
   # Association
   has_many :order_products, dependent: :destroy

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: messages
+#
+#  id             :bigint           not null, primary key
+#  from           :integer
+#  to             :integer
+#  review_message :string
+#  order_id       :bigint
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
 class Message < ApplicationRecord
 	#Association
 	belongs_to :order

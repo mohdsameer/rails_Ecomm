@@ -1,3 +1,57 @@
+# == Schema Information
+#
+# Table name: orders
+#
+#  id                                   :bigint           not null, primary key
+#  customer_name                        :string
+#  price                                :float            default(0.0)
+#  order_status                         :integer          default("onhold")
+#  order_edit_status                    :integer          default("incomplete")
+#  due_date                             :date
+#  created_at                           :datetime         not null
+#  updated_at                           :datetime         not null
+#  priority                             :integer          default("GENERAL")
+#  reject_reason                        :string
+#  additional_comment                   :string
+#  user_id                              :bigint
+#  revision_info                        :string
+#  request_revision                     :boolean          default(FALSE)
+#  shipping_method_id                   :bigint
+#  etsy_order_id                        :string
+#  dimensions_is_manual                 :boolean          default(FALSE)
+#  custom_length                        :decimal(, )
+#  custom_height                        :decimal(, )
+#  custom_width                         :decimal(, )
+#  custom_weight_lb                     :decimal(, )
+#  custom_weight_oz                     :decimal(, )
+#  shippo_rate_id                       :string
+#  shippo_shipment_id                   :string
+#  shipping_cost                        :decimal(, )
+#  shipping_label_image_is_temporary    :boolean          default(FALSE)
+#  packing_slip_image_is_temporary      :boolean          default(FALSE)
+#  gift_message_slip_image_is_temporary :boolean          default(FALSE)
+#  design_file_1_image_is_temporary     :boolean          default(FALSE)
+#  design_file_2_image_is_temporary     :boolean          default(FALSE)
+#  additional_file_image_is_temporary   :boolean          default(FALSE)
+#  total_cost                           :decimal(, )      default(0.0)
+#  submitted_at                         :datetime
+#  mark_completed_by_producer           :boolean          default(FALSE)
+#  shippo_parcel_id                     :string
+#  note_to_buyer                        :text
+#  note_to_seller                       :text
+#  is_etsy_imported                     :boolean          default(FALSE)
+#  grandtotal_json                      :jsonb
+#  subtotal_json                        :jsonb
+#  total_price_json                     :jsonb
+#  total_shipping_cost_json             :jsonb
+#  total_tax_cost_json                  :jsonb
+#  total_vat_cost_json                  :jsonb
+#  discount_amt_json                    :jsonb
+#  gift_wrap_price_json                 :jsonb
+#  shipments_json                       :jsonb
+#  transactions_json                    :jsonb
+#  refunds_json                         :jsonb
+#
 class Order < ApplicationRecord
   include ActionView::Helpers::DateHelper
 
@@ -229,5 +283,33 @@ class Order < ApplicationRecord
   def has_any_design?
     gift_message_slip_image.attached? || shipping_label_image.attached? || packing_slip_image.attached? ||
     design_file_1_image.attached? || design_file_2_image.attached? || additional_file_image.attached?
+  end
+
+  def etsy_requested_shipping_method
+    transactions_json.pluck("shipping_method").join(", ")
+  end
+
+  def etsy_items_total
+    total_price_json["amount"]
+  end
+
+  def etsy_shop_discount
+    discount_amt_json["amount"]
+  end
+
+  def etsy_subtotal
+    subtotal_json["amount"]
+  end
+
+  def etsy_sales_tax
+    total_tax_cost_json["amount"]
+  end
+
+  def etsy_shipping_price
+    total_shipping_cost_json["amount"]
+  end
+
+  def etsy_order_total
+    grandtotal_json["amount"]
   end
 end

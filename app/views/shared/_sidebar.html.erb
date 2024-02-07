@@ -6,6 +6,10 @@
       <div class="light_head"><%= current_user&.type %></div>
     </div>
 
+    <% if current_user && current_user.admin? && !current_user.etsy_access_token %>
+      <%= link_to 'Authorize with etsy', '/etsy/authorize', class: 'btn btn-primary' %>
+    <% end %>
+
     <div class="list_head">MANAGEMENT</div>
 
     <div class="sidebar_links_list">

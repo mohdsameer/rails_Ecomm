@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: order_products
+#
+#  id                       :bigint           not null, primary key
+#  product_id               :bigint
+#  order_id                 :bigint
+#  product_quantity         :integer
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  variant_id               :integer
+#  user_id                  :integer
+#  temporary_added          :boolean          default(FALSE)
+#  temporary_removed        :boolean          default(FALSE)
+#  front_image_is_temporary :boolean          default(FALSE)
+#  back_image_is_temporary  :boolean          default(FALSE)
+#  total_cost               :decimal(, )      default(0.0)
+#
 class OrderProduct < ApplicationRecord
   # Associations
   belongs_to :order

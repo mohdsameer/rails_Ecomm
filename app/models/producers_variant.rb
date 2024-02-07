@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: producers_variants
+#
+#  id         :bigint           not null, primary key
+#  user_id    :bigint
+#  variant_id :bigint
+#  inventory  :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  aisle_no   :string
+#
 class ProducersVariant < ApplicationRecord
   has_paper_trail
 

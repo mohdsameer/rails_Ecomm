@@ -1,3 +1,27 @@
+# == Schema Information
+#
+# Table name: variants
+#
+#  id               :bigint           not null, primary key
+#  product_id       :integer
+#  specification    :jsonb            not null
+#  color            :string
+#  size             :string
+#  inventory        :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  length           :float
+#  height           :float
+#  width            :float
+#  weight_lb        :float
+#  weight_oz        :float
+#  inventory_reason :string
+#  design_style     :string
+#  font             :string
+#  text             :string
+#  real_variant_sku :string
+#  archive          :boolean          default(FALSE)
+#
 class Variant < ApplicationRecord
   belongs_to :product
   # Attachements

@@ -39,6 +39,14 @@ class OrdersController < ApplicationController
 
   before_action :set_common_data, only: [:on_hold_popup, :in_production_popup, :rejected_popup, :fullfilled_popup]
 
+  def etsy_import
+    if params[:receipt_id].present?
+      if EtsyService.import_order(receipt_id: params[:receipt_id], access_token: current_user.etsy_access_token)
+        redirect_to orders_path
+      end
+    end
+  end
+
   def index
     per_page  = params[:per_page] || Rails.configuration.settings.default_per_page
     @orders   = Order.search(params).paginate(page: params[:page], per_page: per_page)
