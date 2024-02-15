@@ -2,10 +2,12 @@
   <div class="panel_header">
     <div class="header_box">
       <div class="create_wrap">
-        <div class="create_content">
-          <%= image_tag("ic_plus", class:"plus_icon") %>
-          <%= link_to 'Create Manual Order', new_order_path , class: 'create_text'%>
-        </div>
+        <% unless current_user.producer? %>
+          <div class="create_content">
+            <%= image_tag("ic_plus", class:"plus_icon") %>
+              <%= link_to 'Create Manual Order', new_order_path , class: 'create_text'%>
+          </div>
+        <% end %>
         <div class="create_bell_box">
           <%= image_tag("ic_notifications", class:"create_bell_icon") %>
           <div class="create_notification">

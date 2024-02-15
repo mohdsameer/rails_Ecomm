@@ -130,7 +130,7 @@ class Order < ApplicationRecord
   end
 
   def order_date_with_time
-    created_at.strftime('%b %d, %Y at %I:%M %p')
+    created_at.in_time_zone('Eastern Time (US & Canada)').strftime('%b %d, %Y at %I:%M %p')
   end
 
   def assignee_name

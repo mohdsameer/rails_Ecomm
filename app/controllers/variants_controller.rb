@@ -16,6 +16,7 @@ class VariantsController < ApplicationController
     @pv = @producer.producers_variants.search(params)
     respond_to do |format|
       format.html
+      format.csv { send_data ExportService.admin_inventory_to_csv(@pv), filename: "Inventory-#{Date.today}.csv" }
       format.js do
         html_data = render_to_string(partial: "variants/producer_inventory_table", locals: { pv: @pv }, layout: false)
         render json: { html_data: html_data }

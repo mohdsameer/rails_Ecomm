@@ -18,16 +18,21 @@
                   </div>
                 </div>
 
-                <div class="choose_btn">
-                  <%= 
-                    link_to 'Choose',
-                      new_order_product_orders_path(order_id:    @order_id,
-                                                    product_id:  @product_id,
-                                                    variant_ids: @variant_ids,
-                                                    producer_id: producer.id),
-                      data: { 'turbo-frame': '_top' }
-                  %>
-                </div>
+                <% @variant_ids.each do |variant_id| %>
+                  <% producer_variant = producer.producers_variants.find_by(variant_id: variant_id) %>
+                  <% unless producer_variant.inventory_for_user(current_user) <= 0 %>
+                    <div class="choose_btn">
+                      <%= 
+                        link_to 'Choose',
+                          new_order_product_orders_path(order_id:    @order_id,
+                                                        product_id:  @product_id,
+                                                        variant_ids: @variant_ids,
+                                                        producer_id: producer.id),
+                          data: { 'turbo-frame': '_top' }
+                      %>
+                  </div>
+                  <% end %>
+                <% end %>
               </div>
             <% end %>
           </div>

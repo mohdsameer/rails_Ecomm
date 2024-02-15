@@ -16,11 +16,11 @@
             <div class="order_th last">&nbsp;</div>
           </div>
         </div>
-        <div class="tbody">
+        <div class="tbody" data-controller="checked_order">
           <% orders.each do |order| %>
             <div class="tbody_row">
               <div class="order_td first td_icon">
-                <input type="checkbox" name="">
+                <input type="checkbox" name="order_ids[]" value="<%= order.id %>" class="order_checked">
               </div>
 
               <div class="order_td second">
